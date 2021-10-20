@@ -151,6 +151,7 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
             //administrator
             let administrator = new OAXDEX_Administrator(wallet);
             result.administrator = await administrator.deploy(governance.address);
+            await governance.initAdmin(result.administrator);
             //VotingRegistry	
             let votingRegistry = new OAXDEX_VotingRegistry(wallet);
             result.votingRegistry = await votingRegistry.deploy(result.governance);
@@ -181,7 +182,7 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
             result.oracleFactory = await oracleFactory.deploy({
                 feePerDelegator: options.oracle.feePerDelegator || 0,
                 governance: options.oracle.governance || result.governance,
-                pairCreator: options.oracle.pairCreator || result.pairCreator,
+                pairCreator: options.oracle.pairCreator || result.oraclePairCreator,
                 protocolFee: options.oracle.protocolFee || 0,
                 protocolFeeTo: options.oracle.protocolFeeTo || Utils.nullAddress,
                 tradeFee: options.oracle.tradeFee || 0
