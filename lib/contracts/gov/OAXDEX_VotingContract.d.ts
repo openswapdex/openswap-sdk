@@ -1,0 +1,55 @@
+import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+export declare class OAXDEX_VotingContract extends Contract {
+    constructor(wallet: Wallet, address?: string);
+    deploy(params: {
+        governance: string;
+        executor: string;
+        id: number | BigNumber;
+        name: string;
+        options: string[];
+        quorum: number | BigNumber;
+        threshold: number | BigNumber;
+        voteEndTime: number | BigNumber;
+        executeDelay: number | BigNumber;
+        executeParam: string[];
+    }): Promise<string>;
+    _executeParam(param1: number | BigNumber): Promise<string>;
+    _options(param1: number | BigNumber): Promise<string>;
+    _optionsWeight(param1: number | BigNumber): Promise<BigNumber>;
+    accountVoteOption(param1: string): Promise<BigNumber>;
+    accountVoteWeight(param1: string): Promise<BigNumber>;
+    execute(): Promise<TransactionReceipt>;
+    executeDelay(): Promise<BigNumber>;
+    executeParam(): Promise<string>;
+    executed(): Promise<boolean>;
+    executor(): Promise<string>;
+    getParams(): Promise<{
+        executor_: string;
+        id_: BigNumber;
+        name_: string;
+        options_: string;
+        voteStartTime_: BigNumber;
+        voteEndTime_: BigNumber;
+        executeDelay_: BigNumber;
+        status_: any;
+        optionsWeight_: BigNumber;
+        quorum_: BigNumber;
+        executeParam_: string;
+    }>;
+    governance(): Promise<string>;
+    id(): Promise<BigNumber>;
+    name(): Promise<string>;
+    options(): Promise<string>;
+    optionsCount(): Promise<BigNumber>;
+    optionsWeight(): Promise<BigNumber>;
+    quorum(): Promise<BigNumber>;
+    threshold(): Promise<BigNumber>;
+    totalVoteWeight(): Promise<BigNumber>;
+    totalWeight(): Promise<BigNumber>;
+    updateWeight(account: string): Promise<TransactionReceipt>;
+    veto(): Promise<TransactionReceipt>;
+    vetoed(): Promise<boolean>;
+    vote(option: number | BigNumber): Promise<TransactionReceipt>;
+    voteEndTime(): Promise<BigNumber>;
+    voteStartTime(): Promise<BigNumber>;
+}
