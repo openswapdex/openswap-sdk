@@ -5,8 +5,9 @@
   "typings": "lib/index.d.ts",
   "main": "lib",
   "scripts": {
-    "build": "eth-wallet-build 0.6.11 node_modules/@openswapdex/openswap-core/contracts bin src/contracts && eth-wallet-build 0.6.11 test/contracts test/contracts/bin test/contracts && tsc",
+    "build": "eth-wallet-build 0.6.11 node_modules/@openswapdex/openswap-core/contracts bin src/contracts && eth-wallet-build 0.6.11 test/contracts test/bin test/src/contracts && tsc",
     "buildContracts": "eth-wallet-build 0.6.11 node_modules/@openswapdex/openswap-core/contracts bin src/contracts",
+    "buildTestContracts": "eth-wallet-build 0.6.11 test/contracts test/bin test/src/contracts",
     "buildLib": "tsc",
     "test": "mocha --ui tdd --exit --require ts-node/register test/*.ts"
   },
@@ -19,8 +20,11 @@
   },
   "devDependencies": {
     "@openzeppelin/contracts": "4.3.2",
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "@types/chai": "^4.2.22",
     "@types/mocha": "9.0.0",
     "@types/node": "14.17",
+    "chai": "^4.3.4",
     "ganache-cli": "6.12.2",
     "mocha": "^9.1.3",
     "solc": "0.8.6",
