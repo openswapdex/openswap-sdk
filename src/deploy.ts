@@ -16,7 +16,6 @@ import {OSWAP_HybridRouterRegistry} from './contracts/router/OSWAP_HybridRouterR
 import {OSWAP_HybridRouter2} from './contracts/router/OSWAP_HybridRouter2';
 import {OpenSwap} from './contracts/OpenSwap';
 
-
 export interface IDeploymentResult{
     administrator?: string;
     factory?: string,
@@ -109,6 +108,25 @@ export interface IDeployOptions {
         weth?: string
     }
 }
+export interface IDeployment {
+    openSwap: OpenSwap,
+    governance: OAXDEX_Governance,
+    administrator: OAXDEX_Administrator,
+    registry: OAXDEX_VotingRegistry,
+    airCreator: OSWAP_PairCreator,
+    actory: OSWAP_Factory,
+    oraclePairCreator: OSWAP_OraclePairCreator,
+    router: OSWAP_Router,
+    oracleFactory: OSWAP_OracleFactory,
+    oracleRouter: OSWAP_OracleRouter,
+    oracleLiquidityProvider: OSWAP_OracleLiquidityProvider,
+    hybridRouterRegistry: OSWAP_HybridRouterRegistry,
+    hybridRouter: OSWAP_HybridRouter2,
+    executor: OAXDEX_VotingExecutor,
+    executor1: OSWAP_VotingExecutor1,
+    executor2: OSWAP_VotingExecutor2,
+}
+
 export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>{
     options = options || <any>{};
     if (!options.govOptions)
