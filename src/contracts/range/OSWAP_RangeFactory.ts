@@ -8,6 +8,30 @@ export class OSWAP_RangeFactory extends Contract{
     deploy(params:{governance:string,oracleFactory:string,pairCreator:string,tradeFee:number|BigNumber,stakeAmount:number[]|BigNumber[],liquidityProviderShare:number[]|BigNumber[],protocolFeeTo:string}): Promise<string>{        	
         return this._deploy(params.governance,params.oracleFactory,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare),params.protocolFeeTo);
     }
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
+        return this.parseEvents(receipt, "OwnershipTransferred");
+    }
+    parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newSize:BigNumber}[]{
+        return this.parseEvents(receipt, "PairCreated");
+    }
+    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
+        return this.parseEvents(receipt, "PairRestarted");
+    }
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
+        return this.parseEvents(receipt, "PairShutdowned");
+    }
+    parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
+        return this.parseEvents(receipt, "ParamSet");
+    }
+    parseParamSet2Event(receipt: TransactionReceipt): {name:string,value1:string,value2:string}[]{
+        return this.parseEvents(receipt, "ParamSet2");
+    }
+    parseRestartedEvent(receipt: TransactionReceipt): any{
+        return this.parseEvents(receipt, "Restarted");
+    }
+    parseShutdownedEvent(receipt: TransactionReceipt): any{
+        return this.parseEvents(receipt, "Shutdowned");
+    }
     async allPairs(param1:number|BigNumber): Promise<string>{
         let result = await this.methods('allPairs',param1);
         return result;
@@ -20,15 +44,15 @@ export class OSWAP_RangeFactory extends Contract{
         let result = await this.methods('checkAndGetSwapParams');
         return new BigNumber(result);
     }
-    async createPair(params:{tokenA:string,tokenB:string}): Promise<string>{
+    async createPair(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
         let result = await this.methods('createPair',params.tokenA,params.tokenB);
         return result;
     }
-    async getAllLiquidityProviderShare(): Promise<{_stakeAmount:BigNumber,_liquidityProviderShare:BigNumber}>{
+    async getAllLiquidityProviderShare(): Promise<{_stakeAmount:BigNumber[],_liquidityProviderShare:BigNumber[]}>{
         let result = await this.methods('getAllLiquidityProviderShare');
         return {
-            _stakeAmount: new BigNumber(result._stakeAmount),
-            _liquidityProviderShare: new BigNumber(result._liquidityProviderShare)
+            _stakeAmount: result._stakeAmount,
+            _liquidityProviderShare: result._liquidityProviderShare
         }
     }
     async getCreateAddresses(): Promise<{_governance:string,_rangeLiquidityProvider:string,_oracleFactory:string}>{

@@ -8,9 +8,36 @@ export class OSWAP_OraclePair extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
-    async addLiquidity(params:{provider:string,direction:boolean,staked:number|BigNumber,afterIndex:number|BigNumber,expire:number|BigNumber,enable:boolean}): Promise<BigNumber>{
+    parseAddLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,expire:BigNumber,enable:boolean}[]{
+        return this.parseEvents(receipt, "AddLiquidity");
+    }
+    parseDelegatorPauseOfferEvent(receipt: TransactionReceipt): {delegator:string,provider:string,direction:boolean}[]{
+        return this.parseEvents(receipt, "DelegatorPauseOffer");
+    }
+    parseDelegatorResumeOfferEvent(receipt: TransactionReceipt): {delegator:string,provider:string,direction:boolean}[]{
+        return this.parseEvents(receipt, "DelegatorResumeOffer");
+    }
+    parseNewProviderEvent(receipt: TransactionReceipt): {provider:string,index:BigNumber}[]{
+        return this.parseEvents(receipt, "NewProvider");
+    }
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,expire:BigNumber,enable:boolean}[]{
+        return this.parseEvents(receipt, "RemoveLiquidity");
+    }
+    parseReplenishEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,expire:BigNumber}[]{
+        return this.parseEvents(receipt, "Replenish");
+    }
+    parseSetDelegatorEvent(receipt: TransactionReceipt): {provider:string,delegator:string}[]{
+        return this.parseEvents(receipt, "SetDelegator");
+    }
+    parseSwapEvent(receipt: TransactionReceipt): {to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}[]{
+        return this.parseEvents(receipt, "Swap");
+    }
+    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}[]{
+        return this.parseEvents(receipt, "SwappedOneProvider");
+    }
+    async addLiquidity(params:{provider:string,direction:boolean,staked:number|BigNumber,afterIndex:number|BigNumber,expire:number|BigNumber,enable:boolean}): Promise<TransactionReceipt>{
         let result = await this.methods('addLiquidity',params.provider,params.direction,Utils.toString(params.staked),Utils.toString(params.afterIndex),Utils.toString(params.expire),params.enable);
-        return new BigNumber(result);
+        return result;
     }
     async counter(): Promise<BigNumber>{
         let result = await this.methods('counter');
@@ -77,24 +104,24 @@ export class OSWAP_OraclePair extends Contract{
             privateReplenish: result.privateReplenish
         }
     }
-    async getQueue(params:{direction:boolean,start:number|BigNumber,end:number|BigNumber}): Promise<{index:BigNumber,provider:any,amount:BigNumber,staked:BigNumber,expire:BigNumber}>{
+    async getQueue(params:{direction:boolean,start:number|BigNumber,end:number|BigNumber}): Promise<{index:BigNumber[],provider:string[],amount:BigNumber[],staked:BigNumber[],expire:BigNumber[]}>{
         let result = await this.methods('getQueue',params.direction,Utils.toString(params.start),Utils.toString(params.end));
         return {
-            index: new BigNumber(result.index),
+            index: result.index,
             provider: result.provider,
-            amount: new BigNumber(result.amount),
-            staked: new BigNumber(result.staked),
-            expire: new BigNumber(result.expire)
+            amount: result.amount,
+            staked: result.staked,
+            expire: result.expire
         }
     }
-    async getQueueFromIndex(params:{direction:boolean,from:number|BigNumber,count:number|BigNumber}): Promise<{index:BigNumber,provider:any,amount:BigNumber,staked:BigNumber,expire:BigNumber}>{
+    async getQueueFromIndex(params:{direction:boolean,from:number|BigNumber,count:number|BigNumber}): Promise<{index:BigNumber[],provider:string[],amount:BigNumber[],staked:BigNumber[],expire:BigNumber[]}>{
         let result = await this.methods('getQueueFromIndex',params.direction,Utils.toString(params.from),Utils.toString(params.count));
         return {
-            index: new BigNumber(result.index),
+            index: result.index,
             provider: result.provider,
-            amount: new BigNumber(result.amount),
-            staked: new BigNumber(result.staked),
-            expire: new BigNumber(result.expire)
+            amount: result.amount,
+            staked: result.staked,
+            expire: result.expire
         }
     }
     async govToken(): Promise<string>{
@@ -160,9 +187,9 @@ export class OSWAP_OraclePair extends Contract{
         let result = await this.methods('providerOfferIndex',param1);
         return new BigNumber(result);
     }
-    async purgeExpire(params:{direction:boolean,startingIndex:number|BigNumber,limit:number|BigNumber}): Promise<BigNumber>{
+    async purgeExpire(params:{direction:boolean,startingIndex:number|BigNumber,limit:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('purgeExpire',params.direction,Utils.toString(params.startingIndex),Utils.toString(params.limit));
-        return new BigNumber(result);
+        return result;
     }
     async queueSize(param1:boolean): Promise<BigNumber>{
         let result = await this.methods('queueSize',param1);
@@ -172,13 +199,9 @@ export class OSWAP_OraclePair extends Contract{
         let result = await this.methods('redeemProtocolFee');
         return result;
     }
-    async removeAllLiquidity(provider:string): Promise<{amount0:BigNumber,amount1:BigNumber,staked:BigNumber}>{
+    async removeAllLiquidity(provider:string): Promise<TransactionReceipt>{
         let result = await this.methods('removeAllLiquidity',provider);
-        return {
-            amount0: new BigNumber(result.amount0),
-            amount1: new BigNumber(result.amount1),
-            staked: new BigNumber(result.staked)
-        }
+        return result;
     }
     async removeLiquidity(params:{provider:string,direction:boolean,unstake:number|BigNumber,afterIndex:number|BigNumber,amountOut:number|BigNumber,reserveOut:number|BigNumber,expire:number|BigNumber,enable:boolean}): Promise<TransactionReceipt>{
         let result = await this.methods('removeLiquidity',params.provider,params.direction,Utils.toString(params.unstake),Utils.toString(params.afterIndex),Utils.toString(params.amountOut),Utils.toString(params.reserveOut),Utils.toString(params.expire),params.enable);

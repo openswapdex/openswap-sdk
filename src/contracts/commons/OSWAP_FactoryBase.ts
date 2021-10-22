@@ -8,6 +8,21 @@ export class OSWAP_FactoryBase extends Contract{
     deploy(params:{governance:string,pairCreator:string}): Promise<string>{        	
         return this._deploy(params.governance,params.pairCreator);
     }
+    parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newSize:BigNumber}[]{
+        return this.parseEvents(receipt, "PairCreated");
+    }
+    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
+        return this.parseEvents(receipt, "PairRestarted");
+    }
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
+        return this.parseEvents(receipt, "PairShutdowned");
+    }
+    parseRestartedEvent(receipt: TransactionReceipt): any{
+        return this.parseEvents(receipt, "Restarted");
+    }
+    parseShutdownedEvent(receipt: TransactionReceipt): any{
+        return this.parseEvents(receipt, "Shutdowned");
+    }
     async allPairs(param1:number|BigNumber): Promise<string>{
         let result = await this.methods('allPairs',param1);
         return result;
@@ -16,7 +31,7 @@ export class OSWAP_FactoryBase extends Contract{
         let result = await this.methods('allPairsLength');
         return new BigNumber(result);
     }
-    async createPair(params:{tokenA:string,tokenB:string}): Promise<string>{
+    async createPair(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
         let result = await this.methods('createPair',params.tokenA,params.tokenB);
         return result;
     }

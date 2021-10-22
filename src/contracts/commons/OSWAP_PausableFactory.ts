@@ -8,6 +8,18 @@ export class OSWAP_PausableFactory extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
+    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
+        return this.parseEvents(receipt, "PairRestarted");
+    }
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
+        return this.parseEvents(receipt, "PairShutdowned");
+    }
+    parseRestartedEvent(receipt: TransactionReceipt): any{
+        return this.parseEvents(receipt, "Restarted");
+    }
+    parseShutdownedEvent(receipt: TransactionReceipt): any{
+        return this.parseEvents(receipt, "Shutdowned");
+    }
     async governance(): Promise<string>{
         let result = await this.methods('governance');
         return result;

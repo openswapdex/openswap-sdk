@@ -8,6 +8,30 @@ export class OSWAP_Pair extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
+    parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
+        return this.parseEvents(receipt, "Approval");
+    }
+    parseBurnEvent(receipt: TransactionReceipt): {sender:string,amount0:BigNumber,amount1:BigNumber,to:string}[]{
+        return this.parseEvents(receipt, "Burn");
+    }
+    parseMintEvent(receipt: TransactionReceipt): {sender:string,amount0:BigNumber,amount1:BigNumber}[]{
+        return this.parseEvents(receipt, "Mint");
+    }
+    parseProtocolFeeSetEvent(receipt: TransactionReceipt): {protocolFee:BigNumber}[]{
+        return this.parseEvents(receipt, "ProtocolFeeSet");
+    }
+    parseSwapEvent(receipt: TransactionReceipt): {sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}[]{
+        return this.parseEvents(receipt, "Swap");
+    }
+    parseSyncEvent(receipt: TransactionReceipt): {reserve0:BigNumber,reserve1:BigNumber}[]{
+        return this.parseEvents(receipt, "Sync");
+    }
+    parseTradeFeeSetEvent(receipt: TransactionReceipt): {tradeFee:BigNumber}[]{
+        return this.parseEvents(receipt, "TradeFeeSet");
+    }
+    parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
+        return this.parseEvents(receipt, "Transfer");
+    }
     async EIP712_TYPEHASH(): Promise<string>{
         let result = await this.methods('EIP712_TYPEHASH');
         return result;
@@ -32,7 +56,7 @@ export class OSWAP_Pair extends Contract{
         let result = await this.methods('allowance',params.param1,params.param2);
         return new BigNumber(result);
     }
-    async approve(params:{spender:string,value:number|BigNumber}): Promise<boolean>{
+    async approve(params:{spender:string,value:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('approve',params.spender,Utils.toString(params.value));
         return result;
     }
@@ -40,12 +64,9 @@ export class OSWAP_Pair extends Contract{
         let result = await this.methods('balanceOf',param1);
         return new BigNumber(result);
     }
-    async burn(to:string): Promise<{amount0:BigNumber,amount1:BigNumber}>{
+    async burn(to:string): Promise<TransactionReceipt>{
         let result = await this.methods('burn',to);
-        return {
-            amount0: new BigNumber(result.amount0),
-            amount1: new BigNumber(result.amount1)
-        }
+        return result;
     }
     async decimals(): Promise<BigNumber>{
         let result = await this.methods('decimals');
@@ -83,9 +104,9 @@ export class OSWAP_Pair extends Contract{
         let result = await this.methods('kLast');
         return new BigNumber(result);
     }
-    async mint(to:string): Promise<BigNumber>{
+    async mint(to:string): Promise<TransactionReceipt>{
         let result = await this.methods('mint',to);
-        return new BigNumber(result);
+        return result;
     }
     async name(): Promise<string>{
         let result = await this.methods('name');
@@ -147,11 +168,11 @@ export class OSWAP_Pair extends Contract{
         let result = await this.methods('tradeFee');
         return new BigNumber(result);
     }
-    async transfer(params:{to:string,value:number|BigNumber}): Promise<boolean>{
+    async transfer(params:{to:string,value:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('transfer',params.to,Utils.toString(params.value));
         return result;
     }
-    async transferFrom(params:{from:string,to:string,value:number|BigNumber}): Promise<boolean>{
+    async transferFrom(params:{from:string,to:string,value:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('transferFrom',params.from,params.to,Utils.toString(params.value));
         return result;
     }

@@ -36,7 +36,7 @@ export class OAXDEX_VotingContract extends Contract{
         let result = await this.methods('executeDelay');
         return new BigNumber(result);
     }
-    async executeParam(): Promise<string>{
+    async executeParam(): Promise<string[]>{
         let result = await this.methods('executeParam');
         return result;
     }
@@ -48,7 +48,7 @@ export class OAXDEX_VotingContract extends Contract{
         let result = await this.methods('executor');
         return result;
     }
-    async getParams(): Promise<{executor_:string,id_:BigNumber,name_:string,options_:string,voteStartTime_:BigNumber,voteEndTime_:BigNumber,executeDelay_:BigNumber,status_:any,optionsWeight_:BigNumber,quorum_:BigNumber,executeParam_:string}>{
+    async getParams(): Promise<{executor_:string,id_:BigNumber,name_:string,options_:string[],voteStartTime_:BigNumber,voteEndTime_:BigNumber,executeDelay_:BigNumber,status_:any,optionsWeight_:BigNumber[],quorum_:BigNumber,executeParam_:string[]}>{
         let result = await this.methods('getParams');
         return {
             executor_: result.executor_,
@@ -59,7 +59,7 @@ export class OAXDEX_VotingContract extends Contract{
             voteEndTime_: new BigNumber(result.voteEndTime_),
             executeDelay_: new BigNumber(result.executeDelay_),
             status_: result.status_,
-            optionsWeight_: new BigNumber(result.optionsWeight_),
+            optionsWeight_: result.optionsWeight_,
             quorum_: new BigNumber(result.quorum_),
             executeParam_: result.executeParam_
         }
@@ -76,7 +76,7 @@ export class OAXDEX_VotingContract extends Contract{
         let result = await this.methods('name');
         return result;
     }
-    async options(): Promise<string>{
+    async options(): Promise<string[]>{
         let result = await this.methods('options');
         return result;
     }
@@ -84,9 +84,9 @@ export class OAXDEX_VotingContract extends Contract{
         let result = await this.methods('optionsCount');
         return new BigNumber(result);
     }
-    async optionsWeight(): Promise<BigNumber>{
+    async optionsWeight(): Promise<BigNumber[]>{
         let result = await this.methods('optionsWeight');
-        return new BigNumber(result);
+        return result;
     }
     async quorum(): Promise<BigNumber>{
         let result = await this.methods('quorum');

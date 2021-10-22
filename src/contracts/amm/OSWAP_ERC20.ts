@@ -8,6 +8,12 @@ export class OSWAP_ERC20 extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
+    parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
+        return this.parseEvents(receipt, "Approval");
+    }
+    parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
+        return this.parseEvents(receipt, "Transfer");
+    }
     async EIP712_TYPEHASH(): Promise<string>{
         let result = await this.methods('EIP712_TYPEHASH');
         return result;
@@ -28,7 +34,7 @@ export class OSWAP_ERC20 extends Contract{
         let result = await this.methods('allowance',params.param1,params.param2);
         return new BigNumber(result);
     }
-    async approve(params:{spender:string,value:number|BigNumber}): Promise<boolean>{
+    async approve(params:{spender:string,value:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('approve',params.spender,Utils.toString(params.value));
         return result;
     }
@@ -60,11 +66,11 @@ export class OSWAP_ERC20 extends Contract{
         let result = await this.methods('totalSupply');
         return new BigNumber(result);
     }
-    async transfer(params:{to:string,value:number|BigNumber}): Promise<boolean>{
+    async transfer(params:{to:string,value:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('transfer',params.to,Utils.toString(params.value));
         return result;
     }
-    async transferFrom(params:{from:string,to:string,value:number|BigNumber}): Promise<boolean>{
+    async transferFrom(params:{from:string,to:string,value:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('transferFrom',params.from,params.to,Utils.toString(params.value));
         return result;
     }

@@ -8,6 +8,27 @@ export class OSWAP_RestrictedPair2 extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
+    parseAddLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,index:BigNumber,amount:BigNumber,newAmountBalance:BigNumber}[]{
+        return this.parseEvents(receipt, "AddLiquidity");
+    }
+    parseApprovedTraderEvent(receipt: TransactionReceipt): {direction:boolean,offerIndex:BigNumber,trader:string,allocation:BigNumber}[]{
+        return this.parseEvents(receipt, "ApprovedTrader");
+    }
+    parseLockEvent(receipt: TransactionReceipt): {direction:boolean,index:BigNumber}[]{
+        return this.parseEvents(receipt, "Lock");
+    }
+    parseNewProviderOfferEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,index:BigNumber,allowAll:boolean,restrictedPrice:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
+        return this.parseEvents(receipt, "NewProviderOffer");
+    }
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,index:BigNumber,amountOut:BigNumber,receivingOut:BigNumber,newAmountBalance:BigNumber,newReceivingBalance:BigNumber}[]{
+        return this.parseEvents(receipt, "RemoveLiquidity");
+    }
+    parseSwapEvent(receipt: TransactionReceipt): {to:string,direction:boolean,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}[]{
+        return this.parseEvents(receipt, "Swap");
+    }
+    parseSwappedOneOfferEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,index:BigNumber,price:BigNumber,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newReceivingBalance:BigNumber}[]{
+        return this.parseEvents(receipt, "SwappedOneOffer");
+    }
     async addLiquidity(params:{direction:boolean,index:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('addLiquidity',params.direction,Utils.toString(params.index));
         return result;
@@ -24,9 +45,9 @@ export class OSWAP_RestrictedPair2 extends Contract{
         let result = await this.methods('counter',param1);
         return new BigNumber(result);
     }
-    async createOrder(params:{provider:string,direction:boolean,allowAll:boolean,restrictedPrice:number|BigNumber,startDate:number|BigNumber,expire:number|BigNumber}): Promise<BigNumber>{
+    async createOrder(params:{provider:string,direction:boolean,allowAll:boolean,restrictedPrice:number|BigNumber,startDate:number|BigNumber,expire:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('createOrder',params.provider,params.direction,params.allowAll,Utils.toString(params.restrictedPrice),Utils.toString(params.startDate),Utils.toString(params.expire));
-        return new BigNumber(result);
+        return result;
     }
     async factory(): Promise<string>{
         let result = await this.methods('factory');
@@ -44,11 +65,11 @@ export class OSWAP_RestrictedPair2 extends Contract{
         let result = await this.methods('getAmountOut',params.tokenIn,Utils.toString(params.amountIn),params.trader,params.param4);
         return new BigNumber(result);
     }
-    async getApprovedTrader(params:{direction:boolean,offerIndex:number|BigNumber,start:number|BigNumber,length:number|BigNumber}): Promise<{trader:any,allocation:BigNumber}>{
+    async getApprovedTrader(params:{direction:boolean,offerIndex:number|BigNumber,start:number|BigNumber,length:number|BigNumber}): Promise<{trader:string[],allocation:BigNumber[]}>{
         let result = await this.methods('getApprovedTrader',params.direction,Utils.toString(params.offerIndex),Utils.toString(params.start),Utils.toString(params.length));
         return {
             trader: result.trader,
-            allocation: new BigNumber(result.allocation)
+            allocation: result.allocation
         }
     }
     async getApprovedTraderLength(params:{direction:boolean,offerIndex:number|BigNumber}): Promise<BigNumber>{
@@ -70,41 +91,41 @@ export class OSWAP_RestrictedPair2 extends Contract{
             new BigNumber(result[1])
         ]
     }
-    async getOffers(params:{direction:boolean,start:number|BigNumber,length:number|BigNumber}): Promise<{index:BigNumber,provider:any,lockedAndAllowAll:any,receiving:BigNumber,amountAndPrice:BigNumber,startDateAndExpire:BigNumber}>{
+    async getOffers(params:{direction:boolean,start:number|BigNumber,length:number|BigNumber}): Promise<{index:BigNumber[],provider:string[],lockedAndAllowAll:boolean[],receiving:BigNumber[],amountAndPrice:BigNumber[],startDateAndExpire:BigNumber[]}>{
         let result = await this.methods('getOffers',params.direction,Utils.toString(params.start),Utils.toString(params.length));
         return {
-            index: new BigNumber(result.index),
+            index: result.index,
             provider: result.provider,
             lockedAndAllowAll: result.lockedAndAllowAll,
-            receiving: new BigNumber(result.receiving),
-            amountAndPrice: new BigNumber(result.amountAndPrice),
-            startDateAndExpire: new BigNumber(result.startDateAndExpire)
+            receiving: result.receiving,
+            amountAndPrice: result.amountAndPrice,
+            startDateAndExpire: result.startDateAndExpire
         }
     }
-    async getProviderOffer(params:{provider:string,direction:boolean,start:number|BigNumber,length:number|BigNumber}): Promise<{index:BigNumber,provider:any,lockedAndAllowAll:any,receiving:BigNumber,amountAndPrice:BigNumber,startDateAndExpire:BigNumber}>{
+    async getProviderOffer(params:{provider:string,direction:boolean,start:number|BigNumber,length:number|BigNumber}): Promise<{index:BigNumber[],provider:string[],lockedAndAllowAll:boolean[],receiving:BigNumber[],amountAndPrice:BigNumber[],startDateAndExpire:BigNumber[]}>{
         let result = await this.methods('getProviderOffer',params.provider,params.direction,Utils.toString(params.start),Utils.toString(params.length));
         return {
-            index: new BigNumber(result.index),
+            index: result.index,
             provider: result.provider,
             lockedAndAllowAll: result.lockedAndAllowAll,
-            receiving: new BigNumber(result.receiving),
-            amountAndPrice: new BigNumber(result.amountAndPrice),
-            startDateAndExpire: new BigNumber(result.startDateAndExpire)
+            receiving: result.receiving,
+            amountAndPrice: result.amountAndPrice,
+            startDateAndExpire: result.startDateAndExpire
         }
     }
     async getProviderOfferIndexLength(params:{provider:string,direction:boolean}): Promise<BigNumber>{
         let result = await this.methods('getProviderOfferIndexLength',params.provider,params.direction);
         return new BigNumber(result);
     }
-    async getTraderOffer(params:{trader:string,direction:boolean,start:number|BigNumber,length:number|BigNumber}): Promise<{index:BigNumber,provider:any,lockedAndAllowAll:any,receiving:BigNumber,amountAndPrice:BigNumber,startDateAndExpire:BigNumber}>{
+    async getTraderOffer(params:{trader:string,direction:boolean,start:number|BigNumber,length:number|BigNumber}): Promise<{index:BigNumber[],provider:string[],lockedAndAllowAll:boolean[],receiving:BigNumber[],amountAndPrice:BigNumber[],startDateAndExpire:BigNumber[]}>{
         let result = await this.methods('getTraderOffer',params.trader,params.direction,Utils.toString(params.start),Utils.toString(params.length));
         return {
-            index: new BigNumber(result.index),
+            index: result.index,
             provider: result.provider,
             lockedAndAllowAll: result.lockedAndAllowAll,
-            receiving: new BigNumber(result.receiving),
-            amountAndPrice: new BigNumber(result.amountAndPrice),
-            startDateAndExpire: new BigNumber(result.startDateAndExpire)
+            receiving: result.receiving,
+            amountAndPrice: result.amountAndPrice,
+            startDateAndExpire: result.startDateAndExpire
         }
     }
     async govToken(): Promise<string>{
@@ -172,19 +193,13 @@ export class OSWAP_RestrictedPair2 extends Contract{
         let result = await this.methods('redeemProtocolFee');
         return result;
     }
-    async removeAllLiquidity(provider:string): Promise<{amount0:BigNumber,amount1:BigNumber}>{
+    async removeAllLiquidity(provider:string): Promise<TransactionReceipt>{
         let result = await this.methods('removeAllLiquidity',provider);
-        return {
-            amount0: new BigNumber(result.amount0),
-            amount1: new BigNumber(result.amount1)
-        }
+        return result;
     }
-    async removeAllLiquidity1D(params:{provider:string,direction:boolean}): Promise<{totalAmount:BigNumber,totalReceiving:BigNumber}>{
+    async removeAllLiquidity1D(params:{provider:string,direction:boolean}): Promise<TransactionReceipt>{
         let result = await this.methods('removeAllLiquidity1D',params.provider,params.direction);
-        return {
-            totalAmount: new BigNumber(result.totalAmount),
-            totalReceiving: new BigNumber(result.totalReceiving)
-        }
+        return result;
     }
     async removeLiquidity(params:{provider:string,direction:boolean,index:number|BigNumber,amountOut:number|BigNumber,receivingOut:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('removeLiquidity',params.provider,params.direction,Utils.toString(params.index),Utils.toString(params.amountOut),Utils.toString(params.receivingOut));

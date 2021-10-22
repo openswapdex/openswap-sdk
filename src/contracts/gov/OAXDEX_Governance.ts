@@ -8,6 +8,45 @@ export class OAXDEX_Governance extends Contract{
     deploy(params:{oaxToken:string,names:string[],minExeDelay:number[]|BigNumber[],minVoteDuration:number[]|BigNumber[],maxVoteDuration:number[]|BigNumber[],minOaxTokenToCreateVote:number[]|BigNumber[],minQuorum:number[]|BigNumber[],minStakePeriod:number|BigNumber}): Promise<string>{        	
         return this._deploy(params.oaxToken,Utils.stringToBytes32(params.names),Utils.toString(params.minExeDelay),Utils.toString(params.minVoteDuration),Utils.toString(params.maxVoteDuration),Utils.toString(params.minOaxTokenToCreateVote),Utils.toString(params.minQuorum),Utils.toString(params.minStakePeriod));
     }
+    parseAddVotingConfigEvent(receipt: TransactionReceipt): {name:string,minExeDelay:BigNumber,minVoteDuration:BigNumber,maxVoteDuration:BigNumber,minOaxTokenToCreateVote:BigNumber,minQuorum:BigNumber}[]{
+        return this.parseEvents(receipt, "AddVotingConfig");
+    }
+    parseExecutedEvent(receipt: TransactionReceipt): {vote:string}[]{
+        return this.parseEvents(receipt, "Executed");
+    }
+    parseNewPollEvent(receipt: TransactionReceipt): {poll:string}[]{
+        return this.parseEvents(receipt, "NewPoll");
+    }
+    parseNewVoteEvent(receipt: TransactionReceipt): {vote:string}[]{
+        return this.parseEvents(receipt, "NewVote");
+    }
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
+        return this.parseEvents(receipt, "OwnershipTransferred");
+    }
+    parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
+        return this.parseEvents(receipt, "ParamSet");
+    }
+    parseParamSet2Event(receipt: TransactionReceipt): {name:string,value1:string,value2:string}[]{
+        return this.parseEvents(receipt, "ParamSet2");
+    }
+    parsePollEvent(receipt: TransactionReceipt): {account:string,poll:string,option:BigNumber}[]{
+        return this.parseEvents(receipt, "Poll");
+    }
+    parseSetVotingConfigEvent(receipt: TransactionReceipt): {configName:string,paramName:string,minExeDelay:BigNumber}[]{
+        return this.parseEvents(receipt, "SetVotingConfig");
+    }
+    parseStakeEvent(receipt: TransactionReceipt): {who:string,value:BigNumber}[]{
+        return this.parseEvents(receipt, "Stake");
+    }
+    parseUnstakeEvent(receipt: TransactionReceipt): {who:string,value:BigNumber}[]{
+        return this.parseEvents(receipt, "Unstake");
+    }
+    parseVetoEvent(receipt: TransactionReceipt): {vote:string}[]{
+        return this.parseEvents(receipt, "Veto");
+    }
+    parseVoteEvent(receipt: TransactionReceipt): {account:string,vote:string,option:BigNumber}[]{
+        return this.parseEvents(receipt, "Vote");
+    }
     async addVotingConfig(params:{name:string,minExeDelay:number|BigNumber,minVoteDuration:number|BigNumber,maxVoteDuration:number|BigNumber,minOaxTokenToCreateVote:number|BigNumber,minQuorum:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('addVotingConfig',Utils.stringToBytes32(params.name),Utils.toString(params.minExeDelay),Utils.toString(params.minVoteDuration),Utils.toString(params.maxVoteDuration),Utils.toString(params.minOaxTokenToCreateVote),Utils.toString(params.minQuorum));
         return result;
@@ -16,7 +55,7 @@ export class OAXDEX_Governance extends Contract{
         let result = await this.methods('admin');
         return result;
     }
-    async allVotings(): Promise<any>{
+    async allVotings(): Promise<string[]>{
         let result = await this.methods('allVotings');
         return result;
     }
@@ -35,11 +74,11 @@ export class OAXDEX_Governance extends Contract{
             timestamp: new BigNumber(result.timestamp)
         }
     }
-    async getNewVoteId(): Promise<BigNumber>{
+    async getNewVoteId(): Promise<TransactionReceipt>{
         let result = await this.methods('getNewVoteId');
-        return new BigNumber(result);
+        return result;
     }
-    async getVotingConfigProfiles(params:{start:number|BigNumber,length:number|BigNumber}): Promise<string>{
+    async getVotingConfigProfiles(params:{start:number|BigNumber,length:number|BigNumber}): Promise<string[]>{
         let result = await this.methods('getVotingConfigProfiles',Utils.toString(params.start),Utils.toString(params.length));
         return result;
     }
@@ -57,7 +96,7 @@ export class OAXDEX_Governance extends Contract{
             _minQuorum: new BigNumber(result._minQuorum)
         }
     }
-    async getVotings(params:{start:number|BigNumber,count:number|BigNumber}): Promise<any>{
+    async getVotings(params:{start:number|BigNumber,count:number|BigNumber}): Promise<string[]>{
         let result = await this.methods('getVotings',Utils.toString(params.start),Utils.toString(params.count));
         return result;
     }

@@ -8,6 +8,9 @@ export class OSWAP_ConfigStore extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
+    parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
+        return this.parseEvents(receipt, "ParamSet");
+    }
     async customParam(param1:string): Promise<string>{
         let result = await this.methods('customParam',param1);
         return result;

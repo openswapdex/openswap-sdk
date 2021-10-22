@@ -8,6 +8,30 @@ export class OAXDEX_Administrator extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
+    parseAddAdminEvent(receipt: TransactionReceipt): {admin:string}[]{
+        return this.parseEvents(receipt, "AddAdmin");
+    }
+    parseRemoveAdminEvent(receipt: TransactionReceipt): {admin:string}[]{
+        return this.parseEvents(receipt, "RemoveAdmin");
+    }
+    parseSetMaxAdminEvent(receipt: TransactionReceipt): {maxAdmin:BigNumber}[]{
+        return this.parseEvents(receipt, "SetMaxAdmin");
+    }
+    parseVotedFactoryRestartEvent(receipt: TransactionReceipt): {admin:string,factory:string,YorN:boolean}[]{
+        return this.parseEvents(receipt, "VotedFactoryRestart");
+    }
+    parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): {admin:string,factory:string,YorN:boolean}[]{
+        return this.parseEvents(receipt, "VotedFactoryShutdown");
+    }
+    parseVotedPairRestartEvent(receipt: TransactionReceipt): {admin:string,pair:string,YorN:boolean}[]{
+        return this.parseEvents(receipt, "VotedPairRestart");
+    }
+    parseVotedPairShutdownEvent(receipt: TransactionReceipt): {admin:string,pair:string,YorN:boolean}[]{
+        return this.parseEvents(receipt, "VotedPairShutdown");
+    }
+    parseVotedVetoEvent(receipt: TransactionReceipt): {admin:string,votingContract:string,YorN:boolean}[]{
+        return this.parseEvents(receipt, "VotedVeto");
+    }
     async addAdmin(admin:string): Promise<TransactionReceipt>{
         let result = await this.methods('addAdmin',admin);
         return result;
@@ -20,7 +44,7 @@ export class OAXDEX_Administrator extends Contract{
         let result = await this.methods('adminsIdx',param1);
         return new BigNumber(result);
     }
-    async allAdmins(): Promise<any>{
+    async allAdmins(): Promise<string[]>{
         let result = await this.methods('allAdmins');
         return result;
     }
@@ -60,23 +84,23 @@ export class OAXDEX_Administrator extends Contract{
         let result = await this.methods('factoryShutdownVote',params.param1,params.param2);
         return result;
     }
-    async getFactoryRestartVote(factory:string): Promise<any>{
+    async getFactoryRestartVote(factory:string): Promise<boolean[]>{
         let result = await this.methods('getFactoryRestartVote',factory);
         return result;
     }
-    async getFactoryShutdownVote(factory:string): Promise<any>{
+    async getFactoryShutdownVote(factory:string): Promise<boolean[]>{
         let result = await this.methods('getFactoryShutdownVote',factory);
         return result;
     }
-    async getPairRestartVote(pair:string): Promise<any>{
+    async getPairRestartVote(pair:string): Promise<boolean[]>{
         let result = await this.methods('getPairRestartVote',pair);
         return result;
     }
-    async getPairShutdownVote(pair:string): Promise<any>{
+    async getPairShutdownVote(pair:string): Promise<boolean[]>{
         let result = await this.methods('getPairShutdownVote',pair);
         return result;
     }
-    async getVetoVotingVote(votingContract:string): Promise<any>{
+    async getVetoVotingVote(votingContract:string): Promise<boolean[]>{
         let result = await this.methods('getVetoVotingVote',votingContract);
         return result;
     }

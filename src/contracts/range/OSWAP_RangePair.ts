@@ -8,9 +8,33 @@ export class OSWAP_RangePair extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
-    async addLiquidity(params:{provider:string,direction:boolean,staked:number|BigNumber,lowerLimit:number|BigNumber,upperLimit:number|BigNumber,startDate:number|BigNumber,expire:number|BigNumber}): Promise<BigNumber>{
+    parseAddLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
+        return this.parseEvents(receipt, "AddLiquidity");
+    }
+    parseNewProviderEvent(receipt: TransactionReceipt): {provider:string,index:BigNumber}[]{
+        return this.parseEvents(receipt, "NewProvider");
+    }
+    parseRemoveAllLiquidityEvent(receipt: TransactionReceipt): {provider:string,unstake:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber}[]{
+        return this.parseEvents(receipt, "RemoveAllLiquidity");
+    }
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
+        return this.parseEvents(receipt, "RemoveLiquidity");
+    }
+    parseReplenishEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountIn:BigNumber}[]{
+        return this.parseEvents(receipt, "Replenish");
+    }
+    parseSwapEvent(receipt: TransactionReceipt): {to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}[]{
+        return this.parseEvents(receipt, "Swap");
+    }
+    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber}[]{
+        return this.parseEvents(receipt, "SwappedOneProvider");
+    }
+    parseUpdateProviderOfferEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,replenish:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}[]{
+        return this.parseEvents(receipt, "UpdateProviderOffer");
+    }
+    async addLiquidity(params:{provider:string,direction:boolean,staked:number|BigNumber,lowerLimit:number|BigNumber,upperLimit:number|BigNumber,startDate:number|BigNumber,expire:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('addLiquidity',params.provider,params.direction,Utils.toString(params.staked),Utils.toString(params.lowerLimit),Utils.toString(params.upperLimit),Utils.toString(params.startDate),Utils.toString(params.expire));
-        return new BigNumber(result);
+        return result;
     }
     async counter(): Promise<BigNumber>{
         let result = await this.methods('counter');
@@ -47,13 +71,13 @@ export class OSWAP_RangePair extends Contract{
         let result = await this.methods('getLatestPrice',params.direction,params.payload);
         return new BigNumber(result);
     }
-    async getOffers(params:{direction:boolean,start:number|BigNumber,end:number|BigNumber}): Promise<{provider:any,amountAndReserve:BigNumber,lowerLimitAndUpperLimit:BigNumber,startDateAndExpire:BigNumber,privateReplenish:any}>{
+    async getOffers(params:{direction:boolean,start:number|BigNumber,end:number|BigNumber}): Promise<{provider:string[],amountAndReserve:BigNumber[],lowerLimitAndUpperLimit:BigNumber[],startDateAndExpire:BigNumber[],privateReplenish:boolean[]}>{
         let result = await this.methods('getOffers',params.direction,Utils.toString(params.start),Utils.toString(params.end));
         return {
             provider: result.provider,
-            amountAndReserve: new BigNumber(result.amountAndReserve),
-            lowerLimitAndUpperLimit: new BigNumber(result.lowerLimitAndUpperLimit),
-            startDateAndExpire: new BigNumber(result.startDateAndExpire),
+            amountAndReserve: result.amountAndReserve,
+            lowerLimitAndUpperLimit: result.lowerLimitAndUpperLimit,
+            startDateAndExpire: result.startDateAndExpire,
             privateReplenish: result.privateReplenish
         }
     }
@@ -140,13 +164,9 @@ export class OSWAP_RangePair extends Contract{
         let result = await this.methods('redeemProtocolFee');
         return result;
     }
-    async removeAllLiquidity(provider:string): Promise<{amount0:BigNumber,amount1:BigNumber,staked:BigNumber}>{
+    async removeAllLiquidity(provider:string): Promise<TransactionReceipt>{
         let result = await this.methods('removeAllLiquidity',provider);
-        return {
-            amount0: new BigNumber(result.amount0),
-            amount1: new BigNumber(result.amount1),
-            staked: new BigNumber(result.staked)
-        }
+        return result;
     }
     async removeLiquidity(params:{provider:string,direction:boolean,unstake:number|BigNumber,amountOut:number|BigNumber,reserveOut:number|BigNumber,lowerLimit:number|BigNumber,upperLimit:number|BigNumber,startDate:number|BigNumber,expire:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('removeLiquidity',params.provider,params.direction,Utils.toString(params.unstake),Utils.toString(params.amountOut),Utils.toString(params.reserveOut),Utils.toString(params.lowerLimit),Utils.toString(params.upperLimit),Utils.toString(params.startDate),Utils.toString(params.expire));

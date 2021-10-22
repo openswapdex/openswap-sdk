@@ -8,6 +8,18 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
+    parseCustomPairRegisterEvent(receipt: TransactionReceipt): {pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}[]{
+        return this.parseEvents(receipt, "CustomPairRegister");
+    }
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
+        return this.parseEvents(receipt, "OwnershipTransferred");
+    }
+    parsePairRegisterEvent(receipt: TransactionReceipt): {factory:string,pair:string,token0:string,token1:string}[]{
+        return this.parseEvents(receipt, "PairRegister");
+    }
+    parseProtocolRegisterEvent(receipt: TransactionReceipt): {factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}[]{
+        return this.parseEvents(receipt, "ProtocolRegister");
+    }
     async customPairs(param1:string): Promise<{fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}>{
         let result = await this.methods('customPairs',param1);
         return {
@@ -27,7 +39,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
             feeBase: new BigNumber(result.feeBase)
         }
     }
-    async getPairTokens(pairAddress:string[]): Promise<{token0:any,token1:any}>{
+    async getPairTokens(pairAddress:string[]): Promise<{token0:string[],token1:string[]}>{
         let result = await this.methods('getPairTokens',pairAddress);
         return {
             token0: result.token0,

@@ -8,11 +8,17 @@ export class OpenSwap extends Contract{
     deploy(params:{minter:string,initSupplyTo:string,initSupply:number|BigNumber,totalSupply:number|BigNumber}): Promise<string>{        	
         return this._deploy(params.minter,params.initSupplyTo,Utils.toString(params.initSupply),Utils.toString(params.totalSupply));
     }
+    parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
+        return this.parseEvents(receipt, "Approval");
+    }
+    parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
+        return this.parseEvents(receipt, "Transfer");
+    }
     async allowance(params:{owner:string,spender:string}): Promise<BigNumber>{
         let result = await this.methods('allowance',params.owner,params.spender);
         return new BigNumber(result);
     }
-    async approve(params:{spender:string,amount:number|BigNumber}): Promise<boolean>{
+    async approve(params:{spender:string,amount:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('approve',params.spender,Utils.toString(params.amount));
         return result;
     }
@@ -28,11 +34,11 @@ export class OpenSwap extends Contract{
         let result = await this.methods('decimals');
         return new BigNumber(result);
     }
-    async decreaseAllowance(params:{spender:string,subtractedValue:number|BigNumber}): Promise<boolean>{
+    async decreaseAllowance(params:{spender:string,subtractedValue:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('decreaseAllowance',params.spender,Utils.toString(params.subtractedValue));
         return result;
     }
-    async increaseAllowance(params:{spender:string,addedValue:number|BigNumber}): Promise<boolean>{
+    async increaseAllowance(params:{spender:string,addedValue:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('increaseAllowance',params.spender,Utils.toString(params.addedValue));
         return result;
     }
@@ -56,11 +62,11 @@ export class OpenSwap extends Contract{
         let result = await this.methods('totalSupply');
         return new BigNumber(result);
     }
-    async transfer(params:{recipient:string,amount:number|BigNumber}): Promise<boolean>{
+    async transfer(params:{recipient:string,amount:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('transfer',params.recipient,Utils.toString(params.amount));
         return result;
     }
-    async transferFrom(params:{sender:string,recipient:string,amount:number|BigNumber}): Promise<boolean>{
+    async transferFrom(params:{sender:string,recipient:string,amount:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('transferFrom',params.sender,params.recipient,Utils.toString(params.amount));
         return result;
     }
