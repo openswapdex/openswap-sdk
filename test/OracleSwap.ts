@@ -152,10 +152,10 @@ async function addLiquidityETH(from, tokenA, toAddTokenA, staked, orderIndex, am
 
 describe('OSWAP_OraclePair 1', function () {
     let _tokenCounter = 0;
-    let _token;
-    let _pair;
-    let _direction;
-    let _expire;
+    let _token: TestERC20;
+    let _pair: OSWAP_OraclePair;
+    let _direction: boolean;
+    let _expire: number;
 
     before(async function() {
         web3 = new Web3(_provider/*new Web3.providers.HttpProvider()*/);
@@ -203,8 +203,7 @@ describe('OSWAP_OraclePair 1', function () {
 
             let receipt = await addLiquidityETH(accounts[2], _token, true, staked, 0, amountIn, _expire, true, deadline);
         });
-
-        it ('should able to swap eth to token', async function () {
+        async function swapExactETHForTokens() {
             let amountIn = toWei("1");
             let amountOutMin = toWei("300");
             let path = [weth.address, _token.address];
@@ -221,8 +220,11 @@ describe('OSWAP_OraclePair 1', function () {
                 data: "0x", 
             },
             amountIn/*{value: amountIn, from: accounts[3]}*/);
+        }
+        it ('should able to swap ETH to token', async function () {
+            await swapExactETHForTokens();
         });
-        it('should able to add liquidity - eth', async function () {
+        it('should able to add liquidity - ETH', async function () {
             let staked = "100";
             let amountIn = "50";
             now = (await web3.eth.getBlock('latest')).timestamp;
@@ -231,7 +233,7 @@ describe('OSWAP_OraclePair 1', function () {
 
             let receipt = await addLiquidityETH(accounts[4], _token, false, staked, 0, amountIn, _expire, true, deadline);
         });
-        it ('should able to swap token to eth', async function () {
+        it ('should able to swap token to ETH', async function () {
             let amountIn = toWei("500");
             let amountOutMin = toWei("1");
             let path = [_token.address, weth.address];
@@ -253,6 +255,43 @@ describe('OSWAP_OraclePair 1', function () {
                 useOracle: [true], 
                 data: "0x", 
             });
+        });
+        it('should able to set delegator', async function () {
+            let fee = 0;
+
+            // _wallet.defaultAccount = accounts[0];
+            // // await govToken.transfer({recipient:accounts[2], amount:fee});
+            // await govToken.mint({account:accounts[2], amount:fee});
+
+            _wallet.defaultAccount = accounts[2];
+            let receipt = await _pair.setDelegator({delegator: accounts[5], fee:fee});
+        });
+        it('should able to pause', async function () {
+
+            _wallet.defaultAccount = accounts[5];
+            let receipt = await _pair.pauseOffer({provider: accounts[2], direction: _direction});
+        });
+        it('swap should be reverted', async function () {
+            let blocked = false;
+            // expect reverted
+            try {
+                await swapExactETHForTokens();
+            }catch(e){
+                blocked = true;
+            }
+            console.log(blocked); // true
+        });
+        it('should able to resume', async function () {
+            // afterIndex can be obtained offline
+            let index = await _pair.providerOfferIndex(accounts[2]);
+            let staked = (await _pair.offers({param1: _direction, param2: index})).staked;
+            let afterIndex = (await _pair.findPosition({direction: _direction, staked: staked, afterIndex:0})).afterIndex;
+
+            _wallet.defaultAccount = accounts[5];
+            let receipt = await _pair.resumeOffer({provider: accounts[2], direction: _direction, afterIndex: afterIndex});
+        });
+        it('try swapping', async function () {
+            await swapExactETHForTokens();
         });
     });
 });
