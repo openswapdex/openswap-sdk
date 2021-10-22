@@ -113,8 +113,8 @@ export interface IDeployment {
     governance: OAXDEX_Governance,
     administrator: OAXDEX_Administrator,
     registry: OAXDEX_VotingRegistry,
-    airCreator: OSWAP_PairCreator,
-    actory: OSWAP_Factory,
+    pairCreator: OSWAP_PairCreator,
+    factory: OSWAP_Factory,
     oraclePairCreator: OSWAP_OraclePairCreator,
     router: OSWAP_Router,
     oracleFactory: OSWAP_OracleFactory,
@@ -127,6 +127,26 @@ export interface IDeployment {
     executor2: OSWAP_VotingExecutor2,
 }
 
+export function toDeployment(wallet: Wallet, result: IDeploymentResult): IDeployment{
+    return {
+        openSwap: new OpenSwap(wallet, result.oswap),
+        governance: new OAXDEX_Governance(wallet, result.governance),
+        administrator: new OAXDEX_Administrator(wallet, result.administrator),
+        registry: new OAXDEX_VotingRegistry(wallet, result.votingRegistry),
+        pairCreator:new  OSWAP_PairCreator(wallet, result.pairCreator),
+        factory: new OSWAP_Factory(wallet, result.factory),
+        oraclePairCreator: new OSWAP_OraclePairCreator(wallet, result.oraclePairCreator),
+        router: new OSWAP_Router(wallet, result.router),
+        oracleFactory: new OSWAP_OracleFactory(wallet, result.oracleFactory),
+        oracleRouter: new OSWAP_OracleRouter(wallet, result.oracleRouter),
+        oracleLiquidityProvider: new OSWAP_OracleLiquidityProvider(wallet, result.oracleLiquidityProvider),
+        hybridRouterRegistry: new OSWAP_HybridRouterRegistry(wallet, result.hybridRouterRegistry),
+        hybridRouter: new OSWAP_HybridRouter2(wallet, result.hybridRouter),
+        executor: new OAXDEX_VotingExecutor(wallet, result.votingExecutor),
+        executor1: new OSWAP_VotingExecutor1(wallet, result.votingExecutor1),
+        executor2: new OSWAP_VotingExecutor2(wallet, result.votingExecutor2)
+    }
+}
 export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>{
     options = options || <any>{};
     if (!options.govOptions)
@@ -237,6 +257,7 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
                 admin: result.administrator,
                 governance: result.governance
             });
+            await governance.initVotingExecutor([result.votingExecutor]);
             //VotingExecutor1
             let votingExecutor1 = new OSWAP_VotingExecutor1(wallet);
             result.votingExecutor1 = await votingExecutor1.deploy(factory.address);
