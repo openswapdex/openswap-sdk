@@ -2,6 +2,71 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_OraclePair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
+    parseAddLiquidityEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        staked: BigNumber;
+        amount: BigNumber;
+        newStakeBalance: BigNumber;
+        newAmountBalance: BigNumber;
+        expire: BigNumber;
+        enable: boolean;
+    }[];
+    parseDelegatorPauseOfferEvent(receipt: TransactionReceipt): {
+        delegator: string;
+        provider: string;
+        direction: boolean;
+    }[];
+    parseDelegatorResumeOfferEvent(receipt: TransactionReceipt): {
+        delegator: string;
+        provider: string;
+        direction: boolean;
+    }[];
+    parseNewProviderEvent(receipt: TransactionReceipt): {
+        provider: string;
+        index: BigNumber;
+    }[];
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        unstake: BigNumber;
+        amountOut: BigNumber;
+        reserveOut: BigNumber;
+        newStakeBalance: BigNumber;
+        newAmountBalance: BigNumber;
+        newReserveBalance: BigNumber;
+        expire: BigNumber;
+        enable: boolean;
+    }[];
+    parseReplenishEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        amountIn: BigNumber;
+        newAmountBalance: BigNumber;
+        newReserveBalance: BigNumber;
+        expire: BigNumber;
+    }[];
+    parseSetDelegatorEvent(receipt: TransactionReceipt): {
+        provider: string;
+        delegator: string;
+    }[];
+    parseSwapEvent(receipt: TransactionReceipt): {
+        to: string;
+        direction: boolean;
+        price: BigNumber;
+        amountIn: BigNumber;
+        amountOut: BigNumber;
+        tradeFee: BigNumber;
+        protocolFee: BigNumber;
+    }[];
+    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        amountOut: BigNumber;
+        amountIn: BigNumber;
+        newAmountBalance: BigNumber;
+        newCounterReserveBalance: BigNumber;
+    }[];
     addLiquidity(params: {
         provider: string;
         direction: boolean;
@@ -9,7 +74,7 @@ export declare class OSWAP_OraclePair extends Contract {
         afterIndex: number | BigNumber;
         expire: number | BigNumber;
         enable: boolean;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     counter(): Promise<BigNumber>;
     delegator(param1: string): Promise<string>;
     factory(): Promise<string>;
@@ -55,22 +120,22 @@ export declare class OSWAP_OraclePair extends Contract {
         start: number | BigNumber;
         end: number | BigNumber;
     }): Promise<{
-        index: BigNumber;
-        provider: any;
-        amount: BigNumber;
-        staked: BigNumber;
-        expire: BigNumber;
+        index: BigNumber[];
+        provider: string[];
+        amount: BigNumber[];
+        staked: BigNumber[];
+        expire: BigNumber[];
     }>;
     getQueueFromIndex(params: {
         direction: boolean;
         from: number | BigNumber;
         count: number | BigNumber;
     }): Promise<{
-        index: BigNumber;
-        provider: any;
-        amount: BigNumber;
-        staked: BigNumber;
-        expire: BigNumber;
+        index: BigNumber[];
+        provider: string[];
+        amount: BigNumber[];
+        staked: BigNumber[];
+        expire: BigNumber[];
     }>;
     govToken(): Promise<string>;
     governance(): Promise<string>;
@@ -109,14 +174,10 @@ export declare class OSWAP_OraclePair extends Contract {
         direction: boolean;
         startingIndex: number | BigNumber;
         limit: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     queueSize(param1: boolean): Promise<BigNumber>;
     redeemProtocolFee(): Promise<TransactionReceipt>;
-    removeAllLiquidity(provider: string): Promise<{
-        amount0: BigNumber;
-        amount1: BigNumber;
-        staked: BigNumber;
-    }>;
+    removeAllLiquidity(provider: string): Promise<TransactionReceipt>;
     removeLiquidity(params: {
         provider: string;
         direction: boolean;

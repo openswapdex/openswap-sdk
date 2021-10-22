@@ -10,6 +10,39 @@ export declare class OSWAP_RestrictedFactory extends Contract {
         protocolFee: number | BigNumber;
         protocolFeeTo: string;
     }): Promise<string>;
+    parseOracleAddedEvent(receipt: TransactionReceipt): {
+        token0: string;
+        token1: string;
+        oracle: string;
+    }[];
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
+        previousOwner: string;
+        newOwner: string;
+    }[];
+    parsePairCreatedEvent(receipt: TransactionReceipt): {
+        token0: string;
+        token1: string;
+        pair: string;
+        newPairSize: BigNumber;
+        newSize: BigNumber;
+    }[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
+    parseParamSetEvent(receipt: TransactionReceipt): {
+        name: string;
+        value: string;
+    }[];
+    parseParamSet2Event(receipt: TransactionReceipt): {
+        name: string;
+        value1: string;
+        value2: string;
+    }[];
+    parseRestartedEvent(receipt: TransactionReceipt): any;
+    parseShutdownedEvent(receipt: TransactionReceipt): any;
     addOldOracleToNewPair(params: {
         tokenA: string;
         tokenB: string;
@@ -33,7 +66,7 @@ export declare class OSWAP_RestrictedFactory extends Contract {
     createPair(params: {
         tokenA: string;
         tokenB: string;
-    }): Promise<string>;
+    }): Promise<TransactionReceipt>;
     getCreateAddresses(): Promise<{
         _governance: string;
         _whitelistFactory: string;

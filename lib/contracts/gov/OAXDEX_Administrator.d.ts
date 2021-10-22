@@ -2,10 +2,44 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OAXDEX_Administrator extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(governance: string): Promise<string>;
+    parseAddAdminEvent(receipt: TransactionReceipt): {
+        admin: string;
+    }[];
+    parseRemoveAdminEvent(receipt: TransactionReceipt): {
+        admin: string;
+    }[];
+    parseSetMaxAdminEvent(receipt: TransactionReceipt): {
+        maxAdmin: BigNumber;
+    }[];
+    parseVotedFactoryRestartEvent(receipt: TransactionReceipt): {
+        admin: string;
+        factory: string;
+        YorN: boolean;
+    }[];
+    parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): {
+        admin: string;
+        factory: string;
+        YorN: boolean;
+    }[];
+    parseVotedPairRestartEvent(receipt: TransactionReceipt): {
+        admin: string;
+        pair: string;
+        YorN: boolean;
+    }[];
+    parseVotedPairShutdownEvent(receipt: TransactionReceipt): {
+        admin: string;
+        pair: string;
+        YorN: boolean;
+    }[];
+    parseVotedVetoEvent(receipt: TransactionReceipt): {
+        admin: string;
+        votingContract: string;
+        YorN: boolean;
+    }[];
     addAdmin(admin: string): Promise<TransactionReceipt>;
     admins(param1: number | BigNumber): Promise<string>;
     adminsIdx(param1: string): Promise<BigNumber>;
-    allAdmins(): Promise<any>;
+    allAdmins(): Promise<string[]>;
     executeFactoryRestart(factory: string): Promise<TransactionReceipt>;
     executeFactoryShutdown(factory: string): Promise<TransactionReceipt>;
     executePairRestart(params: {
@@ -33,11 +67,11 @@ export declare class OAXDEX_Administrator extends Contract {
         param1: string;
         param2: string;
     }): Promise<boolean>;
-    getFactoryRestartVote(factory: string): Promise<any>;
-    getFactoryShutdownVote(factory: string): Promise<any>;
-    getPairRestartVote(pair: string): Promise<any>;
-    getPairShutdownVote(pair: string): Promise<any>;
-    getVetoVotingVote(votingContract: string): Promise<any>;
+    getFactoryRestartVote(factory: string): Promise<boolean[]>;
+    getFactoryShutdownVote(factory: string): Promise<boolean[]>;
+    getPairRestartVote(pair: string): Promise<boolean[]>;
+    getPairShutdownVote(pair: string): Promise<boolean[]>;
+    getVetoVotingVote(votingContract: string): Promise<boolean[]>;
     governance(): Promise<string>;
     maxAdmin(): Promise<BigNumber>;
     pairRestart(params: {

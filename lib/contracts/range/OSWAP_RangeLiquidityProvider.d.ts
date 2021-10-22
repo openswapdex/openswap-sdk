@@ -17,7 +17,7 @@ export declare class OSWAP_RangeLiquidityProvider extends Contract {
         startDate: number | BigNumber;
         expire: number | BigNumber;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     addLiquidityETH(params: {
         tokenA: string;
         addingTokenA: boolean;
@@ -28,7 +28,7 @@ export declare class OSWAP_RangeLiquidityProvider extends Contract {
         startDate: number | BigNumber;
         expire: number | BigNumber;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     factory(): Promise<string>;
     govToken(): Promise<string>;
     removeAllLiquidity(params: {
@@ -36,18 +36,12 @@ export declare class OSWAP_RangeLiquidityProvider extends Contract {
         tokenB: string;
         to: string;
         deadline: number | BigNumber;
-    }): Promise<{
-        amountA: BigNumber;
-        amountB: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     removeAllLiquidityETH(params: {
         tokenA: string;
         to: string;
         deadline: number | BigNumber;
-    }): Promise<{
-        amountToken: BigNumber;
-        amountETH: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     removeLiquidity(params: {
         tokenA: string;
         tokenB: string;

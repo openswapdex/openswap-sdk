@@ -10,16 +10,43 @@ export declare class OSWAP_RangeFactory extends Contract {
         liquidityProviderShare: number[] | BigNumber[];
         protocolFeeTo: string;
     }): Promise<string>;
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
+        previousOwner: string;
+        newOwner: string;
+    }[];
+    parsePairCreatedEvent(receipt: TransactionReceipt): {
+        token0: string;
+        token1: string;
+        pair: string;
+        newSize: BigNumber;
+    }[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
+    parseParamSetEvent(receipt: TransactionReceipt): {
+        name: string;
+        value: string;
+    }[];
+    parseParamSet2Event(receipt: TransactionReceipt): {
+        name: string;
+        value1: string;
+        value2: string;
+    }[];
+    parseRestartedEvent(receipt: TransactionReceipt): any;
+    parseShutdownedEvent(receipt: TransactionReceipt): any;
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
     checkAndGetSwapParams(): Promise<BigNumber>;
     createPair(params: {
         tokenA: string;
         tokenB: string;
-    }): Promise<string>;
+    }): Promise<TransactionReceipt>;
     getAllLiquidityProviderShare(): Promise<{
-        _stakeAmount: BigNumber;
-        _liquidityProviderShare: BigNumber;
+        _stakeAmount: BigNumber[];
+        _liquidityProviderShare: BigNumber[];
     }>;
     getCreateAddresses(): Promise<{
         _governance: string;

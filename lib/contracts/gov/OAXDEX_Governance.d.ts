@@ -11,6 +11,62 @@ export declare class OAXDEX_Governance extends Contract {
         minQuorum: number[] | BigNumber[];
         minStakePeriod: number | BigNumber;
     }): Promise<string>;
+    parseAddVotingConfigEvent(receipt: TransactionReceipt): {
+        name: string;
+        minExeDelay: BigNumber;
+        minVoteDuration: BigNumber;
+        maxVoteDuration: BigNumber;
+        minOaxTokenToCreateVote: BigNumber;
+        minQuorum: BigNumber;
+    }[];
+    parseExecutedEvent(receipt: TransactionReceipt): {
+        vote: string;
+    }[];
+    parseNewPollEvent(receipt: TransactionReceipt): {
+        poll: string;
+    }[];
+    parseNewVoteEvent(receipt: TransactionReceipt): {
+        vote: string;
+    }[];
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
+        previousOwner: string;
+        newOwner: string;
+    }[];
+    parseParamSetEvent(receipt: TransactionReceipt): {
+        name: string;
+        value: string;
+    }[];
+    parseParamSet2Event(receipt: TransactionReceipt): {
+        name: string;
+        value1: string;
+        value2: string;
+    }[];
+    parsePollEvent(receipt: TransactionReceipt): {
+        account: string;
+        poll: string;
+        option: BigNumber;
+    }[];
+    parseSetVotingConfigEvent(receipt: TransactionReceipt): {
+        configName: string;
+        paramName: string;
+        minExeDelay: BigNumber;
+    }[];
+    parseStakeEvent(receipt: TransactionReceipt): {
+        who: string;
+        value: BigNumber;
+    }[];
+    parseUnstakeEvent(receipt: TransactionReceipt): {
+        who: string;
+        value: BigNumber;
+    }[];
+    parseVetoEvent(receipt: TransactionReceipt): {
+        vote: string;
+    }[];
+    parseVoteEvent(receipt: TransactionReceipt): {
+        account: string;
+        vote: string;
+        option: BigNumber;
+    }[];
     addVotingConfig(params: {
         name: string;
         minExeDelay: number | BigNumber;
@@ -20,18 +76,18 @@ export declare class OAXDEX_Governance extends Contract {
         minQuorum: number | BigNumber;
     }): Promise<TransactionReceipt>;
     admin(): Promise<string>;
-    allVotings(): Promise<any>;
+    allVotings(): Promise<string[]>;
     closeVote(vote: string): Promise<TransactionReceipt>;
     executed(): Promise<TransactionReceipt>;
     freezedStake(param1: string): Promise<{
         amount: BigNumber;
         timestamp: BigNumber;
     }>;
-    getNewVoteId(): Promise<BigNumber>;
+    getNewVoteId(): Promise<TransactionReceipt>;
     getVotingConfigProfiles(params: {
         start: number | BigNumber;
         length: number | BigNumber;
-    }): Promise<string>;
+    }): Promise<string[]>;
     getVotingCount(): Promise<BigNumber>;
     getVotingParams(name: string): Promise<{
         _minExeDelay: BigNumber;
@@ -43,7 +99,7 @@ export declare class OAXDEX_Governance extends Contract {
     getVotings(params: {
         start: number | BigNumber;
         count: number | BigNumber;
-    }): Promise<any>;
+    }): Promise<string[]>;
     initAdmin(admin: string): Promise<TransactionReceipt>;
     initVotingExecutor(votingExecutor: string[]): Promise<TransactionReceipt>;
     isVotingContract(votingContract: string): Promise<boolean>;

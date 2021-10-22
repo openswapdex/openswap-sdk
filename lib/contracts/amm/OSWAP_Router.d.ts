@@ -15,11 +15,7 @@ export declare class OSWAP_Router extends Contract {
         amountBMin: number | BigNumber;
         to: string;
         deadline: number | BigNumber;
-    }): Promise<{
-        amountA: BigNumber;
-        amountB: BigNumber;
-        liquidity: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     addLiquidityETH(params: {
         token: string;
         amountTokenDesired: number | BigNumber;
@@ -27,11 +23,7 @@ export declare class OSWAP_Router extends Contract {
         amountETHMin: number | BigNumber;
         to: string;
         deadline: number | BigNumber;
-    }): Promise<{
-        amountToken: BigNumber;
-        amountETH: BigNumber;
-        liquidity: BigNumber;
-    }>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     factory(): Promise<string>;
     getAmountIn(params: {
         amountOut: number | BigNumber;
@@ -46,11 +38,11 @@ export declare class OSWAP_Router extends Contract {
     getAmountsIn(params: {
         amountOut: number | BigNumber;
         path: string[];
-    }): Promise<BigNumber>;
+    }): Promise<BigNumber[]>;
     getAmountsOut(params: {
         amountIn: number | BigNumber;
         path: string[];
-    }): Promise<BigNumber>;
+    }): Promise<BigNumber[]>;
     getReserves(params: {
         tokenA: string;
         tokenB: string;
@@ -62,7 +54,7 @@ export declare class OSWAP_Router extends Contract {
         amountA: number | BigNumber;
         reserveA: number | BigNumber;
         reserveB: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     removeLiquidity(params: {
         tokenA: string;
         tokenB: string;
@@ -71,10 +63,7 @@ export declare class OSWAP_Router extends Contract {
         amountBMin: number | BigNumber;
         to: string;
         deadline: number | BigNumber;
-    }): Promise<{
-        amountA: BigNumber;
-        amountB: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     removeLiquidityETH(params: {
         token: string;
         liquidity: number | BigNumber;
@@ -82,10 +71,7 @@ export declare class OSWAP_Router extends Contract {
         amountETHMin: number | BigNumber;
         to: string;
         deadline: number | BigNumber;
-    }): Promise<{
-        amountToken: BigNumber;
-        amountETH: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     removeLiquidityETHSupportingFeeOnTransferTokens(params: {
         token: string;
         liquidity: number | BigNumber;
@@ -93,7 +79,7 @@ export declare class OSWAP_Router extends Contract {
         amountETHMin: number | BigNumber;
         to: string;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     removeLiquidityETHWithPermit(params: {
         token: string;
         liquidity: number | BigNumber;
@@ -105,10 +91,7 @@ export declare class OSWAP_Router extends Contract {
         v: number | BigNumber;
         r: string;
         s: string;
-    }): Promise<{
-        amountToken: BigNumber;
-        amountETH: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(params: {
         token: string;
         liquidity: number | BigNumber;
@@ -120,7 +103,7 @@ export declare class OSWAP_Router extends Contract {
         v: number | BigNumber;
         r: string;
         s: string;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     removeLiquidityWithPermit(params: {
         tokenA: string;
         tokenB: string;
@@ -133,35 +116,32 @@ export declare class OSWAP_Router extends Contract {
         v: number | BigNumber;
         r: string;
         s: string;
-    }): Promise<{
-        amountA: BigNumber;
-        amountB: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     swapETHForExactTokens(params: {
         amountOut: number | BigNumber;
         path: string[];
         to: string;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     swapExactETHForTokens(params: {
         amountOutMin: number | BigNumber;
         path: string[];
         to: string;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     swapExactETHForTokensSupportingFeeOnTransferTokens(params: {
         amountOutMin: number | BigNumber;
         path: string[];
         to: string;
         deadline: number | BigNumber;
-    }): Promise<TransactionReceipt>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     swapExactTokensForETH(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
         path: string[];
         to: string;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     swapExactTokensForETHSupportingFeeOnTransferTokens(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
@@ -175,7 +155,7 @@ export declare class OSWAP_Router extends Contract {
         path: string[];
         to: string;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     swapExactTokensForTokensSupportingFeeOnTransferTokens(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
@@ -189,12 +169,12 @@ export declare class OSWAP_Router extends Contract {
         path: string[];
         to: string;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     swapTokensForExactTokens(params: {
         amountOut: number | BigNumber;
         amountInMax: number | BigNumber;
         path: string[];
         to: string;
         deadline: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
 }

@@ -2,6 +2,67 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_RangePair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
+    parseAddLiquidityEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        staked: BigNumber;
+        amount: BigNumber;
+        lowerLimit: BigNumber;
+        upperLimit: BigNumber;
+        startDate: BigNumber;
+        expire: BigNumber;
+    }[];
+    parseNewProviderEvent(receipt: TransactionReceipt): {
+        provider: string;
+        index: BigNumber;
+    }[];
+    parseRemoveAllLiquidityEvent(receipt: TransactionReceipt): {
+        provider: string;
+        unstake: BigNumber;
+        amount0Out: BigNumber;
+        amount1Out: BigNumber;
+    }[];
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        unstake: BigNumber;
+        amountOut: BigNumber;
+        reserveOut: BigNumber;
+        lowerLimit: BigNumber;
+        upperLimit: BigNumber;
+        startDate: BigNumber;
+        expire: BigNumber;
+    }[];
+    parseReplenishEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        amountIn: BigNumber;
+    }[];
+    parseSwapEvent(receipt: TransactionReceipt): {
+        to: string;
+        direction: boolean;
+        price: BigNumber;
+        amountIn: BigNumber;
+        amountOut: BigNumber;
+        tradeFee: BigNumber;
+        protocolFee: BigNumber;
+    }[];
+    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        amountOut: BigNumber;
+        amountIn: BigNumber;
+    }[];
+    parseUpdateProviderOfferEvent(receipt: TransactionReceipt): {
+        provider: string;
+        direction: boolean;
+        replenish: BigNumber;
+        lowerLimit: BigNumber;
+        upperLimit: BigNumber;
+        startDate: BigNumber;
+        expire: BigNumber;
+        privateReplenish: boolean;
+    }[];
     addLiquidity(params: {
         provider: string;
         direction: boolean;
@@ -10,7 +71,7 @@ export declare class OSWAP_RangePair extends Contract {
         upperLimit: number | BigNumber;
         startDate: number | BigNumber;
         expire: number | BigNumber;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     counter(): Promise<BigNumber>;
     factory(): Promise<string>;
     getAmountIn(params: {
@@ -34,11 +95,11 @@ export declare class OSWAP_RangePair extends Contract {
         start: number | BigNumber;
         end: number | BigNumber;
     }): Promise<{
-        provider: any;
-        amountAndReserve: BigNumber;
-        lowerLimitAndUpperLimit: BigNumber;
-        startDateAndExpire: BigNumber;
-        privateReplenish: any;
+        provider: string[];
+        amountAndReserve: BigNumber[];
+        lowerLimitAndUpperLimit: BigNumber[];
+        startDateAndExpire: BigNumber[];
+        privateReplenish: boolean[];
     }>;
     getProviderOffer(params: {
         provider: string;
@@ -84,11 +145,7 @@ export declare class OSWAP_RangePair extends Contract {
     providerStaking(param1: string): Promise<BigNumber>;
     rangeLiquidityProvider(): Promise<string>;
     redeemProtocolFee(): Promise<TransactionReceipt>;
-    removeAllLiquidity(provider: string): Promise<{
-        amount0: BigNumber;
-        amount1: BigNumber;
-        staked: BigNumber;
-    }>;
+    removeAllLiquidity(provider: string): Promise<TransactionReceipt>;
     removeLiquidity(params: {
         provider: string;
         direction: boolean;

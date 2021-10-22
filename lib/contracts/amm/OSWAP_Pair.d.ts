@@ -2,6 +2,45 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_Pair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
+    parseApprovalEvent(receipt: TransactionReceipt): {
+        owner: string;
+        spender: string;
+        value: BigNumber;
+    }[];
+    parseBurnEvent(receipt: TransactionReceipt): {
+        sender: string;
+        amount0: BigNumber;
+        amount1: BigNumber;
+        to: string;
+    }[];
+    parseMintEvent(receipt: TransactionReceipt): {
+        sender: string;
+        amount0: BigNumber;
+        amount1: BigNumber;
+    }[];
+    parseProtocolFeeSetEvent(receipt: TransactionReceipt): {
+        protocolFee: BigNumber;
+    }[];
+    parseSwapEvent(receipt: TransactionReceipt): {
+        sender: string;
+        amount0In: BigNumber;
+        amount1In: BigNumber;
+        amount0Out: BigNumber;
+        amount1Out: BigNumber;
+        to: string;
+    }[];
+    parseSyncEvent(receipt: TransactionReceipt): {
+        reserve0: BigNumber;
+        reserve1: BigNumber;
+    }[];
+    parseTradeFeeSetEvent(receipt: TransactionReceipt): {
+        tradeFee: BigNumber;
+    }[];
+    parseTransferEvent(receipt: TransactionReceipt): {
+        from: string;
+        to: string;
+        value: BigNumber;
+    }[];
     EIP712_TYPEHASH(): Promise<string>;
     MINIMUM_LIQUIDITY(): Promise<BigNumber>;
     NAME_HASH(): Promise<string>;
@@ -14,12 +53,9 @@ export declare class OSWAP_Pair extends Contract {
     approve(params: {
         spender: string;
         value: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     balanceOf(param1: string): Promise<BigNumber>;
-    burn(to: string): Promise<{
-        amount0: BigNumber;
-        amount1: BigNumber;
-    }>;
+    burn(to: string): Promise<TransactionReceipt>;
     decimals(): Promise<BigNumber>;
     factory(): Promise<string>;
     getAmountIn(params: {
@@ -41,7 +77,7 @@ export declare class OSWAP_Pair extends Contract {
     }): Promise<TransactionReceipt>;
     isLive(): Promise<boolean>;
     kLast(): Promise<BigNumber>;
-    mint(to: string): Promise<BigNumber>;
+    mint(to: string): Promise<TransactionReceipt>;
     name(): Promise<string>;
     nonces(param1: string): Promise<BigNumber>;
     permit(params: {
@@ -73,12 +109,12 @@ export declare class OSWAP_Pair extends Contract {
     transfer(params: {
         to: string;
         value: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     transferFrom(params: {
         from: string;
         to: string;
         value: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     updateFee(): Promise<TransactionReceipt>;
     updateProtocolFee(): Promise<TransactionReceipt>;
 }

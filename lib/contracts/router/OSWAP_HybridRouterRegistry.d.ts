@@ -2,6 +2,29 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_HybridRouterRegistry extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(governance: string): Promise<string>;
+    parseCustomPairRegisterEvent(receipt: TransactionReceipt): {
+        pair: string;
+        fee: BigNumber;
+        feeBase: BigNumber;
+        typeCode: BigNumber;
+    }[];
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
+        previousOwner: string;
+        newOwner: string;
+    }[];
+    parsePairRegisterEvent(receipt: TransactionReceipt): {
+        factory: string;
+        pair: string;
+        token0: string;
+        token1: string;
+    }[];
+    parseProtocolRegisterEvent(receipt: TransactionReceipt): {
+        factory: string;
+        name: string;
+        fee: BigNumber;
+        feeBase: BigNumber;
+        typeCode: BigNumber;
+    }[];
     customPairs(param1: string): Promise<{
         fee: BigNumber;
         feeBase: BigNumber;
@@ -13,8 +36,8 @@ export declare class OSWAP_HybridRouterRegistry extends Contract {
         feeBase: BigNumber;
     }>;
     getPairTokens(pairAddress: string[]): Promise<{
-        token0: any;
-        token1: any;
+        token0: string[];
+        token1: string[];
     }>;
     getTypeCode(pairAddress: string): Promise<BigNumber>;
     governance(): Promise<string>;

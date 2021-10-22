@@ -7,6 +7,16 @@ export declare class OpenSwap extends Contract {
         initSupply: number | BigNumber;
         totalSupply: number | BigNumber;
     }): Promise<string>;
+    parseApprovalEvent(receipt: TransactionReceipt): {
+        owner: string;
+        spender: string;
+        value: BigNumber;
+    }[];
+    parseTransferEvent(receipt: TransactionReceipt): {
+        from: string;
+        to: string;
+        value: BigNumber;
+    }[];
     allowance(params: {
         owner: string;
         spender: string;
@@ -14,18 +24,18 @@ export declare class OpenSwap extends Contract {
     approve(params: {
         spender: string;
         amount: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     balanceOf(account: string): Promise<BigNumber>;
     cap(): Promise<BigNumber>;
     decimals(): Promise<BigNumber>;
     decreaseAllowance(params: {
         spender: string;
         subtractedValue: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     increaseAllowance(params: {
         spender: string;
         addedValue: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     mint(params: {
         account: string;
         amount: number | BigNumber;
@@ -37,10 +47,10 @@ export declare class OpenSwap extends Contract {
     transfer(params: {
         recipient: string;
         amount: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     transferFrom(params: {
         sender: string;
         recipient: string;
         amount: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
 }

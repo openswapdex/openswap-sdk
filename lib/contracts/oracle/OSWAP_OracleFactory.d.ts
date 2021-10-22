@@ -9,6 +9,46 @@ export declare class OSWAP_OracleFactory extends Contract {
         feePerDelegator: number | BigNumber;
         protocolFeeTo: string;
     }): Promise<string>;
+    parseOracleAddedEvent(receipt: TransactionReceipt): {
+        token0: string;
+        token1: string;
+        oracle: string;
+    }[];
+    parseOracleScoresEvent(receipt: TransactionReceipt): {
+        oracle: string;
+        score: BigNumber;
+    }[];
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
+        previousOwner: string;
+        newOwner: string;
+    }[];
+    parsePairCreatedEvent(receipt: TransactionReceipt): {
+        token0: string;
+        token1: string;
+        pair: string;
+        newSize: BigNumber;
+    }[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
+    parseParamSetEvent(receipt: TransactionReceipt): {
+        name: string;
+        value: string;
+    }[];
+    parseParamSet2Event(receipt: TransactionReceipt): {
+        name: string;
+        value1: string;
+        value2: string;
+    }[];
+    parseRestartedEvent(receipt: TransactionReceipt): any;
+    parseShutdownedEvent(receipt: TransactionReceipt): any;
+    parseWhitelistedEvent(receipt: TransactionReceipt): {
+        who: string;
+        allow: boolean;
+    }[];
     addOldOracleToNewPair(params: {
         tokenA: string;
         tokenB: string;
@@ -17,8 +57,8 @@ export declare class OSWAP_OracleFactory extends Contract {
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
     allWhiteListed(): Promise<{
-        list: any;
-        allowed: any;
+        list: string[];
+        allowed: boolean[];
     }>;
     checkAndGetOracle(params: {
         tokenA: string;
@@ -35,7 +75,7 @@ export declare class OSWAP_OracleFactory extends Contract {
     createPair(params: {
         tokenA: string;
         tokenB: string;
-    }): Promise<string>;
+    }): Promise<TransactionReceipt>;
     feePerDelegator(): Promise<BigNumber>;
     getPair(params: {
         param1: string;

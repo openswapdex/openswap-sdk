@@ -25,13 +25,13 @@ export declare class OSWAP_OracleRouter extends Contract {
         path: string[];
         useOracle: boolean[];
         data: string;
-    }): Promise<BigNumber>;
+    }): Promise<BigNumber[]>;
     getAmountsOut(params: {
         amountIn: number | BigNumber;
         path: string[];
         useOracle: boolean[];
         data: string;
-    }): Promise<BigNumber>;
+    }): Promise<BigNumber[]>;
     getLatestPrice(params: {
         tokenIn: string;
         tokenOut: string;
@@ -45,7 +45,7 @@ export declare class OSWAP_OracleRouter extends Contract {
         deadline: number | BigNumber;
         useOracle: boolean[];
         data: string;
-    }): Promise<BigNumber>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     swapExactETHForTokens(params: {
         amountOutMin: number | BigNumber;
         path: string[];
@@ -53,7 +53,7 @@ export declare class OSWAP_OracleRouter extends Contract {
         deadline: number | BigNumber;
         useOracle: boolean[];
         data: string;
-    }): Promise<BigNumber>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     swapExactETHForTokensSupportingFeeOnTransferTokens(params: {
         amountOutMin: number | BigNumber;
         path: string[];
@@ -61,7 +61,7 @@ export declare class OSWAP_OracleRouter extends Contract {
         deadline: number | BigNumber;
         useOracle: boolean[];
         data: string;
-    }): Promise<TransactionReceipt>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     swapExactTokensForETH(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
@@ -70,7 +70,7 @@ export declare class OSWAP_OracleRouter extends Contract {
         deadline: number | BigNumber;
         useOracle: boolean[];
         data: string;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     swapExactTokensForETHSupportingFeeOnTransferTokens(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
@@ -88,7 +88,7 @@ export declare class OSWAP_OracleRouter extends Contract {
         deadline: number | BigNumber;
         useOracle: boolean[];
         data: string;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     swapExactTokensForTokensSupportingFeeOnTransferTokens(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
@@ -106,7 +106,7 @@ export declare class OSWAP_OracleRouter extends Contract {
         deadline: number | BigNumber;
         useOracle: boolean[];
         data: string;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
     swapTokensForExactTokens(params: {
         amountOut: number | BigNumber;
         amountInMax: number | BigNumber;
@@ -115,5 +115,5 @@ export declare class OSWAP_OracleRouter extends Contract {
         deadline: number | BigNumber;
         useOracle: boolean[];
         data: string;
-    }): Promise<BigNumber>;
+    }): Promise<TransactionReceipt>;
 }

@@ -94,8 +94,8 @@ export interface IDeployment {
     governance: OAXDEX_Governance;
     administrator: OAXDEX_Administrator;
     registry: OAXDEX_VotingRegistry;
-    airCreator: OSWAP_PairCreator;
-    actory: OSWAP_Factory;
+    pairCreator: OSWAP_PairCreator;
+    factory: OSWAP_Factory;
     oraclePairCreator: OSWAP_OraclePairCreator;
     router: OSWAP_Router;
     oracleFactory: OSWAP_OracleFactory;
@@ -107,4 +107,5 @@ export interface IDeployment {
     executor1: OSWAP_VotingExecutor1;
     executor2: OSWAP_VotingExecutor2;
 }
+export declare function toDeployment(wallet: Wallet, result: IDeploymentResult): IDeployment;
 export declare function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>;

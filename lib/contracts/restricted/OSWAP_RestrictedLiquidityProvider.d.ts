@@ -18,18 +18,12 @@ export declare class OSWAP_RestrictedLiquidityProvider extends Contract {
         startDate: number | BigNumber;
         expire: number | BigNumber;
         deadline: number | BigNumber;
-    }): Promise<{
-        pair: string;
-        _offerIndex: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     addLiquidityAndTrader(params: {
         param: number | BigNumber;
         trader: string[];
         allocation: number[] | BigNumber[];
-    }): Promise<{
-        pair: string;
-        offerIndex: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     addLiquidityETH(params: {
         tokenA: string;
         addingTokenA: boolean;
@@ -41,18 +35,12 @@ export declare class OSWAP_RestrictedLiquidityProvider extends Contract {
         startDate: number | BigNumber;
         expire: number | BigNumber;
         deadline: number | BigNumber;
-    }): Promise<{
-        pair: string;
-        _offerIndex: BigNumber;
-    }>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     addLiquidityETHAndTrader(params: {
         param: number | BigNumber;
         trader: string[];
         allocation: number[] | BigNumber[];
-    }): Promise<{
-        pair: string;
-        offerIndex: BigNumber;
-    }>;
+    }, _value: number | BigNumber): Promise<TransactionReceipt>;
     configStore(): Promise<string>;
     factory(): Promise<string>;
     govToken(): Promise<string>;
@@ -62,19 +50,13 @@ export declare class OSWAP_RestrictedLiquidityProvider extends Contract {
         to: string;
         pairIndex: number | BigNumber;
         deadline: number | BigNumber;
-    }): Promise<{
-        amountA: BigNumber;
-        amountB: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     removeAllLiquidityETH(params: {
         tokenA: string;
         to: string;
         pairIndex: number | BigNumber;
         deadline: number | BigNumber;
-    }): Promise<{
-        amountToken: BigNumber;
-        amountETH: BigNumber;
-    }>;
+    }): Promise<TransactionReceipt>;
     removeLiquidity(params: {
         tokenA: string;
         tokenB: string;

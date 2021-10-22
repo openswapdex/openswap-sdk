@@ -2,6 +2,16 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_ERC20 extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
+    parseApprovalEvent(receipt: TransactionReceipt): {
+        owner: string;
+        spender: string;
+        value: BigNumber;
+    }[];
+    parseTransferEvent(receipt: TransactionReceipt): {
+        from: string;
+        to: string;
+        value: BigNumber;
+    }[];
     EIP712_TYPEHASH(): Promise<string>;
     NAME_HASH(): Promise<string>;
     PERMIT_TYPEHASH(): Promise<string>;
@@ -13,7 +23,7 @@ export declare class OSWAP_ERC20 extends Contract {
     approve(params: {
         spender: string;
         value: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     balanceOf(param1: string): Promise<BigNumber>;
     decimals(): Promise<BigNumber>;
     name(): Promise<string>;
@@ -32,10 +42,10 @@ export declare class OSWAP_ERC20 extends Contract {
     transfer(params: {
         to: string;
         value: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
     transferFrom(params: {
         from: string;
         to: string;
         value: number | BigNumber;
-    }): Promise<boolean>;
+    }): Promise<TransactionReceipt>;
 }

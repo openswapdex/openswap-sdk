@@ -2,6 +2,10 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_ConfigStore extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(governance: string): Promise<string>;
+    parseParamSetEvent(receipt: TransactionReceipt): {
+        name: string;
+        value: string;
+    }[];
     customParam(param1: string): Promise<string>;
     customParamNames(param1: number | BigNumber): Promise<string>;
     customParamNamesIdx(param1: string): Promise<BigNumber>;
