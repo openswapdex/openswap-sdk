@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import BN  from "bn.js";
+// import BN  from "bn.js";
 import web3 from "web3";
 import {expect, use} from "chai";
 
@@ -84,12 +84,12 @@ export function print(o: any, indent: any) {
         console.log(indent, o);
     } else if (o._isBigNumber) {
         console.log(indent, o.gt("2000000000")?web3.utils.fromWei(o.toString()):o.toString());
-    } else if (BN.isBN(o)) {
-        console.log(indent, o.gt(new BN("2000000000"))?web3.utils.fromWei(o):o.toString(10));
+    // } else if (BN.isBN(o)) {
+    //     console.log(indent, o.gt(new BN("2000000000"))?web3.utils.fromWei(o):o.toString(10));
     } else if (typeof o === "string") {
         console.log(indent, /\d{9,}/.test(o)?web3.utils.fromWei(o):o);
     } else if (typeof o === "number") {
-        console.log(indent, o>2000000000?web3.utils.fromWei(o):o);
+        console.log(indent, o>2000000000?web3.utils.fromWei(o.toString()):o);
     } else if (typeof o === "boolean") {
         console.log(indent, o);
     } else if (typeof o === "object") {
@@ -98,11 +98,11 @@ export function print(o: any, indent: any) {
                 console.log(indent, k, ":", o[k]);
             } else if (o[k]._isBigNumber) {
                 console.log(indent, k, ":", o[k].gt("2000000000")?web3.utils.fromWei(o[k].toString()):o[k].toString());
-            } else if (BN.isBN(o[k])) {
-                console.log(indent, k, ":", o[k].gt(new BN("2000000000"))?web3.utils.fromWei(o[k]):o[k].toString(10));
+            // } else if (BN.isBN(o[k])) {
+            //     console.log(indent, k, ":", o[k].gt(new BN("2000000000"))?web3.utils.fromWei(o[k]):o[k].toString(10));
             } else if (Array.isArray(o[k])) {
                 console.log(indent, k, ":", o[k].map((e) => e._isBigNumber ? (e.gt("2000000000")?web3.utils.fromWei(e):e.toString()) : 
-                                               BN.isBN(e) ? (e.gt(new BN("2000000000"))?web3.utils.fromWei(e):e.toString(10)) : e));
+                                               /*BN.isBN(e) ? (e.gt(new BN("2000000000"))?web3.utils.fromWei(e):e.toString(10)) :*/ e));
             } else if (typeof o[k] === "number" || typeof o[k] === "string" || typeof o[k] === "boolean") {
                 console.log(indent, k, ":", o[k]); 
             } else {
