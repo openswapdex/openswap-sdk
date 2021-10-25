@@ -9,7 +9,7 @@
     "buildContracts": "eth-wallet-build 0.6.11 node_modules/@openswapdex/openswap-core/contracts bin src/contracts",
     "buildTestContracts": "eth-wallet-build 0.6.11 test/contracts test/bin test/src/contracts",
     "buildLib": "tsc",
-    "test": "mocha --ui tdd --exit --require ts-node/register test/*.ts"
+    "test": "mocha --exit --require ts-node/register test/*.test.ts"
   },
   "keywords": [],
   "author": "",
