@@ -10,6 +10,8 @@ import { OSWAP_OraclePair } from '../src/contracts/oracle/OSWAP_OraclePair';
 import { TestERC20 } from './src/contracts/TestERC20';
 import { MockOracleAdaptor } from './src/contracts/MockOracleAdaptor';
 import { WETH9 } from './src/contracts/WETH9';
+import { MockAmmFactory } from './src/contracts/MockAmmFactory';
+import { MockAmmPair } from './src/contracts/MockAmmPair';
 
 import {deploy, toDeployment, IDeployment} from '../src/deploy';
 
@@ -290,8 +292,17 @@ describe('OSWAP_OraclePair 1', function () {
             _wallet.defaultAccount = accounts[5];
             let receipt = await _pair.resumeOffer({provider: accounts[2], direction: _direction, afterIndex: afterIndex});
         });
-        it('try swapping', async function () {
+        it('should able to swap again', async function () {
             await swapExactETHForTokens();
+        });
+        it('AMM pair', async function () {
+            let ammFactory = new MockAmmFactory(_wallet);
+            let ammFactoryAddress = await ammFactory.deploy();
+            let receipt = await ammFactory.createPair({tokenA:_direction?weth.address:_token.address, tokenB:!_direction?weth.address:_token.address});
+            let ammPairAddress = ammFactory.parsePairCreatedEvent(receipt)[0].pair;
+            let ammPair = new MockAmmPair(_wallet, ammPairAddress);
+            receipt = await ammPair.setReserves({reserve0:Utils.toDecimals(_direction?"1":"400"), reserve1:Utils.toDecimals(!_direction?"1":"400")});
+            console.log(ammPair.parseSyncEvent(receipt));
         });
     });
 });
