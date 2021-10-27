@@ -13,11 +13,11 @@ import { WETH9 } from './src/contracts/WETH9';
 import { MockAmmFactory } from './src/contracts/MockAmmFactory';
 import { MockAmmPair } from './src/contracts/MockAmmPair';
 
-import {deploy, toDeployment, IDeployment} from '../src/deploy';
+import {deploy, toDeploymentContracts, IDeploymentContracts} from '../src/deploy';
 
 import {Utils, Wallet} from "@ijstech/eth-wallet";
 
-let deployment: IDeployment;
+let deployment: IDeploymentContracts;
 let weth: WETH9;
 
 const ERC20 = TestERC20;

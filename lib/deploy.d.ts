@@ -89,7 +89,7 @@ export interface IDeployOptions {
         weth?: string;
     };
 }
-export interface IDeployment {
+export interface IDeploymentContracts {
     openSwap: OpenSwap;
     governance: OAXDEX_Governance;
     administrator: OAXDEX_Administrator;
@@ -107,5 +107,5 @@ export interface IDeployment {
     executor1: OSWAP_VotingExecutor1;
     executor2: OSWAP_VotingExecutor2;
 }
-export declare function toDeployment(wallet: Wallet, result: IDeploymentResult): IDeployment;
+export declare function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult): IDeploymentContracts;
 export declare function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>;
