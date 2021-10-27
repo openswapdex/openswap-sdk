@@ -1,6 +1,6 @@
 {
   "name": "@openswap/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "typings": "lib/index.d.ts",
   "main": "lib",
