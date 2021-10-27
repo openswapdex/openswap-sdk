@@ -180,7 +180,7 @@ describe('OSWAP_OraclePair 1', function () {
             }
         });
 
-        deployment = toDeployment(_wallet, result);
+        deployment = toDeploymentContracts(_wallet, result);
 
         await stakeToVote();
         await addExecutor(deployment.executor1);
