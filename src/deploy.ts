@@ -1,21 +1,22 @@
 import {Wallet,BigNumber,Utils} from "@ijstech/eth-wallet";
-import {OSWAP_Factory} from './contracts/amm/OSWAP_Factory';
-import {OSWAP_PairCreator} from './contracts/amm/OSWAP_PairCreator';
-import {OSWAP_Router} from './contracts/amm/OSWAP_Router';
-import {OSWAP_VotingExecutor1} from './contracts/amm/OSWAP_VotingExecutor1';
-import {OAXDEX_Governance} from './contracts/gov/OAXDEX_Governance';
-import {OAXDEX_VotingExecutor} from './contracts/gov/OAXDEX_VotingExecutor';
-import {OAXDEX_Administrator} from './contracts/gov/OAXDEX_Administrator';
-import {OAXDEX_VotingRegistry} from './contracts/gov/OAXDEX_VotingRegistry';
-import {OSWAP_OraclePairCreator} from './contracts/oracle/OSWAP_OraclePairCreator';
-import {OSWAP_VotingExecutor2} from './contracts/oracle/OSWAP_VotingExecutor2';
-import {OSWAP_OracleFactory} from './contracts/oracle/OSWAP_OracleFactory';
-import {OSWAP_OracleLiquidityProvider} from './contracts/oracle/OSWAP_OracleLiquidityProvider';
-import {OSWAP_OracleRouter} from './contracts/router/OSWAP_OracleRouter';
-import {OSWAP_HybridRouterRegistry} from './contracts/router/OSWAP_HybridRouterRegistry';
-import {OSWAP_HybridRouter2} from './contracts/router/OSWAP_HybridRouter2';
-import {OpenSwap} from './contracts/OpenSwap';
-
+import {
+    OSWAP_Factory, 
+    OSWAP_PairCreator, 
+    OSWAP_Router, 
+    OSWAP_VotingExecutor1, 
+    OAXDEX_Governance, 
+    OAXDEX_VotingExecutor, 
+    OAXDEX_Administrator, 
+    OAXDEX_VotingRegistry, 
+    OSWAP_OraclePairCreator, 
+    OSWAP_VotingExecutor2, 
+    OSWAP_OracleFactory, 
+    OSWAP_OracleLiquidityProvider, 
+    OSWAP_OracleRouter, 
+    OSWAP_HybridRouterRegistry, 
+    OSWAP_HybridRouter2, 
+    OpenSwap
+} from './contracts';
 export interface IDeploymentResult{
     administrator?: string;
     factory?: string,

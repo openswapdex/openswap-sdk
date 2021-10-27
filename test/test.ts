@@ -1,7 +1,8 @@
 import 'mocha';
 import {Utils, Wallet} from "@ijstech/eth-wallet";
-import {deploy, OSWAP_Factory} from "../src";
-import {WETH9} from './contracts/WETH9';
+import {deploy} from "../src";
+import {OSWAP_Factory} from "../src/contracts";
+import {WETH9} from './src/contracts';
 import * as Ganache from "ganache-cli";
 import * as assert from 'assert';
 

@@ -5,13 +5,9 @@ const { expect } = require('chai');
 import * as Ganache from "ganache-cli";
 
 import { Contract } from "@ijstech/eth-wallet";
-import { OAXDEX_VotingContract } from '../src/contracts/gov/OAXDEX_VotingContract';
-import { OSWAP_OraclePair } from '../src/contracts/oracle/OSWAP_OraclePair';
-import { TestERC20 } from './src/contracts/TestERC20';
-import { MockOracleAdaptor } from './src/contracts/MockOracleAdaptor';
-import { WETH9 } from './src/contracts/WETH9';
-import { MockAmmFactory } from './src/contracts/MockAmmFactory';
-import { MockAmmPair } from './src/contracts/MockAmmPair';
+
+import { OAXDEX_VotingContract, OSWAP_OraclePair } from '../src/contracts';
+import { TestERC20, MockOracleAdaptor, WETH9, MockAmmFactory, MockAmmPair } from './src/contracts';
 
 import {deploy, toDeploymentContracts, IDeploymentContracts} from '../src/deploy';
 

@@ -1,8 +1,6 @@
 
 import {Utils, Wallet} from "@ijstech/eth-wallet";
-import { MockOracleAdaptor } from './src/contracts/MockOracleAdaptor';
-import { MockAmmFactory } from './src/contracts/MockAmmFactory';
-import { MockAmmPair } from './src/contracts/MockAmmPair';
+import { MockOracleAdaptor, MockAmmFactory, MockAmmPair } from './src/contracts';
 import Web3 from 'web3';
 
 async function main() {
@@ -26,3 +24,8 @@ async function main() {
     // console.log(ammPair.parseSyncEvent(receipt));
 }
 main();
+
+// node_modules/.bin/tsc -t es2017 -m commonjs --esModuleInterop --removeComments --declaration test/deployMock.ts
+// node test/deployMock.js
+// oracle address 0x15D6AE04cF5F48326FF0E32BE0439c219Fbc92fA
+// amm factory 0x0d55324BddC41c1D40044221a88134FE19107C6F

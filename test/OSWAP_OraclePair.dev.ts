@@ -5,30 +5,14 @@ import Web3 from "web3";
 const { expect } = require('chai');
 import * as Ganache from "ganache-cli";
 
-import { Contract } from "@ijstech/eth-wallet";
-import { TestERC20 } from './src/contracts/TestERC20';
-import { OSWAP_OracleFactory } from '../src/contracts/oracle/OSWAP_OracleFactory';
-import { OAXDEX_Governance } from '../src/contracts/gov/OAXDEX_Governance';
-import { MockOracleAdaptor } from './src/contracts/MockOracleAdaptor';
-import { OAXDEX_VotingRegistry } from '../src/contracts/gov/OAXDEX_VotingRegistry';
-import { OAXDEX_VotingContract } from '../src/contracts/gov/OAXDEX_VotingContract';
-import { OSWAP_OraclePair } from '../src/contracts/oracle/OSWAP_OraclePair';
-import { OSWAP_OracleRouter } from '../src/contracts/router/OSWAP_OracleRouter';
-import { OSWAP_OracleLiquidityProvider } from '../src/contracts/oracle/OSWAP_OracleLiquidityProvider';
-import { MockSecurityOracle } from './src/contracts/MockSecurityOracle';
-import { OAXDEX_VotingExecutor } from '../src/contracts/gov/OAXDEX_VotingExecutor';
-import { OSWAP_VotingExecutor2 } from '../src/contracts/oracle/OSWAP_VotingExecutor2';
-import { CallFormContract } from './src/contracts/CallFormContract';
+import { Contract, Utils, Wallet } from "@ijstech/eth-wallet";
 
-import { OpenSwap } from '../src/contracts/OpenSwap';
-import { WETH9 } from './src/contracts/WETH9';
+import { deploy, toDeploymentContracts, IDeploymentContracts } from '../src';
+import { TestERC20, MockOracleAdaptor, WETH9 } from './src/contracts';
+import { OpenSwap, OAXDEX_VotingContract, OSWAP_OraclePair } from '../src/contracts';
 
-import {deploy, toDeploymentContracts, IDeploymentContracts} from '../src/deploy';
-// import Wallet from "@ijstech/eth-wallet/lib/wallet";
 
-import {Utils, Wallet} from "@ijstech/eth-wallet";
-
-let deployment: IDeployment;
+let deployment: IDeploymentContracts;
 let weth: WETH9;
 let _weth: WETH9;
 
@@ -213,7 +197,7 @@ describe('OSWAP_OraclePair 1', function () {
             }
         });
 
-        deployment = toDeployment(_wallet, result);
+        deployment = toDeploymentContracts(_wallet, result);
 
         await stakeToVote();
         await addExecutor(deployment.executor1);
