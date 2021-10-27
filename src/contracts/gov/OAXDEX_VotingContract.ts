@@ -48,7 +48,7 @@ export class OAXDEX_VotingContract extends Contract{
         let result = await this.methods('executor');
         return result;
     }
-    async getParams(): Promise<{executor_:string,id_:BigNumber,name_:string,options_:string[],voteStartTime_:BigNumber,voteEndTime_:BigNumber,executeDelay_:BigNumber,status_:any,optionsWeight_:BigNumber[],quorum_:BigNumber,executeParam_:string[]}>{
+    async getParams(): Promise<{executor_:string,id_:BigNumber,name_:string,options_:string[],voteStartTime_:BigNumber,voteEndTime_:BigNumber,executeDelay_:BigNumber,status_:boolean[],optionsWeight_:BigNumber[],quorum_:BigNumber[],executeParam_:string[]}>{
         let result = await this.methods('getParams');
         return {
             executor_: result.executor_,
@@ -60,7 +60,7 @@ export class OAXDEX_VotingContract extends Contract{
             executeDelay_: new BigNumber(result.executeDelay_),
             status_: result.status_,
             optionsWeight_: result.optionsWeight_,
-            quorum_: new BigNumber(result.quorum_),
+            quorum_: result.quorum_,
             executeParam_: result.executeParam_
         }
     }

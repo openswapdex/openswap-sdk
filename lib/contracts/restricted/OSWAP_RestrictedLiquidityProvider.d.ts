@@ -20,7 +20,7 @@ export declare class OSWAP_RestrictedLiquidityProvider extends Contract {
         deadline: number | BigNumber;
     }): Promise<TransactionReceipt>;
     addLiquidityAndTrader(params: {
-        param: number | BigNumber;
+        param: number[] | BigNumber[];
         trader: string[];
         allocation: number[] | BigNumber[];
     }): Promise<TransactionReceipt>;
@@ -37,7 +37,7 @@ export declare class OSWAP_RestrictedLiquidityProvider extends Contract {
         deadline: number | BigNumber;
     }, _value: number | BigNumber): Promise<TransactionReceipt>;
     addLiquidityETHAndTrader(params: {
-        param: number | BigNumber;
+        param: number[] | BigNumber[];
         trader: string[];
         allocation: number[] | BigNumber[];
     }, _value: number | BigNumber): Promise<TransactionReceipt>;

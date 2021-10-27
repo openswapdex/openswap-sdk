@@ -31,9 +31,9 @@ export declare class OAXDEX_VotingContract extends Contract {
         voteStartTime_: BigNumber;
         voteEndTime_: BigNumber;
         executeDelay_: BigNumber;
-        status_: any;
+        status_: boolean[];
         optionsWeight_: BigNumber[];
-        quorum_: BigNumber;
+        quorum_: BigNumber[];
         executeParam_: string[];
     }>;
     governance(): Promise<string>;
