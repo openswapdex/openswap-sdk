@@ -152,8 +152,11 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
     options = options || <any>{};
     if (!options.govOptions)
         options.govOptions = DefaultGovOptions;
-    if (!options.govTokenOptions)
+    if (!options.govTokenOptions){
         options.govTokenOptions = DefaultGovTokenOptions;
+        options.govTokenOptions.initSupplyTo = wallet.defaultAccount;
+        options.govTokenOptions.minter = wallet.defaultAccount;
+    }
     if (!options.tokens)
         options.tokens = {};
     if (!options.amm)
