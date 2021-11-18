@@ -9,7 +9,7 @@ export class OSWAP_VotingExecutor3 extends Contract{
         return this._deploy(params.governance,params.factory,params.hybridRegistry);
     }
     async execute(params:string[]): Promise<TransactionReceipt>{
-        let result = await this.methods('execute',params);
+        let result = await this.methods('execute',Utils.stringToBytes32(params));
         return result;
     }
     async factory(): Promise<string>{

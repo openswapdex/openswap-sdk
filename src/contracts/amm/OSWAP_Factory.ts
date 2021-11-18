@@ -30,7 +30,7 @@ export class OSWAP_Factory extends Contract{
         return this.parseEvents(receipt, "Shutdowned");
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('allPairs',param1);
+        let result = await this.methods('allPairs',Utils.toString(param1));
         return result;
     }
     async allPairsLength(): Promise<BigNumber>{
@@ -81,7 +81,7 @@ export class OSWAP_Factory extends Contract{
         return result;
     }
     async setProtocolFee(protocolFee:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setProtocolFee',protocolFee);
+        let result = await this.methods('setProtocolFee',Utils.toString(protocolFee));
         return result;
     }
     async setProtocolFeeTo(protocolFeeTo:string): Promise<TransactionReceipt>{
@@ -89,7 +89,7 @@ export class OSWAP_Factory extends Contract{
         return result;
     }
     async setTradeFee(tradeFee:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setTradeFee',tradeFee);
+        let result = await this.methods('setTradeFee',Utils.toString(tradeFee));
         return result;
     }
     async tradeFee(): Promise<BigNumber>{

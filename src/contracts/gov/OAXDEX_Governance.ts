@@ -87,7 +87,7 @@ export class OAXDEX_Governance extends Contract{
         return new BigNumber(result);
     }
     async getVotingParams(name:string): Promise<{_minExeDelay:BigNumber,_minVoteDuration:BigNumber,_maxVoteDuration:BigNumber,_minOaxTokenToCreateVote:BigNumber,_minQuorum:BigNumber}>{
-        let result = await this.methods('getVotingParams',name);
+        let result = await this.methods('getVotingParams',Utils.stringToBytes32(name));
         return {
             _minExeDelay: new BigNumber(result._minExeDelay),
             _minVoteDuration: new BigNumber(result._minVoteDuration),
@@ -141,7 +141,7 @@ export class OAXDEX_Governance extends Contract{
         return result;
     }
     async setMinStakePeriod(minStakePeriod:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setMinStakePeriod',minStakePeriod);
+        let result = await this.methods('setMinStakePeriod',Utils.toString(minStakePeriod));
         return result;
     }
     async setVotingConfig(params:{configName:string,paramName:string,paramValue:number|BigNumber}): Promise<TransactionReceipt>{
@@ -157,7 +157,7 @@ export class OAXDEX_Governance extends Contract{
         return result;
     }
     async stake(value:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('stake',value);
+        let result = await this.methods('stake',Utils.toString(value));
         return result;
     }
     async stakeOf(param1:string): Promise<BigNumber>{
@@ -177,7 +177,7 @@ export class OAXDEX_Governance extends Contract{
         return result;
     }
     async unstake(value:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('unstake',value);
+        let result = await this.methods('unstake',Utils.toString(value));
         return result;
     }
     async veto(voting:string): Promise<TransactionReceipt>{
@@ -193,7 +193,7 @@ export class OAXDEX_Governance extends Contract{
         return result;
     }
     async votingConfigProfiles(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('votingConfigProfiles',param1);
+        let result = await this.methods('votingConfigProfiles',Utils.toString(param1));
         return result;
     }
     async votingConfigProfilesLength(): Promise<BigNumber>{
@@ -201,7 +201,7 @@ export class OAXDEX_Governance extends Contract{
         return new BigNumber(result);
     }
     async votingConfigs(param1:string): Promise<{minExeDelay:BigNumber,minVoteDuration:BigNumber,maxVoteDuration:BigNumber,minOaxTokenToCreateVote:BigNumber,minQuorum:BigNumber}>{
-        let result = await this.methods('votingConfigs',param1);
+        let result = await this.methods('votingConfigs',Utils.stringToBytes32(param1));
         return {
             minExeDelay: new BigNumber(result.minExeDelay),
             minVoteDuration: new BigNumber(result.minVoteDuration),
@@ -211,7 +211,7 @@ export class OAXDEX_Governance extends Contract{
         }
     }
     async votingExecutor(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('votingExecutor',param1);
+        let result = await this.methods('votingExecutor',Utils.toString(param1));
         return result;
     }
     async votingExecutorInv(param1:string): Promise<BigNumber>{
@@ -231,7 +231,7 @@ export class OAXDEX_Governance extends Contract{
         return result;
     }
     async votings(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('votings',param1);
+        let result = await this.methods('votings',Utils.toString(param1));
         return result;
     }
 }

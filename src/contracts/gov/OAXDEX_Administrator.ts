@@ -37,7 +37,7 @@ export class OAXDEX_Administrator extends Contract{
         return result;
     }
     async admins(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('admins',param1);
+        let result = await this.methods('admins',Utils.toString(param1));
         return result;
     }
     async adminsIdx(param1:string): Promise<BigNumber>{
@@ -133,7 +133,7 @@ export class OAXDEX_Administrator extends Contract{
         return result;
     }
     async setMaxAdmin(maxAdmin:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setMaxAdmin',maxAdmin);
+        let result = await this.methods('setMaxAdmin',Utils.toString(maxAdmin));
         return result;
     }
     async vetoVoting(params:{votingContract:string,YorN:boolean}): Promise<TransactionReceipt>{

@@ -33,7 +33,7 @@ export class OSWAP_RangeFactory extends Contract{
         return this.parseEvents(receipt, "Shutdowned");
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('allPairs',param1);
+        let result = await this.methods('allPairs',Utils.toString(param1));
         return result;
     }
     async allPairsLength(): Promise<BigNumber>{
@@ -64,7 +64,7 @@ export class OSWAP_RangeFactory extends Contract{
         }
     }
     async getLiquidityProviderShare(stake:number|BigNumber): Promise<BigNumber>{
-        let result = await this.methods('getLiquidityProviderShare',stake);
+        let result = await this.methods('getLiquidityProviderShare',Utils.toString(stake));
         return new BigNumber(result);
     }
     async getPair(params:{param1:string,param2:string}): Promise<string>{
@@ -80,7 +80,7 @@ export class OSWAP_RangeFactory extends Contract{
         return result;
     }
     async liquidityProviderShare(param1:number|BigNumber): Promise<BigNumber>{
-        let result = await this.methods('liquidityProviderShare',param1);
+        let result = await this.methods('liquidityProviderShare',Utils.toString(param1));
         return new BigNumber(result);
     }
     async oracleFactory(): Promise<string>{
@@ -128,11 +128,11 @@ export class OSWAP_RangeFactory extends Contract{
         return result;
     }
     async setTradeFee(tradeFee:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setTradeFee',tradeFee);
+        let result = await this.methods('setTradeFee',Utils.toString(tradeFee));
         return result;
     }
     async stakeAmount(param1:number|BigNumber): Promise<BigNumber>{
-        let result = await this.methods('stakeAmount',param1);
+        let result = await this.methods('stakeAmount',Utils.toString(param1));
         return new BigNumber(result);
     }
     async tradeFee(): Promise<BigNumber>{

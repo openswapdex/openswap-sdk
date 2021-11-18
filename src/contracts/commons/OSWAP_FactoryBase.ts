@@ -24,7 +24,7 @@ export class OSWAP_FactoryBase extends Contract{
         return this.parseEvents(receipt, "Shutdowned");
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('allPairs',param1);
+        let result = await this.methods('allPairs',Utils.toString(param1));
         return result;
     }
     async allPairsLength(): Promise<BigNumber>{

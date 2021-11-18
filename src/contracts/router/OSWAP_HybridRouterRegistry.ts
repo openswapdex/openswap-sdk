@@ -29,7 +29,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         }
     }
     async execute(params:string[]): Promise<TransactionReceipt>{
-        let result = await this.methods('execute',params);
+        let result = await this.methods('execute',Utils.stringToBytes32(params));
         return result;
     }
     async getFee(pairAddress:string): Promise<{fee:BigNumber,feeBase:BigNumber}>{
@@ -71,7 +71,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         }
     }
     async protocolList(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('protocolList',param1);
+        let result = await this.methods('protocolList',Utils.toString(param1));
         return result;
     }
     async protocolListLength(): Promise<BigNumber>{

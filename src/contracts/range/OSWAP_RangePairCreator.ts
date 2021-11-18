@@ -9,7 +9,7 @@ export class OSWAP_RangePairCreator extends Contract{
         return this._deploy();
     }
     async createPair(salt:string): Promise<TransactionReceipt>{
-        let result = await this.methods('createPair',salt);
+        let result = await this.methods('createPair',Utils.stringToBytes32(salt));
         return result;
     }
 }

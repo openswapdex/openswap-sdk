@@ -8,7 +8,7 @@ export class OSWAP_RangePair extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
-    parseAddLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
+    parseAddLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
         return this.parseEvents(receipt, "AddLiquidity");
     }
     parseNewProviderEvent(receipt: TransactionReceipt): {provider:string,index:BigNumber}[]{
@@ -17,19 +17,19 @@ export class OSWAP_RangePair extends Contract{
     parseRemoveAllLiquidityEvent(receipt: TransactionReceipt): {provider:string,unstake:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber}[]{
         return this.parseEvents(receipt, "RemoveAllLiquidity");
     }
-    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
         return this.parseEvents(receipt, "RemoveLiquidity");
     }
-    parseReplenishEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountIn:BigNumber}[]{
+    parseReplenishEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber}[]{
         return this.parseEvents(receipt, "Replenish");
     }
     parseSwapEvent(receipt: TransactionReceipt): {to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}[]{
         return this.parseEvents(receipt, "Swap");
     }
-    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber}[]{
+    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}[]{
         return this.parseEvents(receipt, "SwappedOneProvider");
     }
-    parseUpdateProviderOfferEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,replenish:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}[]{
+    parseUpdateProviderOfferEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,replenish:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}[]{
         return this.parseEvents(receipt, "UpdateProviderOffer");
     }
     async addLiquidity(params:{provider:string,direction:boolean,staked:number|BigNumber,lowerLimit:number|BigNumber,upperLimit:number|BigNumber,startDate:number|BigNumber,expire:number|BigNumber}): Promise<TransactionReceipt>{

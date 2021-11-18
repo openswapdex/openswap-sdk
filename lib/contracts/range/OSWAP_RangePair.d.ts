@@ -7,6 +7,8 @@ export declare class OSWAP_RangePair extends Contract {
         direction: boolean;
         staked: BigNumber;
         amount: BigNumber;
+        newStakeBalance: BigNumber;
+        newAmountBalance: BigNumber;
         lowerLimit: BigNumber;
         upperLimit: BigNumber;
         startDate: BigNumber;
@@ -28,6 +30,9 @@ export declare class OSWAP_RangePair extends Contract {
         unstake: BigNumber;
         amountOut: BigNumber;
         reserveOut: BigNumber;
+        newStakeBalance: BigNumber;
+        newAmountBalance: BigNumber;
+        newReserveBalance: BigNumber;
         lowerLimit: BigNumber;
         upperLimit: BigNumber;
         startDate: BigNumber;
@@ -37,6 +42,8 @@ export declare class OSWAP_RangePair extends Contract {
         provider: string;
         direction: boolean;
         amountIn: BigNumber;
+        newAmountBalance: BigNumber;
+        newReserveBalance: BigNumber;
     }[];
     parseSwapEvent(receipt: TransactionReceipt): {
         to: string;
@@ -52,11 +59,15 @@ export declare class OSWAP_RangePair extends Contract {
         direction: boolean;
         amountOut: BigNumber;
         amountIn: BigNumber;
+        newAmountBalance: BigNumber;
+        newCounterReserveBalance: BigNumber;
     }[];
     parseUpdateProviderOfferEvent(receipt: TransactionReceipt): {
         provider: string;
         direction: boolean;
         replenish: BigNumber;
+        newAmountBalance: BigNumber;
+        newReserveBalance: BigNumber;
         lowerLimit: BigNumber;
         upperLimit: BigNumber;
         startDate: BigNumber;

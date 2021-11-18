@@ -46,7 +46,7 @@ export class OSWAP_OracleFactory extends Contract{
         return result;
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('allPairs',param1);
+        let result = await this.methods('allPairs',Utils.toString(param1));
         return result;
     }
     async allPairsLength(): Promise<BigNumber>{
@@ -145,7 +145,7 @@ export class OSWAP_OracleFactory extends Contract{
         return result;
     }
     async setFeePerDelegator(feePerDelegator:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setFeePerDelegator',feePerDelegator);
+        let result = await this.methods('setFeePerDelegator',Utils.toString(feePerDelegator));
         return result;
     }
     async setLive(isLive:boolean): Promise<TransactionReceipt>{
@@ -169,7 +169,7 @@ export class OSWAP_OracleFactory extends Contract{
         return result;
     }
     async setProtocolFee(protocolFee:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setProtocolFee',protocolFee);
+        let result = await this.methods('setProtocolFee',Utils.toString(protocolFee));
         return result;
     }
     async setProtocolFeeTo(protocolFeeTo:string): Promise<TransactionReceipt>{
@@ -181,7 +181,7 @@ export class OSWAP_OracleFactory extends Contract{
         return result;
     }
     async setTradeFee(tradeFee:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setTradeFee',tradeFee);
+        let result = await this.methods('setTradeFee',Utils.toString(tradeFee));
         return result;
     }
     async setWhiteList(params:{who:string,allow:boolean}): Promise<TransactionReceipt>{
@@ -201,7 +201,7 @@ export class OSWAP_OracleFactory extends Contract{
         return result;
     }
     async whitelisted(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('whitelisted',param1);
+        let result = await this.methods('whitelisted',Utils.toString(param1));
         return result;
     }
     async whitelistedInv(param1:string): Promise<BigNumber>{

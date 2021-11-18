@@ -9,15 +9,15 @@ export class OAXDEX_VotingContract extends Contract{
         return this._deploy(params.governance,params.executor,Utils.toString(params.id),Utils.stringToBytes32(params.name),Utils.stringToBytes32(params.options),Utils.toString(params.quorum),Utils.toString(params.threshold),Utils.toString(params.voteEndTime),Utils.toString(params.executeDelay),Utils.stringToBytes32(params.executeParam));
     }
     async _executeParam(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('_executeParam',param1);
+        let result = await this.methods('_executeParam',Utils.toString(param1));
         return result;
     }
     async _options(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('_options',param1);
+        let result = await this.methods('_options',Utils.toString(param1));
         return result;
     }
     async _optionsWeight(param1:number|BigNumber): Promise<BigNumber>{
-        let result = await this.methods('_optionsWeight',param1);
+        let result = await this.methods('_optionsWeight',Utils.toString(param1));
         return new BigNumber(result);
     }
     async accountVoteOption(param1:string): Promise<BigNumber>{
@@ -117,7 +117,7 @@ export class OAXDEX_VotingContract extends Contract{
         return result;
     }
     async vote(option:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('vote',option);
+        let result = await this.methods('vote',Utils.toString(option));
         return result;
     }
     async voteEndTime(): Promise<BigNumber>{

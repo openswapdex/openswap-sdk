@@ -13,7 +13,7 @@ export class OSWAP_VotingExecutor4 extends Contract{
         return result;
     }
     async execute(params:string[]): Promise<TransactionReceipt>{
-        let result = await this.methods('execute',params);
+        let result = await this.methods('execute',Utils.stringToBytes32(params));
         return result;
     }
     async factory(): Promise<string>{

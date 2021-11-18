@@ -12,15 +12,15 @@ export class OSWAP_ConfigStore extends Contract{
         return this.parseEvents(receipt, "ParamSet");
     }
     async customParam(param1:string): Promise<string>{
-        let result = await this.methods('customParam',param1);
+        let result = await this.methods('customParam',Utils.stringToBytes32(param1));
         return result;
     }
     async customParamNames(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('customParamNames',param1);
+        let result = await this.methods('customParamNames',Utils.toString(param1));
         return result;
     }
     async customParamNamesIdx(param1:string): Promise<BigNumber>{
-        let result = await this.methods('customParamNamesIdx',param1);
+        let result = await this.methods('customParamNamesIdx',Utils.stringToBytes32(param1));
         return new BigNumber(result);
     }
     async customParamNamesLength(): Promise<BigNumber>{

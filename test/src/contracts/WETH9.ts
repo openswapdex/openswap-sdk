@@ -61,7 +61,7 @@ export class WETH9 extends Contract{
         return result;
     }
     async withdraw(wad:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('withdraw',wad);
+        let result = await this.methods('withdraw',Utils.toString(wad));
         return result;
     }
 }
