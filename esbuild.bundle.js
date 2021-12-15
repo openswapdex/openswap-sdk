@@ -3,9 +3,9 @@ const packageName = require('./package.json').name;
 
 const Fs = require('fs');
 
-async function readFile(fileName){
-    return new Promise((resolve, reject)=>{
-        Fs.readFile(fileName, 'utf8', function (err,data) {
+async function readFile(fileName) {
+    return new Promise((resolve, reject) => {
+        Fs.readFile(fileName, 'utf8', function (err, data) {
             if (err)
                 reject(err)
             else
@@ -14,7 +14,22 @@ async function readFile(fileName){
     })
 }
 
-async function build(){
+let contractAbiPlugin = {
+    name: 'contractAbi',
+    setup(build) {
+        build.onLoad({ filter: /\.json$/ }, async (args) => {
+            let data = JSON.parse(await readFile(args.path))
+            delete data.bytecode
+            return {
+                contents: JSON.stringify(data),
+                loader: 'json',
+            }
+        })
+    },
+}
+
+
+async function build() {
     let result = await require('esbuild').build({
         entryPoints: ['src/index.ts'],
         outdir: 'dist',
@@ -22,8 +37,8 @@ async function build(){
         minify: false,
         format: 'cjs',
         external: [...Object.keys(dependencies)],
-        plugins: [],
-      }).catch(() => process.exit(1));      
+        plugins: [contractAbiPlugin],
+    }).catch(() => process.exit(1));
     let content = await readFile('dist/index.js');
     content = `window["${packageName}"] = window["${packageName}"] || {};
 ((exports) => {
