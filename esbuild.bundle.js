@@ -40,9 +40,9 @@ async function build() {
         plugins: [contractAbiPlugin],
     }).catch(() => process.exit(1));
     let content = await readFile('dist/index.js');
-    content = `window["${packageName}"] = window["${packageName}"] || {};
-((exports) => {
-` + content + `})(window["${packageName}"]);`;
+    content = `define('@openswap/sdk', (require, exports)=>{
+${content}
+})`;
     Fs.writeFileSync('dist/index.js', content);
 };
 build();
