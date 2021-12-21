@@ -9,7 +9,13 @@ export class OSWAP_ConfigStore extends Contract{
         return this._deploy(governance);
     }
     parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
-        return this.parseEvents(receipt, "ParamSet");
+        let events = this.parseEvents(receipt, "ParamSet");
+        return events.map(result => {
+            return {
+                name: result.name,
+                value: result.value
+            };
+        });
     }
     async customParam(param1:string): Promise<string>{
         let result = await this.methods('customParam',Utils.stringToBytes32(param1));

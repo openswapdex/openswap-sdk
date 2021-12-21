@@ -8,29 +8,73 @@ export class OAXDEX_Administrator extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
-    parseAddAdminEvent(receipt: TransactionReceipt): {admin:string}[]{
-        return this.parseEvents(receipt, "AddAdmin");
+    parseAddAdminEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "AddAdmin");
+        return events.map(result => {
+            return result[0];
+        });
     }
-    parseRemoveAdminEvent(receipt: TransactionReceipt): {admin:string}[]{
-        return this.parseEvents(receipt, "RemoveAdmin");
+    parseRemoveAdminEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "RemoveAdmin");
+        return events.map(result => {
+            return result[0];
+        });
     }
-    parseSetMaxAdminEvent(receipt: TransactionReceipt): {maxAdmin:BigNumber}[]{
-        return this.parseEvents(receipt, "SetMaxAdmin");
+    parseSetMaxAdminEvent(receipt: TransactionReceipt): BigNumber[]{
+        let events = this.parseEvents(receipt, "SetMaxAdmin");
+        return events.map(result => {
+            return new BigNumber(result[0]);
+        });
     }
     parseVotedFactoryRestartEvent(receipt: TransactionReceipt): {admin:string,factory:string,YorN:boolean}[]{
-        return this.parseEvents(receipt, "VotedFactoryRestart");
+        let events = this.parseEvents(receipt, "VotedFactoryRestart");
+        return events.map(result => {
+            return {
+                admin: result.admin,
+                factory: result.factory,
+                YorN: result.YorN
+            };
+        });
     }
     parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): {admin:string,factory:string,YorN:boolean}[]{
-        return this.parseEvents(receipt, "VotedFactoryShutdown");
+        let events = this.parseEvents(receipt, "VotedFactoryShutdown");
+        return events.map(result => {
+            return {
+                admin: result.admin,
+                factory: result.factory,
+                YorN: result.YorN
+            };
+        });
     }
     parseVotedPairRestartEvent(receipt: TransactionReceipt): {admin:string,pair:string,YorN:boolean}[]{
-        return this.parseEvents(receipt, "VotedPairRestart");
+        let events = this.parseEvents(receipt, "VotedPairRestart");
+        return events.map(result => {
+            return {
+                admin: result.admin,
+                pair: result.pair,
+                YorN: result.YorN
+            };
+        });
     }
     parseVotedPairShutdownEvent(receipt: TransactionReceipt): {admin:string,pair:string,YorN:boolean}[]{
-        return this.parseEvents(receipt, "VotedPairShutdown");
+        let events = this.parseEvents(receipt, "VotedPairShutdown");
+        return events.map(result => {
+            return {
+                admin: result.admin,
+                pair: result.pair,
+                YorN: result.YorN
+            };
+        });
     }
     parseVotedVetoEvent(receipt: TransactionReceipt): {admin:string,votingContract:string,YorN:boolean}[]{
-        return this.parseEvents(receipt, "VotedVeto");
+        let events = this.parseEvents(receipt, "VotedVeto");
+        return events.map(result => {
+            return {
+                admin: result.admin,
+                votingContract: result.votingContract,
+                YorN: result.YorN
+            };
+        });
     }
     async addAdmin(admin:string): Promise<TransactionReceipt>{
         let result = await this.methods('addAdmin',admin);

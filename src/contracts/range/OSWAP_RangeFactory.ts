@@ -9,28 +9,67 @@ export class OSWAP_RangeFactory extends Contract{
         return this._deploy(params.governance,params.oracleFactory,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare),params.protocolFeeTo);
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
-        return this.parseEvents(receipt, "OwnershipTransferred");
+        let events = this.parseEvents(receipt, "OwnershipTransferred");
+        return events.map(result => {
+            return {
+                previousOwner: result.previousOwner,
+                newOwner: result.newOwner
+            };
+        });
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newSize:BigNumber}[]{
-        return this.parseEvents(receipt, "PairCreated");
+        let events = this.parseEvents(receipt, "PairCreated");
+        return events.map(result => {
+            return {
+                token0: result.token0,
+                token1: result.token1,
+                pair: result.pair,
+                newSize: new BigNumber(result.newSize)
+            };
+        });
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
-        return this.parseEvents(receipt, "PairRestarted");
+    parsePairRestartedEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "PairRestarted");
+        return events.map(result => {
+            return result[0];
+        });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
-        return this.parseEvents(receipt, "PairShutdowned");
+    parsePairShutdownedEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "PairShutdowned");
+        return events.map(result => {
+            return result[0];
+        });
     }
     parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
-        return this.parseEvents(receipt, "ParamSet");
+        let events = this.parseEvents(receipt, "ParamSet");
+        return events.map(result => {
+            return {
+                name: result.name,
+                value: result.value
+            };
+        });
     }
     parseParamSet2Event(receipt: TransactionReceipt): {name:string,value1:string,value2:string}[]{
-        return this.parseEvents(receipt, "ParamSet2");
+        let events = this.parseEvents(receipt, "ParamSet2");
+        return events.map(result => {
+            return {
+                name: result.name,
+                value1: result.value1,
+                value2: result.value2
+            };
+        });
     }
-    parseRestartedEvent(receipt: TransactionReceipt): any{
-        return this.parseEvents(receipt, "Restarted");
+    parseRestartedEvent(receipt: TransactionReceipt): any[]{
+        let events = this.parseEvents(receipt, "Restarted");
+        return events.map(result => {
+            return ;;
+        });
     }
-    parseShutdownedEvent(receipt: TransactionReceipt): any{
-        return this.parseEvents(receipt, "Shutdowned");
+    parseShutdownedEvent(receipt: TransactionReceipt): any[]{
+        let events = this.parseEvents(receipt, "Shutdowned");
+        return events.map(result => {
+            return ;;
+        });
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
         let result = await this.methods('allPairs',Utils.toString(param1));
@@ -53,7 +92,7 @@ export class OSWAP_RangeFactory extends Contract{
         return {
             _stakeAmount: result._stakeAmount,
             _liquidityProviderShare: result._liquidityProviderShare
-        }
+        };
     }
     async getCreateAddresses(): Promise<{_governance:string,_rangeLiquidityProvider:string,_oracleFactory:string}>{
         let result = await this.methods('getCreateAddresses');
@@ -61,7 +100,7 @@ export class OSWAP_RangeFactory extends Contract{
             _governance: result._governance,
             _rangeLiquidityProvider: result._rangeLiquidityProvider,
             _oracleFactory: result._oracleFactory
-        }
+        };
     }
     async getLiquidityProviderShare(stake:number|BigNumber): Promise<BigNumber>{
         let result = await this.methods('getLiquidityProviderShare',Utils.toString(stake));

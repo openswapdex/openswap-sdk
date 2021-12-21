@@ -45,7 +45,7 @@ export class OSWAP_Router extends Contract{
         return {
             reserveA: new BigNumber(result.reserveA),
             reserveB: new BigNumber(result.reserveB)
-        }
+        };
     }
     async quote(params:{amountA:number|BigNumber,reserveA:number|BigNumber,reserveB:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('quote',Utils.toString(params.amountA),Utils.toString(params.reserveA),Utils.toString(params.reserveB));

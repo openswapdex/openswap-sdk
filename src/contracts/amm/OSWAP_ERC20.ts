@@ -9,10 +9,24 @@ export class OSWAP_ERC20 extends Contract{
         return this._deploy();
     }
     parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Approval");
+        let events = this.parseEvents(receipt, "Approval");
+        return events.map(result => {
+            return {
+                owner: result.owner,
+                spender: result.spender,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Transfer");
+        let events = this.parseEvents(receipt, "Transfer");
+        return events.map(result => {
+            return {
+                from: result.from,
+                to: result.to,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     async EIP712_TYPEHASH(): Promise<string>{
         let result = await this.methods('EIP712_TYPEHASH');

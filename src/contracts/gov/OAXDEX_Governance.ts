@@ -9,43 +9,117 @@ export class OAXDEX_Governance extends Contract{
         return this._deploy(params.oaxToken,Utils.stringToBytes32(params.names),Utils.toString(params.minExeDelay),Utils.toString(params.minVoteDuration),Utils.toString(params.maxVoteDuration),Utils.toString(params.minOaxTokenToCreateVote),Utils.toString(params.minQuorum),Utils.toString(params.minStakePeriod));
     }
     parseAddVotingConfigEvent(receipt: TransactionReceipt): {name:string,minExeDelay:BigNumber,minVoteDuration:BigNumber,maxVoteDuration:BigNumber,minOaxTokenToCreateVote:BigNumber,minQuorum:BigNumber}[]{
-        return this.parseEvents(receipt, "AddVotingConfig");
+        let events = this.parseEvents(receipt, "AddVotingConfig");
+        return events.map(result => {
+            return {
+                name: result.name,
+                minExeDelay: new BigNumber(result.minExeDelay),
+                minVoteDuration: new BigNumber(result.minVoteDuration),
+                maxVoteDuration: new BigNumber(result.maxVoteDuration),
+                minOaxTokenToCreateVote: new BigNumber(result.minOaxTokenToCreateVote),
+                minQuorum: new BigNumber(result.minQuorum)
+            };
+        });
     }
-    parseExecutedEvent(receipt: TransactionReceipt): {vote:string}[]{
-        return this.parseEvents(receipt, "Executed");
+    parseExecutedEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "Executed");
+        return events.map(result => {
+            return result[0];
+        });
     }
-    parseNewPollEvent(receipt: TransactionReceipt): {poll:string}[]{
-        return this.parseEvents(receipt, "NewPoll");
+    parseNewPollEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "NewPoll");
+        return events.map(result => {
+            return result[0];
+        });
     }
-    parseNewVoteEvent(receipt: TransactionReceipt): {vote:string}[]{
-        return this.parseEvents(receipt, "NewVote");
+    parseNewVoteEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "NewVote");
+        return events.map(result => {
+            return result[0];
+        });
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
-        return this.parseEvents(receipt, "OwnershipTransferred");
+        let events = this.parseEvents(receipt, "OwnershipTransferred");
+        return events.map(result => {
+            return {
+                previousOwner: result.previousOwner,
+                newOwner: result.newOwner
+            };
+        });
     }
     parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
-        return this.parseEvents(receipt, "ParamSet");
+        let events = this.parseEvents(receipt, "ParamSet");
+        return events.map(result => {
+            return {
+                name: result.name,
+                value: result.value
+            };
+        });
     }
     parseParamSet2Event(receipt: TransactionReceipt): {name:string,value1:string,value2:string}[]{
-        return this.parseEvents(receipt, "ParamSet2");
+        let events = this.parseEvents(receipt, "ParamSet2");
+        return events.map(result => {
+            return {
+                name: result.name,
+                value1: result.value1,
+                value2: result.value2
+            };
+        });
     }
     parsePollEvent(receipt: TransactionReceipt): {account:string,poll:string,option:BigNumber}[]{
-        return this.parseEvents(receipt, "Poll");
+        let events = this.parseEvents(receipt, "Poll");
+        return events.map(result => {
+            return {
+                account: result.account,
+                poll: result.poll,
+                option: new BigNumber(result.option)
+            };
+        });
     }
     parseSetVotingConfigEvent(receipt: TransactionReceipt): {configName:string,paramName:string,minExeDelay:BigNumber}[]{
-        return this.parseEvents(receipt, "SetVotingConfig");
+        let events = this.parseEvents(receipt, "SetVotingConfig");
+        return events.map(result => {
+            return {
+                configName: result.configName,
+                paramName: result.paramName,
+                minExeDelay: new BigNumber(result.minExeDelay)
+            };
+        });
     }
     parseStakeEvent(receipt: TransactionReceipt): {who:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Stake");
+        let events = this.parseEvents(receipt, "Stake");
+        return events.map(result => {
+            return {
+                who: result.who,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     parseUnstakeEvent(receipt: TransactionReceipt): {who:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Unstake");
+        let events = this.parseEvents(receipt, "Unstake");
+        return events.map(result => {
+            return {
+                who: result.who,
+                value: new BigNumber(result.value)
+            };
+        });
     }
-    parseVetoEvent(receipt: TransactionReceipt): {vote:string}[]{
-        return this.parseEvents(receipt, "Veto");
+    parseVetoEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "Veto");
+        return events.map(result => {
+            return result[0];
+        });
     }
     parseVoteEvent(receipt: TransactionReceipt): {account:string,vote:string,option:BigNumber}[]{
-        return this.parseEvents(receipt, "Vote");
+        let events = this.parseEvents(receipt, "Vote");
+        return events.map(result => {
+            return {
+                account: result.account,
+                vote: result.vote,
+                option: new BigNumber(result.option)
+            };
+        });
     }
     async addVotingConfig(params:{name:string,minExeDelay:number|BigNumber,minVoteDuration:number|BigNumber,maxVoteDuration:number|BigNumber,minOaxTokenToCreateVote:number|BigNumber,minQuorum:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('addVotingConfig',Utils.stringToBytes32(params.name),Utils.toString(params.minExeDelay),Utils.toString(params.minVoteDuration),Utils.toString(params.maxVoteDuration),Utils.toString(params.minOaxTokenToCreateVote),Utils.toString(params.minQuorum));
@@ -72,7 +146,7 @@ export class OAXDEX_Governance extends Contract{
         return {
             amount: new BigNumber(result.amount),
             timestamp: new BigNumber(result.timestamp)
-        }
+        };
     }
     async getNewVoteId(): Promise<TransactionReceipt>{
         let result = await this.methods('getNewVoteId');
@@ -94,7 +168,7 @@ export class OAXDEX_Governance extends Contract{
             _maxVoteDuration: new BigNumber(result._maxVoteDuration),
             _minOaxTokenToCreateVote: new BigNumber(result._minOaxTokenToCreateVote),
             _minQuorum: new BigNumber(result._minQuorum)
-        }
+        };
     }
     async getVotings(params:{start:number|BigNumber,count:number|BigNumber}): Promise<string[]>{
         let result = await this.methods('getVotings',Utils.toString(params.start),Utils.toString(params.count));
@@ -208,7 +282,7 @@ export class OAXDEX_Governance extends Contract{
             maxVoteDuration: new BigNumber(result.maxVoteDuration),
             minOaxTokenToCreateVote: new BigNumber(result.minOaxTokenToCreateVote),
             minQuorum: new BigNumber(result.minQuorum)
-        }
+        };
     }
     async votingExecutor(param1:number|BigNumber): Promise<string>{
         let result = await this.methods('votingExecutor',Utils.toString(param1));

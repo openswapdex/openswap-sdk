@@ -26,12 +26,8 @@ export declare class OSWAP_RestrictedFactory extends Contract {
         newPairSize: BigNumber;
         newSize: BigNumber;
     }[];
-    parsePairRestartedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): string[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): string[];
     parseParamSetEvent(receipt: TransactionReceipt): {
         name: string;
         value: string;
@@ -41,8 +37,8 @@ export declare class OSWAP_RestrictedFactory extends Contract {
         value1: string;
         value2: string;
     }[];
-    parseRestartedEvent(receipt: TransactionReceipt): any;
-    parseShutdownedEvent(receipt: TransactionReceipt): any;
+    parseRestartedEvent(receipt: TransactionReceipt): any[];
+    parseShutdownedEvent(receipt: TransactionReceipt): any[];
     addOldOracleToNewPair(params: {
         tokenA: string;
         tokenB: string;

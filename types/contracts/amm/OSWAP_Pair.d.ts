@@ -18,9 +18,7 @@ export declare class OSWAP_Pair extends Contract {
         amount0: BigNumber;
         amount1: BigNumber;
     }[];
-    parseProtocolFeeSetEvent(receipt: TransactionReceipt): {
-        protocolFee: BigNumber;
-    }[];
+    parseProtocolFeeSetEvent(receipt: TransactionReceipt): BigNumber[];
     parseSwapEvent(receipt: TransactionReceipt): {
         sender: string;
         amount0In: BigNumber;
@@ -33,9 +31,7 @@ export declare class OSWAP_Pair extends Contract {
         reserve0: BigNumber;
         reserve1: BigNumber;
     }[];
-    parseTradeFeeSetEvent(receipt: TransactionReceipt): {
-        tradeFee: BigNumber;
-    }[];
+    parseTradeFeeSetEvent(receipt: TransactionReceipt): BigNumber[];
     parseTransferEvent(receipt: TransactionReceipt): {
         from: string;
         to: string;

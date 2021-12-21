@@ -2,15 +2,9 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OAXDEX_Administrator extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(governance: string): Promise<string>;
-    parseAddAdminEvent(receipt: TransactionReceipt): {
-        admin: string;
-    }[];
-    parseRemoveAdminEvent(receipt: TransactionReceipt): {
-        admin: string;
-    }[];
-    parseSetMaxAdminEvent(receipt: TransactionReceipt): {
-        maxAdmin: BigNumber;
-    }[];
+    parseAddAdminEvent(receipt: TransactionReceipt): string[];
+    parseRemoveAdminEvent(receipt: TransactionReceipt): string[];
+    parseSetMaxAdminEvent(receipt: TransactionReceipt): BigNumber[];
     parseVotedFactoryRestartEvent(receipt: TransactionReceipt): {
         admin: string;
         factory: string;

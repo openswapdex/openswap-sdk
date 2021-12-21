@@ -9,16 +9,47 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         return this._deploy(governance);
     }
     parseCustomPairRegisterEvent(receipt: TransactionReceipt): {pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}[]{
-        return this.parseEvents(receipt, "CustomPairRegister");
+        let events = this.parseEvents(receipt, "CustomPairRegister");
+        return events.map(result => {
+            return {
+                pair: result.pair,
+                fee: new BigNumber(result.fee),
+                feeBase: new BigNumber(result.feeBase),
+                typeCode: new BigNumber(result.typeCode)
+            };
+        });
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
-        return this.parseEvents(receipt, "OwnershipTransferred");
+        let events = this.parseEvents(receipt, "OwnershipTransferred");
+        return events.map(result => {
+            return {
+                previousOwner: result.previousOwner,
+                newOwner: result.newOwner
+            };
+        });
     }
     parsePairRegisterEvent(receipt: TransactionReceipt): {factory:string,pair:string,token0:string,token1:string}[]{
-        return this.parseEvents(receipt, "PairRegister");
+        let events = this.parseEvents(receipt, "PairRegister");
+        return events.map(result => {
+            return {
+                factory: result.factory,
+                pair: result.pair,
+                token0: result.token0,
+                token1: result.token1
+            };
+        });
     }
     parseProtocolRegisterEvent(receipt: TransactionReceipt): {factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}[]{
-        return this.parseEvents(receipt, "ProtocolRegister");
+        let events = this.parseEvents(receipt, "ProtocolRegister");
+        return events.map(result => {
+            return {
+                factory: result.factory,
+                name: result.name,
+                fee: new BigNumber(result.fee),
+                feeBase: new BigNumber(result.feeBase),
+                typeCode: new BigNumber(result.typeCode)
+            };
+        });
     }
     async customPairs(param1:string): Promise<{fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}>{
         let result = await this.methods('customPairs',param1);
@@ -26,7 +57,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
             fee: new BigNumber(result.fee),
             feeBase: new BigNumber(result.feeBase),
             typeCode: new BigNumber(result.typeCode)
-        }
+        };
     }
     async execute(params:string[]): Promise<TransactionReceipt>{
         let result = await this.methods('execute',Utils.stringToBytes32(params));
@@ -37,14 +68,14 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         return {
             fee: new BigNumber(result.fee),
             feeBase: new BigNumber(result.feeBase)
-        }
+        };
     }
     async getPairTokens(pairAddress:string[]): Promise<{token0:string[],token1:string[]}>{
         let result = await this.methods('getPairTokens',pairAddress);
         return {
             token0: result.token0,
             token1: result.token1
-        }
+        };
     }
     async getTypeCode(pairAddress:string): Promise<BigNumber>{
         let result = await this.methods('getTypeCode',pairAddress);
@@ -68,7 +99,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
             factory: result.factory,
             token0: result.token0,
             token1: result.token1
-        }
+        };
     }
     async protocolList(param1:number|BigNumber): Promise<string>{
         let result = await this.methods('protocolList',Utils.toString(param1));
@@ -85,7 +116,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
             fee: new BigNumber(result.fee),
             feeBase: new BigNumber(result.feeBase),
             typeCode: new BigNumber(result.typeCode)
-        }
+        };
     }
     async registerPair(params:{token0:string,token1:string,pairAddress:string,fee:number|BigNumber,feeBase:number|BigNumber,typeCode:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('registerPair',params.token0,params.token1,params.pairAddress,Utils.toString(params.fee),Utils.toString(params.feeBase),Utils.toString(params.typeCode));

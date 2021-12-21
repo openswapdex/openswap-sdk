@@ -9,31 +9,78 @@ export class OSWAP_RestrictedFactory extends Contract{
         return this._deploy(params.governance,params.whitelistFactory,params.pairCreator,params.configStore,Utils.toString(params.tradeFee),Utils.toString(params.protocolFee),params.protocolFeeTo);
     }
     parseOracleAddedEvent(receipt: TransactionReceipt): {token0:string,token1:string,oracle:string}[]{
-        return this.parseEvents(receipt, "OracleAdded");
+        let events = this.parseEvents(receipt, "OracleAdded");
+        return events.map(result => {
+            return {
+                token0: result.token0,
+                token1: result.token1,
+                oracle: result.oracle
+            };
+        });
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
-        return this.parseEvents(receipt, "OwnershipTransferred");
+        let events = this.parseEvents(receipt, "OwnershipTransferred");
+        return events.map(result => {
+            return {
+                previousOwner: result.previousOwner,
+                newOwner: result.newOwner
+            };
+        });
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newPairSize:BigNumber,newSize:BigNumber}[]{
-        return this.parseEvents(receipt, "PairCreated");
+        let events = this.parseEvents(receipt, "PairCreated");
+        return events.map(result => {
+            return {
+                token0: result.token0,
+                token1: result.token1,
+                pair: result.pair,
+                newPairSize: new BigNumber(result.newPairSize),
+                newSize: new BigNumber(result.newSize)
+            };
+        });
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
-        return this.parseEvents(receipt, "PairRestarted");
+    parsePairRestartedEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "PairRestarted");
+        return events.map(result => {
+            return result[0];
+        });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
-        return this.parseEvents(receipt, "PairShutdowned");
+    parsePairShutdownedEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "PairShutdowned");
+        return events.map(result => {
+            return result[0];
+        });
     }
     parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
-        return this.parseEvents(receipt, "ParamSet");
+        let events = this.parseEvents(receipt, "ParamSet");
+        return events.map(result => {
+            return {
+                name: result.name,
+                value: result.value
+            };
+        });
     }
     parseParamSet2Event(receipt: TransactionReceipt): {name:string,value1:string,value2:string}[]{
-        return this.parseEvents(receipt, "ParamSet2");
+        let events = this.parseEvents(receipt, "ParamSet2");
+        return events.map(result => {
+            return {
+                name: result.name,
+                value1: result.value1,
+                value2: result.value2
+            };
+        });
     }
-    parseRestartedEvent(receipt: TransactionReceipt): any{
-        return this.parseEvents(receipt, "Restarted");
+    parseRestartedEvent(receipt: TransactionReceipt): any[]{
+        let events = this.parseEvents(receipt, "Restarted");
+        return events.map(result => {
+            return ;;
+        });
     }
-    parseShutdownedEvent(receipt: TransactionReceipt): any{
-        return this.parseEvents(receipt, "Shutdowned");
+    parseShutdownedEvent(receipt: TransactionReceipt): any[]{
+        let events = this.parseEvents(receipt, "Shutdowned");
+        return events.map(result => {
+            return ;;
+        });
     }
     async addOldOracleToNewPair(params:{tokenA:string,tokenB:string,oracle:string}): Promise<TransactionReceipt>{
         let result = await this.methods('addOldOracleToNewPair',params.tokenA,params.tokenB,params.oracle);
@@ -57,7 +104,7 @@ export class OSWAP_RestrictedFactory extends Contract{
             oracle_: result.oracle_,
             tradeFee_: new BigNumber(result.tradeFee_),
             protocolFee_: new BigNumber(result.protocolFee_)
-        }
+        };
     }
     async configStore(): Promise<string>{
         let result = await this.methods('configStore');
@@ -74,7 +121,7 @@ export class OSWAP_RestrictedFactory extends Contract{
             _whitelistFactory: result._whitelistFactory,
             _restrictedLiquidityProvider: result._restrictedLiquidityProvider,
             _configStore: result._configStore
-        }
+        };
     }
     async getPair(params:{param1:string,param2:string,param3:number|BigNumber}): Promise<string>{
         let result = await this.methods('getPair',params.param1,params.param2,Utils.toString(params.param3));

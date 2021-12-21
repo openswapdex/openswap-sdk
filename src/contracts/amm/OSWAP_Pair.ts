@@ -9,28 +9,79 @@ export class OSWAP_Pair extends Contract{
         return this._deploy();
     }
     parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Approval");
+        let events = this.parseEvents(receipt, "Approval");
+        return events.map(result => {
+            return {
+                owner: result.owner,
+                spender: result.spender,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     parseBurnEvent(receipt: TransactionReceipt): {sender:string,amount0:BigNumber,amount1:BigNumber,to:string}[]{
-        return this.parseEvents(receipt, "Burn");
+        let events = this.parseEvents(receipt, "Burn");
+        return events.map(result => {
+            return {
+                sender: result.sender,
+                amount0: new BigNumber(result.amount0),
+                amount1: new BigNumber(result.amount1),
+                to: result.to
+            };
+        });
     }
     parseMintEvent(receipt: TransactionReceipt): {sender:string,amount0:BigNumber,amount1:BigNumber}[]{
-        return this.parseEvents(receipt, "Mint");
+        let events = this.parseEvents(receipt, "Mint");
+        return events.map(result => {
+            return {
+                sender: result.sender,
+                amount0: new BigNumber(result.amount0),
+                amount1: new BigNumber(result.amount1)
+            };
+        });
     }
-    parseProtocolFeeSetEvent(receipt: TransactionReceipt): {protocolFee:BigNumber}[]{
-        return this.parseEvents(receipt, "ProtocolFeeSet");
+    parseProtocolFeeSetEvent(receipt: TransactionReceipt): BigNumber[]{
+        let events = this.parseEvents(receipt, "ProtocolFeeSet");
+        return events.map(result => {
+            return new BigNumber(result[0]);
+        });
     }
     parseSwapEvent(receipt: TransactionReceipt): {sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}[]{
-        return this.parseEvents(receipt, "Swap");
+        let events = this.parseEvents(receipt, "Swap");
+        return events.map(result => {
+            return {
+                sender: result.sender,
+                amount0In: new BigNumber(result.amount0In),
+                amount1In: new BigNumber(result.amount1In),
+                amount0Out: new BigNumber(result.amount0Out),
+                amount1Out: new BigNumber(result.amount1Out),
+                to: result.to
+            };
+        });
     }
     parseSyncEvent(receipt: TransactionReceipt): {reserve0:BigNumber,reserve1:BigNumber}[]{
-        return this.parseEvents(receipt, "Sync");
+        let events = this.parseEvents(receipt, "Sync");
+        return events.map(result => {
+            return {
+                reserve0: new BigNumber(result.reserve0),
+                reserve1: new BigNumber(result.reserve1)
+            };
+        });
     }
-    parseTradeFeeSetEvent(receipt: TransactionReceipt): {tradeFee:BigNumber}[]{
-        return this.parseEvents(receipt, "TradeFeeSet");
+    parseTradeFeeSetEvent(receipt: TransactionReceipt): BigNumber[]{
+        let events = this.parseEvents(receipt, "TradeFeeSet");
+        return events.map(result => {
+            return new BigNumber(result[0]);
+        });
     }
     parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Transfer");
+        let events = this.parseEvents(receipt, "Transfer");
+        return events.map(result => {
+            return {
+                from: result.from,
+                to: result.to,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     async EIP712_TYPEHASH(): Promise<string>{
         let result = await this.methods('EIP712_TYPEHASH');
@@ -90,7 +141,7 @@ export class OSWAP_Pair extends Contract{
             _reserve0: new BigNumber(result._reserve0),
             _reserve1: new BigNumber(result._reserve1),
             _blockTimestampLast: new BigNumber(result._blockTimestampLast)
-        }
+        };
     }
     async initialize(params:{token0:string,token1:string}): Promise<TransactionReceipt>{
         let result = await this.methods('initialize',params.token0,params.token1);

@@ -98,8 +98,15 @@ export declare class OSWAP_OraclePair extends Contract {
         amountIn: number | BigNumber;
         data: string;
     }): Promise<BigNumber>;
-    getBalances(): Promise<[BigNumber, BigNumber, BigNumber]>;
-    getLastBalances(): Promise<[BigNumber, BigNumber]>;
+    getBalances(): Promise<{
+        param1: BigNumber;
+        param2: BigNumber;
+        param3: BigNumber;
+    }>;
+    getLastBalances(): Promise<{
+        param1: BigNumber;
+        param2: BigNumber;
+    }>;
     getLatestPrice(params: {
         direction: boolean;
         payload: string;

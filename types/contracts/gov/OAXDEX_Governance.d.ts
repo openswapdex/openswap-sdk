@@ -19,15 +19,9 @@ export declare class OAXDEX_Governance extends Contract {
         minOaxTokenToCreateVote: BigNumber;
         minQuorum: BigNumber;
     }[];
-    parseExecutedEvent(receipt: TransactionReceipt): {
-        vote: string;
-    }[];
-    parseNewPollEvent(receipt: TransactionReceipt): {
-        poll: string;
-    }[];
-    parseNewVoteEvent(receipt: TransactionReceipt): {
-        vote: string;
-    }[];
+    parseExecutedEvent(receipt: TransactionReceipt): string[];
+    parseNewPollEvent(receipt: TransactionReceipt): string[];
+    parseNewVoteEvent(receipt: TransactionReceipt): string[];
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
         previousOwner: string;
         newOwner: string;
@@ -59,9 +53,7 @@ export declare class OAXDEX_Governance extends Contract {
         who: string;
         value: BigNumber;
     }[];
-    parseVetoEvent(receipt: TransactionReceipt): {
-        vote: string;
-    }[];
+    parseVetoEvent(receipt: TransactionReceipt): string[];
     parseVoteEvent(receipt: TransactionReceipt): {
         account: string;
         vote: string;

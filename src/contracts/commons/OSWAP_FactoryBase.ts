@@ -9,19 +9,39 @@ export class OSWAP_FactoryBase extends Contract{
         return this._deploy(params.governance,params.pairCreator);
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newSize:BigNumber}[]{
-        return this.parseEvents(receipt, "PairCreated");
+        let events = this.parseEvents(receipt, "PairCreated");
+        return events.map(result => {
+            return {
+                token0: result.token0,
+                token1: result.token1,
+                pair: result.pair,
+                newSize: new BigNumber(result.newSize)
+            };
+        });
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
-        return this.parseEvents(receipt, "PairRestarted");
+    parsePairRestartedEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "PairRestarted");
+        return events.map(result => {
+            return result[0];
+        });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
-        return this.parseEvents(receipt, "PairShutdowned");
+    parsePairShutdownedEvent(receipt: TransactionReceipt): string[]{
+        let events = this.parseEvents(receipt, "PairShutdowned");
+        return events.map(result => {
+            return result[0];
+        });
     }
-    parseRestartedEvent(receipt: TransactionReceipt): any{
-        return this.parseEvents(receipt, "Restarted");
+    parseRestartedEvent(receipt: TransactionReceipt): any[]{
+        let events = this.parseEvents(receipt, "Restarted");
+        return events.map(result => {
+            return ;;
+        });
     }
-    parseShutdownedEvent(receipt: TransactionReceipt): any{
-        return this.parseEvents(receipt, "Shutdowned");
+    parseShutdownedEvent(receipt: TransactionReceipt): any[]{
+        let events = this.parseEvents(receipt, "Shutdowned");
+        return events.map(result => {
+            return ;;
+        });
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
         let result = await this.methods('allPairs',Utils.toString(param1));

@@ -25,7 +25,7 @@ export class OSWAP_RestrictedPairOracle extends Contract{
         return {
             numerator: new BigNumber(result.numerator),
             denominator: new BigNumber(result.denominator)
-        }
+        };
     }
     async isSupported(params:{param1:string,param2:string}): Promise<boolean>{
         let result = await this.methods('isSupported',params.param1,params.param2);

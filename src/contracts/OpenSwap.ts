@@ -9,10 +9,24 @@ export class OpenSwap extends Contract{
         return this._deploy(params.minter,params.initSupplyTo,Utils.toString(params.initSupply),Utils.toString(params.totalSupply));
     }
     parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Approval");
+        let events = this.parseEvents(receipt, "Approval");
+        return events.map(result => {
+            return {
+                owner: result.owner,
+                spender: result.spender,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Transfer");
+        let events = this.parseEvents(receipt, "Transfer");
+        return events.map(result => {
+            return {
+                from: result.from,
+                to: result.to,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     async allowance(params:{owner:string,spender:string}): Promise<BigNumber>{
         let result = await this.methods('allowance',params.owner,params.spender);

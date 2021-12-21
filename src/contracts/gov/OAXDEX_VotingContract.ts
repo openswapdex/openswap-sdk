@@ -62,7 +62,7 @@ export class OAXDEX_VotingContract extends Contract{
             optionsWeight_: result.optionsWeight_,
             quorum_: result.quorum_,
             executeParam_: result.executeParam_
-        }
+        };
     }
     async governance(): Promise<string>{
         let result = await this.methods('governance');
