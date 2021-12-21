@@ -9,7 +9,13 @@ export class MockAmmPair extends Contract{
         return this._deploy(params.token0,params.token1);
     }
     parseSyncEvent(receipt: TransactionReceipt): {reserve0:BigNumber,reserve1:BigNumber}[]{
-        return this.parseEvents(receipt, "Sync");
+        let events = this.parseEvents(receipt, "Sync");
+        return events.map(result => {
+            return {
+                reserve0: new BigNumber(result.reserve0),
+                reserve1: new BigNumber(result.reserve1)
+            };
+        });
     }
     async __blockTimestampLast(): Promise<BigNumber>{
         let result = await this.methods('__blockTimestampLast');
@@ -29,7 +35,7 @@ export class MockAmmPair extends Contract{
             reserve0: new BigNumber(result.reserve0),
             reserve1: new BigNumber(result.reserve1),
             blockTimestampLast: new BigNumber(result.blockTimestampLast)
-        }
+        };
     }
     async setReserves(params:{reserve0:number|BigNumber,reserve1:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('setReserves',Utils.toString(params.reserve0),Utils.toString(params.reserve1));

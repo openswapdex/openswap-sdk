@@ -21,7 +21,7 @@ export class MockOracleAdaptor extends Contract{
         return {
             numerator: new BigNumber(result.numerator),
             denominator: new BigNumber(result.denominator)
-        }
+        };
     }
     async isSupported(params:{from:string,to:string}): Promise<boolean>{
         let result = await this.methods('isSupported',params.from,params.to);

@@ -9,13 +9,33 @@ export class TestERC20 extends Contract{
         return this._deploy(params.symbol,params.name,Utils.toString(params.initialSupply),Utils.toString(params.cap),Utils.toString(params.decimals));
     }
     parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Approval");
+        let events = this.parseEvents(receipt, "Approval");
+        return events.map(result => {
+            return {
+                owner: result.owner,
+                spender: result.spender,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     parseAuthEvent(receipt: TransactionReceipt): {account:string,auth:BigNumber}[]{
-        return this.parseEvents(receipt, "Auth");
+        let events = this.parseEvents(receipt, "Auth");
+        return events.map(result => {
+            return {
+                account: result.account,
+                auth: new BigNumber(result.auth)
+            };
+        });
     }
     parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
-        return this.parseEvents(receipt, "Transfer");
+        let events = this.parseEvents(receipt, "Transfer");
+        return events.map(result => {
+            return {
+                from: result.from,
+                to: result.to,
+                value: new BigNumber(result.value)
+            };
+        });
     }
     async allowance(params:{param1:string,param2:string}): Promise<BigNumber>{
         let result = await this.methods('allowance',params.param1,params.param2);

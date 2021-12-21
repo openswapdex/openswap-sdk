@@ -9,7 +9,15 @@ export class MockAmmFactory extends Contract{
         return this._deploy();
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newSize:BigNumber}[]{
-        return this.parseEvents(receipt, "PairCreated");
+        let events = this.parseEvents(receipt, "PairCreated");
+        return events.map(result => {
+            return {
+                token0: result.token0,
+                token1: result.token1,
+                pair: result.pair,
+                newSize: new BigNumber(result.newSize)
+            };
+        });
     }
     async createPair(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
         let result = await this.methods('createPair',params.tokenA,params.tokenB);

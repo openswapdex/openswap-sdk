@@ -9,16 +9,42 @@ export class WETH9 extends Contract{
         return this._deploy();
     }
     parseApprovalEvent(receipt: TransactionReceipt): {src:string,guy:string,wad:BigNumber}[]{
-        return this.parseEvents(receipt, "Approval");
+        let events = this.parseEvents(receipt, "Approval");
+        return events.map(result => {
+            return {
+                src: result.src,
+                guy: result.guy,
+                wad: new BigNumber(result.wad)
+            };
+        });
     }
     parseDepositEvent(receipt: TransactionReceipt): {dst:string,wad:BigNumber}[]{
-        return this.parseEvents(receipt, "Deposit");
+        let events = this.parseEvents(receipt, "Deposit");
+        return events.map(result => {
+            return {
+                dst: result.dst,
+                wad: new BigNumber(result.wad)
+            };
+        });
     }
     parseTransferEvent(receipt: TransactionReceipt): {src:string,dst:string,wad:BigNumber}[]{
-        return this.parseEvents(receipt, "Transfer");
+        let events = this.parseEvents(receipt, "Transfer");
+        return events.map(result => {
+            return {
+                src: result.src,
+                dst: result.dst,
+                wad: new BigNumber(result.wad)
+            };
+        });
     }
     parseWithdrawalEvent(receipt: TransactionReceipt): {src:string,wad:BigNumber}[]{
-        return this.parseEvents(receipt, "Withdrawal");
+        let events = this.parseEvents(receipt, "Withdrawal");
+        return events.map(result => {
+            return {
+                src: result.src,
+                wad: new BigNumber(result.wad)
+            };
+        });
     }
     async allowance(params:{param1:string,param2:string}): Promise<BigNumber>{
         let result = await this.methods('allowance',params.param1,params.param2);
