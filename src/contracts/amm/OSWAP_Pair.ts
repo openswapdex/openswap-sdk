@@ -39,10 +39,12 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseProtocolFeeSetEvent(receipt: TransactionReceipt): BigNumber[]{
+    parseProtocolFeeSetEvent(receipt: TransactionReceipt): {protocolFee:BigNumber}[]{
         let events = this.parseEvents(receipt, "ProtocolFeeSet");
         return events.map(result => {
-            return new BigNumber(result[0]);
+            return {
+                protocolFee: new BigNumber(result.protocolFee)
+            };
         });
     }
     parseSwapEvent(receipt: TransactionReceipt): {sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}[]{
@@ -67,10 +69,12 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseTradeFeeSetEvent(receipt: TransactionReceipt): BigNumber[]{
+    parseTradeFeeSetEvent(receipt: TransactionReceipt): {tradeFee:BigNumber}[]{
         let events = this.parseEvents(receipt, "TradeFeeSet");
         return events.map(result => {
-            return new BigNumber(result[0]);
+            return {
+                tradeFee: new BigNumber(result.tradeFee)
+            };
         });
     }
     parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{

@@ -8,22 +8,28 @@ export class OAXDEX_Administrator extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
-    parseAddAdminEvent(receipt: TransactionReceipt): string[]{
+    parseAddAdminEvent(receipt: TransactionReceipt): {admin:string}[]{
         let events = this.parseEvents(receipt, "AddAdmin");
         return events.map(result => {
-            return result[0];
+            return {
+                admin: result.admin
+            };
         });
     }
-    parseRemoveAdminEvent(receipt: TransactionReceipt): string[]{
+    parseRemoveAdminEvent(receipt: TransactionReceipt): {admin:string}[]{
         let events = this.parseEvents(receipt, "RemoveAdmin");
         return events.map(result => {
-            return result[0];
+            return {
+                admin: result.admin
+            };
         });
     }
-    parseSetMaxAdminEvent(receipt: TransactionReceipt): BigNumber[]{
+    parseSetMaxAdminEvent(receipt: TransactionReceipt): {maxAdmin:BigNumber}[]{
         let events = this.parseEvents(receipt, "SetMaxAdmin");
         return events.map(result => {
-            return new BigNumber(result[0]);
+            return {
+                maxAdmin: new BigNumber(result.maxAdmin)
+            };
         });
     }
     parseVotedFactoryRestartEvent(receipt: TransactionReceipt): {admin:string,factory:string,YorN:boolean}[]{

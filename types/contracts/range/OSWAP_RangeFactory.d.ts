@@ -20,8 +20,12 @@ export declare class OSWAP_RangeFactory extends Contract {
         pair: string;
         newSize: BigNumber;
     }[];
-    parsePairRestartedEvent(receipt: TransactionReceipt): string[];
-    parsePairShutdownedEvent(receipt: TransactionReceipt): string[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
     parseParamSetEvent(receipt: TransactionReceipt): {
         name: string;
         value: string;

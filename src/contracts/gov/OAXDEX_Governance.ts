@@ -21,22 +21,28 @@ export class OAXDEX_Governance extends Contract{
             };
         });
     }
-    parseExecutedEvent(receipt: TransactionReceipt): string[]{
+    parseExecutedEvent(receipt: TransactionReceipt): {vote:string}[]{
         let events = this.parseEvents(receipt, "Executed");
         return events.map(result => {
-            return result[0];
+            return {
+                vote: result.vote
+            };
         });
     }
-    parseNewPollEvent(receipt: TransactionReceipt): string[]{
+    parseNewPollEvent(receipt: TransactionReceipt): {poll:string}[]{
         let events = this.parseEvents(receipt, "NewPoll");
         return events.map(result => {
-            return result[0];
+            return {
+                poll: result.poll
+            };
         });
     }
-    parseNewVoteEvent(receipt: TransactionReceipt): string[]{
+    parseNewVoteEvent(receipt: TransactionReceipt): {vote:string}[]{
         let events = this.parseEvents(receipt, "NewVote");
         return events.map(result => {
-            return result[0];
+            return {
+                vote: result.vote
+            };
         });
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
@@ -105,10 +111,12 @@ export class OAXDEX_Governance extends Contract{
             };
         });
     }
-    parseVetoEvent(receipt: TransactionReceipt): string[]{
+    parseVetoEvent(receipt: TransactionReceipt): {vote:string}[]{
         let events = this.parseEvents(receipt, "Veto");
         return events.map(result => {
-            return result[0];
+            return {
+                vote: result.vote
+            };
         });
     }
     parseVoteEvent(receipt: TransactionReceipt): {account:string,vote:string,option:BigNumber}[]{

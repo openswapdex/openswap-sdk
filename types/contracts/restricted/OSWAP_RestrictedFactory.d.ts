@@ -26,8 +26,12 @@ export declare class OSWAP_RestrictedFactory extends Contract {
         newPairSize: BigNumber;
         newSize: BigNumber;
     }[];
-    parsePairRestartedEvent(receipt: TransactionReceipt): string[];
-    parsePairShutdownedEvent(receipt: TransactionReceipt): string[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {
+        pair: string;
+    }[];
     parseParamSetEvent(receipt: TransactionReceipt): {
         name: string;
         value: string;

@@ -19,16 +19,20 @@ export class OSWAP_Factory extends Contract{
             };
         });
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): string[]{
+    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
         let events = this.parseEvents(receipt, "PairRestarted");
         return events.map(result => {
-            return result[0];
+            return {
+                pair: result.pair
+            };
         });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): string[]{
+    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
         let events = this.parseEvents(receipt, "PairShutdowned");
         return events.map(result => {
-            return result[0];
+            return {
+                pair: result.pair
+            };
         });
     }
     parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
