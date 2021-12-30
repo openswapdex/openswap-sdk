@@ -1,5 +1,4 @@
 import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
-// const Bin = require("../bin/OpenSwap.json");
 import {OpenSwap as OpenSwapContract} from "./contracts";
 
 export class OpenSwap {
@@ -75,5 +74,14 @@ export class OpenSwap {
         let approval = this._oswap.parseApprovalEvent(receipt)[0];
         approval.value = Utils.fromDecimals(approval.value);
         return {transfer, approval};
+    }
+
+    parseApprovalEvent(receipt: TransactionReceipt){
+        let event = this._oswap.parseApprovalEvent(receipt)[0];
+        event.value = Utils.fromDecimals(event.value);
+    }
+    parseTransferEvent(receipt: TransactionReceipt){
+        let event = this._oswap.parseTransferEvent(receipt)[0];
+        event.value = Utils.fromDecimals(event.value);
     }
 }

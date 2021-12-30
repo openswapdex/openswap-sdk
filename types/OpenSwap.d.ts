@@ -1,4 +1,4 @@
-import { BigNumber } from "@ijstech/eth-wallet";
+import { TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
 import { OpenSwap as OpenSwapContract } from "./contracts";
 export declare class OpenSwap {
     _oswap: OpenSwapContract;
@@ -70,4 +70,6 @@ export declare class OpenSwap {
             value: BigNumber;
         };
     }>;
+    parseApprovalEvent(receipt: TransactionReceipt): void;
+    parseTransferEvent(receipt: TransactionReceipt): void;
 }
