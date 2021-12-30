@@ -17,6 +17,7 @@ import {
     OSWAP_HybridRouter2, 
     OpenSwap
 } from './contracts';
+import {OpenSwap as SdkOpenSwap} from './OpenSwap';
 export interface IDeploymentResult{
     administrator?: string;
     factory?: string,
@@ -110,7 +111,7 @@ export interface IDeployOptions {
     }
 }
 export interface IDeploymentContracts {
-    openSwap: OpenSwap,
+    openSwap: SdkOpenSwap,
     governance: OAXDEX_Governance,
     administrator: OAXDEX_Administrator,
     registry: OAXDEX_VotingRegistry,
@@ -130,7 +131,7 @@ export interface IDeploymentContracts {
 
 export function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult): IDeploymentContracts{
     return {
-        openSwap: new OpenSwap(wallet, result.oswap),
+        openSwap: new SdkOpenSwap(new OpenSwap(wallet, result.oswap)),
         governance: new OAXDEX_Governance(wallet, result.governance),
         administrator: new OAXDEX_Administrator(wallet, result.administrator),
         registry: new OAXDEX_VotingRegistry(wallet, result.votingRegistry),

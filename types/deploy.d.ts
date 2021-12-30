@@ -1,5 +1,6 @@
 import { Wallet, BigNumber } from "@ijstech/eth-wallet";
-import { OSWAP_Factory, OSWAP_PairCreator, OSWAP_Router, OSWAP_VotingExecutor1, OAXDEX_Governance, OAXDEX_VotingExecutor, OAXDEX_Administrator, OAXDEX_VotingRegistry, OSWAP_OraclePairCreator, OSWAP_VotingExecutor2, OSWAP_OracleFactory, OSWAP_OracleLiquidityProvider, OSWAP_OracleRouter, OSWAP_HybridRouterRegistry, OSWAP_HybridRouter2, OpenSwap } from './contracts';
+import { OSWAP_Factory, OSWAP_PairCreator, OSWAP_Router, OSWAP_VotingExecutor1, OAXDEX_Governance, OAXDEX_VotingExecutor, OAXDEX_Administrator, OAXDEX_VotingRegistry, OSWAP_OraclePairCreator, OSWAP_VotingExecutor2, OSWAP_OracleFactory, OSWAP_OracleLiquidityProvider, OSWAP_OracleRouter, OSWAP_HybridRouterRegistry, OSWAP_HybridRouter2 } from './contracts';
+import { OpenSwap as SdkOpenSwap } from './OpenSwap';
 export interface IDeploymentResult {
     administrator?: string;
     factory?: string;
@@ -75,7 +76,7 @@ export interface IDeployOptions {
     };
 }
 export interface IDeploymentContracts {
-    openSwap: OpenSwap;
+    openSwap: SdkOpenSwap;
     governance: OAXDEX_Governance;
     administrator: OAXDEX_Administrator;
     registry: OAXDEX_VotingRegistry;
