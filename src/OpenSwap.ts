@@ -3,13 +3,18 @@ import {OpenSwap as OpenSwapContract} from "./contracts";
 
 export class OpenSwap {
     _oswap: OpenSwapContract;
+    private _address: string;
     constructor(oswap:OpenSwapContract){
         this._oswap = oswap;
+        this._address = oswap.address;
+    }
+    get address(): string{
+        return this._address || '';
     }
     async allowance(params:{owner:string,spender:string}): Promise<BigNumber>{
         return Utils.fromDecimals(await this._oswap.allowance(params));
     }
-    async approve(params:{spender:string,amount:number|BigNumber}): Promise<{owner: string, spender: string, value: BigNumber}>{
+    async approve(params:{spender:string,amount:number|BigNumber}): Promise<OpenSwapContract.ApprovalEvent>{
         params.amount = Utils.toDecimals(params.amount);
         let receipt = await this._oswap.approve(params);
         let event = this._oswap.parseApprovalEvent(receipt)[0];
@@ -25,21 +30,21 @@ export class OpenSwap {
     get decimals(): Promise<number>{
         return (async ()=>{return (await this._oswap.decimals()).toNumber();})();
     }
-    async decreaseAllowance(params:{spender:string,subtractedValue:number|BigNumber}): Promise<{owner: string, spender: string, value: BigNumber}>{
+    async decreaseAllowance(params:{spender:string,subtractedValue:number|BigNumber}): Promise<OpenSwapContract.ApprovalEvent>{
         params.subtractedValue = Utils.toDecimals(params.subtractedValue);
         let receipt = await this._oswap.decreaseAllowance(params);
         let event = this._oswap.parseApprovalEvent(receipt)[0];
         event.value = Utils.fromDecimals(event.value);
         return event;
     }
-    async increaseAllowance(params:{spender:string,addedValue:number|BigNumber}): Promise<{owner: string, spender: string, value: BigNumber}>{
+    async increaseAllowance(params:{spender:string,addedValue:number|BigNumber}): Promise<OpenSwapContract.ApprovalEvent>{
         params.addedValue = Utils.toDecimals(params.addedValue);
         let receipt = await this._oswap.increaseAllowance(params);
         let event = this._oswap.parseApprovalEvent(receipt)[0];
         event.value = Utils.fromDecimals(event.value);
         return event;
     }
-    async mint(params:{address:string,amount:number|BigNumber}): Promise<{from: string, to: string, value: BigNumber}>{
+    async mint(params:{address:string,amount:number|BigNumber}): Promise<OpenSwapContract.TransferEvent>{
         let receipt = await this._oswap.mint({account: params.address, amount: Utils.toDecimals(params.amount)});
         let event = this._oswap.parseTransferEvent(receipt)[0];
         event.value = Utils.fromDecimals(event.value);
@@ -57,15 +62,15 @@ export class OpenSwap {
     get totalSupply(): Promise<BigNumber>{
         return (async ()=>{return Utils.fromDecimals(await this._oswap.totalSupply());})();
     }
-    async transfer(params:{address:string,amount:number|BigNumber}): Promise<{from: string, to: string, value: BigNumber}>{
+    async transfer(params:{address:string,amount:number|BigNumber}): Promise<OpenSwapContract.TransferEvent>{
         let receipt = await this._oswap.transfer({recipient: params.address, amount: Utils.toDecimals(params.amount)});
         let event = this._oswap.parseTransferEvent(receipt)[0];
         event.value = Utils.fromDecimals(event.value);
         return event;
     }
     async transferFrom(params:{sender:string,recipient:string,amount:number|BigNumber}): Promise<{
-        transfer:{from: string, to: string, value: BigNumber},
-        approval:{owner: string, spender: string, value: BigNumber}
+        transfer: OpenSwapContract.TransferEvent,
+        approval: OpenSwapContract.ApprovalEvent
     }>{
         params.amount = Utils.toDecimals(params.amount);
         let receipt = await this._oswap.transferFrom(params);
@@ -74,14 +79,5 @@ export class OpenSwap {
         let approval = this._oswap.parseApprovalEvent(receipt)[0];
         approval.value = Utils.fromDecimals(approval.value);
         return {transfer, approval};
-    }
-
-    parseApprovalEvent(receipt: TransactionReceipt){
-        let event = this._oswap.parseApprovalEvent(receipt)[0];
-        event.value = Utils.fromDecimals(event.value);
-    }
-    parseTransferEvent(receipt: TransactionReceipt){
-        let event = this._oswap.parseTransferEvent(receipt)[0];
-        event.value = Utils.fromDecimals(event.value);
     }
 }
