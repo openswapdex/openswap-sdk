@@ -8,7 +8,7 @@ export class OSWAP_OraclePair extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
-    parseAddLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,expire:BigNumber,enable:boolean}[]{
+    parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_OraclePair.AddLiquidityEvent[]{
         let events = this.parseEvents(receipt, "AddLiquidity");
         return events.map(result => {
             return {
@@ -23,7 +23,7 @@ export class OSWAP_OraclePair extends Contract{
             };
         });
     }
-    parseDelegatorPauseOfferEvent(receipt: TransactionReceipt): {delegator:string,provider:string,direction:boolean}[]{
+    parseDelegatorPauseOfferEvent(receipt: TransactionReceipt): OSWAP_OraclePair.DelegatorPauseOfferEvent[]{
         let events = this.parseEvents(receipt, "DelegatorPauseOffer");
         return events.map(result => {
             return {
@@ -33,7 +33,7 @@ export class OSWAP_OraclePair extends Contract{
             };
         });
     }
-    parseDelegatorResumeOfferEvent(receipt: TransactionReceipt): {delegator:string,provider:string,direction:boolean}[]{
+    parseDelegatorResumeOfferEvent(receipt: TransactionReceipt): OSWAP_OraclePair.DelegatorResumeOfferEvent[]{
         let events = this.parseEvents(receipt, "DelegatorResumeOffer");
         return events.map(result => {
             return {
@@ -43,7 +43,7 @@ export class OSWAP_OraclePair extends Contract{
             };
         });
     }
-    parseNewProviderEvent(receipt: TransactionReceipt): {provider:string,index:BigNumber}[]{
+    parseNewProviderEvent(receipt: TransactionReceipt): OSWAP_OraclePair.NewProviderEvent[]{
         let events = this.parseEvents(receipt, "NewProvider");
         return events.map(result => {
             return {
@@ -52,7 +52,7 @@ export class OSWAP_OraclePair extends Contract{
             };
         });
     }
-    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,expire:BigNumber,enable:boolean}[]{
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_OraclePair.RemoveLiquidityEvent[]{
         let events = this.parseEvents(receipt, "RemoveLiquidity");
         return events.map(result => {
             return {
@@ -69,7 +69,7 @@ export class OSWAP_OraclePair extends Contract{
             };
         });
     }
-    parseReplenishEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,expire:BigNumber}[]{
+    parseReplenishEvent(receipt: TransactionReceipt): OSWAP_OraclePair.ReplenishEvent[]{
         let events = this.parseEvents(receipt, "Replenish");
         return events.map(result => {
             return {
@@ -82,7 +82,7 @@ export class OSWAP_OraclePair extends Contract{
             };
         });
     }
-    parseSetDelegatorEvent(receipt: TransactionReceipt): {provider:string,delegator:string}[]{
+    parseSetDelegatorEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SetDelegatorEvent[]{
         let events = this.parseEvents(receipt, "SetDelegator");
         return events.map(result => {
             return {
@@ -91,7 +91,7 @@ export class OSWAP_OraclePair extends Contract{
             };
         });
     }
-    parseSwapEvent(receipt: TransactionReceipt): {to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}[]{
+    parseSwapEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SwapEvent[]{
         let events = this.parseEvents(receipt, "Swap");
         return events.map(result => {
             return {
@@ -105,7 +105,7 @@ export class OSWAP_OraclePair extends Contract{
             };
         });
     }
-    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}[]{
+    parseSwappedOneProviderEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SwappedOneProviderEvent[]{
         let events = this.parseEvents(receipt, "SwappedOneProvider");
         return events.map(result => {
             return {
@@ -338,4 +338,15 @@ export class OSWAP_OraclePair extends Contract{
         let result = await this.methods('token1');
         return result;
     }
+}
+export module OSWAP_OraclePair{
+    export interface AddLiquidityEvent {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,expire:BigNumber,enable:boolean}
+    export interface DelegatorPauseOfferEvent {delegator:string,provider:string,direction:boolean}
+    export interface DelegatorResumeOfferEvent {delegator:string,provider:string,direction:boolean}
+    export interface NewProviderEvent {provider:string,index:BigNumber}
+    export interface RemoveLiquidityEvent {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,expire:BigNumber,enable:boolean}
+    export interface ReplenishEvent {provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,expire:BigNumber}
+    export interface SetDelegatorEvent {provider:string,delegator:string}
+    export interface SwapEvent {to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}
+    export interface SwappedOneProviderEvent {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}
 }

@@ -8,7 +8,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
-    parseCustomPairRegisterEvent(receipt: TransactionReceipt): {pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}[]{
+    parseCustomPairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent[]{
         let events = this.parseEvents(receipt, "CustomPairRegister");
         return events.map(result => {
             return {
@@ -19,7 +19,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
             };
         });
     }
-    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.OwnershipTransferredEvent[]{
         let events = this.parseEvents(receipt, "OwnershipTransferred");
         return events.map(result => {
             return {
@@ -28,7 +28,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
             };
         });
     }
-    parsePairRegisterEvent(receipt: TransactionReceipt): {factory:string,pair:string,token0:string,token1:string}[]{
+    parsePairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.PairRegisterEvent[]{
         let events = this.parseEvents(receipt, "PairRegister");
         return events.map(result => {
             return {
@@ -39,7 +39,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
             };
         });
     }
-    parseProtocolRegisterEvent(receipt: TransactionReceipt): {factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}[]{
+    parseProtocolRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.ProtocolRegisterEvent[]{
         let events = this.parseEvents(receipt, "ProtocolRegister");
         return events.map(result => {
             return {
@@ -170,4 +170,10 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         let result = await this.methods('transferOwnership',newOwner);
         return result;
     }
+}
+export module OSWAP_HybridRouterRegistry{
+    export interface CustomPairRegisterEvent {pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
+    export interface OwnershipTransferredEvent {previousOwner:string,newOwner:string}
+    export interface PairRegisterEvent {factory:string,pair:string,token0:string,token1:string}
+    export interface ProtocolRegisterEvent {factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
 }

@@ -8,7 +8,7 @@ export class OAXDEX_Administrator extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
-    parseAddAdminEvent(receipt: TransactionReceipt): {admin:string}[]{
+    parseAddAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.AddAdminEvent[]{
         let events = this.parseEvents(receipt, "AddAdmin");
         return events.map(result => {
             return {
@@ -16,7 +16,7 @@ export class OAXDEX_Administrator extends Contract{
             };
         });
     }
-    parseRemoveAdminEvent(receipt: TransactionReceipt): {admin:string}[]{
+    parseRemoveAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.RemoveAdminEvent[]{
         let events = this.parseEvents(receipt, "RemoveAdmin");
         return events.map(result => {
             return {
@@ -24,7 +24,7 @@ export class OAXDEX_Administrator extends Contract{
             };
         });
     }
-    parseSetMaxAdminEvent(receipt: TransactionReceipt): {maxAdmin:BigNumber}[]{
+    parseSetMaxAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.SetMaxAdminEvent[]{
         let events = this.parseEvents(receipt, "SetMaxAdmin");
         return events.map(result => {
             return {
@@ -32,7 +32,7 @@ export class OAXDEX_Administrator extends Contract{
             };
         });
     }
-    parseVotedFactoryRestartEvent(receipt: TransactionReceipt): {admin:string,factory:string,YorN:boolean}[]{
+    parseVotedFactoryRestartEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedFactoryRestartEvent[]{
         let events = this.parseEvents(receipt, "VotedFactoryRestart");
         return events.map(result => {
             return {
@@ -42,7 +42,7 @@ export class OAXDEX_Administrator extends Contract{
             };
         });
     }
-    parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): {admin:string,factory:string,YorN:boolean}[]{
+    parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedFactoryShutdownEvent[]{
         let events = this.parseEvents(receipt, "VotedFactoryShutdown");
         return events.map(result => {
             return {
@@ -52,7 +52,7 @@ export class OAXDEX_Administrator extends Contract{
             };
         });
     }
-    parseVotedPairRestartEvent(receipt: TransactionReceipt): {admin:string,pair:string,YorN:boolean}[]{
+    parseVotedPairRestartEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedPairRestartEvent[]{
         let events = this.parseEvents(receipt, "VotedPairRestart");
         return events.map(result => {
             return {
@@ -62,7 +62,7 @@ export class OAXDEX_Administrator extends Contract{
             };
         });
     }
-    parseVotedPairShutdownEvent(receipt: TransactionReceipt): {admin:string,pair:string,YorN:boolean}[]{
+    parseVotedPairShutdownEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedPairShutdownEvent[]{
         let events = this.parseEvents(receipt, "VotedPairShutdown");
         return events.map(result => {
             return {
@@ -72,7 +72,7 @@ export class OAXDEX_Administrator extends Contract{
             };
         });
     }
-    parseVotedVetoEvent(receipt: TransactionReceipt): {admin:string,votingContract:string,YorN:boolean}[]{
+    parseVotedVetoEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedVetoEvent[]{
         let events = this.parseEvents(receipt, "VotedVeto");
         return events.map(result => {
             return {
@@ -194,4 +194,14 @@ export class OAXDEX_Administrator extends Contract{
         let result = await this.methods('vetoVotingVote',params.param1,params.param2);
         return result;
     }
+}
+export module OAXDEX_Administrator{
+    export interface AddAdminEvent {admin:string}
+    export interface RemoveAdminEvent {admin:string}
+    export interface SetMaxAdminEvent {maxAdmin:BigNumber}
+    export interface VotedFactoryRestartEvent {admin:string,factory:string,YorN:boolean}
+    export interface VotedFactoryShutdownEvent {admin:string,factory:string,YorN:boolean}
+    export interface VotedPairRestartEvent {admin:string,pair:string,YorN:boolean}
+    export interface VotedPairShutdownEvent {admin:string,pair:string,YorN:boolean}
+    export interface VotedVetoEvent {admin:string,votingContract:string,YorN:boolean}
 }

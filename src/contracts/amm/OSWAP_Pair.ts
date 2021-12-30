@@ -8,7 +8,7 @@ export class OSWAP_Pair extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
-    parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
+    parseApprovalEvent(receipt: TransactionReceipt): OSWAP_Pair.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
@@ -18,7 +18,7 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseBurnEvent(receipt: TransactionReceipt): {sender:string,amount0:BigNumber,amount1:BigNumber,to:string}[]{
+    parseBurnEvent(receipt: TransactionReceipt): OSWAP_Pair.BurnEvent[]{
         let events = this.parseEvents(receipt, "Burn");
         return events.map(result => {
             return {
@@ -29,7 +29,7 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseMintEvent(receipt: TransactionReceipt): {sender:string,amount0:BigNumber,amount1:BigNumber}[]{
+    parseMintEvent(receipt: TransactionReceipt): OSWAP_Pair.MintEvent[]{
         let events = this.parseEvents(receipt, "Mint");
         return events.map(result => {
             return {
@@ -39,7 +39,7 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseProtocolFeeSetEvent(receipt: TransactionReceipt): {protocolFee:BigNumber}[]{
+    parseProtocolFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.ProtocolFeeSetEvent[]{
         let events = this.parseEvents(receipt, "ProtocolFeeSet");
         return events.map(result => {
             return {
@@ -47,7 +47,7 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseSwapEvent(receipt: TransactionReceipt): {sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}[]{
+    parseSwapEvent(receipt: TransactionReceipt): OSWAP_Pair.SwapEvent[]{
         let events = this.parseEvents(receipt, "Swap");
         return events.map(result => {
             return {
@@ -60,7 +60,7 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseSyncEvent(receipt: TransactionReceipt): {reserve0:BigNumber,reserve1:BigNumber}[]{
+    parseSyncEvent(receipt: TransactionReceipt): OSWAP_Pair.SyncEvent[]{
         let events = this.parseEvents(receipt, "Sync");
         return events.map(result => {
             return {
@@ -69,7 +69,7 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseTradeFeeSetEvent(receipt: TransactionReceipt): {tradeFee:BigNumber}[]{
+    parseTradeFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.TradeFeeSetEvent[]{
         let events = this.parseEvents(receipt, "TradeFeeSet");
         return events.map(result => {
             return {
@@ -77,7 +77,7 @@ export class OSWAP_Pair extends Contract{
             };
         });
     }
-    parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
+    parseTransferEvent(receipt: TransactionReceipt): OSWAP_Pair.TransferEvent[]{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
@@ -239,4 +239,14 @@ export class OSWAP_Pair extends Contract{
         let result = await this.methods('updateProtocolFee');
         return result;
     }
+}
+export module OSWAP_Pair{
+    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber}
+    export interface BurnEvent {sender:string,amount0:BigNumber,amount1:BigNumber,to:string}
+    export interface MintEvent {sender:string,amount0:BigNumber,amount1:BigNumber}
+    export interface ProtocolFeeSetEvent {protocolFee:BigNumber}
+    export interface SwapEvent {sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}
+    export interface SyncEvent {reserve0:BigNumber,reserve1:BigNumber}
+    export interface TradeFeeSetEvent {tradeFee:BigNumber}
+    export interface TransferEvent {from:string,to:string,value:BigNumber}
 }

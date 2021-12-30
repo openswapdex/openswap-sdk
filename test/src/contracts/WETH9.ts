@@ -8,7 +8,7 @@ export class WETH9 extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
-    parseApprovalEvent(receipt: TransactionReceipt): {src:string,guy:string,wad:BigNumber}[]{
+    parseApprovalEvent(receipt: TransactionReceipt): WETH9.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
@@ -18,7 +18,7 @@ export class WETH9 extends Contract{
             };
         });
     }
-    parseDepositEvent(receipt: TransactionReceipt): {dst:string,wad:BigNumber}[]{
+    parseDepositEvent(receipt: TransactionReceipt): WETH9.DepositEvent[]{
         let events = this.parseEvents(receipt, "Deposit");
         return events.map(result => {
             return {
@@ -27,7 +27,7 @@ export class WETH9 extends Contract{
             };
         });
     }
-    parseTransferEvent(receipt: TransactionReceipt): {src:string,dst:string,wad:BigNumber}[]{
+    parseTransferEvent(receipt: TransactionReceipt): WETH9.TransferEvent[]{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
@@ -37,7 +37,7 @@ export class WETH9 extends Contract{
             };
         });
     }
-    parseWithdrawalEvent(receipt: TransactionReceipt): {src:string,wad:BigNumber}[]{
+    parseWithdrawalEvent(receipt: TransactionReceipt): WETH9.WithdrawalEvent[]{
         let events = this.parseEvents(receipt, "Withdrawal");
         return events.map(result => {
             return {
@@ -90,4 +90,10 @@ export class WETH9 extends Contract{
         let result = await this.methods('withdraw',Utils.toString(wad));
         return result;
     }
+}
+export module WETH9{
+    export interface ApprovalEvent {src:string,guy:string,wad:BigNumber}
+    export interface DepositEvent {dst:string,wad:BigNumber}
+    export interface TransferEvent {src:string,dst:string,wad:BigNumber}
+    export interface WithdrawalEvent {src:string,wad:BigNumber}
 }

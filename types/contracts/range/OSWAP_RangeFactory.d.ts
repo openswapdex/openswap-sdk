@@ -10,33 +10,14 @@ export declare class OSWAP_RangeFactory extends Contract {
         liquidityProviderShare: number[] | BigNumber[];
         protocolFeeTo: string;
     }): Promise<string>;
-    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
-        previousOwner: string;
-        newOwner: string;
-    }[];
-    parsePairCreatedEvent(receipt: TransactionReceipt): {
-        token0: string;
-        token1: string;
-        pair: string;
-        newSize: BigNumber;
-    }[];
-    parsePairRestartedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parseParamSetEvent(receipt: TransactionReceipt): {
-        name: string;
-        value: string;
-    }[];
-    parseParamSet2Event(receipt: TransactionReceipt): {
-        name: string;
-        value1: string;
-        value2: string;
-    }[];
-    parseRestartedEvent(receipt: TransactionReceipt): any[];
-    parseShutdownedEvent(receipt: TransactionReceipt): any[];
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.OwnershipTransferredEvent[];
+    parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.PairCreatedEvent[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.PairRestartedEvent[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.PairShutdownedEvent[];
+    parseParamSetEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.ParamSetEvent[];
+    parseParamSet2Event(receipt: TransactionReceipt): OSWAP_RangeFactory.ParamSet2Event[];
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.RestartedEvent[];
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.ShutdownedEvent[];
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
     checkAndGetSwapParams(): Promise<BigNumber>;
@@ -82,4 +63,35 @@ export declare class OSWAP_RangeFactory extends Contract {
     stakeAmount(param1: number | BigNumber): Promise<BigNumber>;
     tradeFee(): Promise<BigNumber>;
     transferOwnership(newOwner: string): Promise<TransactionReceipt>;
+}
+export declare module OSWAP_RangeFactory {
+    interface OwnershipTransferredEvent {
+        previousOwner: string;
+        newOwner: string;
+    }
+    interface PairCreatedEvent {
+        token0: string;
+        token1: string;
+        pair: string;
+        newSize: BigNumber;
+    }
+    interface PairRestartedEvent {
+        pair: string;
+    }
+    interface PairShutdownedEvent {
+        pair: string;
+    }
+    interface ParamSetEvent {
+        name: string;
+        value: string;
+    }
+    interface ParamSet2Event {
+        name: string;
+        value1: string;
+        value2: string;
+    }
+    interface RestartedEvent {
+    }
+    interface ShutdownedEvent {
+    }
 }

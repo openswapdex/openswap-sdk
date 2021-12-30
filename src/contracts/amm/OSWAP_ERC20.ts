@@ -8,7 +8,7 @@ export class OSWAP_ERC20 extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
-    parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
+    parseApprovalEvent(receipt: TransactionReceipt): OSWAP_ERC20.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
@@ -18,7 +18,7 @@ export class OSWAP_ERC20 extends Contract{
             };
         });
     }
-    parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
+    parseTransferEvent(receipt: TransactionReceipt): OSWAP_ERC20.TransferEvent[]{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
@@ -88,4 +88,8 @@ export class OSWAP_ERC20 extends Contract{
         let result = await this.methods('transferFrom',params.from,params.to,Utils.toString(params.value));
         return result;
     }
+}
+export module OSWAP_ERC20{
+    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber}
+    export interface TransferEvent {from:string,to:string,value:BigNumber}
 }

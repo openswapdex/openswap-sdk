@@ -2,71 +2,15 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_OraclePair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
-    parseAddLiquidityEvent(receipt: TransactionReceipt): {
-        provider: string;
-        direction: boolean;
-        staked: BigNumber;
-        amount: BigNumber;
-        newStakeBalance: BigNumber;
-        newAmountBalance: BigNumber;
-        expire: BigNumber;
-        enable: boolean;
-    }[];
-    parseDelegatorPauseOfferEvent(receipt: TransactionReceipt): {
-        delegator: string;
-        provider: string;
-        direction: boolean;
-    }[];
-    parseDelegatorResumeOfferEvent(receipt: TransactionReceipt): {
-        delegator: string;
-        provider: string;
-        direction: boolean;
-    }[];
-    parseNewProviderEvent(receipt: TransactionReceipt): {
-        provider: string;
-        index: BigNumber;
-    }[];
-    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {
-        provider: string;
-        direction: boolean;
-        unstake: BigNumber;
-        amountOut: BigNumber;
-        reserveOut: BigNumber;
-        newStakeBalance: BigNumber;
-        newAmountBalance: BigNumber;
-        newReserveBalance: BigNumber;
-        expire: BigNumber;
-        enable: boolean;
-    }[];
-    parseReplenishEvent(receipt: TransactionReceipt): {
-        provider: string;
-        direction: boolean;
-        amountIn: BigNumber;
-        newAmountBalance: BigNumber;
-        newReserveBalance: BigNumber;
-        expire: BigNumber;
-    }[];
-    parseSetDelegatorEvent(receipt: TransactionReceipt): {
-        provider: string;
-        delegator: string;
-    }[];
-    parseSwapEvent(receipt: TransactionReceipt): {
-        to: string;
-        direction: boolean;
-        price: BigNumber;
-        amountIn: BigNumber;
-        amountOut: BigNumber;
-        tradeFee: BigNumber;
-        protocolFee: BigNumber;
-    }[];
-    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {
-        provider: string;
-        direction: boolean;
-        amountOut: BigNumber;
-        amountIn: BigNumber;
-        newAmountBalance: BigNumber;
-        newCounterReserveBalance: BigNumber;
-    }[];
+    parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_OraclePair.AddLiquidityEvent[];
+    parseDelegatorPauseOfferEvent(receipt: TransactionReceipt): OSWAP_OraclePair.DelegatorPauseOfferEvent[];
+    parseDelegatorResumeOfferEvent(receipt: TransactionReceipt): OSWAP_OraclePair.DelegatorResumeOfferEvent[];
+    parseNewProviderEvent(receipt: TransactionReceipt): OSWAP_OraclePair.NewProviderEvent[];
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_OraclePair.RemoveLiquidityEvent[];
+    parseReplenishEvent(receipt: TransactionReceipt): OSWAP_OraclePair.ReplenishEvent[];
+    parseSetDelegatorEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SetDelegatorEvent[];
+    parseSwapEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SwapEvent[];
+    parseSwappedOneProviderEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SwappedOneProviderEvent[];
     addLiquidity(params: {
         provider: string;
         direction: boolean;
@@ -225,4 +169,71 @@ export declare class OSWAP_OraclePair extends Contract {
     sync(): Promise<TransactionReceipt>;
     token0(): Promise<string>;
     token1(): Promise<string>;
+}
+export declare module OSWAP_OraclePair {
+    interface AddLiquidityEvent {
+        provider: string;
+        direction: boolean;
+        staked: BigNumber;
+        amount: BigNumber;
+        newStakeBalance: BigNumber;
+        newAmountBalance: BigNumber;
+        expire: BigNumber;
+        enable: boolean;
+    }
+    interface DelegatorPauseOfferEvent {
+        delegator: string;
+        provider: string;
+        direction: boolean;
+    }
+    interface DelegatorResumeOfferEvent {
+        delegator: string;
+        provider: string;
+        direction: boolean;
+    }
+    interface NewProviderEvent {
+        provider: string;
+        index: BigNumber;
+    }
+    interface RemoveLiquidityEvent {
+        provider: string;
+        direction: boolean;
+        unstake: BigNumber;
+        amountOut: BigNumber;
+        reserveOut: BigNumber;
+        newStakeBalance: BigNumber;
+        newAmountBalance: BigNumber;
+        newReserveBalance: BigNumber;
+        expire: BigNumber;
+        enable: boolean;
+    }
+    interface ReplenishEvent {
+        provider: string;
+        direction: boolean;
+        amountIn: BigNumber;
+        newAmountBalance: BigNumber;
+        newReserveBalance: BigNumber;
+        expire: BigNumber;
+    }
+    interface SetDelegatorEvent {
+        provider: string;
+        delegator: string;
+    }
+    interface SwapEvent {
+        to: string;
+        direction: boolean;
+        price: BigNumber;
+        amountIn: BigNumber;
+        amountOut: BigNumber;
+        tradeFee: BigNumber;
+        protocolFee: BigNumber;
+    }
+    interface SwappedOneProviderEvent {
+        provider: string;
+        direction: boolean;
+        amountOut: BigNumber;
+        amountIn: BigNumber;
+        newAmountBalance: BigNumber;
+        newCounterReserveBalance: BigNumber;
+    }
 }

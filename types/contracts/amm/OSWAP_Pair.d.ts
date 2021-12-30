@@ -2,45 +2,14 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_Pair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
-    parseApprovalEvent(receipt: TransactionReceipt): {
-        owner: string;
-        spender: string;
-        value: BigNumber;
-    }[];
-    parseBurnEvent(receipt: TransactionReceipt): {
-        sender: string;
-        amount0: BigNumber;
-        amount1: BigNumber;
-        to: string;
-    }[];
-    parseMintEvent(receipt: TransactionReceipt): {
-        sender: string;
-        amount0: BigNumber;
-        amount1: BigNumber;
-    }[];
-    parseProtocolFeeSetEvent(receipt: TransactionReceipt): {
-        protocolFee: BigNumber;
-    }[];
-    parseSwapEvent(receipt: TransactionReceipt): {
-        sender: string;
-        amount0In: BigNumber;
-        amount1In: BigNumber;
-        amount0Out: BigNumber;
-        amount1Out: BigNumber;
-        to: string;
-    }[];
-    parseSyncEvent(receipt: TransactionReceipt): {
-        reserve0: BigNumber;
-        reserve1: BigNumber;
-    }[];
-    parseTradeFeeSetEvent(receipt: TransactionReceipt): {
-        tradeFee: BigNumber;
-    }[];
-    parseTransferEvent(receipt: TransactionReceipt): {
-        from: string;
-        to: string;
-        value: BigNumber;
-    }[];
+    parseApprovalEvent(receipt: TransactionReceipt): OSWAP_Pair.ApprovalEvent[];
+    parseBurnEvent(receipt: TransactionReceipt): OSWAP_Pair.BurnEvent[];
+    parseMintEvent(receipt: TransactionReceipt): OSWAP_Pair.MintEvent[];
+    parseProtocolFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.ProtocolFeeSetEvent[];
+    parseSwapEvent(receipt: TransactionReceipt): OSWAP_Pair.SwapEvent[];
+    parseSyncEvent(receipt: TransactionReceipt): OSWAP_Pair.SyncEvent[];
+    parseTradeFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.TradeFeeSetEvent[];
+    parseTransferEvent(receipt: TransactionReceipt): OSWAP_Pair.TransferEvent[];
     EIP712_TYPEHASH(): Promise<string>;
     MINIMUM_LIQUIDITY(): Promise<BigNumber>;
     NAME_HASH(): Promise<string>;
@@ -117,4 +86,45 @@ export declare class OSWAP_Pair extends Contract {
     }): Promise<TransactionReceipt>;
     updateFee(): Promise<TransactionReceipt>;
     updateProtocolFee(): Promise<TransactionReceipt>;
+}
+export declare module OSWAP_Pair {
+    interface ApprovalEvent {
+        owner: string;
+        spender: string;
+        value: BigNumber;
+    }
+    interface BurnEvent {
+        sender: string;
+        amount0: BigNumber;
+        amount1: BigNumber;
+        to: string;
+    }
+    interface MintEvent {
+        sender: string;
+        amount0: BigNumber;
+        amount1: BigNumber;
+    }
+    interface ProtocolFeeSetEvent {
+        protocolFee: BigNumber;
+    }
+    interface SwapEvent {
+        sender: string;
+        amount0In: BigNumber;
+        amount1In: BigNumber;
+        amount0Out: BigNumber;
+        amount1Out: BigNumber;
+        to: string;
+    }
+    interface SyncEvent {
+        reserve0: BigNumber;
+        reserve1: BigNumber;
+    }
+    interface TradeFeeSetEvent {
+        tradeFee: BigNumber;
+    }
+    interface TransferEvent {
+        from: string;
+        to: string;
+        value: BigNumber;
+    }
 }

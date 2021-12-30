@@ -2,29 +2,10 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_HybridRouterRegistry extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(governance: string): Promise<string>;
-    parseCustomPairRegisterEvent(receipt: TransactionReceipt): {
-        pair: string;
-        fee: BigNumber;
-        feeBase: BigNumber;
-        typeCode: BigNumber;
-    }[];
-    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
-        previousOwner: string;
-        newOwner: string;
-    }[];
-    parsePairRegisterEvent(receipt: TransactionReceipt): {
-        factory: string;
-        pair: string;
-        token0: string;
-        token1: string;
-    }[];
-    parseProtocolRegisterEvent(receipt: TransactionReceipt): {
-        factory: string;
-        name: string;
-        fee: BigNumber;
-        feeBase: BigNumber;
-        typeCode: BigNumber;
-    }[];
+    parseCustomPairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent[];
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.OwnershipTransferredEvent[];
+    parsePairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.PairRegisterEvent[];
+    parseProtocolRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.ProtocolRegisterEvent[];
     customPairs(param1: string): Promise<{
         fee: BigNumber;
         feeBase: BigNumber;
@@ -121,4 +102,29 @@ export declare class OSWAP_HybridRouterRegistry extends Contract {
     }): Promise<TransactionReceipt>;
     renounceOwnership(): Promise<TransactionReceipt>;
     transferOwnership(newOwner: string): Promise<TransactionReceipt>;
+}
+export declare module OSWAP_HybridRouterRegistry {
+    interface CustomPairRegisterEvent {
+        pair: string;
+        fee: BigNumber;
+        feeBase: BigNumber;
+        typeCode: BigNumber;
+    }
+    interface OwnershipTransferredEvent {
+        previousOwner: string;
+        newOwner: string;
+    }
+    interface PairRegisterEvent {
+        factory: string;
+        pair: string;
+        token0: string;
+        token1: string;
+    }
+    interface ProtocolRegisterEvent {
+        factory: string;
+        name: string;
+        fee: BigNumber;
+        feeBase: BigNumber;
+        typeCode: BigNumber;
+    }
 }

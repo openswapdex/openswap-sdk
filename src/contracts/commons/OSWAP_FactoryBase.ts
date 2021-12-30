@@ -8,7 +8,7 @@ export class OSWAP_FactoryBase extends Contract{
     deploy(params:{governance:string,pairCreator:string}): Promise<string>{        	
         return this._deploy(params.governance,params.pairCreator);
     }
-    parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newSize:BigNumber}[]{
+    parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairCreatedEvent[]{
         let events = this.parseEvents(receipt, "PairCreated");
         return events.map(result => {
             return {
@@ -19,7 +19,7 @@ export class OSWAP_FactoryBase extends Contract{
             };
         });
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairRestartedEvent[]{
         let events = this.parseEvents(receipt, "PairRestarted");
         return events.map(result => {
             return {
@@ -27,7 +27,7 @@ export class OSWAP_FactoryBase extends Contract{
             };
         });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairShutdownedEvent[]{
         let events = this.parseEvents(receipt, "PairShutdowned");
         return events.map(result => {
             return {
@@ -35,16 +35,16 @@ export class OSWAP_FactoryBase extends Contract{
             };
         });
     }
-    parseRestartedEvent(receipt: TransactionReceipt): any[]{
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.RestartedEvent[]{
         let events = this.parseEvents(receipt, "Restarted");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
-    parseShutdownedEvent(receipt: TransactionReceipt): any[]{
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.ShutdownedEvent[]{
         let events = this.parseEvents(receipt, "Shutdowned");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
@@ -83,4 +83,11 @@ export class OSWAP_FactoryBase extends Contract{
         let result = await this.methods('setLiveForPair',params.pair,params.live);
         return result;
     }
+}
+export module OSWAP_FactoryBase{
+    export interface PairCreatedEvent {token0:string,token1:string,pair:string,newSize:BigNumber}
+    export interface PairRestartedEvent {pair:string}
+    export interface PairShutdownedEvent {pair:string}
+    export interface RestartedEvent {}
+    export interface ShutdownedEvent {}
 }

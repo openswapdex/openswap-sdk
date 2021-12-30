@@ -8,7 +8,7 @@ export class ERC20 extends Contract{
     deploy(params:{name:string,symbol:string}): Promise<string>{        	
         return this._deploy(params.name,params.symbol);
     }
-    parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
+    parseApprovalEvent(receipt: TransactionReceipt): ERC20.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
@@ -18,7 +18,7 @@ export class ERC20 extends Contract{
             };
         });
     }
-    parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
+    parseTransferEvent(receipt: TransactionReceipt): ERC20.TransferEvent[]{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
@@ -72,4 +72,8 @@ export class ERC20 extends Contract{
         let result = await this.methods('transferFrom',params.sender,params.recipient,Utils.toString(params.amount));
         return result;
     }
+}
+export module ERC20{
+    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber}
+    export interface TransferEvent {from:string,to:string,value:BigNumber}
 }

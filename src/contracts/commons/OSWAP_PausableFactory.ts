@@ -8,7 +8,7 @@ export class OSWAP_PausableFactory extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.PairRestartedEvent[]{
         let events = this.parseEvents(receipt, "PairRestarted");
         return events.map(result => {
             return {
@@ -16,7 +16,7 @@ export class OSWAP_PausableFactory extends Contract{
             };
         });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.PairShutdownedEvent[]{
         let events = this.parseEvents(receipt, "PairShutdowned");
         return events.map(result => {
             return {
@@ -24,16 +24,16 @@ export class OSWAP_PausableFactory extends Contract{
             };
         });
     }
-    parseRestartedEvent(receipt: TransactionReceipt): any[]{
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.RestartedEvent[]{
         let events = this.parseEvents(receipt, "Restarted");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
-    parseShutdownedEvent(receipt: TransactionReceipt): any[]{
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.ShutdownedEvent[]{
         let events = this.parseEvents(receipt, "Shutdowned");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
     async governance(): Promise<string>{
@@ -52,4 +52,10 @@ export class OSWAP_PausableFactory extends Contract{
         let result = await this.methods('setLiveForPair',params.pair,params.live);
         return result;
     }
+}
+export module OSWAP_PausableFactory{
+    export interface PairRestartedEvent {pair:string}
+    export interface PairShutdownedEvent {pair:string}
+    export interface RestartedEvent {}
+    export interface ShutdownedEvent {}
 }

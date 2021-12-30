@@ -10,39 +10,15 @@ export declare class OSWAP_RestrictedFactory extends Contract {
         protocolFee: number | BigNumber;
         protocolFeeTo: string;
     }): Promise<string>;
-    parseOracleAddedEvent(receipt: TransactionReceipt): {
-        token0: string;
-        token1: string;
-        oracle: string;
-    }[];
-    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {
-        previousOwner: string;
-        newOwner: string;
-    }[];
-    parsePairCreatedEvent(receipt: TransactionReceipt): {
-        token0: string;
-        token1: string;
-        pair: string;
-        newPairSize: BigNumber;
-        newSize: BigNumber;
-    }[];
-    parsePairRestartedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parseParamSetEvent(receipt: TransactionReceipt): {
-        name: string;
-        value: string;
-    }[];
-    parseParamSet2Event(receipt: TransactionReceipt): {
-        name: string;
-        value1: string;
-        value2: string;
-    }[];
-    parseRestartedEvent(receipt: TransactionReceipt): any[];
-    parseShutdownedEvent(receipt: TransactionReceipt): any[];
+    parseOracleAddedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.OracleAddedEvent[];
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.OwnershipTransferredEvent[];
+    parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.PairCreatedEvent[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.PairRestartedEvent[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.PairShutdownedEvent[];
+    parseParamSetEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.ParamSetEvent[];
+    parseParamSet2Event(receipt: TransactionReceipt): OSWAP_RestrictedFactory.ParamSet2Event[];
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.RestartedEvent[];
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.ShutdownedEvent[];
     addOldOracleToNewPair(params: {
         tokenA: string;
         tokenB: string;
@@ -114,4 +90,41 @@ export declare class OSWAP_RestrictedFactory extends Contract {
     tradeFee(): Promise<BigNumber>;
     transferOwnership(newOwner: string): Promise<TransactionReceipt>;
     whitelistFactory(): Promise<string>;
+}
+export declare module OSWAP_RestrictedFactory {
+    interface OracleAddedEvent {
+        token0: string;
+        token1: string;
+        oracle: string;
+    }
+    interface OwnershipTransferredEvent {
+        previousOwner: string;
+        newOwner: string;
+    }
+    interface PairCreatedEvent {
+        token0: string;
+        token1: string;
+        pair: string;
+        newPairSize: BigNumber;
+        newSize: BigNumber;
+    }
+    interface PairRestartedEvent {
+        pair: string;
+    }
+    interface PairShutdownedEvent {
+        pair: string;
+    }
+    interface ParamSetEvent {
+        name: string;
+        value: string;
+    }
+    interface ParamSet2Event {
+        name: string;
+        value1: string;
+        value2: string;
+    }
+    interface RestartedEvent {
+    }
+    interface ShutdownedEvent {
+    }
 }

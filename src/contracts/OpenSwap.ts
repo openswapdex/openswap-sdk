@@ -8,7 +8,7 @@ export class OpenSwap extends Contract{
     deploy(params:{minter:string,initSupplyTo:string,initSupply:number|BigNumber,totalSupply:number|BigNumber}): Promise<string>{        	
         return this._deploy(params.minter,params.initSupplyTo,Utils.toString(params.initSupply),Utils.toString(params.totalSupply));
     }
-    parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
+    parseApprovalEvent(receipt: TransactionReceipt): OpenSwap.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
@@ -18,7 +18,7 @@ export class OpenSwap extends Contract{
             };
         });
     }
-    parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
+    parseTransferEvent(receipt: TransactionReceipt): OpenSwap.TransferEvent[]{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
@@ -84,4 +84,8 @@ export class OpenSwap extends Contract{
         let result = await this.methods('transferFrom',params.sender,params.recipient,Utils.toString(params.amount));
         return result;
     }
+}
+export module OpenSwap{
+    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber}
+    export interface TransferEvent {from:string,to:string,value:BigNumber}
 }

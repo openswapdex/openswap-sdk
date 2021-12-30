@@ -8,7 +8,7 @@ export class OSWAP_ConfigStore extends Contract{
     deploy(governance:string): Promise<string>{        	
         return this._deploy(governance);
     }
-    parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
+    parseParamSetEvent(receipt: TransactionReceipt): OSWAP_ConfigStore.ParamSetEvent[]{
         let events = this.parseEvents(receipt, "ParamSet");
         return events.map(result => {
             return {
@@ -45,4 +45,7 @@ export class OSWAP_ConfigStore extends Contract{
         let result = await this.methods('setMultiCustomParam',Utils.stringToBytes32(params.paramName),Utils.stringToBytes32(params.paramValue));
         return result;
     }
+}
+export module OSWAP_ConfigStore{
+    export interface ParamSetEvent {name:string,value:string}
 }

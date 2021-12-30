@@ -8,7 +8,7 @@ export class TestERC20 extends Contract{
     deploy(params:{symbol:string,name:string,initialSupply:number|BigNumber,cap:number|BigNumber,decimals:number|BigNumber}): Promise<string>{        	
         return this._deploy(params.symbol,params.name,Utils.toString(params.initialSupply),Utils.toString(params.cap),Utils.toString(params.decimals));
     }
-    parseApprovalEvent(receipt: TransactionReceipt): {owner:string,spender:string,value:BigNumber}[]{
+    parseApprovalEvent(receipt: TransactionReceipt): TestERC20.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
@@ -18,7 +18,7 @@ export class TestERC20 extends Contract{
             };
         });
     }
-    parseAuthEvent(receipt: TransactionReceipt): {account:string,auth:BigNumber}[]{
+    parseAuthEvent(receipt: TransactionReceipt): TestERC20.AuthEvent[]{
         let events = this.parseEvents(receipt, "Auth");
         return events.map(result => {
             return {
@@ -27,7 +27,7 @@ export class TestERC20 extends Contract{
             };
         });
     }
-    parseTransferEvent(receipt: TransactionReceipt): {from:string,to:string,value:BigNumber}[]{
+    parseTransferEvent(receipt: TransactionReceipt): TestERC20.TransferEvent[]{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
@@ -105,4 +105,9 @@ export class TestERC20 extends Contract{
         let result = await this.methods('transferFrom',params.from,params.to,Utils.toString(params.value));
         return result;
     }
+}
+export module TestERC20{
+    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber}
+    export interface AuthEvent {account:string,auth:BigNumber}
+    export interface TransferEvent {from:string,to:string,value:BigNumber}
 }

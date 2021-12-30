@@ -8,7 +8,7 @@ export class OSWAP_RangePair extends Contract{
     deploy(): Promise<string>{        	
         return this._deploy();
     }
-    parseAddLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
+    parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.AddLiquidityEvent[]{
         let events = this.parseEvents(receipt, "AddLiquidity");
         return events.map(result => {
             return {
@@ -25,7 +25,7 @@ export class OSWAP_RangePair extends Contract{
             };
         });
     }
-    parseNewProviderEvent(receipt: TransactionReceipt): {provider:string,index:BigNumber}[]{
+    parseNewProviderEvent(receipt: TransactionReceipt): OSWAP_RangePair.NewProviderEvent[]{
         let events = this.parseEvents(receipt, "NewProvider");
         return events.map(result => {
             return {
@@ -34,7 +34,7 @@ export class OSWAP_RangePair extends Contract{
             };
         });
     }
-    parseRemoveAllLiquidityEvent(receipt: TransactionReceipt): {provider:string,unstake:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber}[]{
+    parseRemoveAllLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.RemoveAllLiquidityEvent[]{
         let events = this.parseEvents(receipt, "RemoveAllLiquidity");
         return events.map(result => {
             return {
@@ -45,7 +45,7 @@ export class OSWAP_RangePair extends Contract{
             };
         });
     }
-    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}[]{
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.RemoveLiquidityEvent[]{
         let events = this.parseEvents(receipt, "RemoveLiquidity");
         return events.map(result => {
             return {
@@ -64,7 +64,7 @@ export class OSWAP_RangePair extends Contract{
             };
         });
     }
-    parseReplenishEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber}[]{
+    parseReplenishEvent(receipt: TransactionReceipt): OSWAP_RangePair.ReplenishEvent[]{
         let events = this.parseEvents(receipt, "Replenish");
         return events.map(result => {
             return {
@@ -76,7 +76,7 @@ export class OSWAP_RangePair extends Contract{
             };
         });
     }
-    parseSwapEvent(receipt: TransactionReceipt): {to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}[]{
+    parseSwapEvent(receipt: TransactionReceipt): OSWAP_RangePair.SwapEvent[]{
         let events = this.parseEvents(receipt, "Swap");
         return events.map(result => {
             return {
@@ -90,7 +90,7 @@ export class OSWAP_RangePair extends Contract{
             };
         });
     }
-    parseSwappedOneProviderEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}[]{
+    parseSwappedOneProviderEvent(receipt: TransactionReceipt): OSWAP_RangePair.SwappedOneProviderEvent[]{
         let events = this.parseEvents(receipt, "SwappedOneProvider");
         return events.map(result => {
             return {
@@ -103,7 +103,7 @@ export class OSWAP_RangePair extends Contract{
             };
         });
     }
-    parseUpdateProviderOfferEvent(receipt: TransactionReceipt): {provider:string,direction:boolean,replenish:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}[]{
+    parseUpdateProviderOfferEvent(receipt: TransactionReceipt): OSWAP_RangePair.UpdateProviderOfferEvent[]{
         let events = this.parseEvents(receipt, "UpdateProviderOffer");
         return events.map(result => {
             return {
@@ -300,4 +300,14 @@ export class OSWAP_RangePair extends Contract{
         let result = await this.methods('updateProviderOffer',params.provider,params.direction,Utils.toString(params.replenishAmount),Utils.toString(params.lowerLimit),Utils.toString(params.upperLimit),Utils.toString(params.startDate),Utils.toString(params.expire),params.privateReplenish);
         return result;
     }
+}
+export module OSWAP_RangePair{
+    export interface AddLiquidityEvent {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
+    export interface NewProviderEvent {provider:string,index:BigNumber}
+    export interface RemoveAllLiquidityEvent {provider:string,unstake:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber}
+    export interface RemoveLiquidityEvent {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
+    export interface ReplenishEvent {provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber}
+    export interface SwapEvent {to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}
+    export interface SwappedOneProviderEvent {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}
+    export interface UpdateProviderOfferEvent {provider:string,direction:boolean,replenish:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}
 }

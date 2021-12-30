@@ -8,7 +8,7 @@ export class MockAmmPair extends Contract{
     deploy(params:{token0:string,token1:string}): Promise<string>{        	
         return this._deploy(params.token0,params.token1);
     }
-    parseSyncEvent(receipt: TransactionReceipt): {reserve0:BigNumber,reserve1:BigNumber}[]{
+    parseSyncEvent(receipt: TransactionReceipt): MockAmmPair.SyncEvent[]{
         let events = this.parseEvents(receipt, "Sync");
         return events.map(result => {
             return {
@@ -49,4 +49,7 @@ export class MockAmmPair extends Contract{
         let result = await this.methods('token1');
         return result;
     }
+}
+export module MockAmmPair{
+    export interface SyncEvent {reserve0:BigNumber,reserve1:BigNumber}
 }

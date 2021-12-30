@@ -7,16 +7,8 @@ export declare class OpenSwap extends Contract {
         initSupply: number | BigNumber;
         totalSupply: number | BigNumber;
     }): Promise<string>;
-    parseApprovalEvent(receipt: TransactionReceipt): {
-        owner: string;
-        spender: string;
-        value: BigNumber;
-    }[];
-    parseTransferEvent(receipt: TransactionReceipt): {
-        from: string;
-        to: string;
-        value: BigNumber;
-    }[];
+    parseApprovalEvent(receipt: TransactionReceipt): OpenSwap.ApprovalEvent[];
+    parseTransferEvent(receipt: TransactionReceipt): OpenSwap.TransferEvent[];
     allowance(params: {
         owner: string;
         spender: string;
@@ -53,4 +45,16 @@ export declare class OpenSwap extends Contract {
         recipient: string;
         amount: number | BigNumber;
     }): Promise<TransactionReceipt>;
+}
+export declare module OpenSwap {
+    interface ApprovalEvent {
+        owner: string;
+        spender: string;
+        value: BigNumber;
+    }
+    interface TransferEvent {
+        from: string;
+        to: string;
+        value: BigNumber;
+    }
 }

@@ -8,29 +8,13 @@ export declare class OSWAP_Factory extends Contract {
         protocolFee: number | BigNumber;
         protocolFeeTo: string;
     }): Promise<string>;
-    parsePairCreatedEvent(receipt: TransactionReceipt): {
-        token0: string;
-        token1: string;
-        pair: string;
-        newSize: BigNumber;
-    }[];
-    parsePairRestartedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parseParamSetEvent(receipt: TransactionReceipt): {
-        name: string;
-        value: string;
-    }[];
-    parseParamSet2Event(receipt: TransactionReceipt): {
-        name: string;
-        value1: string;
-        value2: string;
-    }[];
-    parseRestartedEvent(receipt: TransactionReceipt): any[];
-    parseShutdownedEvent(receipt: TransactionReceipt): any[];
+    parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairCreatedEvent[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairRestartedEvent[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairShutdownedEvent[];
+    parseParamSetEvent(receipt: TransactionReceipt): OSWAP_Factory.ParamSetEvent[];
+    parseParamSet2Event(receipt: TransactionReceipt): OSWAP_Factory.ParamSet2Event[];
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_Factory.RestartedEvent[];
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_Factory.ShutdownedEvent[];
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
     createPair(params: {
@@ -59,4 +43,31 @@ export declare class OSWAP_Factory extends Contract {
     setProtocolFeeTo(protocolFeeTo: string): Promise<TransactionReceipt>;
     setTradeFee(tradeFee: number | BigNumber): Promise<TransactionReceipt>;
     tradeFee(): Promise<BigNumber>;
+}
+export declare module OSWAP_Factory {
+    interface PairCreatedEvent {
+        token0: string;
+        token1: string;
+        pair: string;
+        newSize: BigNumber;
+    }
+    interface PairRestartedEvent {
+        pair: string;
+    }
+    interface PairShutdownedEvent {
+        pair: string;
+    }
+    interface ParamSetEvent {
+        name: string;
+        value: string;
+    }
+    interface ParamSet2Event {
+        name: string;
+        value1: string;
+        value2: string;
+    }
+    interface RestartedEvent {
+    }
+    interface ShutdownedEvent {
+    }
 }

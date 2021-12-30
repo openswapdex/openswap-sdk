@@ -8,7 +8,7 @@ export class OSWAP_RangeFactory extends Contract{
     deploy(params:{governance:string,oracleFactory:string,pairCreator:string,tradeFee:number|BigNumber,stakeAmount:number[]|BigNumber[],liquidityProviderShare:number[]|BigNumber[],protocolFeeTo:string}): Promise<string>{        	
         return this._deploy(params.governance,params.oracleFactory,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare),params.protocolFeeTo);
     }
-    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.OwnershipTransferredEvent[]{
         let events = this.parseEvents(receipt, "OwnershipTransferred");
         return events.map(result => {
             return {
@@ -17,7 +17,7 @@ export class OSWAP_RangeFactory extends Contract{
             };
         });
     }
-    parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newSize:BigNumber}[]{
+    parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.PairCreatedEvent[]{
         let events = this.parseEvents(receipt, "PairCreated");
         return events.map(result => {
             return {
@@ -28,7 +28,7 @@ export class OSWAP_RangeFactory extends Contract{
             };
         });
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.PairRestartedEvent[]{
         let events = this.parseEvents(receipt, "PairRestarted");
         return events.map(result => {
             return {
@@ -36,7 +36,7 @@ export class OSWAP_RangeFactory extends Contract{
             };
         });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.PairShutdownedEvent[]{
         let events = this.parseEvents(receipt, "PairShutdowned");
         return events.map(result => {
             return {
@@ -44,7 +44,7 @@ export class OSWAP_RangeFactory extends Contract{
             };
         });
     }
-    parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
+    parseParamSetEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.ParamSetEvent[]{
         let events = this.parseEvents(receipt, "ParamSet");
         return events.map(result => {
             return {
@@ -53,7 +53,7 @@ export class OSWAP_RangeFactory extends Contract{
             };
         });
     }
-    parseParamSet2Event(receipt: TransactionReceipt): {name:string,value1:string,value2:string}[]{
+    parseParamSet2Event(receipt: TransactionReceipt): OSWAP_RangeFactory.ParamSet2Event[]{
         let events = this.parseEvents(receipt, "ParamSet2");
         return events.map(result => {
             return {
@@ -63,16 +63,16 @@ export class OSWAP_RangeFactory extends Contract{
             };
         });
     }
-    parseRestartedEvent(receipt: TransactionReceipt): any[]{
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.RestartedEvent[]{
         let events = this.parseEvents(receipt, "Restarted");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
-    parseShutdownedEvent(receipt: TransactionReceipt): any[]{
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.ShutdownedEvent[]{
         let events = this.parseEvents(receipt, "Shutdowned");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
@@ -186,4 +186,14 @@ export class OSWAP_RangeFactory extends Contract{
         let result = await this.methods('transferOwnership',newOwner);
         return result;
     }
+}
+export module OSWAP_RangeFactory{
+    export interface OwnershipTransferredEvent {previousOwner:string,newOwner:string}
+    export interface PairCreatedEvent {token0:string,token1:string,pair:string,newSize:BigNumber}
+    export interface PairRestartedEvent {pair:string}
+    export interface PairShutdownedEvent {pair:string}
+    export interface ParamSetEvent {name:string,value:string}
+    export interface ParamSet2Event {name:string,value1:string,value2:string}
+    export interface RestartedEvent {}
+    export interface ShutdownedEvent {}
 }

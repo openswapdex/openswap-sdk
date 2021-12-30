@@ -8,7 +8,7 @@ export class OSWAP_Factory extends Contract{
     deploy(params:{governance:string,pairCreator:string,tradeFee:number|BigNumber,protocolFee:number|BigNumber,protocolFeeTo:string}): Promise<string>{        	
         return this._deploy(params.governance,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.protocolFee),params.protocolFeeTo);
     }
-    parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newSize:BigNumber}[]{
+    parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairCreatedEvent[]{
         let events = this.parseEvents(receipt, "PairCreated");
         return events.map(result => {
             return {
@@ -19,7 +19,7 @@ export class OSWAP_Factory extends Contract{
             };
         });
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairRestartedEvent[]{
         let events = this.parseEvents(receipt, "PairRestarted");
         return events.map(result => {
             return {
@@ -27,7 +27,7 @@ export class OSWAP_Factory extends Contract{
             };
         });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairShutdownedEvent[]{
         let events = this.parseEvents(receipt, "PairShutdowned");
         return events.map(result => {
             return {
@@ -35,7 +35,7 @@ export class OSWAP_Factory extends Contract{
             };
         });
     }
-    parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
+    parseParamSetEvent(receipt: TransactionReceipt): OSWAP_Factory.ParamSetEvent[]{
         let events = this.parseEvents(receipt, "ParamSet");
         return events.map(result => {
             return {
@@ -44,7 +44,7 @@ export class OSWAP_Factory extends Contract{
             };
         });
     }
-    parseParamSet2Event(receipt: TransactionReceipt): {name:string,value1:string,value2:string}[]{
+    parseParamSet2Event(receipt: TransactionReceipt): OSWAP_Factory.ParamSet2Event[]{
         let events = this.parseEvents(receipt, "ParamSet2");
         return events.map(result => {
             return {
@@ -54,16 +54,16 @@ export class OSWAP_Factory extends Contract{
             };
         });
     }
-    parseRestartedEvent(receipt: TransactionReceipt): any[]{
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_Factory.RestartedEvent[]{
         let events = this.parseEvents(receipt, "Restarted");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
-    parseShutdownedEvent(receipt: TransactionReceipt): any[]{
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_Factory.ShutdownedEvent[]{
         let events = this.parseEvents(receipt, "Shutdowned");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
@@ -133,4 +133,13 @@ export class OSWAP_Factory extends Contract{
         let result = await this.methods('tradeFee');
         return new BigNumber(result);
     }
+}
+export module OSWAP_Factory{
+    export interface PairCreatedEvent {token0:string,token1:string,pair:string,newSize:BigNumber}
+    export interface PairRestartedEvent {pair:string}
+    export interface PairShutdownedEvent {pair:string}
+    export interface ParamSetEvent {name:string,value:string}
+    export interface ParamSet2Event {name:string,value1:string,value2:string}
+    export interface RestartedEvent {}
+    export interface ShutdownedEvent {}
 }

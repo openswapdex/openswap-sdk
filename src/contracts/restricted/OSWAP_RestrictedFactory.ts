@@ -8,7 +8,7 @@ export class OSWAP_RestrictedFactory extends Contract{
     deploy(params:{governance:string,whitelistFactory:string,pairCreator:string,configStore:string,tradeFee:number|BigNumber,protocolFee:number|BigNumber,protocolFeeTo:string}): Promise<string>{        	
         return this._deploy(params.governance,params.whitelistFactory,params.pairCreator,params.configStore,Utils.toString(params.tradeFee),Utils.toString(params.protocolFee),params.protocolFeeTo);
     }
-    parseOracleAddedEvent(receipt: TransactionReceipt): {token0:string,token1:string,oracle:string}[]{
+    parseOracleAddedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.OracleAddedEvent[]{
         let events = this.parseEvents(receipt, "OracleAdded");
         return events.map(result => {
             return {
@@ -18,7 +18,7 @@ export class OSWAP_RestrictedFactory extends Contract{
             };
         });
     }
-    parseOwnershipTransferredEvent(receipt: TransactionReceipt): {previousOwner:string,newOwner:string}[]{
+    parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.OwnershipTransferredEvent[]{
         let events = this.parseEvents(receipt, "OwnershipTransferred");
         return events.map(result => {
             return {
@@ -27,7 +27,7 @@ export class OSWAP_RestrictedFactory extends Contract{
             };
         });
     }
-    parsePairCreatedEvent(receipt: TransactionReceipt): {token0:string,token1:string,pair:string,newPairSize:BigNumber,newSize:BigNumber}[]{
+    parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.PairCreatedEvent[]{
         let events = this.parseEvents(receipt, "PairCreated");
         return events.map(result => {
             return {
@@ -39,7 +39,7 @@ export class OSWAP_RestrictedFactory extends Contract{
             };
         });
     }
-    parsePairRestartedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.PairRestartedEvent[]{
         let events = this.parseEvents(receipt, "PairRestarted");
         return events.map(result => {
             return {
@@ -47,7 +47,7 @@ export class OSWAP_RestrictedFactory extends Contract{
             };
         });
     }
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {pair:string}[]{
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.PairShutdownedEvent[]{
         let events = this.parseEvents(receipt, "PairShutdowned");
         return events.map(result => {
             return {
@@ -55,7 +55,7 @@ export class OSWAP_RestrictedFactory extends Contract{
             };
         });
     }
-    parseParamSetEvent(receipt: TransactionReceipt): {name:string,value:string}[]{
+    parseParamSetEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.ParamSetEvent[]{
         let events = this.parseEvents(receipt, "ParamSet");
         return events.map(result => {
             return {
@@ -64,7 +64,7 @@ export class OSWAP_RestrictedFactory extends Contract{
             };
         });
     }
-    parseParamSet2Event(receipt: TransactionReceipt): {name:string,value1:string,value2:string}[]{
+    parseParamSet2Event(receipt: TransactionReceipt): OSWAP_RestrictedFactory.ParamSet2Event[]{
         let events = this.parseEvents(receipt, "ParamSet2");
         return events.map(result => {
             return {
@@ -74,16 +74,16 @@ export class OSWAP_RestrictedFactory extends Contract{
             };
         });
     }
-    parseRestartedEvent(receipt: TransactionReceipt): any[]{
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.RestartedEvent[]{
         let events = this.parseEvents(receipt, "Restarted");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
-    parseShutdownedEvent(receipt: TransactionReceipt): any[]{
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.ShutdownedEvent[]{
         let events = this.parseEvents(receipt, "Shutdowned");
         return events.map(result => {
-            return ;;
+            return {};
         });
     }
     async addOldOracleToNewPair(params:{tokenA:string,tokenB:string,oracle:string}): Promise<TransactionReceipt>{
@@ -223,4 +223,15 @@ export class OSWAP_RestrictedFactory extends Contract{
         let result = await this.methods('whitelistFactory');
         return result;
     }
+}
+export module OSWAP_RestrictedFactory{
+    export interface OracleAddedEvent {token0:string,token1:string,oracle:string}
+    export interface OwnershipTransferredEvent {previousOwner:string,newOwner:string}
+    export interface PairCreatedEvent {token0:string,token1:string,pair:string,newPairSize:BigNumber,newSize:BigNumber}
+    export interface PairRestartedEvent {pair:string}
+    export interface PairShutdownedEvent {pair:string}
+    export interface ParamSetEvent {name:string,value:string}
+    export interface ParamSet2Event {name:string,value1:string,value2:string}
+    export interface RestartedEvent {}
+    export interface ShutdownedEvent {}
 }

@@ -5,20 +5,11 @@ export declare class OSWAP_FactoryBase extends Contract {
         governance: string;
         pairCreator: string;
     }): Promise<string>;
-    parsePairCreatedEvent(receipt: TransactionReceipt): {
-        token0: string;
-        token1: string;
-        pair: string;
-        newSize: BigNumber;
-    }[];
-    parsePairRestartedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parsePairShutdownedEvent(receipt: TransactionReceipt): {
-        pair: string;
-    }[];
-    parseRestartedEvent(receipt: TransactionReceipt): any[];
-    parseShutdownedEvent(receipt: TransactionReceipt): any[];
+    parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairCreatedEvent[];
+    parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairRestartedEvent[];
+    parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairShutdownedEvent[];
+    parseRestartedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.RestartedEvent[];
+    parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.ShutdownedEvent[];
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
     createPair(params: {
@@ -37,4 +28,22 @@ export declare class OSWAP_FactoryBase extends Contract {
         pair: string;
         live: boolean;
     }): Promise<TransactionReceipt>;
+}
+export declare module OSWAP_FactoryBase {
+    interface PairCreatedEvent {
+        token0: string;
+        token1: string;
+        pair: string;
+        newSize: BigNumber;
+    }
+    interface PairRestartedEvent {
+        pair: string;
+    }
+    interface PairShutdownedEvent {
+        pair: string;
+    }
+    interface RestartedEvent {
+    }
+    interface ShutdownedEvent {
+    }
 }

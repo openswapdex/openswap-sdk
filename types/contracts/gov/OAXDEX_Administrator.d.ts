@@ -2,40 +2,14 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OAXDEX_Administrator extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(governance: string): Promise<string>;
-    parseAddAdminEvent(receipt: TransactionReceipt): {
-        admin: string;
-    }[];
-    parseRemoveAdminEvent(receipt: TransactionReceipt): {
-        admin: string;
-    }[];
-    parseSetMaxAdminEvent(receipt: TransactionReceipt): {
-        maxAdmin: BigNumber;
-    }[];
-    parseVotedFactoryRestartEvent(receipt: TransactionReceipt): {
-        admin: string;
-        factory: string;
-        YorN: boolean;
-    }[];
-    parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): {
-        admin: string;
-        factory: string;
-        YorN: boolean;
-    }[];
-    parseVotedPairRestartEvent(receipt: TransactionReceipt): {
-        admin: string;
-        pair: string;
-        YorN: boolean;
-    }[];
-    parseVotedPairShutdownEvent(receipt: TransactionReceipt): {
-        admin: string;
-        pair: string;
-        YorN: boolean;
-    }[];
-    parseVotedVetoEvent(receipt: TransactionReceipt): {
-        admin: string;
-        votingContract: string;
-        YorN: boolean;
-    }[];
+    parseAddAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.AddAdminEvent[];
+    parseRemoveAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.RemoveAdminEvent[];
+    parseSetMaxAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.SetMaxAdminEvent[];
+    parseVotedFactoryRestartEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedFactoryRestartEvent[];
+    parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedFactoryShutdownEvent[];
+    parseVotedPairRestartEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedPairRestartEvent[];
+    parseVotedPairShutdownEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedPairShutdownEvent[];
+    parseVotedVetoEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedVetoEvent[];
     addAdmin(admin: string): Promise<TransactionReceipt>;
     admins(param1: number | BigNumber): Promise<string>;
     adminsIdx(param1: string): Promise<BigNumber>;
@@ -100,4 +74,40 @@ export declare class OAXDEX_Administrator extends Contract {
         param1: string;
         param2: string;
     }): Promise<boolean>;
+}
+export declare module OAXDEX_Administrator {
+    interface AddAdminEvent {
+        admin: string;
+    }
+    interface RemoveAdminEvent {
+        admin: string;
+    }
+    interface SetMaxAdminEvent {
+        maxAdmin: BigNumber;
+    }
+    interface VotedFactoryRestartEvent {
+        admin: string;
+        factory: string;
+        YorN: boolean;
+    }
+    interface VotedFactoryShutdownEvent {
+        admin: string;
+        factory: string;
+        YorN: boolean;
+    }
+    interface VotedPairRestartEvent {
+        admin: string;
+        pair: string;
+        YorN: boolean;
+    }
+    interface VotedPairShutdownEvent {
+        admin: string;
+        pair: string;
+        YorN: boolean;
+    }
+    interface VotedVetoEvent {
+        admin: string;
+        votingContract: string;
+        YorN: boolean;
+    }
 }

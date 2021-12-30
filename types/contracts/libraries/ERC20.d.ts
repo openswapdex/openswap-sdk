@@ -5,16 +5,8 @@ export declare class ERC20 extends Contract {
         name: string;
         symbol: string;
     }): Promise<string>;
-    parseApprovalEvent(receipt: TransactionReceipt): {
-        owner: string;
-        spender: string;
-        value: BigNumber;
-    }[];
-    parseTransferEvent(receipt: TransactionReceipt): {
-        from: string;
-        to: string;
-        value: BigNumber;
-    }[];
+    parseApprovalEvent(receipt: TransactionReceipt): ERC20.ApprovalEvent[];
+    parseTransferEvent(receipt: TransactionReceipt): ERC20.TransferEvent[];
     allowance(params: {
         owner: string;
         spender: string;
@@ -45,4 +37,16 @@ export declare class ERC20 extends Contract {
         recipient: string;
         amount: number | BigNumber;
     }): Promise<TransactionReceipt>;
+}
+export declare module ERC20 {
+    interface ApprovalEvent {
+        owner: string;
+        spender: string;
+        value: BigNumber;
+    }
+    interface TransferEvent {
+        from: string;
+        to: string;
+        value: BigNumber;
+    }
 }
