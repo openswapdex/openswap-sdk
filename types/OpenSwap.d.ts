@@ -1,10 +1,15 @@
-import { BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, BigNumber } from "@ijstech/eth-wallet";
 import { OpenSwap as OpenSwapContract } from "./contracts";
 export declare class OpenSwap {
+    address: string;
     _oswap: OpenSwapContract;
-    private _address;
-    constructor(oswap: OpenSwapContract);
-    get address(): string;
+    constructor(wallet: Wallet, address?: string);
+    deploy(params: {
+        minter: string;
+        initSupplyTo: string;
+        initSupply: number | BigNumber;
+        totalSupply: number | BigNumber;
+    }): Promise<string>;
     allowance(params: {
         owner: string;
         spender: string;

@@ -14,10 +14,9 @@ import {
     OSWAP_OracleLiquidityProvider, 
     OSWAP_OracleRouter, 
     OSWAP_HybridRouterRegistry, 
-    OSWAP_HybridRouter2, 
-    OpenSwap
+    OSWAP_HybridRouter2
 } from './contracts';
-import {OpenSwap as SdkOpenSwap} from './OpenSwap';
+import {OpenSwap} from './OpenSwap';
 export interface IDeploymentResult{
     administrator?: string;
     factory?: string,
@@ -83,7 +82,7 @@ export const DefaultGovTokenOptions: IGovTokenOptions = {
     initSupply: 0,
     initSupplyTo: '',
     minter: '',
-    totalSupply: Utils.toDecimals(1000000000, 18)
+    totalSupply: 1000000000
 }
 export interface IAmmOptions{
     governance?: string;
@@ -111,7 +110,7 @@ export interface IDeployOptions {
     }
 }
 export interface IDeploymentContracts {
-    openSwap: SdkOpenSwap,
+    openSwap: OpenSwap,
     governance: OAXDEX_Governance,
     administrator: OAXDEX_Administrator,
     registry: OAXDEX_VotingRegistry,
@@ -131,7 +130,7 @@ export interface IDeploymentContracts {
 
 export function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult): IDeploymentContracts{
     return {
-        openSwap: new SdkOpenSwap(new OpenSwap(wallet, result.oswap)),
+        openSwap: new OpenSwap(wallet, result.oswap),
         governance: new OAXDEX_Governance(wallet, result.governance),
         administrator: new OAXDEX_Administrator(wallet, result.administrator),
         registry: new OAXDEX_VotingRegistry(wallet, result.votingRegistry),

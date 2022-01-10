@@ -1,5 +1,4 @@
-window["@openswap/sdk"] = window["@openswap/sdk"] || {};
-((exports) => {
+define('@openswap/sdk', (require, exports)=>{
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -132,45 +131,10 @@ var require_OAXDEX_VotingRegistry = __commonJS({
   }
 });
 
-// bin/libraries/Address.json
-var require_Address = __commonJS({
-  "bin/libraries/Address.json"(exports, module2) {
-    module2.exports = { abi: [] };
-  }
-});
-
 // bin/libraries/ERC20.json
 var require_ERC20 = __commonJS({
   "bin/libraries/ERC20.json"(exports, module2) {
     module2.exports = { abi: [{ inputs: [{ internalType: "string", name: "name_", type: "string" }, { internalType: "string", name: "symbol_", type: "string" }], stateMutability: "nonpayable", type: "constructor" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "owner", type: "address" }, { indexed: true, internalType: "address", name: "spender", type: "address" }, { indexed: false, internalType: "uint256", name: "value", type: "uint256" }], name: "Approval", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "from", type: "address" }, { indexed: true, internalType: "address", name: "to", type: "address" }, { indexed: false, internalType: "uint256", name: "value", type: "uint256" }], name: "Transfer", type: "event" }, { inputs: [{ internalType: "address", name: "owner", type: "address" }, { internalType: "address", name: "spender", type: "address" }], name: "allowance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "spender", type: "address" }, { internalType: "uint256", name: "amount", type: "uint256" }], name: "approve", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "account", type: "address" }], name: "balanceOf", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "decimals", outputs: [{ internalType: "uint8", name: "", type: "uint8" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "spender", type: "address" }, { internalType: "uint256", name: "subtractedValue", type: "uint256" }], name: "decreaseAllowance", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "spender", type: "address" }, { internalType: "uint256", name: "addedValue", type: "uint256" }], name: "increaseAllowance", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "name", outputs: [{ internalType: "string", name: "", type: "string" }], stateMutability: "view", type: "function" }, { inputs: [], name: "symbol", outputs: [{ internalType: "string", name: "", type: "string" }], stateMutability: "view", type: "function" }, { inputs: [], name: "totalSupply", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "recipient", type: "address" }, { internalType: "uint256", name: "amount", type: "uint256" }], name: "transfer", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "sender", type: "address" }, { internalType: "address", name: "recipient", type: "address" }, { internalType: "uint256", name: "amount", type: "uint256" }], name: "transferFrom", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "nonpayable", type: "function" }] };
-  }
-});
-
-// bin/libraries/Math.json
-var require_Math = __commonJS({
-  "bin/libraries/Math.json"(exports, module2) {
-    module2.exports = { abi: [] };
-  }
-});
-
-// bin/libraries/SafeMath.json
-var require_SafeMath = __commonJS({
-  "bin/libraries/SafeMath.json"(exports, module2) {
-    module2.exports = { abi: [] };
-  }
-});
-
-// bin/libraries/TransferHelper.json
-var require_TransferHelper = __commonJS({
-  "bin/libraries/TransferHelper.json"(exports, module2) {
-    module2.exports = { abi: [] };
-  }
-});
-
-// bin/libraries/UQ112x112.json
-var require_UQ112x112 = __commonJS({
-  "bin/libraries/UQ112x112.json"(exports, module2) {
-    module2.exports = { abi: [] };
   }
 });
 
@@ -317,6 +281,7 @@ var require_OSWAP_OracleRouter = __commonJS({
 // src/index.ts
 __export(exports, {
   Contracts: () => contracts_exports,
+  OpenSwap: () => OpenSwap2,
   deploy: () => deploy,
   toDeploymentContracts: () => toDeploymentContracts
 });
@@ -324,9 +289,7 @@ __export(exports, {
 // src/contracts/index.ts
 var contracts_exports = {};
 __export(contracts_exports, {
-  Address: () => Address,
   ERC20: () => ERC20,
-  Math: () => Math2,
   OAXDEX_Administrator: () => OAXDEX_Administrator,
   OAXDEX_Governance: () => OAXDEX_Governance,
   OAXDEX_VotingContract: () => OAXDEX_VotingContract,
@@ -361,10 +324,7 @@ __export(contracts_exports, {
   OSWAP_VotingExecutor2: () => OSWAP_VotingExecutor2,
   OSWAP_VotingExecutor3: () => OSWAP_VotingExecutor3,
   OSWAP_VotingExecutor4: () => OSWAP_VotingExecutor4,
-  OpenSwap: () => OpenSwap,
-  SafeMath: () => SafeMath,
-  TransferHelper: () => TransferHelper,
-  UQ112x112: () => UQ112x112
+  OpenSwap: () => OpenSwap
 });
 
 // src/contracts/OpenSwap.ts
@@ -378,10 +338,30 @@ var OpenSwap = class extends import_eth_wallet.Contract {
     return this._deploy(params.minter, params.initSupplyTo, import_eth_wallet.Utils.toString(params.initSupply), import_eth_wallet.Utils.toString(params.totalSupply));
   }
   parseApprovalEvent(receipt) {
-    return this.parseEvents(receipt, "Approval");
+    let events = this.parseEvents(receipt, "Approval");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        owner: result.owner,
+        spender: result.spender,
+        value: new import_eth_wallet.BigNumber(result.value)
+      };
+    });
   }
   parseTransferEvent(receipt) {
-    return this.parseEvents(receipt, "Transfer");
+    let events = this.parseEvents(receipt, "Transfer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        from: result.from,
+        to: result.to,
+        value: new import_eth_wallet.BigNumber(result.value)
+      };
+    });
   }
   async allowance(params) {
     let result = await this.methods("allowance", params.owner, params.spender);
@@ -452,10 +432,30 @@ var OSWAP_ERC20 = class extends import_eth_wallet2.Contract {
     return this._deploy();
   }
   parseApprovalEvent(receipt) {
-    return this.parseEvents(receipt, "Approval");
+    let events = this.parseEvents(receipt, "Approval");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        owner: result.owner,
+        spender: result.spender,
+        value: new import_eth_wallet2.BigNumber(result.value)
+      };
+    });
   }
   parseTransferEvent(receipt) {
-    return this.parseEvents(receipt, "Transfer");
+    let events = this.parseEvents(receipt, "Transfer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        from: result.from,
+        to: result.to,
+        value: new import_eth_wallet2.BigNumber(result.value)
+      };
+    });
   }
   async EIP712_TYPEHASH() {
     let result = await this.methods("EIP712_TYPEHASH");
@@ -530,25 +530,85 @@ var OSWAP_Factory = class extends import_eth_wallet3.Contract {
     return this._deploy(params.governance, params.pairCreator, import_eth_wallet3.Utils.toString(params.tradeFee), import_eth_wallet3.Utils.toString(params.protocolFee), params.protocolFeeTo);
   }
   parsePairCreatedEvent(receipt) {
-    return this.parseEvents(receipt, "PairCreated");
+    let events = this.parseEvents(receipt, "PairCreated");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        token0: result.token0,
+        token1: result.token1,
+        pair: result.pair,
+        newSize: new import_eth_wallet3.BigNumber(result.newSize)
+      };
+    });
   }
   parsePairRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "PairRestarted");
+    let events = this.parseEvents(receipt, "PairRestarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parsePairShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "PairShutdowned");
+    let events = this.parseEvents(receipt, "PairShutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parseParamSetEvent(receipt) {
-    return this.parseEvents(receipt, "ParamSet");
+    let events = this.parseEvents(receipt, "ParamSet");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value: result.value
+      };
+    });
   }
   parseParamSet2Event(receipt) {
-    return this.parseEvents(receipt, "ParamSet2");
+    let events = this.parseEvents(receipt, "ParamSet2");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value1: result.value1,
+        value2: result.value2
+      };
+    });
   }
   parseRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "Restarted");
+    let events = this.parseEvents(receipt, "Restarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   parseShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "Shutdowned");
+    let events = this.parseEvents(receipt, "Shutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   async allPairs(param1) {
     let result = await this.methods("allPairs", import_eth_wallet3.Utils.toString(param1));
@@ -630,28 +690,107 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
     return this._deploy();
   }
   parseApprovalEvent(receipt) {
-    return this.parseEvents(receipt, "Approval");
+    let events = this.parseEvents(receipt, "Approval");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        owner: result.owner,
+        spender: result.spender,
+        value: new import_eth_wallet4.BigNumber(result.value)
+      };
+    });
   }
   parseBurnEvent(receipt) {
-    return this.parseEvents(receipt, "Burn");
+    let events = this.parseEvents(receipt, "Burn");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        sender: result.sender,
+        amount0: new import_eth_wallet4.BigNumber(result.amount0),
+        amount1: new import_eth_wallet4.BigNumber(result.amount1),
+        to: result.to
+      };
+    });
   }
   parseMintEvent(receipt) {
-    return this.parseEvents(receipt, "Mint");
+    let events = this.parseEvents(receipt, "Mint");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        sender: result.sender,
+        amount0: new import_eth_wallet4.BigNumber(result.amount0),
+        amount1: new import_eth_wallet4.BigNumber(result.amount1)
+      };
+    });
   }
   parseProtocolFeeSetEvent(receipt) {
-    return this.parseEvents(receipt, "ProtocolFeeSet");
+    let events = this.parseEvents(receipt, "ProtocolFeeSet");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        protocolFee: new import_eth_wallet4.BigNumber(result.protocolFee)
+      };
+    });
   }
   parseSwapEvent(receipt) {
-    return this.parseEvents(receipt, "Swap");
+    let events = this.parseEvents(receipt, "Swap");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        sender: result.sender,
+        amount0In: new import_eth_wallet4.BigNumber(result.amount0In),
+        amount1In: new import_eth_wallet4.BigNumber(result.amount1In),
+        amount0Out: new import_eth_wallet4.BigNumber(result.amount0Out),
+        amount1Out: new import_eth_wallet4.BigNumber(result.amount1Out),
+        to: result.to
+      };
+    });
   }
   parseSyncEvent(receipt) {
-    return this.parseEvents(receipt, "Sync");
+    let events = this.parseEvents(receipt, "Sync");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        reserve0: new import_eth_wallet4.BigNumber(result.reserve0),
+        reserve1: new import_eth_wallet4.BigNumber(result.reserve1)
+      };
+    });
   }
   parseTradeFeeSetEvent(receipt) {
-    return this.parseEvents(receipt, "TradeFeeSet");
+    let events = this.parseEvents(receipt, "TradeFeeSet");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        tradeFee: new import_eth_wallet4.BigNumber(result.tradeFee)
+      };
+    });
   }
   parseTransferEvent(receipt) {
-    return this.parseEvents(receipt, "Transfer");
+    let events = this.parseEvents(receipt, "Transfer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        from: result.from,
+        to: result.to,
+        value: new import_eth_wallet4.BigNumber(result.value)
+      };
+    });
   }
   async EIP712_TYPEHASH() {
     let result = await this.methods("EIP712_TYPEHASH");
@@ -874,7 +1013,7 @@ var OSWAP_Router = class extends import_eth_wallet6.Contract {
   }
   async quote(params) {
     let result = await this.methods("quote", import_eth_wallet6.Utils.toString(params.amountA), import_eth_wallet6.Utils.toString(params.reserveA), import_eth_wallet6.Utils.toString(params.reserveB));
-    return result;
+    return new import_eth_wallet6.BigNumber(result);
   }
   async removeLiquidity(params) {
     let result = await this.methods("removeLiquidity", params.tokenA, params.tokenB, import_eth_wallet6.Utils.toString(params.liquidity), import_eth_wallet6.Utils.toString(params.amountAMin), import_eth_wallet6.Utils.toString(params.amountBMin), params.to, import_eth_wallet6.Utils.toString(params.deadline));
@@ -973,19 +1112,60 @@ var OSWAP_FactoryBase = class extends import_eth_wallet8.Contract {
     return this._deploy(params.governance, params.pairCreator);
   }
   parsePairCreatedEvent(receipt) {
-    return this.parseEvents(receipt, "PairCreated");
+    let events = this.parseEvents(receipt, "PairCreated");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        token0: result.token0,
+        token1: result.token1,
+        pair: result.pair,
+        newSize: new import_eth_wallet8.BigNumber(result.newSize)
+      };
+    });
   }
   parsePairRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "PairRestarted");
+    let events = this.parseEvents(receipt, "PairRestarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parsePairShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "PairShutdowned");
+    let events = this.parseEvents(receipt, "PairShutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parseRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "Restarted");
+    let events = this.parseEvents(receipt, "Restarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   parseShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "Shutdowned");
+    let events = this.parseEvents(receipt, "Shutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   async allPairs(param1) {
     let result = await this.methods("allPairs", import_eth_wallet8.Utils.toString(param1));
@@ -1036,16 +1216,46 @@ var OSWAP_PausableFactory = class extends import_eth_wallet9.Contract {
     return this._deploy(governance);
   }
   parsePairRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "PairRestarted");
+    let events = this.parseEvents(receipt, "PairRestarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parsePairShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "PairShutdowned");
+    let events = this.parseEvents(receipt, "PairShutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parseRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "Restarted");
+    let events = this.parseEvents(receipt, "Restarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   parseShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "Shutdowned");
+    let events = this.parseEvents(receipt, "Shutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   async governance() {
     let result = await this.methods("governance");
@@ -1100,28 +1310,102 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
     return this._deploy(governance);
   }
   parseAddAdminEvent(receipt) {
-    return this.parseEvents(receipt, "AddAdmin");
+    let events = this.parseEvents(receipt, "AddAdmin");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        admin: result.admin
+      };
+    });
   }
   parseRemoveAdminEvent(receipt) {
-    return this.parseEvents(receipt, "RemoveAdmin");
+    let events = this.parseEvents(receipt, "RemoveAdmin");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        admin: result.admin
+      };
+    });
   }
   parseSetMaxAdminEvent(receipt) {
-    return this.parseEvents(receipt, "SetMaxAdmin");
+    let events = this.parseEvents(receipt, "SetMaxAdmin");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        maxAdmin: new import_eth_wallet11.BigNumber(result.maxAdmin)
+      };
+    });
   }
   parseVotedFactoryRestartEvent(receipt) {
-    return this.parseEvents(receipt, "VotedFactoryRestart");
+    let events = this.parseEvents(receipt, "VotedFactoryRestart");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        admin: result.admin,
+        factory: result.factory,
+        YorN: result.YorN
+      };
+    });
   }
   parseVotedFactoryShutdownEvent(receipt) {
-    return this.parseEvents(receipt, "VotedFactoryShutdown");
+    let events = this.parseEvents(receipt, "VotedFactoryShutdown");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        admin: result.admin,
+        factory: result.factory,
+        YorN: result.YorN
+      };
+    });
   }
   parseVotedPairRestartEvent(receipt) {
-    return this.parseEvents(receipt, "VotedPairRestart");
+    let events = this.parseEvents(receipt, "VotedPairRestart");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        admin: result.admin,
+        pair: result.pair,
+        YorN: result.YorN
+      };
+    });
   }
   parseVotedPairShutdownEvent(receipt) {
-    return this.parseEvents(receipt, "VotedPairShutdown");
+    let events = this.parseEvents(receipt, "VotedPairShutdown");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        admin: result.admin,
+        pair: result.pair,
+        YorN: result.YorN
+      };
+    });
   }
   parseVotedVetoEvent(receipt) {
-    return this.parseEvents(receipt, "VotedVeto");
+    let events = this.parseEvents(receipt, "VotedVeto");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        admin: result.admin,
+        votingContract: result.votingContract,
+        YorN: result.YorN
+      };
+    });
   }
   async addAdmin(admin) {
     let result = await this.methods("addAdmin", admin);
@@ -1248,43 +1532,164 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
     return this._deploy(params.oaxToken, import_eth_wallet12.Utils.stringToBytes32(params.names), import_eth_wallet12.Utils.toString(params.minExeDelay), import_eth_wallet12.Utils.toString(params.minVoteDuration), import_eth_wallet12.Utils.toString(params.maxVoteDuration), import_eth_wallet12.Utils.toString(params.minOaxTokenToCreateVote), import_eth_wallet12.Utils.toString(params.minQuorum), import_eth_wallet12.Utils.toString(params.minStakePeriod));
   }
   parseAddVotingConfigEvent(receipt) {
-    return this.parseEvents(receipt, "AddVotingConfig");
+    let events = this.parseEvents(receipt, "AddVotingConfig");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay),
+        minVoteDuration: new import_eth_wallet12.BigNumber(result.minVoteDuration),
+        maxVoteDuration: new import_eth_wallet12.BigNumber(result.maxVoteDuration),
+        minOaxTokenToCreateVote: new import_eth_wallet12.BigNumber(result.minOaxTokenToCreateVote),
+        minQuorum: new import_eth_wallet12.BigNumber(result.minQuorum)
+      };
+    });
   }
   parseExecutedEvent(receipt) {
-    return this.parseEvents(receipt, "Executed");
+    let events = this.parseEvents(receipt, "Executed");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        vote: result.vote
+      };
+    });
   }
   parseNewPollEvent(receipt) {
-    return this.parseEvents(receipt, "NewPoll");
+    let events = this.parseEvents(receipt, "NewPoll");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        poll: result.poll
+      };
+    });
   }
   parseNewVoteEvent(receipt) {
-    return this.parseEvents(receipt, "NewVote");
+    let events = this.parseEvents(receipt, "NewVote");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        vote: result.vote
+      };
+    });
   }
   parseOwnershipTransferredEvent(receipt) {
-    return this.parseEvents(receipt, "OwnershipTransferred");
+    let events = this.parseEvents(receipt, "OwnershipTransferred");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        previousOwner: result.previousOwner,
+        newOwner: result.newOwner
+      };
+    });
   }
   parseParamSetEvent(receipt) {
-    return this.parseEvents(receipt, "ParamSet");
+    let events = this.parseEvents(receipt, "ParamSet");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value: result.value
+      };
+    });
   }
   parseParamSet2Event(receipt) {
-    return this.parseEvents(receipt, "ParamSet2");
+    let events = this.parseEvents(receipt, "ParamSet2");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value1: result.value1,
+        value2: result.value2
+      };
+    });
   }
   parsePollEvent(receipt) {
-    return this.parseEvents(receipt, "Poll");
+    let events = this.parseEvents(receipt, "Poll");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        account: result.account,
+        poll: result.poll,
+        option: new import_eth_wallet12.BigNumber(result.option)
+      };
+    });
   }
   parseSetVotingConfigEvent(receipt) {
-    return this.parseEvents(receipt, "SetVotingConfig");
+    let events = this.parseEvents(receipt, "SetVotingConfig");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        configName: result.configName,
+        paramName: result.paramName,
+        minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay)
+      };
+    });
   }
   parseStakeEvent(receipt) {
-    return this.parseEvents(receipt, "Stake");
+    let events = this.parseEvents(receipt, "Stake");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        who: result.who,
+        value: new import_eth_wallet12.BigNumber(result.value)
+      };
+    });
   }
   parseUnstakeEvent(receipt) {
-    return this.parseEvents(receipt, "Unstake");
+    let events = this.parseEvents(receipt, "Unstake");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        who: result.who,
+        value: new import_eth_wallet12.BigNumber(result.value)
+      };
+    });
   }
   parseVetoEvent(receipt) {
-    return this.parseEvents(receipt, "Veto");
+    let events = this.parseEvents(receipt, "Veto");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        vote: result.vote
+      };
+    });
   }
   parseVoteEvent(receipt) {
-    return this.parseEvents(receipt, "Vote");
+    let events = this.parseEvents(receipt, "Vote");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        account: result.account,
+        vote: result.vote,
+        option: new import_eth_wallet12.BigNumber(result.option)
+      };
+    });
   }
   async addVotingConfig(params) {
     let result = await this.methods("addVotingConfig", import_eth_wallet12.Utils.stringToBytes32(params.name), import_eth_wallet12.Utils.toString(params.minExeDelay), import_eth_wallet12.Utils.toString(params.minVoteDuration), import_eth_wallet12.Utils.toString(params.maxVoteDuration), import_eth_wallet12.Utils.toString(params.minOaxTokenToCreateVote), import_eth_wallet12.Utils.toString(params.minQuorum));
@@ -1536,8 +1941,8 @@ var OAXDEX_VotingContract = class extends import_eth_wallet13.Contract {
       voteEndTime_: new import_eth_wallet13.BigNumber(result.voteEndTime_),
       executeDelay_: new import_eth_wallet13.BigNumber(result.executeDelay_),
       status_: result.status_,
-      optionsWeight_: result.optionsWeight_,
-      quorum_: result.quorum_,
+      optionsWeight_: result.optionsWeight_.map((e) => new import_eth_wallet13.BigNumber(e)),
+      quorum_: result.quorum_.map((e) => new import_eth_wallet13.BigNumber(e)),
       executeParam_: result.executeParam_
     };
   }
@@ -1651,56 +2056,64 @@ var OAXDEX_VotingRegistry = class extends import_eth_wallet15.Contract {
   }
 };
 
-// src/contracts/libraries/Address.ts
+// src/contracts/libraries/ERC20.ts
 var import_eth_wallet16 = __toModule(require("@ijstech/eth-wallet"));
-var Bin16 = require_Address();
-var Address = class extends import_eth_wallet16.Contract {
+var Bin16 = require_ERC20();
+var ERC20 = class extends import_eth_wallet16.Contract {
   constructor(wallet, address) {
     super(wallet, address, Bin16.abi, Bin16.bytecode);
-  }
-  deploy() {
-    return this._deploy();
-  }
-};
-
-// src/contracts/libraries/ERC20.ts
-var import_eth_wallet17 = __toModule(require("@ijstech/eth-wallet"));
-var Bin17 = require_ERC20();
-var ERC20 = class extends import_eth_wallet17.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin17.abi, Bin17.bytecode);
   }
   deploy(params) {
     return this._deploy(params.name, params.symbol);
   }
   parseApprovalEvent(receipt) {
-    return this.parseEvents(receipt, "Approval");
+    let events = this.parseEvents(receipt, "Approval");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        owner: result.owner,
+        spender: result.spender,
+        value: new import_eth_wallet16.BigNumber(result.value)
+      };
+    });
   }
   parseTransferEvent(receipt) {
-    return this.parseEvents(receipt, "Transfer");
+    let events = this.parseEvents(receipt, "Transfer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        from: result.from,
+        to: result.to,
+        value: new import_eth_wallet16.BigNumber(result.value)
+      };
+    });
   }
   async allowance(params) {
     let result = await this.methods("allowance", params.owner, params.spender);
-    return new import_eth_wallet17.BigNumber(result);
+    return new import_eth_wallet16.BigNumber(result);
   }
   async approve(params) {
-    let result = await this.methods("approve", params.spender, import_eth_wallet17.Utils.toString(params.amount));
+    let result = await this.methods("approve", params.spender, import_eth_wallet16.Utils.toString(params.amount));
     return result;
   }
   async balanceOf(account) {
     let result = await this.methods("balanceOf", account);
-    return new import_eth_wallet17.BigNumber(result);
+    return new import_eth_wallet16.BigNumber(result);
   }
   async decimals() {
     let result = await this.methods("decimals");
-    return new import_eth_wallet17.BigNumber(result);
+    return new import_eth_wallet16.BigNumber(result);
   }
   async decreaseAllowance(params) {
-    let result = await this.methods("decreaseAllowance", params.spender, import_eth_wallet17.Utils.toString(params.subtractedValue));
+    let result = await this.methods("decreaseAllowance", params.spender, import_eth_wallet16.Utils.toString(params.subtractedValue));
     return result;
   }
   async increaseAllowance(params) {
-    let result = await this.methods("increaseAllowance", params.spender, import_eth_wallet17.Utils.toString(params.addedValue));
+    let result = await this.methods("increaseAllowance", params.spender, import_eth_wallet16.Utils.toString(params.addedValue));
     return result;
   }
   async name() {
@@ -1713,79 +2126,31 @@ var ERC20 = class extends import_eth_wallet17.Contract {
   }
   async totalSupply() {
     let result = await this.methods("totalSupply");
-    return new import_eth_wallet17.BigNumber(result);
+    return new import_eth_wallet16.BigNumber(result);
   }
   async transfer(params) {
-    let result = await this.methods("transfer", params.recipient, import_eth_wallet17.Utils.toString(params.amount));
+    let result = await this.methods("transfer", params.recipient, import_eth_wallet16.Utils.toString(params.amount));
     return result;
   }
   async transferFrom(params) {
-    let result = await this.methods("transferFrom", params.sender, params.recipient, import_eth_wallet17.Utils.toString(params.amount));
+    let result = await this.methods("transferFrom", params.sender, params.recipient, import_eth_wallet16.Utils.toString(params.amount));
     return result;
-  }
-};
-
-// src/contracts/libraries/Math.ts
-var import_eth_wallet18 = __toModule(require("@ijstech/eth-wallet"));
-var Bin18 = require_Math();
-var Math2 = class extends import_eth_wallet18.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin18.abi, Bin18.bytecode);
-  }
-  deploy() {
-    return this._deploy();
-  }
-};
-
-// src/contracts/libraries/SafeMath.ts
-var import_eth_wallet19 = __toModule(require("@ijstech/eth-wallet"));
-var Bin19 = require_SafeMath();
-var SafeMath = class extends import_eth_wallet19.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin19.abi, Bin19.bytecode);
-  }
-  deploy() {
-    return this._deploy();
-  }
-};
-
-// src/contracts/libraries/TransferHelper.ts
-var import_eth_wallet20 = __toModule(require("@ijstech/eth-wallet"));
-var Bin20 = require_TransferHelper();
-var TransferHelper = class extends import_eth_wallet20.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin20.abi, Bin20.bytecode);
-  }
-  deploy() {
-    return this._deploy();
-  }
-};
-
-// src/contracts/libraries/UQ112x112.ts
-var import_eth_wallet21 = __toModule(require("@ijstech/eth-wallet"));
-var Bin21 = require_UQ112x112();
-var UQ112x112 = class extends import_eth_wallet21.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin21.abi, Bin21.bytecode);
-  }
-  deploy() {
-    return this._deploy();
   }
 };
 
 // src/contracts/oracle/OSWAP_CertiKSecurityOracle.ts
-var import_eth_wallet22 = __toModule(require("@ijstech/eth-wallet"));
-var Bin22 = require_OSWAP_CertiKSecurityOracle();
-var OSWAP_CertiKSecurityOracle = class extends import_eth_wallet22.Contract {
+var import_eth_wallet17 = __toModule(require("@ijstech/eth-wallet"));
+var Bin17 = require_OSWAP_CertiKSecurityOracle();
+var OSWAP_CertiKSecurityOracle = class extends import_eth_wallet17.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin22.abi, Bin22.bytecode);
+    super(wallet, address, Bin17.abi, Bin17.bytecode);
   }
   deploy(oracleAddress) {
     return this._deploy(oracleAddress);
   }
   async getSecurityScore(oracle) {
     let result = await this.methods("getSecurityScore", oracle);
-    return new import_eth_wallet22.BigNumber(result);
+    return new import_eth_wallet17.BigNumber(result);
   }
   async oracleAddress() {
     let result = await this.methods("oracleAddress");
@@ -1794,59 +2159,156 @@ var OSWAP_CertiKSecurityOracle = class extends import_eth_wallet22.Contract {
 };
 
 // src/contracts/oracle/OSWAP_OracleFactory.ts
-var import_eth_wallet23 = __toModule(require("@ijstech/eth-wallet"));
-var Bin23 = require_OSWAP_OracleFactory();
-var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
+var import_eth_wallet18 = __toModule(require("@ijstech/eth-wallet"));
+var Bin18 = require_OSWAP_OracleFactory();
+var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin23.abi, Bin23.bytecode);
+    super(wallet, address, Bin18.abi, Bin18.bytecode);
   }
   deploy(params) {
-    return this._deploy(params.governance, params.pairCreator, import_eth_wallet23.Utils.toString(params.tradeFee), import_eth_wallet23.Utils.toString(params.protocolFee), import_eth_wallet23.Utils.toString(params.feePerDelegator), params.protocolFeeTo);
+    return this._deploy(params.governance, params.pairCreator, import_eth_wallet18.Utils.toString(params.tradeFee), import_eth_wallet18.Utils.toString(params.protocolFee), import_eth_wallet18.Utils.toString(params.feePerDelegator), params.protocolFeeTo);
   }
   parseOracleAddedEvent(receipt) {
-    return this.parseEvents(receipt, "OracleAdded");
+    let events = this.parseEvents(receipt, "OracleAdded");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        token0: result.token0,
+        token1: result.token1,
+        oracle: result.oracle
+      };
+    });
   }
   parseOracleScoresEvent(receipt) {
-    return this.parseEvents(receipt, "OracleScores");
+    let events = this.parseEvents(receipt, "OracleScores");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        oracle: result.oracle,
+        score: new import_eth_wallet18.BigNumber(result.score)
+      };
+    });
   }
   parseOwnershipTransferredEvent(receipt) {
-    return this.parseEvents(receipt, "OwnershipTransferred");
+    let events = this.parseEvents(receipt, "OwnershipTransferred");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        previousOwner: result.previousOwner,
+        newOwner: result.newOwner
+      };
+    });
   }
   parsePairCreatedEvent(receipt) {
-    return this.parseEvents(receipt, "PairCreated");
+    let events = this.parseEvents(receipt, "PairCreated");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        token0: result.token0,
+        token1: result.token1,
+        pair: result.pair,
+        newSize: new import_eth_wallet18.BigNumber(result.newSize)
+      };
+    });
   }
   parsePairRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "PairRestarted");
+    let events = this.parseEvents(receipt, "PairRestarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parsePairShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "PairShutdowned");
+    let events = this.parseEvents(receipt, "PairShutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parseParamSetEvent(receipt) {
-    return this.parseEvents(receipt, "ParamSet");
+    let events = this.parseEvents(receipt, "ParamSet");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value: result.value
+      };
+    });
   }
   parseParamSet2Event(receipt) {
-    return this.parseEvents(receipt, "ParamSet2");
+    let events = this.parseEvents(receipt, "ParamSet2");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value1: result.value1,
+        value2: result.value2
+      };
+    });
   }
   parseRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "Restarted");
+    let events = this.parseEvents(receipt, "Restarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   parseShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "Shutdowned");
+    let events = this.parseEvents(receipt, "Shutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   parseWhitelistedEvent(receipt) {
-    return this.parseEvents(receipt, "Whitelisted");
+    let events = this.parseEvents(receipt, "Whitelisted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        who: result.who,
+        allow: result.allow
+      };
+    });
   }
   async addOldOracleToNewPair(params) {
     let result = await this.methods("addOldOracleToNewPair", params.tokenA, params.tokenB, params.oracle);
     return result;
   }
   async allPairs(param1) {
-    let result = await this.methods("allPairs", import_eth_wallet23.Utils.toString(param1));
+    let result = await this.methods("allPairs", import_eth_wallet18.Utils.toString(param1));
     return result;
   }
   async allPairsLength() {
     let result = await this.methods("allPairsLength");
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
   async allWhiteListed() {
     let result = await this.methods("allWhiteListed");
@@ -1863,8 +2325,8 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
     let result = await this.methods("checkAndGetOracleSwapParams", params.tokenA, params.tokenB);
     return {
       oracle_: result.oracle_,
-      tradeFee_: new import_eth_wallet23.BigNumber(result.tradeFee_),
-      protocolFee_: new import_eth_wallet23.BigNumber(result.protocolFee_)
+      tradeFee_: new import_eth_wallet18.BigNumber(result.tradeFee_),
+      protocolFee_: new import_eth_wallet18.BigNumber(result.protocolFee_)
     };
   }
   async createPair(params) {
@@ -1873,7 +2335,7 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
   }
   async feePerDelegator() {
     let result = await this.methods("feePerDelegator");
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
   async getPair(params) {
     let result = await this.methods("getPair", params.param1, params.param2);
@@ -1897,11 +2359,11 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
   }
   async minLotSize(param1) {
     let result = await this.methods("minLotSize", param1);
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
   async minOracleScore() {
     let result = await this.methods("minOracleScore");
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
   async oracleLiquidityProvider() {
     let result = await this.methods("oracleLiquidityProvider");
@@ -1909,7 +2371,7 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
   }
   async oracleScores(param1) {
     let result = await this.methods("oracleScores", param1);
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
   async oracles(params) {
     let result = await this.methods("oracles", params.param1, params.param2);
@@ -1925,7 +2387,7 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
   }
   async protocolFee() {
     let result = await this.methods("protocolFee");
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
   async protocolFeeTo() {
     let result = await this.methods("protocolFeeTo");
@@ -1940,7 +2402,7 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
     return result;
   }
   async setFeePerDelegator(feePerDelegator) {
-    let result = await this.methods("setFeePerDelegator", import_eth_wallet23.Utils.toString(feePerDelegator));
+    let result = await this.methods("setFeePerDelegator", import_eth_wallet18.Utils.toString(feePerDelegator));
     return result;
   }
   async setLive(isLive) {
@@ -1952,7 +2414,7 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
     return result;
   }
   async setMinLotSize(params) {
-    let result = await this.methods("setMinLotSize", params.token, import_eth_wallet23.Utils.toString(params.minLotSize));
+    let result = await this.methods("setMinLotSize", params.token, import_eth_wallet18.Utils.toString(params.minLotSize));
     return result;
   }
   async setOracle(params) {
@@ -1964,7 +2426,7 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
     return result;
   }
   async setProtocolFee(protocolFee) {
-    let result = await this.methods("setProtocolFee", import_eth_wallet23.Utils.toString(protocolFee));
+    let result = await this.methods("setProtocolFee", import_eth_wallet18.Utils.toString(protocolFee));
     return result;
   }
   async setProtocolFeeTo(protocolFeeTo) {
@@ -1972,11 +2434,11 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
     return result;
   }
   async setSecurityScoreOracle(params) {
-    let result = await this.methods("setSecurityScoreOracle", params.securityScoreOracle, import_eth_wallet23.Utils.toString(params.minOracleScore));
+    let result = await this.methods("setSecurityScoreOracle", params.securityScoreOracle, import_eth_wallet18.Utils.toString(params.minOracleScore));
     return result;
   }
   async setTradeFee(tradeFee) {
-    let result = await this.methods("setTradeFee", import_eth_wallet23.Utils.toString(tradeFee));
+    let result = await this.methods("setTradeFee", import_eth_wallet18.Utils.toString(tradeFee));
     return result;
   }
   async setWhiteList(params) {
@@ -1985,7 +2447,7 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
   }
   async tradeFee() {
     let result = await this.methods("tradeFee");
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
   async transferOwnership(newOwner) {
     let result = await this.methods("transferOwnership", newOwner);
@@ -1996,23 +2458,696 @@ var OSWAP_OracleFactory = class extends import_eth_wallet23.Contract {
     return result;
   }
   async whitelisted(param1) {
-    let result = await this.methods("whitelisted", import_eth_wallet23.Utils.toString(param1));
+    let result = await this.methods("whitelisted", import_eth_wallet18.Utils.toString(param1));
     return result;
   }
   async whitelistedInv(param1) {
     let result = await this.methods("whitelistedInv", param1);
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
   async whitelistedLength() {
     let result = await this.methods("whitelistedLength");
-    return new import_eth_wallet23.BigNumber(result);
+    return new import_eth_wallet18.BigNumber(result);
   }
 };
 
 // src/contracts/oracle/OSWAP_OracleLiquidityProvider.ts
+var import_eth_wallet19 = __toModule(require("@ijstech/eth-wallet"));
+var Bin19 = require_OSWAP_OracleLiquidityProvider();
+var OSWAP_OracleLiquidityProvider = class extends import_eth_wallet19.Contract {
+  constructor(wallet, address) {
+    super(wallet, address, Bin19.abi, Bin19.bytecode);
+  }
+  deploy(params) {
+    return this._deploy(params.factory, params.WETH);
+  }
+  async WETH() {
+    let result = await this.methods("WETH");
+    return result;
+  }
+  async addLiquidity(params) {
+    let result = await this.methods("addLiquidity", params.tokenA, params.tokenB, params.addingTokenA, import_eth_wallet19.Utils.toString(params.staked), import_eth_wallet19.Utils.toString(params.afterIndex), import_eth_wallet19.Utils.toString(params.amountIn), import_eth_wallet19.Utils.toString(params.expire), params.enable, import_eth_wallet19.Utils.toString(params.deadline));
+    return result;
+  }
+  async addLiquidityETH(params, _value) {
+    let result = await this.methods("addLiquidityETH", params.tokenA, params.addingTokenA, import_eth_wallet19.Utils.toString(params.staked), import_eth_wallet19.Utils.toString(params.afterIndex), import_eth_wallet19.Utils.toString(params.amountAIn), import_eth_wallet19.Utils.toString(params.expire), params.enable, import_eth_wallet19.Utils.toString(params.deadline), _value);
+    return result;
+  }
+  async factory() {
+    let result = await this.methods("factory");
+    return result;
+  }
+  async govToken() {
+    let result = await this.methods("govToken");
+    return result;
+  }
+  async removeAllLiquidity(params) {
+    let result = await this.methods("removeAllLiquidity", params.tokenA, params.tokenB, params.to, import_eth_wallet19.Utils.toString(params.deadline));
+    return result;
+  }
+  async removeAllLiquidityETH(params) {
+    let result = await this.methods("removeAllLiquidityETH", params.tokenA, params.to, import_eth_wallet19.Utils.toString(params.deadline));
+    return result;
+  }
+  async removeLiquidity(params) {
+    let result = await this.methods("removeLiquidity", params.tokenA, params.tokenB, params.removingTokenA, params.to, import_eth_wallet19.Utils.toString(params.unstake), import_eth_wallet19.Utils.toString(params.afterIndex), import_eth_wallet19.Utils.toString(params.amountOut), import_eth_wallet19.Utils.toString(params.reserveOut), import_eth_wallet19.Utils.toString(params.expire), params.enable, import_eth_wallet19.Utils.toString(params.deadline));
+    return result;
+  }
+  async removeLiquidityETH(params) {
+    let result = await this.methods("removeLiquidityETH", params.tokenA, params.removingTokenA, params.to, import_eth_wallet19.Utils.toString(params.unstake), import_eth_wallet19.Utils.toString(params.afterIndex), import_eth_wallet19.Utils.toString(params.amountOut), import_eth_wallet19.Utils.toString(params.reserveOut), import_eth_wallet19.Utils.toString(params.expire), params.enable, import_eth_wallet19.Utils.toString(params.deadline));
+    return result;
+  }
+};
+
+// src/contracts/oracle/OSWAP_OraclePair.ts
+var import_eth_wallet20 = __toModule(require("@ijstech/eth-wallet"));
+var Bin20 = require_OSWAP_OraclePair();
+var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
+  constructor(wallet, address) {
+    super(wallet, address, Bin20.abi, Bin20.bytecode);
+  }
+  deploy() {
+    return this._deploy();
+  }
+  parseAddLiquidityEvent(receipt) {
+    let events = this.parseEvents(receipt, "AddLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        staked: new import_eth_wallet20.BigNumber(result.staked),
+        amount: new import_eth_wallet20.BigNumber(result.amount),
+        newStakeBalance: new import_eth_wallet20.BigNumber(result.newStakeBalance),
+        newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
+        expire: new import_eth_wallet20.BigNumber(result.expire),
+        enable: result.enable
+      };
+    });
+  }
+  parseDelegatorPauseOfferEvent(receipt) {
+    let events = this.parseEvents(receipt, "DelegatorPauseOffer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        delegator: result.delegator,
+        provider: result.provider,
+        direction: result.direction
+      };
+    });
+  }
+  parseDelegatorResumeOfferEvent(receipt) {
+    let events = this.parseEvents(receipt, "DelegatorResumeOffer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        delegator: result.delegator,
+        provider: result.provider,
+        direction: result.direction
+      };
+    });
+  }
+  parseNewProviderEvent(receipt) {
+    let events = this.parseEvents(receipt, "NewProvider");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        index: new import_eth_wallet20.BigNumber(result.index)
+      };
+    });
+  }
+  parseRemoveLiquidityEvent(receipt) {
+    let events = this.parseEvents(receipt, "RemoveLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        unstake: new import_eth_wallet20.BigNumber(result.unstake),
+        amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
+        reserveOut: new import_eth_wallet20.BigNumber(result.reserveOut),
+        newStakeBalance: new import_eth_wallet20.BigNumber(result.newStakeBalance),
+        newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
+        newReserveBalance: new import_eth_wallet20.BigNumber(result.newReserveBalance),
+        expire: new import_eth_wallet20.BigNumber(result.expire),
+        enable: result.enable
+      };
+    });
+  }
+  parseReplenishEvent(receipt) {
+    let events = this.parseEvents(receipt, "Replenish");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
+        newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
+        newReserveBalance: new import_eth_wallet20.BigNumber(result.newReserveBalance),
+        expire: new import_eth_wallet20.BigNumber(result.expire)
+      };
+    });
+  }
+  parseSetDelegatorEvent(receipt) {
+    let events = this.parseEvents(receipt, "SetDelegator");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        delegator: result.delegator
+      };
+    });
+  }
+  parseSwapEvent(receipt) {
+    let events = this.parseEvents(receipt, "Swap");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        to: result.to,
+        direction: result.direction,
+        price: new import_eth_wallet20.BigNumber(result.price),
+        amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
+        amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
+        tradeFee: new import_eth_wallet20.BigNumber(result.tradeFee),
+        protocolFee: new import_eth_wallet20.BigNumber(result.protocolFee)
+      };
+    });
+  }
+  parseSwappedOneProviderEvent(receipt) {
+    let events = this.parseEvents(receipt, "SwappedOneProvider");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
+        amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
+        newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
+        newCounterReserveBalance: new import_eth_wallet20.BigNumber(result.newCounterReserveBalance)
+      };
+    });
+  }
+  async addLiquidity(params) {
+    let result = await this.methods("addLiquidity", params.provider, params.direction, import_eth_wallet20.Utils.toString(params.staked), import_eth_wallet20.Utils.toString(params.afterIndex), import_eth_wallet20.Utils.toString(params.expire), params.enable);
+    return result;
+  }
+  async counter() {
+    let result = await this.methods("counter");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async delegator(param1) {
+    let result = await this.methods("delegator", param1);
+    return result;
+  }
+  async factory() {
+    let result = await this.methods("factory");
+    return result;
+  }
+  async feeBalance() {
+    let result = await this.methods("feeBalance");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async findPosition(params) {
+    let result = await this.methods("findPosition", params.direction, import_eth_wallet20.Utils.toString(params.staked), import_eth_wallet20.Utils.toString(params.afterIndex));
+    return {
+      afterIndex: new import_eth_wallet20.BigNumber(result.afterIndex),
+      nextIndex: new import_eth_wallet20.BigNumber(result.nextIndex)
+    };
+  }
+  async first(param1) {
+    let result = await this.methods("first", param1);
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async getAmountIn(params) {
+    let result = await this.methods("getAmountIn", params.tokenOut, import_eth_wallet20.Utils.toString(params.amountOut), params.data);
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async getAmountOut(params) {
+    let result = await this.methods("getAmountOut", params.tokenIn, import_eth_wallet20.Utils.toString(params.amountIn), params.data);
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async getBalances() {
+    let result = await this.methods("getBalances");
+    return {
+      param1: new import_eth_wallet20.BigNumber(result[0]),
+      param2: new import_eth_wallet20.BigNumber(result[1]),
+      param3: new import_eth_wallet20.BigNumber(result[2])
+    };
+  }
+  async getLastBalances() {
+    let result = await this.methods("getLastBalances");
+    return {
+      param1: new import_eth_wallet20.BigNumber(result[0]),
+      param2: new import_eth_wallet20.BigNumber(result[1])
+    };
+  }
+  async getLatestPrice(params) {
+    let result = await this.methods("getLatestPrice", params.direction, params.payload);
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async getProviderOffer(params) {
+    let result = await this.methods("getProviderOffer", params.provider, params.direction);
+    return {
+      index: new import_eth_wallet20.BigNumber(result.index),
+      staked: new import_eth_wallet20.BigNumber(result.staked),
+      amount: new import_eth_wallet20.BigNumber(result.amount),
+      reserve: new import_eth_wallet20.BigNumber(result.reserve),
+      expire: new import_eth_wallet20.BigNumber(result.expire),
+      privateReplenish: result.privateReplenish
+    };
+  }
+  async getQueue(params) {
+    let result = await this.methods("getQueue", params.direction, import_eth_wallet20.Utils.toString(params.start), import_eth_wallet20.Utils.toString(params.end));
+    return {
+      index: result.index.map((e) => new import_eth_wallet20.BigNumber(e)),
+      provider: result.provider,
+      amount: result.amount.map((e) => new import_eth_wallet20.BigNumber(e)),
+      staked: result.staked.map((e) => new import_eth_wallet20.BigNumber(e)),
+      expire: result.expire.map((e) => new import_eth_wallet20.BigNumber(e))
+    };
+  }
+  async getQueueFromIndex(params) {
+    let result = await this.methods("getQueueFromIndex", params.direction, import_eth_wallet20.Utils.toString(params.from), import_eth_wallet20.Utils.toString(params.count));
+    return {
+      index: result.index.map((e) => new import_eth_wallet20.BigNumber(e)),
+      provider: result.provider,
+      amount: result.amount.map((e) => new import_eth_wallet20.BigNumber(e)),
+      staked: result.staked.map((e) => new import_eth_wallet20.BigNumber(e)),
+      expire: result.expire.map((e) => new import_eth_wallet20.BigNumber(e))
+    };
+  }
+  async govToken() {
+    let result = await this.methods("govToken");
+    return result;
+  }
+  async governance() {
+    let result = await this.methods("governance");
+    return result;
+  }
+  async initialize(params) {
+    let result = await this.methods("initialize", params.token0, params.token1);
+    return result;
+  }
+  async isLive() {
+    let result = await this.methods("isLive");
+    return result;
+  }
+  async lastGovBalance() {
+    let result = await this.methods("lastGovBalance");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async lastToken0Balance() {
+    let result = await this.methods("lastToken0Balance");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async lastToken1Balance() {
+    let result = await this.methods("lastToken1Balance");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async offers(params) {
+    let result = await this.methods("offers", params.param1, import_eth_wallet20.Utils.toString(params.param2));
+    return {
+      provider: result.provider,
+      staked: new import_eth_wallet20.BigNumber(result.staked),
+      amount: new import_eth_wallet20.BigNumber(result.amount),
+      reserve: new import_eth_wallet20.BigNumber(result.reserve),
+      expire: new import_eth_wallet20.BigNumber(result.expire),
+      privateReplenish: result.privateReplenish,
+      isActive: result.isActive,
+      enabled: result.enabled,
+      prev: new import_eth_wallet20.BigNumber(result.prev),
+      next: new import_eth_wallet20.BigNumber(result.next)
+    };
+  }
+  async oracleLiquidityProvider() {
+    let result = await this.methods("oracleLiquidityProvider");
+    return result;
+  }
+  async pauseOffer(params) {
+    let result = await this.methods("pauseOffer", params.provider, params.direction);
+    return result;
+  }
+  async protocolFeeBalance0() {
+    let result = await this.methods("protocolFeeBalance0");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async protocolFeeBalance1() {
+    let result = await this.methods("protocolFeeBalance1");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async providerOfferIndex(param1) {
+    let result = await this.methods("providerOfferIndex", param1);
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async purgeExpire(params) {
+    let result = await this.methods("purgeExpire", params.direction, import_eth_wallet20.Utils.toString(params.startingIndex), import_eth_wallet20.Utils.toString(params.limit));
+    return result;
+  }
+  async queueSize(param1) {
+    let result = await this.methods("queueSize", param1);
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async redeemProtocolFee() {
+    let result = await this.methods("redeemProtocolFee");
+    return result;
+  }
+  async removeAllLiquidity(provider) {
+    let result = await this.methods("removeAllLiquidity", provider);
+    return result;
+  }
+  async removeLiquidity(params) {
+    let result = await this.methods("removeLiquidity", params.provider, params.direction, import_eth_wallet20.Utils.toString(params.unstake), import_eth_wallet20.Utils.toString(params.afterIndex), import_eth_wallet20.Utils.toString(params.amountOut), import_eth_wallet20.Utils.toString(params.reserveOut), import_eth_wallet20.Utils.toString(params.expire), params.enable);
+    return result;
+  }
+  async replenish(params) {
+    let result = await this.methods("replenish", params.provider, params.direction, import_eth_wallet20.Utils.toString(params.afterIndex), import_eth_wallet20.Utils.toString(params.amountIn), import_eth_wallet20.Utils.toString(params.expire));
+    return result;
+  }
+  async resumeOffer(params) {
+    let result = await this.methods("resumeOffer", params.provider, params.direction, import_eth_wallet20.Utils.toString(params.afterIndex));
+    return result;
+  }
+  async scaleDirection() {
+    let result = await this.methods("scaleDirection");
+    return result;
+  }
+  async scaler() {
+    let result = await this.methods("scaler");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async setDelegator(params) {
+    let result = await this.methods("setDelegator", params.delegator, import_eth_wallet20.Utils.toString(params.fee));
+    return result;
+  }
+  async setLive(isLive) {
+    let result = await this.methods("setLive", isLive);
+    return result;
+  }
+  async setPrivateReplenish(replenish) {
+    let result = await this.methods("setPrivateReplenish", replenish);
+    return result;
+  }
+  async stakeBalance() {
+    let result = await this.methods("stakeBalance");
+    return new import_eth_wallet20.BigNumber(result);
+  }
+  async swap(params) {
+    let result = await this.methods("swap", import_eth_wallet20.Utils.toString(params.amount0Out), import_eth_wallet20.Utils.toString(params.amount1Out), params.to, params.data);
+    return result;
+  }
+  async sync() {
+    let result = await this.methods("sync");
+    return result;
+  }
+  async token0() {
+    let result = await this.methods("token0");
+    return result;
+  }
+  async token1() {
+    let result = await this.methods("token1");
+    return result;
+  }
+};
+
+// src/contracts/oracle/OSWAP_OraclePairCreator.ts
+var import_eth_wallet21 = __toModule(require("@ijstech/eth-wallet"));
+var Bin21 = require_OSWAP_OraclePairCreator();
+var OSWAP_OraclePairCreator = class extends import_eth_wallet21.Contract {
+  constructor(wallet, address) {
+    super(wallet, address, Bin21.abi, Bin21.bytecode);
+  }
+  deploy() {
+    return this._deploy();
+  }
+  async createPair(salt) {
+    let result = await this.methods("createPair", import_eth_wallet21.Utils.stringToBytes32(salt));
+    return result;
+  }
+};
+
+// src/contracts/oracle/OSWAP_VotingExecutor2.ts
+var import_eth_wallet22 = __toModule(require("@ijstech/eth-wallet"));
+var Bin22 = require_OSWAP_VotingExecutor2();
+var OSWAP_VotingExecutor2 = class extends import_eth_wallet22.Contract {
+  constructor(wallet, address) {
+    super(wallet, address, Bin22.abi, Bin22.bytecode);
+  }
+  deploy(factory) {
+    return this._deploy(factory);
+  }
+  async execute(params) {
+    let result = await this.methods("execute", import_eth_wallet22.Utils.stringToBytes32(params));
+    return result;
+  }
+  async factory() {
+    let result = await this.methods("factory");
+    return result;
+  }
+  async governance() {
+    let result = await this.methods("governance");
+    return result;
+  }
+};
+
+// src/contracts/range/OSWAP_RangeFactory.ts
+var import_eth_wallet23 = __toModule(require("@ijstech/eth-wallet"));
+var Bin23 = require_OSWAP_RangeFactory();
+var OSWAP_RangeFactory = class extends import_eth_wallet23.Contract {
+  constructor(wallet, address) {
+    super(wallet, address, Bin23.abi, Bin23.bytecode);
+  }
+  deploy(params) {
+    return this._deploy(params.governance, params.oracleFactory, params.pairCreator, import_eth_wallet23.Utils.toString(params.tradeFee), import_eth_wallet23.Utils.toString(params.stakeAmount), import_eth_wallet23.Utils.toString(params.liquidityProviderShare), params.protocolFeeTo);
+  }
+  parseOwnershipTransferredEvent(receipt) {
+    let events = this.parseEvents(receipt, "OwnershipTransferred");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        previousOwner: result.previousOwner,
+        newOwner: result.newOwner
+      };
+    });
+  }
+  parsePairCreatedEvent(receipt) {
+    let events = this.parseEvents(receipt, "PairCreated");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        token0: result.token0,
+        token1: result.token1,
+        pair: result.pair,
+        newSize: new import_eth_wallet23.BigNumber(result.newSize)
+      };
+    });
+  }
+  parsePairRestartedEvent(receipt) {
+    let events = this.parseEvents(receipt, "PairRestarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
+  }
+  parsePairShutdownedEvent(receipt) {
+    let events = this.parseEvents(receipt, "PairShutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
+  }
+  parseParamSetEvent(receipt) {
+    let events = this.parseEvents(receipt, "ParamSet");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value: result.value
+      };
+    });
+  }
+  parseParamSet2Event(receipt) {
+    let events = this.parseEvents(receipt, "ParamSet2");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value1: result.value1,
+        value2: result.value2
+      };
+    });
+  }
+  parseRestartedEvent(receipt) {
+    let events = this.parseEvents(receipt, "Restarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
+  }
+  parseShutdownedEvent(receipt) {
+    let events = this.parseEvents(receipt, "Shutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
+  }
+  async allPairs(param1) {
+    let result = await this.methods("allPairs", import_eth_wallet23.Utils.toString(param1));
+    return result;
+  }
+  async allPairsLength() {
+    let result = await this.methods("allPairsLength");
+    return new import_eth_wallet23.BigNumber(result);
+  }
+  async checkAndGetSwapParams() {
+    let result = await this.methods("checkAndGetSwapParams");
+    return new import_eth_wallet23.BigNumber(result);
+  }
+  async createPair(params) {
+    let result = await this.methods("createPair", params.tokenA, params.tokenB);
+    return result;
+  }
+  async getAllLiquidityProviderShare() {
+    let result = await this.methods("getAllLiquidityProviderShare");
+    return {
+      _stakeAmount: result._stakeAmount.map((e) => new import_eth_wallet23.BigNumber(e)),
+      _liquidityProviderShare: result._liquidityProviderShare.map((e) => new import_eth_wallet23.BigNumber(e))
+    };
+  }
+  async getCreateAddresses() {
+    let result = await this.methods("getCreateAddresses");
+    return {
+      _governance: result._governance,
+      _rangeLiquidityProvider: result._rangeLiquidityProvider,
+      _oracleFactory: result._oracleFactory
+    };
+  }
+  async getLiquidityProviderShare(stake) {
+    let result = await this.methods("getLiquidityProviderShare", import_eth_wallet23.Utils.toString(stake));
+    return new import_eth_wallet23.BigNumber(result);
+  }
+  async getPair(params) {
+    let result = await this.methods("getPair", params.param1, params.param2);
+    return result;
+  }
+  async governance() {
+    let result = await this.methods("governance");
+    return result;
+  }
+  async isLive() {
+    let result = await this.methods("isLive");
+    return result;
+  }
+  async liquidityProviderShare(param1) {
+    let result = await this.methods("liquidityProviderShare", import_eth_wallet23.Utils.toString(param1));
+    return new import_eth_wallet23.BigNumber(result);
+  }
+  async oracleFactory() {
+    let result = await this.methods("oracleFactory");
+    return result;
+  }
+  async owner() {
+    let result = await this.methods("owner");
+    return result;
+  }
+  async pairCreator() {
+    let result = await this.methods("pairCreator");
+    return result;
+  }
+  async protocolFeeTo() {
+    let result = await this.methods("protocolFeeTo");
+    return result;
+  }
+  async rangeLiquidityProvider() {
+    let result = await this.methods("rangeLiquidityProvider");
+    return result;
+  }
+  async renounceOwnership() {
+    let result = await this.methods("renounceOwnership");
+    return result;
+  }
+  async setLiquidityProviderShare(params) {
+    let result = await this.methods("setLiquidityProviderShare", import_eth_wallet23.Utils.toString(params.stakeAmount), import_eth_wallet23.Utils.toString(params.liquidityProviderShare));
+    return result;
+  }
+  async setLive(isLive) {
+    let result = await this.methods("setLive", isLive);
+    return result;
+  }
+  async setLiveForPair(params) {
+    let result = await this.methods("setLiveForPair", params.pair, params.live);
+    return result;
+  }
+  async setProtocolFeeTo(protocolFeeTo) {
+    let result = await this.methods("setProtocolFeeTo", protocolFeeTo);
+    return result;
+  }
+  async setRangeLiquidityProvider(rangeLiquidityProvider) {
+    let result = await this.methods("setRangeLiquidityProvider", rangeLiquidityProvider);
+    return result;
+  }
+  async setTradeFee(tradeFee) {
+    let result = await this.methods("setTradeFee", import_eth_wallet23.Utils.toString(tradeFee));
+    return result;
+  }
+  async stakeAmount(param1) {
+    let result = await this.methods("stakeAmount", import_eth_wallet23.Utils.toString(param1));
+    return new import_eth_wallet23.BigNumber(result);
+  }
+  async tradeFee() {
+    let result = await this.methods("tradeFee");
+    return new import_eth_wallet23.BigNumber(result);
+  }
+  async transferOwnership(newOwner) {
+    let result = await this.methods("transferOwnership", newOwner);
+    return result;
+  }
+};
+
+// src/contracts/range/OSWAP_RangeLiquidityProvider.ts
 var import_eth_wallet24 = __toModule(require("@ijstech/eth-wallet"));
-var Bin24 = require_OSWAP_OracleLiquidityProvider();
-var OSWAP_OracleLiquidityProvider = class extends import_eth_wallet24.Contract {
+var Bin24 = require_OSWAP_RangeLiquidityProvider();
+var OSWAP_RangeLiquidityProvider = class extends import_eth_wallet24.Contract {
   constructor(wallet, address) {
     super(wallet, address, Bin24.abi, Bin24.bytecode);
   }
@@ -2024,11 +3159,11 @@ var OSWAP_OracleLiquidityProvider = class extends import_eth_wallet24.Contract {
     return result;
   }
   async addLiquidity(params) {
-    let result = await this.methods("addLiquidity", params.tokenA, params.tokenB, params.addingTokenA, import_eth_wallet24.Utils.toString(params.staked), import_eth_wallet24.Utils.toString(params.afterIndex), import_eth_wallet24.Utils.toString(params.amountIn), import_eth_wallet24.Utils.toString(params.expire), params.enable, import_eth_wallet24.Utils.toString(params.deadline));
+    let result = await this.methods("addLiquidity", params.tokenA, params.tokenB, params.addingTokenA, import_eth_wallet24.Utils.toString(params.staked), import_eth_wallet24.Utils.toString(params.amountIn), import_eth_wallet24.Utils.toString(params.lowerLimit), import_eth_wallet24.Utils.toString(params.upperLimit), import_eth_wallet24.Utils.toString(params.startDate), import_eth_wallet24.Utils.toString(params.expire), import_eth_wallet24.Utils.toString(params.deadline));
     return result;
   }
   async addLiquidityETH(params, _value) {
-    let result = await this.methods("addLiquidityETH", params.tokenA, params.addingTokenA, import_eth_wallet24.Utils.toString(params.staked), import_eth_wallet24.Utils.toString(params.afterIndex), import_eth_wallet24.Utils.toString(params.amountAIn), import_eth_wallet24.Utils.toString(params.expire), params.enable, import_eth_wallet24.Utils.toString(params.deadline), _value);
+    let result = await this.methods("addLiquidityETH", params.tokenA, params.addingTokenA, import_eth_wallet24.Utils.toString(params.staked), import_eth_wallet24.Utils.toString(params.amountAIn), import_eth_wallet24.Utils.toString(params.lowerLimit), import_eth_wallet24.Utils.toString(params.upperLimit), import_eth_wallet24.Utils.toString(params.startDate), import_eth_wallet24.Utils.toString(params.expire), import_eth_wallet24.Utils.toString(params.deadline), _value);
     return result;
   }
   async factory() {
@@ -2048,19 +3183,23 @@ var OSWAP_OracleLiquidityProvider = class extends import_eth_wallet24.Contract {
     return result;
   }
   async removeLiquidity(params) {
-    let result = await this.methods("removeLiquidity", params.tokenA, params.tokenB, params.removingTokenA, params.to, import_eth_wallet24.Utils.toString(params.unstake), import_eth_wallet24.Utils.toString(params.afterIndex), import_eth_wallet24.Utils.toString(params.amountOut), import_eth_wallet24.Utils.toString(params.reserveOut), import_eth_wallet24.Utils.toString(params.expire), params.enable, import_eth_wallet24.Utils.toString(params.deadline));
+    let result = await this.methods("removeLiquidity", params.tokenA, params.tokenB, params.removingTokenA, params.to, import_eth_wallet24.Utils.toString(params.unstake), import_eth_wallet24.Utils.toString(params.amountOut), import_eth_wallet24.Utils.toString(params.reserveOut), import_eth_wallet24.Utils.toString(params.lowerLimit), import_eth_wallet24.Utils.toString(params.upperLimit), import_eth_wallet24.Utils.toString(params.startDate), import_eth_wallet24.Utils.toString(params.expire), import_eth_wallet24.Utils.toString(params.deadline));
     return result;
   }
   async removeLiquidityETH(params) {
-    let result = await this.methods("removeLiquidityETH", params.tokenA, params.removingTokenA, params.to, import_eth_wallet24.Utils.toString(params.unstake), import_eth_wallet24.Utils.toString(params.afterIndex), import_eth_wallet24.Utils.toString(params.amountOut), import_eth_wallet24.Utils.toString(params.reserveOut), import_eth_wallet24.Utils.toString(params.expire), params.enable, import_eth_wallet24.Utils.toString(params.deadline));
+    let result = await this.methods("removeLiquidityETH", params.tokenA, params.removingTokenA, params.to, import_eth_wallet24.Utils.toString(params.unstake), import_eth_wallet24.Utils.toString(params.amountOut), import_eth_wallet24.Utils.toString(params.reserveOut), import_eth_wallet24.Utils.toString(params.lowerLimit), import_eth_wallet24.Utils.toString(params.upperLimit), import_eth_wallet24.Utils.toString(params.startDate), import_eth_wallet24.Utils.toString(params.expire), import_eth_wallet24.Utils.toString(params.deadline));
+    return result;
+  }
+  async updateProviderOffer(params) {
+    let result = await this.methods("updateProviderOffer", params.tokenA, params.tokenB, import_eth_wallet24.Utils.toString(params.replenishAmount), import_eth_wallet24.Utils.toString(params.lowerLimit), import_eth_wallet24.Utils.toString(params.upperLimit), import_eth_wallet24.Utils.toString(params.startDate), import_eth_wallet24.Utils.toString(params.expire), params.privateReplenish, import_eth_wallet24.Utils.toString(params.deadline));
     return result;
   }
 };
 
-// src/contracts/oracle/OSWAP_OraclePair.ts
+// src/contracts/range/OSWAP_RangePair.ts
 var import_eth_wallet25 = __toModule(require("@ijstech/eth-wallet"));
-var Bin25 = require_OSWAP_OraclePair();
-var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
+var Bin25 = require_OSWAP_RangePair();
+var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   constructor(wallet, address) {
     super(wallet, address, Bin25.abi, Bin25.bytecode);
   }
@@ -2068,62 +3207,152 @@ var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
     return this._deploy();
   }
   parseAddLiquidityEvent(receipt) {
-    return this.parseEvents(receipt, "AddLiquidity");
-  }
-  parseDelegatorPauseOfferEvent(receipt) {
-    return this.parseEvents(receipt, "DelegatorPauseOffer");
-  }
-  parseDelegatorResumeOfferEvent(receipt) {
-    return this.parseEvents(receipt, "DelegatorResumeOffer");
+    let events = this.parseEvents(receipt, "AddLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        staked: new import_eth_wallet25.BigNumber(result.staked),
+        amount: new import_eth_wallet25.BigNumber(result.amount),
+        newStakeBalance: new import_eth_wallet25.BigNumber(result.newStakeBalance),
+        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+        lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
+        upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
+        startDate: new import_eth_wallet25.BigNumber(result.startDate),
+        expire: new import_eth_wallet25.BigNumber(result.expire)
+      };
+    });
   }
   parseNewProviderEvent(receipt) {
-    return this.parseEvents(receipt, "NewProvider");
+    let events = this.parseEvents(receipt, "NewProvider");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        index: new import_eth_wallet25.BigNumber(result.index)
+      };
+    });
+  }
+  parseRemoveAllLiquidityEvent(receipt) {
+    let events = this.parseEvents(receipt, "RemoveAllLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        unstake: new import_eth_wallet25.BigNumber(result.unstake),
+        amount0Out: new import_eth_wallet25.BigNumber(result.amount0Out),
+        amount1Out: new import_eth_wallet25.BigNumber(result.amount1Out)
+      };
+    });
   }
   parseRemoveLiquidityEvent(receipt) {
-    return this.parseEvents(receipt, "RemoveLiquidity");
+    let events = this.parseEvents(receipt, "RemoveLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        unstake: new import_eth_wallet25.BigNumber(result.unstake),
+        amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
+        reserveOut: new import_eth_wallet25.BigNumber(result.reserveOut),
+        newStakeBalance: new import_eth_wallet25.BigNumber(result.newStakeBalance),
+        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+        newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance),
+        lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
+        upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
+        startDate: new import_eth_wallet25.BigNumber(result.startDate),
+        expire: new import_eth_wallet25.BigNumber(result.expire)
+      };
+    });
   }
   parseReplenishEvent(receipt) {
-    return this.parseEvents(receipt, "Replenish");
-  }
-  parseSetDelegatorEvent(receipt) {
-    return this.parseEvents(receipt, "SetDelegator");
+    let events = this.parseEvents(receipt, "Replenish");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
+        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+        newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance)
+      };
+    });
   }
   parseSwapEvent(receipt) {
-    return this.parseEvents(receipt, "Swap");
+    let events = this.parseEvents(receipt, "Swap");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        to: result.to,
+        direction: result.direction,
+        price: new import_eth_wallet25.BigNumber(result.price),
+        amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
+        amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
+        tradeFee: new import_eth_wallet25.BigNumber(result.tradeFee),
+        protocolFee: new import_eth_wallet25.BigNumber(result.protocolFee)
+      };
+    });
   }
   parseSwappedOneProviderEvent(receipt) {
-    return this.parseEvents(receipt, "SwappedOneProvider");
+    let events = this.parseEvents(receipt, "SwappedOneProvider");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
+        amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
+        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+        newCounterReserveBalance: new import_eth_wallet25.BigNumber(result.newCounterReserveBalance)
+      };
+    });
+  }
+  parseUpdateProviderOfferEvent(receipt) {
+    let events = this.parseEvents(receipt, "UpdateProviderOffer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        replenish: new import_eth_wallet25.BigNumber(result.replenish),
+        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+        newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance),
+        lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
+        upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
+        startDate: new import_eth_wallet25.BigNumber(result.startDate),
+        expire: new import_eth_wallet25.BigNumber(result.expire),
+        privateReplenish: result.privateReplenish
+      };
+    });
   }
   async addLiquidity(params) {
-    let result = await this.methods("addLiquidity", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.staked), import_eth_wallet25.Utils.toString(params.afterIndex), import_eth_wallet25.Utils.toString(params.expire), params.enable);
+    let result = await this.methods("addLiquidity", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.staked), import_eth_wallet25.Utils.toString(params.lowerLimit), import_eth_wallet25.Utils.toString(params.upperLimit), import_eth_wallet25.Utils.toString(params.startDate), import_eth_wallet25.Utils.toString(params.expire));
     return result;
   }
   async counter() {
     let result = await this.methods("counter");
     return new import_eth_wallet25.BigNumber(result);
   }
-  async delegator(param1) {
-    let result = await this.methods("delegator", param1);
-    return result;
-  }
   async factory() {
     let result = await this.methods("factory");
     return result;
-  }
-  async feeBalance() {
-    let result = await this.methods("feeBalance");
-    return new import_eth_wallet25.BigNumber(result);
-  }
-  async findPosition(params) {
-    let result = await this.methods("findPosition", params.direction, import_eth_wallet25.Utils.toString(params.staked), import_eth_wallet25.Utils.toString(params.afterIndex));
-    return {
-      afterIndex: new import_eth_wallet25.BigNumber(result.afterIndex),
-      nextIndex: new import_eth_wallet25.BigNumber(result.nextIndex)
-    };
-  }
-  async first(param1) {
-    let result = await this.methods("first", param1);
-    return new import_eth_wallet25.BigNumber(result);
   }
   async getAmountIn(params) {
     let result = await this.methods("getAmountIn", params.tokenOut, import_eth_wallet25.Utils.toString(params.amountOut), params.data);
@@ -2135,22 +3364,32 @@ var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
   }
   async getBalances() {
     let result = await this.methods("getBalances");
-    return [
-      new import_eth_wallet25.BigNumber(result[0]),
-      new import_eth_wallet25.BigNumber(result[1]),
-      new import_eth_wallet25.BigNumber(result[2])
-    ];
+    return {
+      param1: new import_eth_wallet25.BigNumber(result[0]),
+      param2: new import_eth_wallet25.BigNumber(result[1]),
+      param3: new import_eth_wallet25.BigNumber(result[2])
+    };
   }
   async getLastBalances() {
     let result = await this.methods("getLastBalances");
-    return [
-      new import_eth_wallet25.BigNumber(result[0]),
-      new import_eth_wallet25.BigNumber(result[1])
-    ];
+    return {
+      param1: new import_eth_wallet25.BigNumber(result[0]),
+      param2: new import_eth_wallet25.BigNumber(result[1])
+    };
   }
   async getLatestPrice(params) {
     let result = await this.methods("getLatestPrice", params.direction, params.payload);
     return new import_eth_wallet25.BigNumber(result);
+  }
+  async getOffers(params) {
+    let result = await this.methods("getOffers", params.direction, import_eth_wallet25.Utils.toString(params.start), import_eth_wallet25.Utils.toString(params.end));
+    return {
+      provider: result.provider,
+      amountAndReserve: result.amountAndReserve.map((e) => new import_eth_wallet25.BigNumber(e)),
+      lowerLimitAndUpperLimit: result.lowerLimitAndUpperLimit.map((e) => new import_eth_wallet25.BigNumber(e)),
+      startDateAndExpire: result.startDateAndExpire.map((e) => new import_eth_wallet25.BigNumber(e)),
+      privateReplenish: result.privateReplenish
+    };
   }
   async getProviderOffer(params) {
     let result = await this.methods("getProviderOffer", params.provider, params.direction);
@@ -2159,28 +3398,11 @@ var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
       staked: new import_eth_wallet25.BigNumber(result.staked),
       amount: new import_eth_wallet25.BigNumber(result.amount),
       reserve: new import_eth_wallet25.BigNumber(result.reserve),
+      lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
+      upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
+      startDate: new import_eth_wallet25.BigNumber(result.startDate),
       expire: new import_eth_wallet25.BigNumber(result.expire),
       privateReplenish: result.privateReplenish
-    };
-  }
-  async getQueue(params) {
-    let result = await this.methods("getQueue", params.direction, import_eth_wallet25.Utils.toString(params.start), import_eth_wallet25.Utils.toString(params.end));
-    return {
-      index: result.index,
-      provider: result.provider,
-      amount: result.amount,
-      staked: result.staked,
-      expire: result.expire
-    };
-  }
-  async getQueueFromIndex(params) {
-    let result = await this.methods("getQueueFromIndex", params.direction, import_eth_wallet25.Utils.toString(params.from), import_eth_wallet25.Utils.toString(params.count));
-    return {
-      index: result.index,
-      provider: result.provider,
-      amount: result.amount,
-      staked: result.staked,
-      expire: result.expire
     };
   }
   async govToken() {
@@ -2215,23 +3437,17 @@ var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
     let result = await this.methods("offers", params.param1, import_eth_wallet25.Utils.toString(params.param2));
     return {
       provider: result.provider,
-      staked: new import_eth_wallet25.BigNumber(result.staked),
       amount: new import_eth_wallet25.BigNumber(result.amount),
       reserve: new import_eth_wallet25.BigNumber(result.reserve),
+      lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
+      upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
+      startDate: new import_eth_wallet25.BigNumber(result.startDate),
       expire: new import_eth_wallet25.BigNumber(result.expire),
-      privateReplenish: result.privateReplenish,
-      isActive: result.isActive,
-      enabled: result.enabled,
-      prev: new import_eth_wallet25.BigNumber(result.prev),
-      next: new import_eth_wallet25.BigNumber(result.next)
+      privateReplenish: result.privateReplenish
     };
   }
-  async oracleLiquidityProvider() {
-    let result = await this.methods("oracleLiquidityProvider");
-    return result;
-  }
-  async pauseOffer(params) {
-    let result = await this.methods("pauseOffer", params.provider, params.direction);
+  async oracleFactory() {
+    let result = await this.methods("oracleFactory");
     return result;
   }
   async protocolFeeBalance0() {
@@ -2246,13 +3462,13 @@ var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
     let result = await this.methods("providerOfferIndex", param1);
     return new import_eth_wallet25.BigNumber(result);
   }
-  async purgeExpire(params) {
-    let result = await this.methods("purgeExpire", params.direction, import_eth_wallet25.Utils.toString(params.startingIndex), import_eth_wallet25.Utils.toString(params.limit));
-    return result;
-  }
-  async queueSize(param1) {
-    let result = await this.methods("queueSize", param1);
+  async providerStaking(param1) {
+    let result = await this.methods("providerStaking", param1);
     return new import_eth_wallet25.BigNumber(result);
+  }
+  async rangeLiquidityProvider() {
+    let result = await this.methods("rangeLiquidityProvider");
+    return result;
   }
   async redeemProtocolFee() {
     let result = await this.methods("redeemProtocolFee");
@@ -2263,15 +3479,11 @@ var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
     return result;
   }
   async removeLiquidity(params) {
-    let result = await this.methods("removeLiquidity", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.unstake), import_eth_wallet25.Utils.toString(params.afterIndex), import_eth_wallet25.Utils.toString(params.amountOut), import_eth_wallet25.Utils.toString(params.reserveOut), import_eth_wallet25.Utils.toString(params.expire), params.enable);
+    let result = await this.methods("removeLiquidity", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.unstake), import_eth_wallet25.Utils.toString(params.amountOut), import_eth_wallet25.Utils.toString(params.reserveOut), import_eth_wallet25.Utils.toString(params.lowerLimit), import_eth_wallet25.Utils.toString(params.upperLimit), import_eth_wallet25.Utils.toString(params.startDate), import_eth_wallet25.Utils.toString(params.expire));
     return result;
   }
   async replenish(params) {
-    let result = await this.methods("replenish", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.afterIndex), import_eth_wallet25.Utils.toString(params.amountIn), import_eth_wallet25.Utils.toString(params.expire));
-    return result;
-  }
-  async resumeOffer(params) {
-    let result = await this.methods("resumeOffer", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.afterIndex));
+    let result = await this.methods("replenish", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.amountIn));
     return result;
   }
   async scaleDirection() {
@@ -2282,16 +3494,8 @@ var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
     let result = await this.methods("scaler");
     return new import_eth_wallet25.BigNumber(result);
   }
-  async setDelegator(params) {
-    let result = await this.methods("setDelegator", params.delegator, import_eth_wallet25.Utils.toString(params.fee));
-    return result;
-  }
   async setLive(isLive) {
     let result = await this.methods("setLive", isLive);
-    return result;
-  }
-  async setPrivateReplenish(replenish) {
-    let result = await this.methods("setPrivateReplenish", replenish);
     return result;
   }
   async stakeBalance() {
@@ -2314,12 +3518,16 @@ var OSWAP_OraclePair = class extends import_eth_wallet25.Contract {
     let result = await this.methods("token1");
     return result;
   }
+  async updateProviderOffer(params) {
+    let result = await this.methods("updateProviderOffer", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.replenishAmount), import_eth_wallet25.Utils.toString(params.lowerLimit), import_eth_wallet25.Utils.toString(params.upperLimit), import_eth_wallet25.Utils.toString(params.startDate), import_eth_wallet25.Utils.toString(params.expire), params.privateReplenish);
+    return result;
+  }
 };
 
-// src/contracts/oracle/OSWAP_OraclePairCreator.ts
+// src/contracts/range/OSWAP_RangePairCreator.ts
 var import_eth_wallet26 = __toModule(require("@ijstech/eth-wallet"));
-var Bin26 = require_OSWAP_OraclePairCreator();
-var OSWAP_OraclePairCreator = class extends import_eth_wallet26.Contract {
+var Bin26 = require_OSWAP_RangePairCreator();
+var OSWAP_RangePairCreator = class extends import_eth_wallet26.Contract {
   constructor(wallet, address) {
     super(wallet, address, Bin26.abi, Bin26.bytecode);
   }
@@ -2332,473 +3540,18 @@ var OSWAP_OraclePairCreator = class extends import_eth_wallet26.Contract {
   }
 };
 
-// src/contracts/oracle/OSWAP_VotingExecutor2.ts
+// src/contracts/range/OSWAP_VotingExecutor3.ts
 var import_eth_wallet27 = __toModule(require("@ijstech/eth-wallet"));
-var Bin27 = require_OSWAP_VotingExecutor2();
-var OSWAP_VotingExecutor2 = class extends import_eth_wallet27.Contract {
+var Bin27 = require_OSWAP_VotingExecutor3();
+var OSWAP_VotingExecutor3 = class extends import_eth_wallet27.Contract {
   constructor(wallet, address) {
     super(wallet, address, Bin27.abi, Bin27.bytecode);
-  }
-  deploy(factory) {
-    return this._deploy(factory);
-  }
-  async execute(params) {
-    let result = await this.methods("execute", import_eth_wallet27.Utils.stringToBytes32(params));
-    return result;
-  }
-  async factory() {
-    let result = await this.methods("factory");
-    return result;
-  }
-  async governance() {
-    let result = await this.methods("governance");
-    return result;
-  }
-};
-
-// src/contracts/range/OSWAP_RangeFactory.ts
-var import_eth_wallet28 = __toModule(require("@ijstech/eth-wallet"));
-var Bin28 = require_OSWAP_RangeFactory();
-var OSWAP_RangeFactory = class extends import_eth_wallet28.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin28.abi, Bin28.bytecode);
-  }
-  deploy(params) {
-    return this._deploy(params.governance, params.oracleFactory, params.pairCreator, import_eth_wallet28.Utils.toString(params.tradeFee), import_eth_wallet28.Utils.toString(params.stakeAmount), import_eth_wallet28.Utils.toString(params.liquidityProviderShare), params.protocolFeeTo);
-  }
-  parseOwnershipTransferredEvent(receipt) {
-    return this.parseEvents(receipt, "OwnershipTransferred");
-  }
-  parsePairCreatedEvent(receipt) {
-    return this.parseEvents(receipt, "PairCreated");
-  }
-  parsePairRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "PairRestarted");
-  }
-  parsePairShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "PairShutdowned");
-  }
-  parseParamSetEvent(receipt) {
-    return this.parseEvents(receipt, "ParamSet");
-  }
-  parseParamSet2Event(receipt) {
-    return this.parseEvents(receipt, "ParamSet2");
-  }
-  parseRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "Restarted");
-  }
-  parseShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "Shutdowned");
-  }
-  async allPairs(param1) {
-    let result = await this.methods("allPairs", import_eth_wallet28.Utils.toString(param1));
-    return result;
-  }
-  async allPairsLength() {
-    let result = await this.methods("allPairsLength");
-    return new import_eth_wallet28.BigNumber(result);
-  }
-  async checkAndGetSwapParams() {
-    let result = await this.methods("checkAndGetSwapParams");
-    return new import_eth_wallet28.BigNumber(result);
-  }
-  async createPair(params) {
-    let result = await this.methods("createPair", params.tokenA, params.tokenB);
-    return result;
-  }
-  async getAllLiquidityProviderShare() {
-    let result = await this.methods("getAllLiquidityProviderShare");
-    return {
-      _stakeAmount: result._stakeAmount,
-      _liquidityProviderShare: result._liquidityProviderShare
-    };
-  }
-  async getCreateAddresses() {
-    let result = await this.methods("getCreateAddresses");
-    return {
-      _governance: result._governance,
-      _rangeLiquidityProvider: result._rangeLiquidityProvider,
-      _oracleFactory: result._oracleFactory
-    };
-  }
-  async getLiquidityProviderShare(stake) {
-    let result = await this.methods("getLiquidityProviderShare", import_eth_wallet28.Utils.toString(stake));
-    return new import_eth_wallet28.BigNumber(result);
-  }
-  async getPair(params) {
-    let result = await this.methods("getPair", params.param1, params.param2);
-    return result;
-  }
-  async governance() {
-    let result = await this.methods("governance");
-    return result;
-  }
-  async isLive() {
-    let result = await this.methods("isLive");
-    return result;
-  }
-  async liquidityProviderShare(param1) {
-    let result = await this.methods("liquidityProviderShare", import_eth_wallet28.Utils.toString(param1));
-    return new import_eth_wallet28.BigNumber(result);
-  }
-  async oracleFactory() {
-    let result = await this.methods("oracleFactory");
-    return result;
-  }
-  async owner() {
-    let result = await this.methods("owner");
-    return result;
-  }
-  async pairCreator() {
-    let result = await this.methods("pairCreator");
-    return result;
-  }
-  async protocolFeeTo() {
-    let result = await this.methods("protocolFeeTo");
-    return result;
-  }
-  async rangeLiquidityProvider() {
-    let result = await this.methods("rangeLiquidityProvider");
-    return result;
-  }
-  async renounceOwnership() {
-    let result = await this.methods("renounceOwnership");
-    return result;
-  }
-  async setLiquidityProviderShare(params) {
-    let result = await this.methods("setLiquidityProviderShare", import_eth_wallet28.Utils.toString(params.stakeAmount), import_eth_wallet28.Utils.toString(params.liquidityProviderShare));
-    return result;
-  }
-  async setLive(isLive) {
-    let result = await this.methods("setLive", isLive);
-    return result;
-  }
-  async setLiveForPair(params) {
-    let result = await this.methods("setLiveForPair", params.pair, params.live);
-    return result;
-  }
-  async setProtocolFeeTo(protocolFeeTo) {
-    let result = await this.methods("setProtocolFeeTo", protocolFeeTo);
-    return result;
-  }
-  async setRangeLiquidityProvider(rangeLiquidityProvider) {
-    let result = await this.methods("setRangeLiquidityProvider", rangeLiquidityProvider);
-    return result;
-  }
-  async setTradeFee(tradeFee) {
-    let result = await this.methods("setTradeFee", import_eth_wallet28.Utils.toString(tradeFee));
-    return result;
-  }
-  async stakeAmount(param1) {
-    let result = await this.methods("stakeAmount", import_eth_wallet28.Utils.toString(param1));
-    return new import_eth_wallet28.BigNumber(result);
-  }
-  async tradeFee() {
-    let result = await this.methods("tradeFee");
-    return new import_eth_wallet28.BigNumber(result);
-  }
-  async transferOwnership(newOwner) {
-    let result = await this.methods("transferOwnership", newOwner);
-    return result;
-  }
-};
-
-// src/contracts/range/OSWAP_RangeLiquidityProvider.ts
-var import_eth_wallet29 = __toModule(require("@ijstech/eth-wallet"));
-var Bin29 = require_OSWAP_RangeLiquidityProvider();
-var OSWAP_RangeLiquidityProvider = class extends import_eth_wallet29.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin29.abi, Bin29.bytecode);
-  }
-  deploy(params) {
-    return this._deploy(params.factory, params.WETH);
-  }
-  async WETH() {
-    let result = await this.methods("WETH");
-    return result;
-  }
-  async addLiquidity(params) {
-    let result = await this.methods("addLiquidity", params.tokenA, params.tokenB, params.addingTokenA, import_eth_wallet29.Utils.toString(params.staked), import_eth_wallet29.Utils.toString(params.amountIn), import_eth_wallet29.Utils.toString(params.lowerLimit), import_eth_wallet29.Utils.toString(params.upperLimit), import_eth_wallet29.Utils.toString(params.startDate), import_eth_wallet29.Utils.toString(params.expire), import_eth_wallet29.Utils.toString(params.deadline));
-    return result;
-  }
-  async addLiquidityETH(params, _value) {
-    let result = await this.methods("addLiquidityETH", params.tokenA, params.addingTokenA, import_eth_wallet29.Utils.toString(params.staked), import_eth_wallet29.Utils.toString(params.amountAIn), import_eth_wallet29.Utils.toString(params.lowerLimit), import_eth_wallet29.Utils.toString(params.upperLimit), import_eth_wallet29.Utils.toString(params.startDate), import_eth_wallet29.Utils.toString(params.expire), import_eth_wallet29.Utils.toString(params.deadline), _value);
-    return result;
-  }
-  async factory() {
-    let result = await this.methods("factory");
-    return result;
-  }
-  async govToken() {
-    let result = await this.methods("govToken");
-    return result;
-  }
-  async removeAllLiquidity(params) {
-    let result = await this.methods("removeAllLiquidity", params.tokenA, params.tokenB, params.to, import_eth_wallet29.Utils.toString(params.deadline));
-    return result;
-  }
-  async removeAllLiquidityETH(params) {
-    let result = await this.methods("removeAllLiquidityETH", params.tokenA, params.to, import_eth_wallet29.Utils.toString(params.deadline));
-    return result;
-  }
-  async removeLiquidity(params) {
-    let result = await this.methods("removeLiquidity", params.tokenA, params.tokenB, params.removingTokenA, params.to, import_eth_wallet29.Utils.toString(params.unstake), import_eth_wallet29.Utils.toString(params.amountOut), import_eth_wallet29.Utils.toString(params.reserveOut), import_eth_wallet29.Utils.toString(params.lowerLimit), import_eth_wallet29.Utils.toString(params.upperLimit), import_eth_wallet29.Utils.toString(params.startDate), import_eth_wallet29.Utils.toString(params.expire), import_eth_wallet29.Utils.toString(params.deadline));
-    return result;
-  }
-  async removeLiquidityETH(params) {
-    let result = await this.methods("removeLiquidityETH", params.tokenA, params.removingTokenA, params.to, import_eth_wallet29.Utils.toString(params.unstake), import_eth_wallet29.Utils.toString(params.amountOut), import_eth_wallet29.Utils.toString(params.reserveOut), import_eth_wallet29.Utils.toString(params.lowerLimit), import_eth_wallet29.Utils.toString(params.upperLimit), import_eth_wallet29.Utils.toString(params.startDate), import_eth_wallet29.Utils.toString(params.expire), import_eth_wallet29.Utils.toString(params.deadline));
-    return result;
-  }
-  async updateProviderOffer(params) {
-    let result = await this.methods("updateProviderOffer", params.tokenA, params.tokenB, import_eth_wallet29.Utils.toString(params.replenishAmount), import_eth_wallet29.Utils.toString(params.lowerLimit), import_eth_wallet29.Utils.toString(params.upperLimit), import_eth_wallet29.Utils.toString(params.startDate), import_eth_wallet29.Utils.toString(params.expire), params.privateReplenish, import_eth_wallet29.Utils.toString(params.deadline));
-    return result;
-  }
-};
-
-// src/contracts/range/OSWAP_RangePair.ts
-var import_eth_wallet30 = __toModule(require("@ijstech/eth-wallet"));
-var Bin30 = require_OSWAP_RangePair();
-var OSWAP_RangePair = class extends import_eth_wallet30.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin30.abi, Bin30.bytecode);
-  }
-  deploy() {
-    return this._deploy();
-  }
-  parseAddLiquidityEvent(receipt) {
-    return this.parseEvents(receipt, "AddLiquidity");
-  }
-  parseNewProviderEvent(receipt) {
-    return this.parseEvents(receipt, "NewProvider");
-  }
-  parseRemoveAllLiquidityEvent(receipt) {
-    return this.parseEvents(receipt, "RemoveAllLiquidity");
-  }
-  parseRemoveLiquidityEvent(receipt) {
-    return this.parseEvents(receipt, "RemoveLiquidity");
-  }
-  parseReplenishEvent(receipt) {
-    return this.parseEvents(receipt, "Replenish");
-  }
-  parseSwapEvent(receipt) {
-    return this.parseEvents(receipt, "Swap");
-  }
-  parseSwappedOneProviderEvent(receipt) {
-    return this.parseEvents(receipt, "SwappedOneProvider");
-  }
-  parseUpdateProviderOfferEvent(receipt) {
-    return this.parseEvents(receipt, "UpdateProviderOffer");
-  }
-  async addLiquidity(params) {
-    let result = await this.methods("addLiquidity", params.provider, params.direction, import_eth_wallet30.Utils.toString(params.staked), import_eth_wallet30.Utils.toString(params.lowerLimit), import_eth_wallet30.Utils.toString(params.upperLimit), import_eth_wallet30.Utils.toString(params.startDate), import_eth_wallet30.Utils.toString(params.expire));
-    return result;
-  }
-  async counter() {
-    let result = await this.methods("counter");
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async factory() {
-    let result = await this.methods("factory");
-    return result;
-  }
-  async getAmountIn(params) {
-    let result = await this.methods("getAmountIn", params.tokenOut, import_eth_wallet30.Utils.toString(params.amountOut), params.data);
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async getAmountOut(params) {
-    let result = await this.methods("getAmountOut", params.tokenIn, import_eth_wallet30.Utils.toString(params.amountIn), params.data);
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async getBalances() {
-    let result = await this.methods("getBalances");
-    return [
-      new import_eth_wallet30.BigNumber(result[0]),
-      new import_eth_wallet30.BigNumber(result[1]),
-      new import_eth_wallet30.BigNumber(result[2])
-    ];
-  }
-  async getLastBalances() {
-    let result = await this.methods("getLastBalances");
-    return [
-      new import_eth_wallet30.BigNumber(result[0]),
-      new import_eth_wallet30.BigNumber(result[1])
-    ];
-  }
-  async getLatestPrice(params) {
-    let result = await this.methods("getLatestPrice", params.direction, params.payload);
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async getOffers(params) {
-    let result = await this.methods("getOffers", params.direction, import_eth_wallet30.Utils.toString(params.start), import_eth_wallet30.Utils.toString(params.end));
-    return {
-      provider: result.provider,
-      amountAndReserve: result.amountAndReserve,
-      lowerLimitAndUpperLimit: result.lowerLimitAndUpperLimit,
-      startDateAndExpire: result.startDateAndExpire,
-      privateReplenish: result.privateReplenish
-    };
-  }
-  async getProviderOffer(params) {
-    let result = await this.methods("getProviderOffer", params.provider, params.direction);
-    return {
-      index: new import_eth_wallet30.BigNumber(result.index),
-      staked: new import_eth_wallet30.BigNumber(result.staked),
-      amount: new import_eth_wallet30.BigNumber(result.amount),
-      reserve: new import_eth_wallet30.BigNumber(result.reserve),
-      lowerLimit: new import_eth_wallet30.BigNumber(result.lowerLimit),
-      upperLimit: new import_eth_wallet30.BigNumber(result.upperLimit),
-      startDate: new import_eth_wallet30.BigNumber(result.startDate),
-      expire: new import_eth_wallet30.BigNumber(result.expire),
-      privateReplenish: result.privateReplenish
-    };
-  }
-  async govToken() {
-    let result = await this.methods("govToken");
-    return result;
-  }
-  async governance() {
-    let result = await this.methods("governance");
-    return result;
-  }
-  async initialize(params) {
-    let result = await this.methods("initialize", params.token0, params.token1);
-    return result;
-  }
-  async isLive() {
-    let result = await this.methods("isLive");
-    return result;
-  }
-  async lastGovBalance() {
-    let result = await this.methods("lastGovBalance");
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async lastToken0Balance() {
-    let result = await this.methods("lastToken0Balance");
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async lastToken1Balance() {
-    let result = await this.methods("lastToken1Balance");
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async offers(params) {
-    let result = await this.methods("offers", params.param1, import_eth_wallet30.Utils.toString(params.param2));
-    return {
-      provider: result.provider,
-      amount: new import_eth_wallet30.BigNumber(result.amount),
-      reserve: new import_eth_wallet30.BigNumber(result.reserve),
-      lowerLimit: new import_eth_wallet30.BigNumber(result.lowerLimit),
-      upperLimit: new import_eth_wallet30.BigNumber(result.upperLimit),
-      startDate: new import_eth_wallet30.BigNumber(result.startDate),
-      expire: new import_eth_wallet30.BigNumber(result.expire),
-      privateReplenish: result.privateReplenish
-    };
-  }
-  async oracleFactory() {
-    let result = await this.methods("oracleFactory");
-    return result;
-  }
-  async protocolFeeBalance0() {
-    let result = await this.methods("protocolFeeBalance0");
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async protocolFeeBalance1() {
-    let result = await this.methods("protocolFeeBalance1");
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async providerOfferIndex(param1) {
-    let result = await this.methods("providerOfferIndex", param1);
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async providerStaking(param1) {
-    let result = await this.methods("providerStaking", param1);
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async rangeLiquidityProvider() {
-    let result = await this.methods("rangeLiquidityProvider");
-    return result;
-  }
-  async redeemProtocolFee() {
-    let result = await this.methods("redeemProtocolFee");
-    return result;
-  }
-  async removeAllLiquidity(provider) {
-    let result = await this.methods("removeAllLiquidity", provider);
-    return result;
-  }
-  async removeLiquidity(params) {
-    let result = await this.methods("removeLiquidity", params.provider, params.direction, import_eth_wallet30.Utils.toString(params.unstake), import_eth_wallet30.Utils.toString(params.amountOut), import_eth_wallet30.Utils.toString(params.reserveOut), import_eth_wallet30.Utils.toString(params.lowerLimit), import_eth_wallet30.Utils.toString(params.upperLimit), import_eth_wallet30.Utils.toString(params.startDate), import_eth_wallet30.Utils.toString(params.expire));
-    return result;
-  }
-  async replenish(params) {
-    let result = await this.methods("replenish", params.provider, params.direction, import_eth_wallet30.Utils.toString(params.amountIn));
-    return result;
-  }
-  async scaleDirection() {
-    let result = await this.methods("scaleDirection");
-    return result;
-  }
-  async scaler() {
-    let result = await this.methods("scaler");
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async setLive(isLive) {
-    let result = await this.methods("setLive", isLive);
-    return result;
-  }
-  async stakeBalance() {
-    let result = await this.methods("stakeBalance");
-    return new import_eth_wallet30.BigNumber(result);
-  }
-  async swap(params) {
-    let result = await this.methods("swap", import_eth_wallet30.Utils.toString(params.amount0Out), import_eth_wallet30.Utils.toString(params.amount1Out), params.to, params.data);
-    return result;
-  }
-  async sync() {
-    let result = await this.methods("sync");
-    return result;
-  }
-  async token0() {
-    let result = await this.methods("token0");
-    return result;
-  }
-  async token1() {
-    let result = await this.methods("token1");
-    return result;
-  }
-  async updateProviderOffer(params) {
-    let result = await this.methods("updateProviderOffer", params.provider, params.direction, import_eth_wallet30.Utils.toString(params.replenishAmount), import_eth_wallet30.Utils.toString(params.lowerLimit), import_eth_wallet30.Utils.toString(params.upperLimit), import_eth_wallet30.Utils.toString(params.startDate), import_eth_wallet30.Utils.toString(params.expire), params.privateReplenish);
-    return result;
-  }
-};
-
-// src/contracts/range/OSWAP_RangePairCreator.ts
-var import_eth_wallet31 = __toModule(require("@ijstech/eth-wallet"));
-var Bin31 = require_OSWAP_RangePairCreator();
-var OSWAP_RangePairCreator = class extends import_eth_wallet31.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin31.abi, Bin31.bytecode);
-  }
-  deploy() {
-    return this._deploy();
-  }
-  async createPair(salt) {
-    let result = await this.methods("createPair", import_eth_wallet31.Utils.stringToBytes32(salt));
-    return result;
-  }
-};
-
-// src/contracts/range/OSWAP_VotingExecutor3.ts
-var import_eth_wallet32 = __toModule(require("@ijstech/eth-wallet"));
-var Bin32 = require_OSWAP_VotingExecutor3();
-var OSWAP_VotingExecutor3 = class extends import_eth_wallet32.Contract {
-  constructor(wallet, address) {
-    super(wallet, address, Bin32.abi, Bin32.bytecode);
   }
   deploy(params) {
     return this._deploy(params.governance, params.factory, params.hybridRegistry);
   }
   async execute(params) {
-    let result = await this.methods("execute", import_eth_wallet32.Utils.stringToBytes32(params));
+    let result = await this.methods("execute", import_eth_wallet27.Utils.stringToBytes32(params));
     return result;
   }
   async factory() {
@@ -2816,96 +3569,185 @@ var OSWAP_VotingExecutor3 = class extends import_eth_wallet32.Contract {
 };
 
 // src/contracts/restricted/OSWAP_ConfigStore.ts
-var import_eth_wallet33 = __toModule(require("@ijstech/eth-wallet"));
-var Bin33 = require_OSWAP_ConfigStore();
-var OSWAP_ConfigStore = class extends import_eth_wallet33.Contract {
+var import_eth_wallet28 = __toModule(require("@ijstech/eth-wallet"));
+var Bin28 = require_OSWAP_ConfigStore();
+var OSWAP_ConfigStore = class extends import_eth_wallet28.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin33.abi, Bin33.bytecode);
+    super(wallet, address, Bin28.abi, Bin28.bytecode);
   }
   deploy(governance) {
     return this._deploy(governance);
   }
   parseParamSetEvent(receipt) {
-    return this.parseEvents(receipt, "ParamSet");
+    let events = this.parseEvents(receipt, "ParamSet");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value: result.value
+      };
+    });
   }
   async customParam(param1) {
-    let result = await this.methods("customParam", import_eth_wallet33.Utils.stringToBytes32(param1));
+    let result = await this.methods("customParam", import_eth_wallet28.Utils.stringToBytes32(param1));
     return result;
   }
   async customParamNames(param1) {
-    let result = await this.methods("customParamNames", import_eth_wallet33.Utils.toString(param1));
+    let result = await this.methods("customParamNames", import_eth_wallet28.Utils.toString(param1));
     return result;
   }
   async customParamNamesIdx(param1) {
-    let result = await this.methods("customParamNamesIdx", import_eth_wallet33.Utils.stringToBytes32(param1));
-    return new import_eth_wallet33.BigNumber(result);
+    let result = await this.methods("customParamNamesIdx", import_eth_wallet28.Utils.stringToBytes32(param1));
+    return new import_eth_wallet28.BigNumber(result);
   }
   async customParamNamesLength() {
     let result = await this.methods("customParamNamesLength");
-    return new import_eth_wallet33.BigNumber(result);
+    return new import_eth_wallet28.BigNumber(result);
   }
   async governance() {
     let result = await this.methods("governance");
     return result;
   }
   async setCustomParam(params) {
-    let result = await this.methods("setCustomParam", import_eth_wallet33.Utils.stringToBytes32(params.paramName), import_eth_wallet33.Utils.stringToBytes32(params.paramValue));
+    let result = await this.methods("setCustomParam", import_eth_wallet28.Utils.stringToBytes32(params.paramName), import_eth_wallet28.Utils.stringToBytes32(params.paramValue));
     return result;
   }
   async setMultiCustomParam(params) {
-    let result = await this.methods("setMultiCustomParam", import_eth_wallet33.Utils.stringToBytes32(params.paramName), import_eth_wallet33.Utils.stringToBytes32(params.paramValue));
+    let result = await this.methods("setMultiCustomParam", import_eth_wallet28.Utils.stringToBytes32(params.paramName), import_eth_wallet28.Utils.stringToBytes32(params.paramValue));
     return result;
   }
 };
 
 // src/contracts/restricted/OSWAP_RestrictedFactory.ts
-var import_eth_wallet34 = __toModule(require("@ijstech/eth-wallet"));
-var Bin34 = require_OSWAP_RestrictedFactory();
-var OSWAP_RestrictedFactory = class extends import_eth_wallet34.Contract {
+var import_eth_wallet29 = __toModule(require("@ijstech/eth-wallet"));
+var Bin29 = require_OSWAP_RestrictedFactory();
+var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin34.abi, Bin34.bytecode);
+    super(wallet, address, Bin29.abi, Bin29.bytecode);
   }
   deploy(params) {
-    return this._deploy(params.governance, params.whitelistFactory, params.pairCreator, params.configStore, import_eth_wallet34.Utils.toString(params.tradeFee), import_eth_wallet34.Utils.toString(params.protocolFee), params.protocolFeeTo);
+    return this._deploy(params.governance, params.whitelistFactory, params.pairCreator, params.configStore, import_eth_wallet29.Utils.toString(params.tradeFee), import_eth_wallet29.Utils.toString(params.protocolFee), params.protocolFeeTo);
   }
   parseOracleAddedEvent(receipt) {
-    return this.parseEvents(receipt, "OracleAdded");
+    let events = this.parseEvents(receipt, "OracleAdded");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        token0: result.token0,
+        token1: result.token1,
+        oracle: result.oracle
+      };
+    });
   }
   parseOwnershipTransferredEvent(receipt) {
-    return this.parseEvents(receipt, "OwnershipTransferred");
+    let events = this.parseEvents(receipt, "OwnershipTransferred");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        previousOwner: result.previousOwner,
+        newOwner: result.newOwner
+      };
+    });
   }
   parsePairCreatedEvent(receipt) {
-    return this.parseEvents(receipt, "PairCreated");
+    let events = this.parseEvents(receipt, "PairCreated");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        token0: result.token0,
+        token1: result.token1,
+        pair: result.pair,
+        newPairSize: new import_eth_wallet29.BigNumber(result.newPairSize),
+        newSize: new import_eth_wallet29.BigNumber(result.newSize)
+      };
+    });
   }
   parsePairRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "PairRestarted");
+    let events = this.parseEvents(receipt, "PairRestarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parsePairShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "PairShutdowned");
+    let events = this.parseEvents(receipt, "PairShutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair
+      };
+    });
   }
   parseParamSetEvent(receipt) {
-    return this.parseEvents(receipt, "ParamSet");
+    let events = this.parseEvents(receipt, "ParamSet");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value: result.value
+      };
+    });
   }
   parseParamSet2Event(receipt) {
-    return this.parseEvents(receipt, "ParamSet2");
+    let events = this.parseEvents(receipt, "ParamSet2");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        name: result.name,
+        value1: result.value1,
+        value2: result.value2
+      };
+    });
   }
   parseRestartedEvent(receipt) {
-    return this.parseEvents(receipt, "Restarted");
+    let events = this.parseEvents(receipt, "Restarted");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   parseShutdownedEvent(receipt) {
-    return this.parseEvents(receipt, "Shutdowned");
+    let events = this.parseEvents(receipt, "Shutdowned");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash
+      };
+    });
   }
   async addOldOracleToNewPair(params) {
     let result = await this.methods("addOldOracleToNewPair", params.tokenA, params.tokenB, params.oracle);
     return result;
   }
   async allPairs(param1) {
-    let result = await this.methods("allPairs", import_eth_wallet34.Utils.toString(param1));
+    let result = await this.methods("allPairs", import_eth_wallet29.Utils.toString(param1));
     return result;
   }
   async allPairsLength() {
     let result = await this.methods("allPairsLength");
-    return new import_eth_wallet34.BigNumber(result);
+    return new import_eth_wallet29.BigNumber(result);
   }
   async checkAndGetOracle(params) {
     let result = await this.methods("checkAndGetOracle", params.tokenA, params.tokenB);
@@ -2915,8 +3757,8 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet34.Contract {
     let result = await this.methods("checkAndGetOracleSwapParams", params.tokenA, params.tokenB);
     return {
       oracle_: result.oracle_,
-      tradeFee_: new import_eth_wallet34.BigNumber(result.tradeFee_),
-      protocolFee_: new import_eth_wallet34.BigNumber(result.protocolFee_)
+      tradeFee_: new import_eth_wallet29.BigNumber(result.tradeFee_),
+      protocolFee_: new import_eth_wallet29.BigNumber(result.protocolFee_)
     };
   }
   async configStore() {
@@ -2937,7 +3779,7 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet34.Contract {
     };
   }
   async getPair(params) {
-    let result = await this.methods("getPair", params.param1, params.param2, import_eth_wallet34.Utils.toString(params.param3));
+    let result = await this.methods("getPair", params.param1, params.param2, import_eth_wallet29.Utils.toString(params.param3));
     return result;
   }
   async governance() {
@@ -2974,15 +3816,15 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet34.Contract {
   }
   async pairIdx(param1) {
     let result = await this.methods("pairIdx", param1);
-    return new import_eth_wallet34.BigNumber(result);
+    return new import_eth_wallet29.BigNumber(result);
   }
   async pairLength(params) {
     let result = await this.methods("pairLength", params.tokenA, params.tokenB);
-    return new import_eth_wallet34.BigNumber(result);
+    return new import_eth_wallet29.BigNumber(result);
   }
   async protocolFee() {
     let result = await this.methods("protocolFee");
-    return new import_eth_wallet34.BigNumber(result);
+    return new import_eth_wallet29.BigNumber(result);
   }
   async protocolFeeTo() {
     let result = await this.methods("protocolFeeTo");
@@ -3009,7 +3851,7 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet34.Contract {
     return result;
   }
   async setProtocolFee(protocolFee) {
-    let result = await this.methods("setProtocolFee", import_eth_wallet34.Utils.toString(protocolFee));
+    let result = await this.methods("setProtocolFee", import_eth_wallet29.Utils.toString(protocolFee));
     return result;
   }
   async setProtocolFeeTo(protocolFeeTo) {
@@ -3017,12 +3859,12 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet34.Contract {
     return result;
   }
   async setTradeFee(tradeFee) {
-    let result = await this.methods("setTradeFee", import_eth_wallet34.Utils.toString(tradeFee));
+    let result = await this.methods("setTradeFee", import_eth_wallet29.Utils.toString(tradeFee));
     return result;
   }
   async tradeFee() {
     let result = await this.methods("tradeFee");
-    return new import_eth_wallet34.BigNumber(result);
+    return new import_eth_wallet29.BigNumber(result);
   }
   async transferOwnership(newOwner) {
     let result = await this.methods("transferOwnership", newOwner);
@@ -3035,11 +3877,11 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet34.Contract {
 };
 
 // src/contracts/restricted/OSWAP_RestrictedLiquidityProvider.ts
-var import_eth_wallet35 = __toModule(require("@ijstech/eth-wallet"));
-var Bin35 = require_OSWAP_RestrictedLiquidityProvider();
-var OSWAP_RestrictedLiquidityProvider = class extends import_eth_wallet35.Contract {
+var import_eth_wallet30 = __toModule(require("@ijstech/eth-wallet"));
+var Bin30 = require_OSWAP_RestrictedLiquidityProvider();
+var OSWAP_RestrictedLiquidityProvider = class extends import_eth_wallet30.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin35.abi, Bin35.bytecode);
+    super(wallet, address, Bin30.abi, Bin30.bytecode);
   }
   deploy(params) {
     return this._deploy(params.factory, params.WETH);
@@ -3049,19 +3891,19 @@ var OSWAP_RestrictedLiquidityProvider = class extends import_eth_wallet35.Contra
     return result;
   }
   async addLiquidity(params) {
-    let result = await this.methods("addLiquidity", params.tokenA, params.tokenB, params.addingTokenA, import_eth_wallet35.Utils.toString(params.pairIndex), import_eth_wallet35.Utils.toString(params.offerIndex), import_eth_wallet35.Utils.toString(params.amountIn), params.allowAll, import_eth_wallet35.Utils.toString(params.restrictedPrice), import_eth_wallet35.Utils.toString(params.startDate), import_eth_wallet35.Utils.toString(params.expire), import_eth_wallet35.Utils.toString(params.deadline));
+    let result = await this.methods("addLiquidity", params.tokenA, params.tokenB, params.addingTokenA, import_eth_wallet30.Utils.toString(params.pairIndex), import_eth_wallet30.Utils.toString(params.offerIndex), import_eth_wallet30.Utils.toString(params.amountIn), params.allowAll, import_eth_wallet30.Utils.toString(params.restrictedPrice), import_eth_wallet30.Utils.toString(params.startDate), import_eth_wallet30.Utils.toString(params.expire), import_eth_wallet30.Utils.toString(params.deadline));
     return result;
   }
   async addLiquidityAndTrader(params) {
-    let result = await this.methods("addLiquidityAndTrader", import_eth_wallet35.Utils.toString(params.param), params.trader, import_eth_wallet35.Utils.toString(params.allocation));
+    let result = await this.methods("addLiquidityAndTrader", import_eth_wallet30.Utils.toString(params.param), params.trader, import_eth_wallet30.Utils.toString(params.allocation));
     return result;
   }
   async addLiquidityETH(params, _value) {
-    let result = await this.methods("addLiquidityETH", params.tokenA, params.addingTokenA, import_eth_wallet35.Utils.toString(params.pairIndex), import_eth_wallet35.Utils.toString(params.offerIndex), import_eth_wallet35.Utils.toString(params.amountAIn), params.allowAll, import_eth_wallet35.Utils.toString(params.restrictedPrice), import_eth_wallet35.Utils.toString(params.startDate), import_eth_wallet35.Utils.toString(params.expire), import_eth_wallet35.Utils.toString(params.deadline), _value);
+    let result = await this.methods("addLiquidityETH", params.tokenA, params.addingTokenA, import_eth_wallet30.Utils.toString(params.pairIndex), import_eth_wallet30.Utils.toString(params.offerIndex), import_eth_wallet30.Utils.toString(params.amountAIn), params.allowAll, import_eth_wallet30.Utils.toString(params.restrictedPrice), import_eth_wallet30.Utils.toString(params.startDate), import_eth_wallet30.Utils.toString(params.expire), import_eth_wallet30.Utils.toString(params.deadline), _value);
     return result;
   }
   async addLiquidityETHAndTrader(params, _value) {
-    let result = await this.methods("addLiquidityETHAndTrader", import_eth_wallet35.Utils.toString(params.param), params.trader, import_eth_wallet35.Utils.toString(params.allocation), _value);
+    let result = await this.methods("addLiquidityETHAndTrader", import_eth_wallet30.Utils.toString(params.param), params.trader, import_eth_wallet30.Utils.toString(params.allocation), _value);
     return result;
   }
   async configStore() {
@@ -3077,50 +3919,50 @@ var OSWAP_RestrictedLiquidityProvider = class extends import_eth_wallet35.Contra
     return result;
   }
   async removeAllLiquidity(params) {
-    let result = await this.methods("removeAllLiquidity", params.tokenA, params.tokenB, params.to, import_eth_wallet35.Utils.toString(params.pairIndex), import_eth_wallet35.Utils.toString(params.deadline));
+    let result = await this.methods("removeAllLiquidity", params.tokenA, params.tokenB, params.to, import_eth_wallet30.Utils.toString(params.pairIndex), import_eth_wallet30.Utils.toString(params.deadline));
     return result;
   }
   async removeAllLiquidityETH(params) {
-    let result = await this.methods("removeAllLiquidityETH", params.tokenA, params.to, import_eth_wallet35.Utils.toString(params.pairIndex), import_eth_wallet35.Utils.toString(params.deadline));
+    let result = await this.methods("removeAllLiquidityETH", params.tokenA, params.to, import_eth_wallet30.Utils.toString(params.pairIndex), import_eth_wallet30.Utils.toString(params.deadline));
     return result;
   }
   async removeLiquidity(params) {
-    let result = await this.methods("removeLiquidity", params.tokenA, params.tokenB, params.removingTokenA, params.to, import_eth_wallet35.Utils.toString(params.pairIndex), import_eth_wallet35.Utils.toString(params.offerIndex), import_eth_wallet35.Utils.toString(params.amountOut), import_eth_wallet35.Utils.toString(params.receivingOut), import_eth_wallet35.Utils.toString(params.deadline));
+    let result = await this.methods("removeLiquidity", params.tokenA, params.tokenB, params.removingTokenA, params.to, import_eth_wallet30.Utils.toString(params.pairIndex), import_eth_wallet30.Utils.toString(params.offerIndex), import_eth_wallet30.Utils.toString(params.amountOut), import_eth_wallet30.Utils.toString(params.receivingOut), import_eth_wallet30.Utils.toString(params.deadline));
     return result;
   }
   async removeLiquidityETH(params) {
-    let result = await this.methods("removeLiquidityETH", params.tokenA, params.removingTokenA, params.to, import_eth_wallet35.Utils.toString(params.pairIndex), import_eth_wallet35.Utils.toString(params.offerIndex), import_eth_wallet35.Utils.toString(params.amountOut), import_eth_wallet35.Utils.toString(params.receivingOut), import_eth_wallet35.Utils.toString(params.deadline));
+    let result = await this.methods("removeLiquidityETH", params.tokenA, params.removingTokenA, params.to, import_eth_wallet30.Utils.toString(params.pairIndex), import_eth_wallet30.Utils.toString(params.offerIndex), import_eth_wallet30.Utils.toString(params.amountOut), import_eth_wallet30.Utils.toString(params.receivingOut), import_eth_wallet30.Utils.toString(params.deadline));
     return result;
   }
 };
 
 // src/contracts/restricted/OSWAP_RestrictedPairOracle.ts
-var import_eth_wallet36 = __toModule(require("@ijstech/eth-wallet"));
-var Bin36 = require_OSWAP_RestrictedPairOracle();
-var OSWAP_RestrictedPairOracle = class extends import_eth_wallet36.Contract {
+var import_eth_wallet31 = __toModule(require("@ijstech/eth-wallet"));
+var Bin31 = require_OSWAP_RestrictedPairOracle();
+var OSWAP_RestrictedPairOracle = class extends import_eth_wallet31.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin36.abi, Bin36.bytecode);
+    super(wallet, address, Bin31.abi, Bin31.bytecode);
   }
   deploy() {
     return this._deploy();
   }
   async WEI() {
     let result = await this.methods("WEI");
-    return new import_eth_wallet36.BigNumber(result);
+    return new import_eth_wallet31.BigNumber(result);
   }
   async decimals() {
     let result = await this.methods("decimals");
-    return new import_eth_wallet36.BigNumber(result);
+    return new import_eth_wallet31.BigNumber(result);
   }
   async getLatestPrice(params) {
     let result = await this.methods("getLatestPrice", params.from, params.to, params.payload);
-    return new import_eth_wallet36.BigNumber(result);
+    return new import_eth_wallet31.BigNumber(result);
   }
   async getRatio(params) {
-    let result = await this.methods("getRatio", params.from, params.to, import_eth_wallet36.Utils.toString(params.param3), import_eth_wallet36.Utils.toString(params.param4), params.param5, params.payload);
+    let result = await this.methods("getRatio", params.from, params.to, import_eth_wallet31.Utils.toString(params.param3), import_eth_wallet31.Utils.toString(params.param4), params.param5, params.payload);
     return {
-      numerator: new import_eth_wallet36.BigNumber(result.numerator),
-      denominator: new import_eth_wallet36.BigNumber(result.denominator)
+      numerator: new import_eth_wallet31.BigNumber(result.numerator),
+      denominator: new import_eth_wallet31.BigNumber(result.denominator)
     };
   }
   async isSupported(params) {
@@ -3130,11 +3972,11 @@ var OSWAP_RestrictedPairOracle = class extends import_eth_wallet36.Contract {
 };
 
 // src/contracts/restricted/OSWAP_VotingExecutor4.ts
-var import_eth_wallet37 = __toModule(require("@ijstech/eth-wallet"));
-var Bin37 = require_OSWAP_VotingExecutor4();
-var OSWAP_VotingExecutor4 = class extends import_eth_wallet37.Contract {
+var import_eth_wallet32 = __toModule(require("@ijstech/eth-wallet"));
+var Bin32 = require_OSWAP_VotingExecutor4();
+var OSWAP_VotingExecutor4 = class extends import_eth_wallet32.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin37.abi, Bin37.bytecode);
+    super(wallet, address, Bin32.abi, Bin32.bytecode);
   }
   deploy(params) {
     return this._deploy(params.governance, params.factory, params.configStore);
@@ -3144,7 +3986,7 @@ var OSWAP_VotingExecutor4 = class extends import_eth_wallet37.Contract {
     return result;
   }
   async execute(params) {
-    let result = await this.methods("execute", import_eth_wallet37.Utils.stringToBytes32(params));
+    let result = await this.methods("execute", import_eth_wallet32.Utils.stringToBytes32(params));
     return result;
   }
   async factory() {
@@ -3158,11 +4000,11 @@ var OSWAP_VotingExecutor4 = class extends import_eth_wallet37.Contract {
 };
 
 // src/contracts/router/OSWAP_HybridRouter.ts
-var import_eth_wallet38 = __toModule(require("@ijstech/eth-wallet"));
-var Bin38 = require_OSWAP_HybridRouter();
-var OSWAP_HybridRouter = class extends import_eth_wallet38.Contract {
+var import_eth_wallet33 = __toModule(require("@ijstech/eth-wallet"));
+var Bin33 = require_OSWAP_HybridRouter();
+var OSWAP_HybridRouter = class extends import_eth_wallet33.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin38.abi, Bin38.bytecode);
+    super(wallet, address, Bin33.abi, Bin33.bytecode);
   }
   deploy(params) {
     return this._deploy(params.oracleFactory, params.WETH);
@@ -3172,11 +4014,11 @@ var OSWAP_HybridRouter = class extends import_eth_wallet38.Contract {
     return result;
   }
   async getAmountsIn(params) {
-    let result = await this.methods("getAmountsIn", import_eth_wallet38.Utils.toString(params.amountOut), params.path, params.pair, import_eth_wallet38.Utils.toString(params.fee), params.data);
+    let result = await this.methods("getAmountsIn", import_eth_wallet33.Utils.toString(params.amountOut), params.path, params.pair, import_eth_wallet33.Utils.toString(params.fee), params.data);
     return result;
   }
   async getAmountsOut(params) {
-    let result = await this.methods("getAmountsOut", import_eth_wallet38.Utils.toString(params.amountIn), params.path, params.pair, import_eth_wallet38.Utils.toString(params.fee), params.data);
+    let result = await this.methods("getAmountsOut", import_eth_wallet33.Utils.toString(params.amountIn), params.path, params.pair, import_eth_wallet33.Utils.toString(params.fee), params.data);
     return result;
   }
   async oracleFactory() {
@@ -3188,49 +4030,49 @@ var OSWAP_HybridRouter = class extends import_eth_wallet38.Contract {
     return result;
   }
   async swapETHForExactTokens(params, _value) {
-    let result = await this.methods("swapETHForExactTokens", import_eth_wallet38.Utils.toString(params.amountOut), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee), params.data, _value);
+    let result = await this.methods("swapETHForExactTokens", import_eth_wallet33.Utils.toString(params.amountOut), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee), params.data, _value);
     return result;
   }
   async swapExactETHForTokens(params, _value) {
-    let result = await this.methods("swapExactETHForTokens", import_eth_wallet38.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee), params.data, _value);
+    let result = await this.methods("swapExactETHForTokens", import_eth_wallet33.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee), params.data, _value);
     return result;
   }
   async swapExactETHForTokensSupportingFeeOnTransferTokens(params, _value) {
-    let result = await this.methods("swapExactETHForTokensSupportingFeeOnTransferTokens", import_eth_wallet38.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee), _value);
+    let result = await this.methods("swapExactETHForTokensSupportingFeeOnTransferTokens", import_eth_wallet33.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee), _value);
     return result;
   }
   async swapExactTokensForETH(params) {
-    let result = await this.methods("swapExactTokensForETH", import_eth_wallet38.Utils.toString(params.amountIn), import_eth_wallet38.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee), params.data);
+    let result = await this.methods("swapExactTokensForETH", import_eth_wallet33.Utils.toString(params.amountIn), import_eth_wallet33.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee), params.data);
     return result;
   }
   async swapExactTokensForETHSupportingFeeOnTransferTokens(params) {
-    let result = await this.methods("swapExactTokensForETHSupportingFeeOnTransferTokens", import_eth_wallet38.Utils.toString(params.amountIn), import_eth_wallet38.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee));
+    let result = await this.methods("swapExactTokensForETHSupportingFeeOnTransferTokens", import_eth_wallet33.Utils.toString(params.amountIn), import_eth_wallet33.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee));
     return result;
   }
   async swapExactTokensForTokens(params) {
-    let result = await this.methods("swapExactTokensForTokens", import_eth_wallet38.Utils.toString(params.amountIn), import_eth_wallet38.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee), params.data);
+    let result = await this.methods("swapExactTokensForTokens", import_eth_wallet33.Utils.toString(params.amountIn), import_eth_wallet33.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee), params.data);
     return result;
   }
   async swapExactTokensForTokensSupportingFeeOnTransferTokens(params) {
-    let result = await this.methods("swapExactTokensForTokensSupportingFeeOnTransferTokens", import_eth_wallet38.Utils.toString(params.amountIn), import_eth_wallet38.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee));
+    let result = await this.methods("swapExactTokensForTokensSupportingFeeOnTransferTokens", import_eth_wallet33.Utils.toString(params.amountIn), import_eth_wallet33.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee));
     return result;
   }
   async swapTokensForExactETH(params) {
-    let result = await this.methods("swapTokensForExactETH", import_eth_wallet38.Utils.toString(params.amountOut), import_eth_wallet38.Utils.toString(params.amountInMax), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee), params.data);
+    let result = await this.methods("swapTokensForExactETH", import_eth_wallet33.Utils.toString(params.amountOut), import_eth_wallet33.Utils.toString(params.amountInMax), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee), params.data);
     return result;
   }
   async swapTokensForExactTokens(params) {
-    let result = await this.methods("swapTokensForExactTokens", import_eth_wallet38.Utils.toString(params.amountOut), import_eth_wallet38.Utils.toString(params.amountInMax), params.path, params.to, import_eth_wallet38.Utils.toString(params.deadline), params.pair, import_eth_wallet38.Utils.toString(params.fee), params.data);
+    let result = await this.methods("swapTokensForExactTokens", import_eth_wallet33.Utils.toString(params.amountOut), import_eth_wallet33.Utils.toString(params.amountInMax), params.path, params.to, import_eth_wallet33.Utils.toString(params.deadline), params.pair, import_eth_wallet33.Utils.toString(params.fee), params.data);
     return result;
   }
 };
 
 // src/contracts/router/OSWAP_HybridRouter2.ts
-var import_eth_wallet39 = __toModule(require("@ijstech/eth-wallet"));
-var Bin39 = require_OSWAP_HybridRouter2();
-var OSWAP_HybridRouter2 = class extends import_eth_wallet39.Contract {
+var import_eth_wallet34 = __toModule(require("@ijstech/eth-wallet"));
+var Bin34 = require_OSWAP_HybridRouter2();
+var OSWAP_HybridRouter2 = class extends import_eth_wallet34.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin39.abi, Bin39.bytecode);
+    super(wallet, address, Bin34.abi, Bin34.bytecode);
   }
   deploy(params) {
     return this._deploy(params.registry, params.WETH);
@@ -3240,19 +4082,19 @@ var OSWAP_HybridRouter2 = class extends import_eth_wallet39.Contract {
     return result;
   }
   async getAmountsInEndsWith(params) {
-    let result = await this.methods("getAmountsInEndsWith", import_eth_wallet39.Utils.toString(params.amountOut), params.pair, params.tokenOut, params.data);
+    let result = await this.methods("getAmountsInEndsWith", import_eth_wallet34.Utils.toString(params.amountOut), params.pair, params.tokenOut, params.data);
     return result;
   }
   async getAmountsInStartsWith(params) {
-    let result = await this.methods("getAmountsInStartsWith", import_eth_wallet39.Utils.toString(params.amountOut), params.pair, params.tokenIn, params.data);
+    let result = await this.methods("getAmountsInStartsWith", import_eth_wallet34.Utils.toString(params.amountOut), params.pair, params.tokenIn, params.data);
     return result;
   }
   async getAmountsOutEndsWith(params) {
-    let result = await this.methods("getAmountsOutEndsWith", import_eth_wallet39.Utils.toString(params.amountIn), params.pair, params.tokenOut, params.data);
+    let result = await this.methods("getAmountsOutEndsWith", import_eth_wallet34.Utils.toString(params.amountIn), params.pair, params.tokenOut, params.data);
     return result;
   }
   async getAmountsOutStartsWith(params) {
-    let result = await this.methods("getAmountsOutStartsWith", import_eth_wallet39.Utils.toString(params.amountIn), params.pair, params.tokenIn, params.data);
+    let result = await this.methods("getAmountsOutStartsWith", import_eth_wallet34.Utils.toString(params.amountIn), params.pair, params.tokenIn, params.data);
     return result;
   }
   async getPathIn(params) {
@@ -3268,82 +4110,125 @@ var OSWAP_HybridRouter2 = class extends import_eth_wallet39.Contract {
     return result;
   }
   async swapETHForExactTokens(params, _value) {
-    let result = await this.methods("swapETHForExactTokens", import_eth_wallet39.Utils.toString(params.amountOut), params.pair, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data, _value);
+    let result = await this.methods("swapETHForExactTokens", import_eth_wallet34.Utils.toString(params.amountOut), params.pair, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data, _value);
     return result;
   }
   async swapExactETHForTokens(params, _value) {
-    let result = await this.methods("swapExactETHForTokens", import_eth_wallet39.Utils.toString(params.amountOutMin), params.pair, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data, _value);
+    let result = await this.methods("swapExactETHForTokens", import_eth_wallet34.Utils.toString(params.amountOutMin), params.pair, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data, _value);
     return result;
   }
   async swapExactETHForTokensSupportingFeeOnTransferTokens(params, _value) {
-    let result = await this.methods("swapExactETHForTokensSupportingFeeOnTransferTokens", import_eth_wallet39.Utils.toString(params.amountOutMin), params.pair, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data, _value);
+    let result = await this.methods("swapExactETHForTokensSupportingFeeOnTransferTokens", import_eth_wallet34.Utils.toString(params.amountOutMin), params.pair, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data, _value);
     return result;
   }
   async swapExactTokensForETH(params) {
-    let result = await this.methods("swapExactTokensForETH", import_eth_wallet39.Utils.toString(params.amountIn), import_eth_wallet39.Utils.toString(params.amountOutMin), params.pair, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data);
+    let result = await this.methods("swapExactTokensForETH", import_eth_wallet34.Utils.toString(params.amountIn), import_eth_wallet34.Utils.toString(params.amountOutMin), params.pair, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data);
     return result;
   }
   async swapExactTokensForETHSupportingFeeOnTransferTokens(params) {
-    let result = await this.methods("swapExactTokensForETHSupportingFeeOnTransferTokens", import_eth_wallet39.Utils.toString(params.amountIn), import_eth_wallet39.Utils.toString(params.amountOutMin), params.pair, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data);
+    let result = await this.methods("swapExactTokensForETHSupportingFeeOnTransferTokens", import_eth_wallet34.Utils.toString(params.amountIn), import_eth_wallet34.Utils.toString(params.amountOutMin), params.pair, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data);
     return result;
   }
   async swapExactTokensForTokens(params) {
-    let result = await this.methods("swapExactTokensForTokens", import_eth_wallet39.Utils.toString(params.amountIn), import_eth_wallet39.Utils.toString(params.amountOutMin), params.pair, params.tokenIn, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data);
+    let result = await this.methods("swapExactTokensForTokens", import_eth_wallet34.Utils.toString(params.amountIn), import_eth_wallet34.Utils.toString(params.amountOutMin), params.pair, params.tokenIn, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data);
     return result;
   }
   async swapExactTokensForTokensSupportingFeeOnTransferTokens(params) {
-    let result = await this.methods("swapExactTokensForTokensSupportingFeeOnTransferTokens", import_eth_wallet39.Utils.toString(params.amountIn), import_eth_wallet39.Utils.toString(params.amountOutMin), params.pair, params.tokenIn, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data);
+    let result = await this.methods("swapExactTokensForTokensSupportingFeeOnTransferTokens", import_eth_wallet34.Utils.toString(params.amountIn), import_eth_wallet34.Utils.toString(params.amountOutMin), params.pair, params.tokenIn, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data);
     return result;
   }
   async swapTokensForExactETH(params) {
-    let result = await this.methods("swapTokensForExactETH", import_eth_wallet39.Utils.toString(params.amountOut), import_eth_wallet39.Utils.toString(params.amountInMax), params.pair, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data);
+    let result = await this.methods("swapTokensForExactETH", import_eth_wallet34.Utils.toString(params.amountOut), import_eth_wallet34.Utils.toString(params.amountInMax), params.pair, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data);
     return result;
   }
   async swapTokensForExactTokens(params) {
-    let result = await this.methods("swapTokensForExactTokens", import_eth_wallet39.Utils.toString(params.amountOut), import_eth_wallet39.Utils.toString(params.amountInMax), params.pair, params.tokenOut, params.to, import_eth_wallet39.Utils.toString(params.deadline), params.data);
+    let result = await this.methods("swapTokensForExactTokens", import_eth_wallet34.Utils.toString(params.amountOut), import_eth_wallet34.Utils.toString(params.amountInMax), params.pair, params.tokenOut, params.to, import_eth_wallet34.Utils.toString(params.deadline), params.data);
     return result;
   }
 };
 
 // src/contracts/router/OSWAP_HybridRouterRegistry.ts
-var import_eth_wallet40 = __toModule(require("@ijstech/eth-wallet"));
-var Bin40 = require_OSWAP_HybridRouterRegistry();
-var OSWAP_HybridRouterRegistry = class extends import_eth_wallet40.Contract {
+var import_eth_wallet35 = __toModule(require("@ijstech/eth-wallet"));
+var Bin35 = require_OSWAP_HybridRouterRegistry();
+var OSWAP_HybridRouterRegistry = class extends import_eth_wallet35.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin40.abi, Bin40.bytecode);
+    super(wallet, address, Bin35.abi, Bin35.bytecode);
   }
   deploy(governance) {
     return this._deploy(governance);
   }
   parseCustomPairRegisterEvent(receipt) {
-    return this.parseEvents(receipt, "CustomPairRegister");
+    let events = this.parseEvents(receipt, "CustomPairRegister");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        pair: result.pair,
+        fee: new import_eth_wallet35.BigNumber(result.fee),
+        feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
+        typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
+      };
+    });
   }
   parseOwnershipTransferredEvent(receipt) {
-    return this.parseEvents(receipt, "OwnershipTransferred");
+    let events = this.parseEvents(receipt, "OwnershipTransferred");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        previousOwner: result.previousOwner,
+        newOwner: result.newOwner
+      };
+    });
   }
   parsePairRegisterEvent(receipt) {
-    return this.parseEvents(receipt, "PairRegister");
+    let events = this.parseEvents(receipt, "PairRegister");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        factory: result.factory,
+        pair: result.pair,
+        token0: result.token0,
+        token1: result.token1
+      };
+    });
   }
   parseProtocolRegisterEvent(receipt) {
-    return this.parseEvents(receipt, "ProtocolRegister");
+    let events = this.parseEvents(receipt, "ProtocolRegister");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        factory: result.factory,
+        name: result.name,
+        fee: new import_eth_wallet35.BigNumber(result.fee),
+        feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
+        typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
+      };
+    });
   }
   async customPairs(param1) {
     let result = await this.methods("customPairs", param1);
     return {
-      fee: new import_eth_wallet40.BigNumber(result.fee),
-      feeBase: new import_eth_wallet40.BigNumber(result.feeBase),
-      typeCode: new import_eth_wallet40.BigNumber(result.typeCode)
+      fee: new import_eth_wallet35.BigNumber(result.fee),
+      feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
+      typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
     };
   }
   async execute(params) {
-    let result = await this.methods("execute", import_eth_wallet40.Utils.stringToBytes32(params));
+    let result = await this.methods("execute", import_eth_wallet35.Utils.stringToBytes32(params));
     return result;
   }
   async getFee(pairAddress) {
     let result = await this.methods("getFee", pairAddress);
     return {
-      fee: new import_eth_wallet40.BigNumber(result.fee),
-      feeBase: new import_eth_wallet40.BigNumber(result.feeBase)
+      fee: new import_eth_wallet35.BigNumber(result.fee),
+      feeBase: new import_eth_wallet35.BigNumber(result.feeBase)
     };
   }
   async getPairTokens(pairAddress) {
@@ -3355,14 +4240,14 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet40.Contract {
   }
   async getTypeCode(pairAddress) {
     let result = await this.methods("getTypeCode", pairAddress);
-    return new import_eth_wallet40.BigNumber(result);
+    return new import_eth_wallet35.BigNumber(result);
   }
   async governance() {
     let result = await this.methods("governance");
     return result;
   }
   async init(params) {
-    let result = await this.methods("init", import_eth_wallet40.Utils.stringToBytes32(params.name), params.factory, import_eth_wallet40.Utils.toString(params.fee), import_eth_wallet40.Utils.toString(params.feeBase), import_eth_wallet40.Utils.toString(params.typeCode));
+    let result = await this.methods("init", import_eth_wallet35.Utils.stringToBytes32(params.name), params.factory, import_eth_wallet35.Utils.toString(params.fee), import_eth_wallet35.Utils.toString(params.feeBase), import_eth_wallet35.Utils.toString(params.typeCode));
     return result;
   }
   async owner() {
@@ -3378,24 +4263,24 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet40.Contract {
     };
   }
   async protocolList(param1) {
-    let result = await this.methods("protocolList", import_eth_wallet40.Utils.toString(param1));
+    let result = await this.methods("protocolList", import_eth_wallet35.Utils.toString(param1));
     return result;
   }
   async protocolListLength() {
     let result = await this.methods("protocolListLength");
-    return new import_eth_wallet40.BigNumber(result);
+    return new import_eth_wallet35.BigNumber(result);
   }
   async protocols(param1) {
     let result = await this.methods("protocols", param1);
     return {
       name: result.name,
-      fee: new import_eth_wallet40.BigNumber(result.fee),
-      feeBase: new import_eth_wallet40.BigNumber(result.feeBase),
-      typeCode: new import_eth_wallet40.BigNumber(result.typeCode)
+      fee: new import_eth_wallet35.BigNumber(result.fee),
+      feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
+      typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
     };
   }
   async registerPair(params) {
-    let result = await this.methods("registerPair", params.token0, params.token1, params.pairAddress, import_eth_wallet40.Utils.toString(params.fee), import_eth_wallet40.Utils.toString(params.feeBase), import_eth_wallet40.Utils.toString(params.typeCode));
+    let result = await this.methods("registerPair", params.token0, params.token1, params.pairAddress, import_eth_wallet35.Utils.toString(params.fee), import_eth_wallet35.Utils.toString(params.feeBase), import_eth_wallet35.Utils.toString(params.typeCode));
     return result;
   }
   async registerPairByAddress(params) {
@@ -3403,7 +4288,7 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet40.Contract {
     return result;
   }
   async registerPairByIndex(params) {
-    let result = await this.methods("registerPairByIndex", params.factory, import_eth_wallet40.Utils.toString(params.index));
+    let result = await this.methods("registerPairByIndex", params.factory, import_eth_wallet35.Utils.toString(params.index));
     return result;
   }
   async registerPairByTokens(params) {
@@ -3411,7 +4296,7 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet40.Contract {
     return result;
   }
   async registerPairByTokensV3(params) {
-    let result = await this.methods("registerPairByTokensV3", params.factory, params.token0, params.token1, import_eth_wallet40.Utils.toString(params.pairIndex));
+    let result = await this.methods("registerPairByTokensV3", params.factory, params.token0, params.token1, import_eth_wallet35.Utils.toString(params.pairIndex));
     return result;
   }
   async registerPairsByAddress(params) {
@@ -3423,7 +4308,7 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet40.Contract {
     return result;
   }
   async registerPairsByIndex(params) {
-    let result = await this.methods("registerPairsByIndex", params.factory, import_eth_wallet40.Utils.toString(params.index));
+    let result = await this.methods("registerPairsByIndex", params.factory, import_eth_wallet35.Utils.toString(params.index));
     return result;
   }
   async registerPairsByTokens(params) {
@@ -3431,11 +4316,11 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet40.Contract {
     return result;
   }
   async registerPairsByTokensV3(params) {
-    let result = await this.methods("registerPairsByTokensV3", params.factory, params.token0, params.token1, import_eth_wallet40.Utils.toString(params.pairIndex));
+    let result = await this.methods("registerPairsByTokensV3", params.factory, params.token0, params.token1, import_eth_wallet35.Utils.toString(params.pairIndex));
     return result;
   }
   async registerProtocol(params) {
-    let result = await this.methods("registerProtocol", import_eth_wallet40.Utils.stringToBytes32(params.name), params.factory, import_eth_wallet40.Utils.toString(params.fee), import_eth_wallet40.Utils.toString(params.feeBase), import_eth_wallet40.Utils.toString(params.typeCode));
+    let result = await this.methods("registerProtocol", import_eth_wallet35.Utils.stringToBytes32(params.name), params.factory, import_eth_wallet35.Utils.toString(params.fee), import_eth_wallet35.Utils.toString(params.feeBase), import_eth_wallet35.Utils.toString(params.typeCode));
     return result;
   }
   async renounceOwnership() {
@@ -3449,11 +4334,11 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet40.Contract {
 };
 
 // src/contracts/router/OSWAP_OracleRouter.ts
-var import_eth_wallet41 = __toModule(require("@ijstech/eth-wallet"));
-var Bin41 = require_OSWAP_OracleRouter();
-var OSWAP_OracleRouter = class extends import_eth_wallet41.Contract {
+var import_eth_wallet36 = __toModule(require("@ijstech/eth-wallet"));
+var Bin36 = require_OSWAP_OracleRouter();
+var OSWAP_OracleRouter = class extends import_eth_wallet36.Contract {
   constructor(wallet, address) {
-    super(wallet, address, Bin41.abi, Bin41.bytecode);
+    super(wallet, address, Bin36.abi, Bin36.bytecode);
   }
   deploy(params) {
     return this._deploy(params.ammFactory, params.oracleFactory, params.WETH);
@@ -3467,69 +4352,157 @@ var OSWAP_OracleRouter = class extends import_eth_wallet41.Contract {
     return result;
   }
   async getAmountIn(params) {
-    let result = await this.methods("getAmountIn", import_eth_wallet41.Utils.toString(params.amountOut), params.tokenIn, params.tokenOut, params.data);
-    return new import_eth_wallet41.BigNumber(result);
+    let result = await this.methods("getAmountIn", import_eth_wallet36.Utils.toString(params.amountOut), params.tokenIn, params.tokenOut, params.data);
+    return new import_eth_wallet36.BigNumber(result);
   }
   async getAmountOut(params) {
-    let result = await this.methods("getAmountOut", import_eth_wallet41.Utils.toString(params.amountIn), params.tokenIn, params.tokenOut, params.data);
-    return new import_eth_wallet41.BigNumber(result);
+    let result = await this.methods("getAmountOut", import_eth_wallet36.Utils.toString(params.amountIn), params.tokenIn, params.tokenOut, params.data);
+    return new import_eth_wallet36.BigNumber(result);
   }
   async getAmountsIn(params) {
-    let result = await this.methods("getAmountsIn", import_eth_wallet41.Utils.toString(params.amountOut), params.path, params.useOracle, params.data);
+    let result = await this.methods("getAmountsIn", import_eth_wallet36.Utils.toString(params.amountOut), params.path, params.useOracle, params.data);
     return result;
   }
   async getAmountsOut(params) {
-    let result = await this.methods("getAmountsOut", import_eth_wallet41.Utils.toString(params.amountIn), params.path, params.useOracle, params.data);
+    let result = await this.methods("getAmountsOut", import_eth_wallet36.Utils.toString(params.amountIn), params.path, params.useOracle, params.data);
     return result;
   }
   async getLatestPrice(params) {
     let result = await this.methods("getLatestPrice", params.tokenIn, params.tokenOut, params.data);
-    return new import_eth_wallet41.BigNumber(result);
+    return new import_eth_wallet36.BigNumber(result);
   }
   async oracleFactory() {
     let result = await this.methods("oracleFactory");
     return result;
   }
   async swapETHForExactTokens(params, _value) {
-    let result = await this.methods("swapETHForExactTokens", import_eth_wallet41.Utils.toString(params.amountOut), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data, _value);
+    let result = await this.methods("swapETHForExactTokens", import_eth_wallet36.Utils.toString(params.amountOut), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data, _value);
     return result;
   }
   async swapExactETHForTokens(params, _value) {
-    let result = await this.methods("swapExactETHForTokens", import_eth_wallet41.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data, _value);
+    let result = await this.methods("swapExactETHForTokens", import_eth_wallet36.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data, _value);
     return result;
   }
   async swapExactETHForTokensSupportingFeeOnTransferTokens(params, _value) {
-    let result = await this.methods("swapExactETHForTokensSupportingFeeOnTransferTokens", import_eth_wallet41.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data, _value);
+    let result = await this.methods("swapExactETHForTokensSupportingFeeOnTransferTokens", import_eth_wallet36.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data, _value);
     return result;
   }
   async swapExactTokensForETH(params) {
-    let result = await this.methods("swapExactTokensForETH", import_eth_wallet41.Utils.toString(params.amountIn), import_eth_wallet41.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data);
+    let result = await this.methods("swapExactTokensForETH", import_eth_wallet36.Utils.toString(params.amountIn), import_eth_wallet36.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data);
     return result;
   }
   async swapExactTokensForETHSupportingFeeOnTransferTokens(params) {
-    let result = await this.methods("swapExactTokensForETHSupportingFeeOnTransferTokens", import_eth_wallet41.Utils.toString(params.amountIn), import_eth_wallet41.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data);
+    let result = await this.methods("swapExactTokensForETHSupportingFeeOnTransferTokens", import_eth_wallet36.Utils.toString(params.amountIn), import_eth_wallet36.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data);
     return result;
   }
   async swapExactTokensForTokens(params) {
-    let result = await this.methods("swapExactTokensForTokens", import_eth_wallet41.Utils.toString(params.amountIn), import_eth_wallet41.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data);
+    let result = await this.methods("swapExactTokensForTokens", import_eth_wallet36.Utils.toString(params.amountIn), import_eth_wallet36.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data);
     return result;
   }
   async swapExactTokensForTokensSupportingFeeOnTransferTokens(params) {
-    let result = await this.methods("swapExactTokensForTokensSupportingFeeOnTransferTokens", import_eth_wallet41.Utils.toString(params.amountIn), import_eth_wallet41.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data);
+    let result = await this.methods("swapExactTokensForTokensSupportingFeeOnTransferTokens", import_eth_wallet36.Utils.toString(params.amountIn), import_eth_wallet36.Utils.toString(params.amountOutMin), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data);
     return result;
   }
   async swapTokensForExactETH(params) {
-    let result = await this.methods("swapTokensForExactETH", import_eth_wallet41.Utils.toString(params.amountOut), import_eth_wallet41.Utils.toString(params.amountInMax), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data);
+    let result = await this.methods("swapTokensForExactETH", import_eth_wallet36.Utils.toString(params.amountOut), import_eth_wallet36.Utils.toString(params.amountInMax), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data);
     return result;
   }
   async swapTokensForExactTokens(params) {
-    let result = await this.methods("swapTokensForExactTokens", import_eth_wallet41.Utils.toString(params.amountOut), import_eth_wallet41.Utils.toString(params.amountInMax), params.path, params.to, import_eth_wallet41.Utils.toString(params.deadline), params.useOracle, params.data);
+    let result = await this.methods("swapTokensForExactTokens", import_eth_wallet36.Utils.toString(params.amountOut), import_eth_wallet36.Utils.toString(params.amountInMax), params.path, params.to, import_eth_wallet36.Utils.toString(params.deadline), params.useOracle, params.data);
     return result;
   }
 };
 
 // src/deploy.ts
-var import_eth_wallet42 = __toModule(require("@ijstech/eth-wallet"));
+var import_eth_wallet38 = __toModule(require("@ijstech/eth-wallet"));
+
+// src/OpenSwap.ts
+var import_eth_wallet37 = __toModule(require("@ijstech/eth-wallet"));
+var OpenSwap2 = class {
+  constructor(wallet, address) {
+    this._oswap = new OpenSwap(wallet, address);
+  }
+  async deploy(params) {
+    params.initSupply = import_eth_wallet37.Utils.toDecimals(params.initSupply);
+    params.totalSupply = import_eth_wallet37.Utils.toDecimals(params.totalSupply);
+    this.address = await this._oswap.deploy(params);
+    return this.address;
+  }
+  async allowance(params) {
+    return import_eth_wallet37.Utils.fromDecimals(await this._oswap.allowance(params));
+  }
+  async approve(params) {
+    params.amount = import_eth_wallet37.Utils.toDecimals(params.amount);
+    let receipt = await this._oswap.approve(params);
+    let event = this._oswap.parseApprovalEvent(receipt)[0];
+    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    return event;
+  }
+  async balanceOf(account) {
+    return import_eth_wallet37.Utils.fromDecimals(await this._oswap.balanceOf(account));
+  }
+  get cap() {
+    return (async () => {
+      return import_eth_wallet37.Utils.fromDecimals(await this._oswap.cap());
+    })();
+  }
+  get decimals() {
+    return (async () => {
+      return (await this._oswap.decimals()).toNumber();
+    })();
+  }
+  async decreaseAllowance(params) {
+    params.subtractedValue = import_eth_wallet37.Utils.toDecimals(params.subtractedValue);
+    let receipt = await this._oswap.decreaseAllowance(params);
+    let event = this._oswap.parseApprovalEvent(receipt)[0];
+    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    return event;
+  }
+  async increaseAllowance(params) {
+    params.addedValue = import_eth_wallet37.Utils.toDecimals(params.addedValue);
+    let receipt = await this._oswap.increaseAllowance(params);
+    let event = this._oswap.parseApprovalEvent(receipt)[0];
+    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    return event;
+  }
+  async mint(params) {
+    let receipt = await this._oswap.mint({ account: params.address, amount: import_eth_wallet37.Utils.toDecimals(params.amount) });
+    let event = this._oswap.parseTransferEvent(receipt)[0];
+    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    return event;
+  }
+  get minter() {
+    return this._oswap.minter();
+  }
+  get name() {
+    return this._oswap.name();
+  }
+  get symbol() {
+    return this._oswap.symbol();
+  }
+  get totalSupply() {
+    return (async () => {
+      return import_eth_wallet37.Utils.fromDecimals(await this._oswap.totalSupply());
+    })();
+  }
+  async transfer(params) {
+    let receipt = await this._oswap.transfer({ recipient: params.address, amount: import_eth_wallet37.Utils.toDecimals(params.amount) });
+    let event = this._oswap.parseTransferEvent(receipt)[0];
+    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    return event;
+  }
+  async transferFrom(params) {
+    params.amount = import_eth_wallet37.Utils.toDecimals(params.amount);
+    let receipt = await this._oswap.transferFrom(params);
+    let transfer = this._oswap.parseTransferEvent(receipt)[0];
+    transfer.value = import_eth_wallet37.Utils.fromDecimals(transfer.value);
+    let approval = this._oswap.parseApprovalEvent(receipt)[0];
+    approval.value = import_eth_wallet37.Utils.fromDecimals(approval.value);
+    return { transfer, approval };
+  }
+};
+
+// src/deploy.ts
 var DefaultGovOptions = {
   minStakePeriod: 1,
   tradeFee: 0.28,
@@ -3540,19 +4513,19 @@ var DefaultGovOptions = {
     minExeDelay: [1, 1, 1],
     minVoteDuration: [0, 0, 0],
     maxVoteDuration: [1209600, 1209600, 1209600],
-    minGovTokenToCreateVote: [import_eth_wallet42.Utils.toDecimals(1e5), import_eth_wallet42.Utils.toDecimals(1e5), import_eth_wallet42.Utils.toDecimals(1e5)],
-    minQuorum: [import_eth_wallet42.Utils.toDecimals(0), import_eth_wallet42.Utils.toDecimals(1e7), import_eth_wallet42.Utils.toDecimals(100)]
+    minGovTokenToCreateVote: [import_eth_wallet38.Utils.toDecimals(1e5), import_eth_wallet38.Utils.toDecimals(1e5), import_eth_wallet38.Utils.toDecimals(1e5)],
+    minQuorum: [import_eth_wallet38.Utils.toDecimals(0), import_eth_wallet38.Utils.toDecimals(1e7), import_eth_wallet38.Utils.toDecimals(100)]
   }
 };
 var DefaultGovTokenOptions = {
   initSupply: 0,
   initSupplyTo: "",
   minter: "",
-  totalSupply: import_eth_wallet42.Utils.toDecimals(1e9, 18)
+  totalSupply: 1e9
 };
 function toDeploymentContracts(wallet, result) {
   return {
-    openSwap: new OpenSwap(wallet, result.oswap),
+    openSwap: new OpenSwap2(wallet, result.oswap),
     governance: new OAXDEX_Governance(wallet, result.governance),
     administrator: new OAXDEX_Administrator(wallet, result.administrator),
     registry: new OAXDEX_VotingRegistry(wallet, result.votingRegistry),
@@ -3589,7 +4562,7 @@ function deploy(wallet, options) {
     try {
       let result = {};
       if (!options.tokens.oswap) {
-        let oswap = new OpenSwap(wallet);
+        let oswap = new OpenSwap2(wallet);
         result.oswap = await oswap.deploy(options.govTokenOptions);
       } else
         result.oswap = options.tokens.oswap;
@@ -3619,7 +4592,7 @@ function deploy(wallet, options) {
         governance: options.amm.governance || result.governance,
         pairCreator: result.pairCreator,
         protocolFee: 0,
-        protocolFeeTo: options.amm.protocolFeeTo || import_eth_wallet42.Utils.nullAddress,
+        protocolFeeTo: options.amm.protocolFeeTo || import_eth_wallet38.Utils.nullAddress,
         tradeFee: 0
       });
       let oraclePairCreator = new OSWAP_OraclePairCreator(wallet);
@@ -3635,7 +4608,7 @@ function deploy(wallet, options) {
         governance: options.oracle.governance || result.governance,
         pairCreator: options.oracle.pairCreator || result.oraclePairCreator,
         protocolFee: options.oracle.protocolFee || 0,
-        protocolFeeTo: options.oracle.protocolFeeTo || import_eth_wallet42.Utils.nullAddress,
+        protocolFeeTo: options.oracle.protocolFeeTo || import_eth_wallet38.Utils.nullAddress,
         tradeFee: options.oracle.tradeFee || 0
       });
       let oracleRouter = new OSWAP_OracleRouter(wallet);
@@ -3677,4 +4650,5 @@ function deploy(wallet, options) {
     }
   });
 }
-})(window["@openswap/sdk"]);
+
+})

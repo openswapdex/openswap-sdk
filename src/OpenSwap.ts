@@ -2,14 +2,17 @@ import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/e
 import {OpenSwap as OpenSwapContract} from "./contracts";
 
 export class OpenSwap {
-    _oswap: OpenSwapContract;
-    private _address: string;
-    constructor(oswap:OpenSwapContract){
-        this._oswap = oswap;
-        this._address = oswap.address;
+    address: string;
+    _oswap:OpenSwapContract;
+
+    constructor(wallet: Wallet, address?: string) {
+        this._oswap = new OpenSwapContract(wallet, address);
     }
-    get address(): string{
-        return this._address || '';
+    async deploy(params:{minter:string,initSupplyTo:string,initSupply:number|BigNumber,totalSupply:number|BigNumber}): Promise<string>{
+        params.initSupply = Utils.toDecimals(params.initSupply);
+        params.totalSupply = Utils.toDecimals(params.totalSupply);
+        this.address = await this._oswap.deploy(params);
+        return this.address;
     }
     async allowance(params:{owner:string,spender:string}): Promise<BigNumber>{
         return Utils.fromDecimals(await this._oswap.allowance(params));
