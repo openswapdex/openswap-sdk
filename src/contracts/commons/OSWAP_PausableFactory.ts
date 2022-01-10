@@ -5,13 +5,16 @@ export class OSWAP_PausableFactory extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(governance:string): Promise<string>{        	
+    deploy(governance:string): Promise<string>{
         return this._deploy(governance);
     }
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.PairRestartedEvent[]{
         let events = this.parseEvents(receipt, "PairRestarted");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 pair: result.pair
             };
         });
@@ -20,6 +23,9 @@ export class OSWAP_PausableFactory extends Contract{
         let events = this.parseEvents(receipt, "PairShutdowned");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 pair: result.pair
             };
         });
@@ -27,13 +33,21 @@ export class OSWAP_PausableFactory extends Contract{
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.RestartedEvent[]{
         let events = this.parseEvents(receipt, "Restarted");
         return events.map(result => {
-            return {};
+            return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash
+            };
         });
     }
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.ShutdownedEvent[]{
         let events = this.parseEvents(receipt, "Shutdowned");
         return events.map(result => {
-            return {};
+            return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash
+            };
         });
     }
     async governance(): Promise<string>{
@@ -54,8 +68,8 @@ export class OSWAP_PausableFactory extends Contract{
     }
 }
 export module OSWAP_PausableFactory{
-    export interface PairRestartedEvent {pair:string}
-    export interface PairShutdownedEvent {pair:string}
-    export interface RestartedEvent {}
-    export interface ShutdownedEvent {}
+    export interface PairRestartedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
+    export interface PairShutdownedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
+    export interface RestartedEvent {_eventName:string,_address:string,_transactionHash:string}
+    export interface ShutdownedEvent {_eventName:string,_address:string,_transactionHash:string}
 }

@@ -5,7 +5,7 @@ export class OSWAP_Router extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{factory:string,WETH:string}): Promise<string>{        	
+    deploy(params:{factory:string,WETH:string}): Promise<string>{
         return this._deploy(params.factory,params.WETH);
     }
     async WETH(): Promise<string>{
@@ -47,9 +47,9 @@ export class OSWAP_Router extends Contract{
             reserveB: new BigNumber(result.reserveB)
         };
     }
-    async quote(params:{amountA:number|BigNumber,reserveA:number|BigNumber,reserveB:number|BigNumber}): Promise<TransactionReceipt>{
+    async quote(params:{amountA:number|BigNumber,reserveA:number|BigNumber,reserveB:number|BigNumber}): Promise<BigNumber>{
         let result = await this.methods('quote',Utils.toString(params.amountA),Utils.toString(params.reserveA),Utils.toString(params.reserveB));
-        return result;
+        return new BigNumber(result);
     }
     async removeLiquidity(params:{tokenA:string,tokenB:string,liquidity:number|BigNumber,amountAMin:number|BigNumber,amountBMin:number|BigNumber,to:string,deadline:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('removeLiquidity',params.tokenA,params.tokenB,Utils.toString(params.liquidity),Utils.toString(params.amountAMin),Utils.toString(params.amountBMin),params.to,Utils.toString(params.deadline));

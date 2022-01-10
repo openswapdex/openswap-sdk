@@ -5,13 +5,16 @@ export class OSWAP_ConfigStore extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(governance:string): Promise<string>{        	
+    deploy(governance:string): Promise<string>{
         return this._deploy(governance);
     }
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_ConfigStore.ParamSetEvent[]{
         let events = this.parseEvents(receipt, "ParamSet");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 name: result.name,
                 value: result.value
             };
@@ -47,5 +50,5 @@ export class OSWAP_ConfigStore extends Contract{
     }
 }
 export module OSWAP_ConfigStore{
-    export interface ParamSetEvent {name:string,value:string}
+    export interface ParamSetEvent {_eventName:string,_address:string,_transactionHash:string,name:string,value:string}
 }

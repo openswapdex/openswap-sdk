@@ -5,13 +5,16 @@ export class WETH9 extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(): Promise<string>{        	
+    deploy(): Promise<string>{
         return this._deploy();
     }
     parseApprovalEvent(receipt: TransactionReceipt): WETH9.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 src: result.src,
                 guy: result.guy,
                 wad: new BigNumber(result.wad)
@@ -22,6 +25,9 @@ export class WETH9 extends Contract{
         let events = this.parseEvents(receipt, "Deposit");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 dst: result.dst,
                 wad: new BigNumber(result.wad)
             };
@@ -31,6 +37,9 @@ export class WETH9 extends Contract{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 src: result.src,
                 dst: result.dst,
                 wad: new BigNumber(result.wad)
@@ -41,6 +50,9 @@ export class WETH9 extends Contract{
         let events = this.parseEvents(receipt, "Withdrawal");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 src: result.src,
                 wad: new BigNumber(result.wad)
             };
@@ -92,8 +104,8 @@ export class WETH9 extends Contract{
     }
 }
 export module WETH9{
-    export interface ApprovalEvent {src:string,guy:string,wad:BigNumber}
-    export interface DepositEvent {dst:string,wad:BigNumber}
-    export interface TransferEvent {src:string,dst:string,wad:BigNumber}
-    export interface WithdrawalEvent {src:string,wad:BigNumber}
+    export interface ApprovalEvent {_eventName:string,_address:string,_transactionHash:string,src:string,guy:string,wad:BigNumber}
+    export interface DepositEvent {_eventName:string,_address:string,_transactionHash:string,dst:string,wad:BigNumber}
+    export interface TransferEvent {_eventName:string,_address:string,_transactionHash:string,src:string,dst:string,wad:BigNumber}
+    export interface WithdrawalEvent {_eventName:string,_address:string,_transactionHash:string,src:string,wad:BigNumber}
 }

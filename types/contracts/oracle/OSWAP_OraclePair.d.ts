@@ -172,6 +172,9 @@ export declare class OSWAP_OraclePair extends Contract {
 }
 export declare module OSWAP_OraclePair {
     interface AddLiquidityEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         staked: BigNumber;
@@ -182,20 +185,32 @@ export declare module OSWAP_OraclePair {
         enable: boolean;
     }
     interface DelegatorPauseOfferEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         delegator: string;
         provider: string;
         direction: boolean;
     }
     interface DelegatorResumeOfferEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         delegator: string;
         provider: string;
         direction: boolean;
     }
     interface NewProviderEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         index: BigNumber;
     }
     interface RemoveLiquidityEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         unstake: BigNumber;
@@ -208,6 +223,9 @@ export declare module OSWAP_OraclePair {
         enable: boolean;
     }
     interface ReplenishEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         amountIn: BigNumber;
@@ -216,10 +234,16 @@ export declare module OSWAP_OraclePair {
         expire: BigNumber;
     }
     interface SetDelegatorEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         delegator: string;
     }
     interface SwapEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         to: string;
         direction: boolean;
         price: BigNumber;
@@ -229,6 +253,9 @@ export declare module OSWAP_OraclePair {
         protocolFee: BigNumber;
     }
     interface SwappedOneProviderEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         amountOut: BigNumber;

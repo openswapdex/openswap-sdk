@@ -48,11 +48,17 @@ export declare class OpenSwap extends Contract {
 }
 export declare module OpenSwap {
     interface ApprovalEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         owner: string;
         spender: string;
         value: BigNumber;
     }
     interface TransferEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         from: string;
         to: string;
         value: BigNumber;

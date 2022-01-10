@@ -5,7 +5,7 @@ export class CallFormContract extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{weth:string,factory:string,router:string}): Promise<string>{        	
+    deploy(params:{weth:string,factory:string,router:string}): Promise<string>{
         return this._deploy(params.weth,params.factory,params.router);
     }
     async callPairToSwap(params:{token0:string,token1:string,token0In:number|BigNumber,token1In:number|BigNumber,token0Out:number|BigNumber,token1Out:number|BigNumber,data:string},_value:number|BigNumber): Promise<TransactionReceipt>{

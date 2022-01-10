@@ -5,7 +5,7 @@ export class OSWAP_HybridRouter2 extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{registry:string,WETH:string}): Promise<string>{        	
+    deploy(params:{registry:string,WETH:string}): Promise<string>{
         return this._deploy(params.registry,params.WETH);
     }
     async WETH(): Promise<string>{

@@ -5,7 +5,7 @@ export class OAXDEX_VotingContract extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{governance:string,executor:string,id:number|BigNumber,name:string,options:string[],quorum:number|BigNumber,threshold:number|BigNumber,voteEndTime:number|BigNumber,executeDelay:number|BigNumber,executeParam:string[]}): Promise<string>{        	
+    deploy(params:{governance:string,executor:string,id:number|BigNumber,name:string,options:string[],quorum:number|BigNumber,threshold:number|BigNumber,voteEndTime:number|BigNumber,executeDelay:number|BigNumber,executeParam:string[]}): Promise<string>{
         return this._deploy(params.governance,params.executor,Utils.toString(params.id),Utils.stringToBytes32(params.name),Utils.stringToBytes32(params.options),Utils.toString(params.quorum),Utils.toString(params.threshold),Utils.toString(params.voteEndTime),Utils.toString(params.executeDelay),Utils.stringToBytes32(params.executeParam));
     }
     async _executeParam(param1:number|BigNumber): Promise<string>{
@@ -59,8 +59,8 @@ export class OAXDEX_VotingContract extends Contract{
             voteEndTime_: new BigNumber(result.voteEndTime_),
             executeDelay_: new BigNumber(result.executeDelay_),
             status_: result.status_,
-            optionsWeight_: result.optionsWeight_,
-            quorum_: result.quorum_,
+            optionsWeight_: result.optionsWeight_.map(e=>new BigNumber(e)),
+            quorum_: result.quorum_.map(e=>new BigNumber(e)),
             executeParam_: result.executeParam_
         };
     }

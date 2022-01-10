@@ -105,22 +105,34 @@ export declare class OSWAP_HybridRouterRegistry extends Contract {
 }
 export declare module OSWAP_HybridRouterRegistry {
     interface CustomPairRegisterEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         pair: string;
         fee: BigNumber;
         feeBase: BigNumber;
         typeCode: BigNumber;
     }
     interface OwnershipTransferredEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         previousOwner: string;
         newOwner: string;
     }
     interface PairRegisterEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         factory: string;
         pair: string;
         token0: string;
         token1: string;
     }
     interface ProtocolRegisterEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         factory: string;
         name: string;
         fee: BigNumber;

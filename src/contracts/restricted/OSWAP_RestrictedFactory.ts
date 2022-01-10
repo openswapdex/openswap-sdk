@@ -5,13 +5,16 @@ export class OSWAP_RestrictedFactory extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{governance:string,whitelistFactory:string,pairCreator:string,configStore:string,tradeFee:number|BigNumber,protocolFee:number|BigNumber,protocolFeeTo:string}): Promise<string>{        	
+    deploy(params:{governance:string,whitelistFactory:string,pairCreator:string,configStore:string,tradeFee:number|BigNumber,protocolFee:number|BigNumber,protocolFeeTo:string}): Promise<string>{
         return this._deploy(params.governance,params.whitelistFactory,params.pairCreator,params.configStore,Utils.toString(params.tradeFee),Utils.toString(params.protocolFee),params.protocolFeeTo);
     }
     parseOracleAddedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.OracleAddedEvent[]{
         let events = this.parseEvents(receipt, "OracleAdded");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 token0: result.token0,
                 token1: result.token1,
                 oracle: result.oracle
@@ -22,6 +25,9 @@ export class OSWAP_RestrictedFactory extends Contract{
         let events = this.parseEvents(receipt, "OwnershipTransferred");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 previousOwner: result.previousOwner,
                 newOwner: result.newOwner
             };
@@ -31,6 +37,9 @@ export class OSWAP_RestrictedFactory extends Contract{
         let events = this.parseEvents(receipt, "PairCreated");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 token0: result.token0,
                 token1: result.token1,
                 pair: result.pair,
@@ -43,6 +52,9 @@ export class OSWAP_RestrictedFactory extends Contract{
         let events = this.parseEvents(receipt, "PairRestarted");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 pair: result.pair
             };
         });
@@ -51,6 +63,9 @@ export class OSWAP_RestrictedFactory extends Contract{
         let events = this.parseEvents(receipt, "PairShutdowned");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 pair: result.pair
             };
         });
@@ -59,6 +74,9 @@ export class OSWAP_RestrictedFactory extends Contract{
         let events = this.parseEvents(receipt, "ParamSet");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 name: result.name,
                 value: result.value
             };
@@ -68,6 +86,9 @@ export class OSWAP_RestrictedFactory extends Contract{
         let events = this.parseEvents(receipt, "ParamSet2");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 name: result.name,
                 value1: result.value1,
                 value2: result.value2
@@ -77,13 +98,21 @@ export class OSWAP_RestrictedFactory extends Contract{
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.RestartedEvent[]{
         let events = this.parseEvents(receipt, "Restarted");
         return events.map(result => {
-            return {};
+            return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash
+            };
         });
     }
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.ShutdownedEvent[]{
         let events = this.parseEvents(receipt, "Shutdowned");
         return events.map(result => {
-            return {};
+            return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash
+            };
         });
     }
     async addOldOracleToNewPair(params:{tokenA:string,tokenB:string,oracle:string}): Promise<TransactionReceipt>{
@@ -225,13 +254,13 @@ export class OSWAP_RestrictedFactory extends Contract{
     }
 }
 export module OSWAP_RestrictedFactory{
-    export interface OracleAddedEvent {token0:string,token1:string,oracle:string}
-    export interface OwnershipTransferredEvent {previousOwner:string,newOwner:string}
-    export interface PairCreatedEvent {token0:string,token1:string,pair:string,newPairSize:BigNumber,newSize:BigNumber}
-    export interface PairRestartedEvent {pair:string}
-    export interface PairShutdownedEvent {pair:string}
-    export interface ParamSetEvent {name:string,value:string}
-    export interface ParamSet2Event {name:string,value1:string,value2:string}
-    export interface RestartedEvent {}
-    export interface ShutdownedEvent {}
+    export interface OracleAddedEvent {_eventName:string,_address:string,_transactionHash:string,token0:string,token1:string,oracle:string}
+    export interface OwnershipTransferredEvent {_eventName:string,_address:string,_transactionHash:string,previousOwner:string,newOwner:string}
+    export interface PairCreatedEvent {_eventName:string,_address:string,_transactionHash:string,token0:string,token1:string,pair:string,newPairSize:BigNumber,newSize:BigNumber}
+    export interface PairRestartedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
+    export interface PairShutdownedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
+    export interface ParamSetEvent {_eventName:string,_address:string,_transactionHash:string,name:string,value:string}
+    export interface ParamSet2Event {_eventName:string,_address:string,_transactionHash:string,name:string,value1:string,value2:string}
+    export interface RestartedEvent {_eventName:string,_address:string,_transactionHash:string}
+    export interface ShutdownedEvent {_eventName:string,_address:string,_transactionHash:string}
 }

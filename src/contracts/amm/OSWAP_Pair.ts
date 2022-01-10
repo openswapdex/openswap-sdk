@@ -5,13 +5,16 @@ export class OSWAP_Pair extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(): Promise<string>{        	
+    deploy(): Promise<string>{
         return this._deploy();
     }
     parseApprovalEvent(receipt: TransactionReceipt): OSWAP_Pair.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 owner: result.owner,
                 spender: result.spender,
                 value: new BigNumber(result.value)
@@ -22,6 +25,9 @@ export class OSWAP_Pair extends Contract{
         let events = this.parseEvents(receipt, "Burn");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 sender: result.sender,
                 amount0: new BigNumber(result.amount0),
                 amount1: new BigNumber(result.amount1),
@@ -33,6 +39,9 @@ export class OSWAP_Pair extends Contract{
         let events = this.parseEvents(receipt, "Mint");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 sender: result.sender,
                 amount0: new BigNumber(result.amount0),
                 amount1: new BigNumber(result.amount1)
@@ -43,6 +52,9 @@ export class OSWAP_Pair extends Contract{
         let events = this.parseEvents(receipt, "ProtocolFeeSet");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 protocolFee: new BigNumber(result.protocolFee)
             };
         });
@@ -51,6 +63,9 @@ export class OSWAP_Pair extends Contract{
         let events = this.parseEvents(receipt, "Swap");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 sender: result.sender,
                 amount0In: new BigNumber(result.amount0In),
                 amount1In: new BigNumber(result.amount1In),
@@ -64,6 +79,9 @@ export class OSWAP_Pair extends Contract{
         let events = this.parseEvents(receipt, "Sync");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 reserve0: new BigNumber(result.reserve0),
                 reserve1: new BigNumber(result.reserve1)
             };
@@ -73,6 +91,9 @@ export class OSWAP_Pair extends Contract{
         let events = this.parseEvents(receipt, "TradeFeeSet");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 tradeFee: new BigNumber(result.tradeFee)
             };
         });
@@ -81,6 +102,9 @@ export class OSWAP_Pair extends Contract{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 from: result.from,
                 to: result.to,
                 value: new BigNumber(result.value)
@@ -241,12 +265,12 @@ export class OSWAP_Pair extends Contract{
     }
 }
 export module OSWAP_Pair{
-    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber}
-    export interface BurnEvent {sender:string,amount0:BigNumber,amount1:BigNumber,to:string}
-    export interface MintEvent {sender:string,amount0:BigNumber,amount1:BigNumber}
-    export interface ProtocolFeeSetEvent {protocolFee:BigNumber}
-    export interface SwapEvent {sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}
-    export interface SyncEvent {reserve0:BigNumber,reserve1:BigNumber}
-    export interface TradeFeeSetEvent {tradeFee:BigNumber}
-    export interface TransferEvent {from:string,to:string,value:BigNumber}
+    export interface ApprovalEvent {_eventName:string,_address:string,_transactionHash:string,owner:string,spender:string,value:BigNumber}
+    export interface BurnEvent {_eventName:string,_address:string,_transactionHash:string,sender:string,amount0:BigNumber,amount1:BigNumber,to:string}
+    export interface MintEvent {_eventName:string,_address:string,_transactionHash:string,sender:string,amount0:BigNumber,amount1:BigNumber}
+    export interface ProtocolFeeSetEvent {_eventName:string,_address:string,_transactionHash:string,protocolFee:BigNumber}
+    export interface SwapEvent {_eventName:string,_address:string,_transactionHash:string,sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}
+    export interface SyncEvent {_eventName:string,_address:string,_transactionHash:string,reserve0:BigNumber,reserve1:BigNumber}
+    export interface TradeFeeSetEvent {_eventName:string,_address:string,_transactionHash:string,tradeFee:BigNumber}
+    export interface TransferEvent {_eventName:string,_address:string,_transactionHash:string,from:string,to:string,value:BigNumber}
 }

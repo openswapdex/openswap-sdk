@@ -5,13 +5,16 @@ export class OpenSwap extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{minter:string,initSupplyTo:string,initSupply:number|BigNumber,totalSupply:number|BigNumber}): Promise<string>{        	
+    deploy(params:{minter:string,initSupplyTo:string,initSupply:number|BigNumber,totalSupply:number|BigNumber}): Promise<string>{
         return this._deploy(params.minter,params.initSupplyTo,Utils.toString(params.initSupply),Utils.toString(params.totalSupply));
     }
     parseApprovalEvent(receipt: TransactionReceipt): OpenSwap.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 owner: result.owner,
                 spender: result.spender,
                 value: new BigNumber(result.value)
@@ -22,6 +25,9 @@ export class OpenSwap extends Contract{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 from: result.from,
                 to: result.to,
                 value: new BigNumber(result.value)
@@ -86,6 +92,6 @@ export class OpenSwap extends Contract{
     }
 }
 export module OpenSwap{
-    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber}
-    export interface TransferEvent {from:string,to:string,value:BigNumber}
+    export interface ApprovalEvent {_eventName:string,_address:string,_transactionHash:string,owner:string,spender:string,value:BigNumber}
+    export interface TransferEvent {_eventName:string,_address:string,_transactionHash:string,from:string,to:string,value:BigNumber}
 }

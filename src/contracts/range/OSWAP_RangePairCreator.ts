@@ -5,7 +5,7 @@ export class OSWAP_RangePairCreator extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(): Promise<string>{        	
+    deploy(): Promise<string>{
         return this._deploy();
     }
     async createPair(salt:string): Promise<TransactionReceipt>{

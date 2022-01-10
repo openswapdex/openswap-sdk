@@ -5,13 +5,16 @@ export class MockAmmFactory extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(): Promise<string>{        	
+    deploy(): Promise<string>{
         return this._deploy();
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): MockAmmFactory.PairCreatedEvent[]{
         let events = this.parseEvents(receipt, "PairCreated");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 token0: result.token0,
                 token1: result.token1,
                 pair: result.pair,
@@ -33,5 +36,5 @@ export class MockAmmFactory extends Contract{
     }
 }
 export module MockAmmFactory{
-    export interface PairCreatedEvent {token0:string,token1:string,pair:string,newSize:BigNumber}
+    export interface PairCreatedEvent {_eventName:string,_address:string,_transactionHash:string,token0:string,token1:string,pair:string,newSize:BigNumber}
 }

@@ -5,13 +5,16 @@ export class MockAmmPair extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{token0:string,token1:string}): Promise<string>{        	
+    deploy(params:{token0:string,token1:string}): Promise<string>{
         return this._deploy(params.token0,params.token1);
     }
     parseSyncEvent(receipt: TransactionReceipt): MockAmmPair.SyncEvent[]{
         let events = this.parseEvents(receipt, "Sync");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 reserve0: new BigNumber(result.reserve0),
                 reserve1: new BigNumber(result.reserve1)
             };
@@ -51,5 +54,5 @@ export class MockAmmPair extends Contract{
     }
 }
 export module MockAmmPair{
-    export interface SyncEvent {reserve0:BigNumber,reserve1:BigNumber}
+    export interface SyncEvent {_eventName:string,_address:string,_transactionHash:string,reserve0:BigNumber,reserve1:BigNumber}
 }

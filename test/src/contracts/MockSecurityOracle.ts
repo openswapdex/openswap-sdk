@@ -5,7 +5,7 @@ export class MockSecurityOracle extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(): Promise<string>{        	
+    deploy(): Promise<string>{
         return this._deploy();
     }
     async getSecurityScore(oracle:string): Promise<BigNumber>{

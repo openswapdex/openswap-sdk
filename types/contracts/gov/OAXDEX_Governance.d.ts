@@ -112,6 +112,9 @@ export declare class OAXDEX_Governance extends Contract {
 }
 export declare module OAXDEX_Governance {
     interface AddVotingConfigEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         name: string;
         minExeDelay: BigNumber;
         minVoteDuration: BigNumber;
@@ -120,49 +123,85 @@ export declare module OAXDEX_Governance {
         minQuorum: BigNumber;
     }
     interface ExecutedEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         vote: string;
     }
     interface NewPollEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         poll: string;
     }
     interface NewVoteEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         vote: string;
     }
     interface OwnershipTransferredEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         previousOwner: string;
         newOwner: string;
     }
     interface ParamSetEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         name: string;
         value: string;
     }
     interface ParamSet2Event {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         name: string;
         value1: string;
         value2: string;
     }
     interface PollEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         account: string;
         poll: string;
         option: BigNumber;
     }
     interface SetVotingConfigEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         configName: string;
         paramName: string;
         minExeDelay: BigNumber;
     }
     interface StakeEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         who: string;
         value: BigNumber;
     }
     interface UnstakeEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         who: string;
         value: BigNumber;
     }
     interface VetoEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         vote: string;
     }
     interface VoteEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         account: string;
         vote: string;
         option: BigNumber;

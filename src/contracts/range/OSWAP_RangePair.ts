@@ -5,13 +5,16 @@ export class OSWAP_RangePair extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(): Promise<string>{        	
+    deploy(): Promise<string>{
         return this._deploy();
     }
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.AddLiquidityEvent[]{
         let events = this.parseEvents(receipt, "AddLiquidity");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 provider: result.provider,
                 direction: result.direction,
                 staked: new BigNumber(result.staked),
@@ -29,6 +32,9 @@ export class OSWAP_RangePair extends Contract{
         let events = this.parseEvents(receipt, "NewProvider");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 provider: result.provider,
                 index: new BigNumber(result.index)
             };
@@ -38,6 +44,9 @@ export class OSWAP_RangePair extends Contract{
         let events = this.parseEvents(receipt, "RemoveAllLiquidity");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 provider: result.provider,
                 unstake: new BigNumber(result.unstake),
                 amount0Out: new BigNumber(result.amount0Out),
@@ -49,6 +58,9 @@ export class OSWAP_RangePair extends Contract{
         let events = this.parseEvents(receipt, "RemoveLiquidity");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 provider: result.provider,
                 direction: result.direction,
                 unstake: new BigNumber(result.unstake),
@@ -68,6 +80,9 @@ export class OSWAP_RangePair extends Contract{
         let events = this.parseEvents(receipt, "Replenish");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 provider: result.provider,
                 direction: result.direction,
                 amountIn: new BigNumber(result.amountIn),
@@ -80,6 +95,9 @@ export class OSWAP_RangePair extends Contract{
         let events = this.parseEvents(receipt, "Swap");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 to: result.to,
                 direction: result.direction,
                 price: new BigNumber(result.price),
@@ -94,6 +112,9 @@ export class OSWAP_RangePair extends Contract{
         let events = this.parseEvents(receipt, "SwappedOneProvider");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 provider: result.provider,
                 direction: result.direction,
                 amountOut: new BigNumber(result.amountOut),
@@ -107,6 +128,9 @@ export class OSWAP_RangePair extends Contract{
         let events = this.parseEvents(receipt, "UpdateProviderOffer");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 provider: result.provider,
                 direction: result.direction,
                 replenish: new BigNumber(result.replenish),
@@ -163,9 +187,9 @@ export class OSWAP_RangePair extends Contract{
         let result = await this.methods('getOffers',params.direction,Utils.toString(params.start),Utils.toString(params.end));
         return {
             provider: result.provider,
-            amountAndReserve: result.amountAndReserve,
-            lowerLimitAndUpperLimit: result.lowerLimitAndUpperLimit,
-            startDateAndExpire: result.startDateAndExpire,
+            amountAndReserve: result.amountAndReserve.map(e=>new BigNumber(e)),
+            lowerLimitAndUpperLimit: result.lowerLimitAndUpperLimit.map(e=>new BigNumber(e)),
+            startDateAndExpire: result.startDateAndExpire.map(e=>new BigNumber(e)),
             privateReplenish: result.privateReplenish
         };
     }
@@ -302,12 +326,12 @@ export class OSWAP_RangePair extends Contract{
     }
 }
 export module OSWAP_RangePair{
-    export interface AddLiquidityEvent {provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
-    export interface NewProviderEvent {provider:string,index:BigNumber}
-    export interface RemoveAllLiquidityEvent {provider:string,unstake:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber}
-    export interface RemoveLiquidityEvent {provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
-    export interface ReplenishEvent {provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber}
-    export interface SwapEvent {to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}
-    export interface SwappedOneProviderEvent {provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}
-    export interface UpdateProviderOfferEvent {provider:string,direction:boolean,replenish:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}
+    export interface AddLiquidityEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
+    export interface NewProviderEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,index:BigNumber}
+    export interface RemoveAllLiquidityEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,unstake:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber}
+    export interface RemoveLiquidityEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
+    export interface ReplenishEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber}
+    export interface SwapEvent {_eventName:string,_address:string,_transactionHash:string,to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}
+    export interface SwappedOneProviderEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}
+    export interface UpdateProviderOfferEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,replenish:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}
 }

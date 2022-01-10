@@ -5,7 +5,7 @@ export class MockOracleAdaptor extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{weth:string,decimals:number|BigNumber,tokens:string[],prices:number[]|BigNumber[]}): Promise<string>{        	
+    deploy(params:{weth:string,decimals:number|BigNumber,tokens:string[],prices:number[]|BigNumber[]}): Promise<string>{
         return this._deploy(params.weth,Utils.toString(params.decimals),params.tokens,Utils.toString(params.prices));
     }
     async decimals(): Promise<BigNumber>{

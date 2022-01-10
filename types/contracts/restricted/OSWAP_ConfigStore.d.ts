@@ -19,6 +19,9 @@ export declare class OSWAP_ConfigStore extends Contract {
 }
 export declare module OSWAP_ConfigStore {
     interface ParamSetEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         name: string;
         value: string;
     }

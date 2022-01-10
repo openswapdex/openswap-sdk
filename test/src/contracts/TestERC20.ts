@@ -5,13 +5,16 @@ export class TestERC20 extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{symbol:string,name:string,initialSupply:number|BigNumber,cap:number|BigNumber,decimals:number|BigNumber}): Promise<string>{        	
+    deploy(params:{symbol:string,name:string,initialSupply:number|BigNumber,cap:number|BigNumber,decimals:number|BigNumber}): Promise<string>{
         return this._deploy(params.symbol,params.name,Utils.toString(params.initialSupply),Utils.toString(params.cap),Utils.toString(params.decimals));
     }
     parseApprovalEvent(receipt: TransactionReceipt): TestERC20.ApprovalEvent[]{
         let events = this.parseEvents(receipt, "Approval");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 owner: result.owner,
                 spender: result.spender,
                 value: new BigNumber(result.value)
@@ -22,6 +25,9 @@ export class TestERC20 extends Contract{
         let events = this.parseEvents(receipt, "Auth");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 account: result.account,
                 auth: new BigNumber(result.auth)
             };
@@ -31,6 +37,9 @@ export class TestERC20 extends Contract{
         let events = this.parseEvents(receipt, "Transfer");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 from: result.from,
                 to: result.to,
                 value: new BigNumber(result.value)
@@ -107,7 +116,7 @@ export class TestERC20 extends Contract{
     }
 }
 export module TestERC20{
-    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber}
-    export interface AuthEvent {account:string,auth:BigNumber}
-    export interface TransferEvent {from:string,to:string,value:BigNumber}
+    export interface ApprovalEvent {_eventName:string,_address:string,_transactionHash:string,owner:string,spender:string,value:BigNumber}
+    export interface AuthEvent {_eventName:string,_address:string,_transactionHash:string,account:string,auth:BigNumber}
+    export interface TransferEvent {_eventName:string,_address:string,_transactionHash:string,from:string,to:string,value:BigNumber}
 }

@@ -5,7 +5,7 @@ export class OSWAP_CertiKSecurityOracle extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(oracleAddress:string): Promise<string>{        	
+    deploy(oracleAddress:string): Promise<string>{
         return this._deploy(oracleAddress);
     }
     async getSecurityScore(oracle:string): Promise<BigNumber>{

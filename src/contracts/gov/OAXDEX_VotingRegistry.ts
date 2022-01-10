@@ -5,7 +5,7 @@ export class OAXDEX_VotingRegistry extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(governance:string): Promise<string>{        	
+    deploy(governance:string): Promise<string>{
         return this._deploy(governance);
     }
     async governance(): Promise<string>{

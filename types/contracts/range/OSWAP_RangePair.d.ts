@@ -142,6 +142,9 @@ export declare class OSWAP_RangePair extends Contract {
 }
 export declare module OSWAP_RangePair {
     interface AddLiquidityEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         staked: BigNumber;
@@ -154,16 +157,25 @@ export declare module OSWAP_RangePair {
         expire: BigNumber;
     }
     interface NewProviderEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         index: BigNumber;
     }
     interface RemoveAllLiquidityEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         unstake: BigNumber;
         amount0Out: BigNumber;
         amount1Out: BigNumber;
     }
     interface RemoveLiquidityEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         unstake: BigNumber;
@@ -178,6 +190,9 @@ export declare module OSWAP_RangePair {
         expire: BigNumber;
     }
     interface ReplenishEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         amountIn: BigNumber;
@@ -185,6 +200,9 @@ export declare module OSWAP_RangePair {
         newReserveBalance: BigNumber;
     }
     interface SwapEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         to: string;
         direction: boolean;
         price: BigNumber;
@@ -194,6 +212,9 @@ export declare module OSWAP_RangePair {
         protocolFee: BigNumber;
     }
     interface SwappedOneProviderEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         amountOut: BigNumber;
@@ -202,6 +223,9 @@ export declare module OSWAP_RangePair {
         newCounterReserveBalance: BigNumber;
     }
     interface UpdateProviderOfferEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         provider: string;
         direction: boolean;
         replenish: BigNumber;

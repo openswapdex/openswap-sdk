@@ -40,11 +40,17 @@ export declare class ERC20 extends Contract {
 }
 export declare module ERC20 {
     interface ApprovalEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         owner: string;
         spender: string;
         value: BigNumber;
     }
     interface TransferEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         from: string;
         to: string;
         value: BigNumber;

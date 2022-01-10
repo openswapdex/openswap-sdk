@@ -5,7 +5,7 @@ export class OSWAP_OracleRouter extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{ammFactory:string,oracleFactory:string,WETH:string}): Promise<string>{        	
+    deploy(params:{ammFactory:string,oracleFactory:string,WETH:string}): Promise<string>{
         return this._deploy(params.ammFactory,params.oracleFactory,params.WETH);
     }
     async WETH(): Promise<string>{

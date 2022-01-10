@@ -109,44 +109,77 @@ export declare class OSWAP_OracleFactory extends Contract {
 }
 export declare module OSWAP_OracleFactory {
     interface OracleAddedEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         token0: string;
         token1: string;
         oracle: string;
     }
     interface OracleScoresEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         oracle: string;
         score: BigNumber;
     }
     interface OwnershipTransferredEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         previousOwner: string;
         newOwner: string;
     }
     interface PairCreatedEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         token0: string;
         token1: string;
         pair: string;
         newSize: BigNumber;
     }
     interface PairRestartedEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         pair: string;
     }
     interface PairShutdownedEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         pair: string;
     }
     interface ParamSetEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         name: string;
         value: string;
     }
     interface ParamSet2Event {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         name: string;
         value1: string;
         value2: string;
     }
     interface RestartedEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
     }
     interface ShutdownedEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
     }
     interface WhitelistedEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
         who: string;
         allow: boolean;
     }

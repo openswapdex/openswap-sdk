@@ -5,13 +5,16 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(governance:string): Promise<string>{        	
+    deploy(governance:string): Promise<string>{
         return this._deploy(governance);
     }
     parseCustomPairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent[]{
         let events = this.parseEvents(receipt, "CustomPairRegister");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 pair: result.pair,
                 fee: new BigNumber(result.fee),
                 feeBase: new BigNumber(result.feeBase),
@@ -23,6 +26,9 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         let events = this.parseEvents(receipt, "OwnershipTransferred");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 previousOwner: result.previousOwner,
                 newOwner: result.newOwner
             };
@@ -32,6 +38,9 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         let events = this.parseEvents(receipt, "PairRegister");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 factory: result.factory,
                 pair: result.pair,
                 token0: result.token0,
@@ -43,6 +52,9 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         let events = this.parseEvents(receipt, "ProtocolRegister");
         return events.map(result => {
             return {
+                _eventName: result._eventName,
+                _address: result._address,
+                _transactionHash: result._transactionHash,
                 factory: result.factory,
                 name: result.name,
                 fee: new BigNumber(result.fee),
@@ -172,8 +184,8 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     }
 }
 export module OSWAP_HybridRouterRegistry{
-    export interface CustomPairRegisterEvent {pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
-    export interface OwnershipTransferredEvent {previousOwner:string,newOwner:string}
-    export interface PairRegisterEvent {factory:string,pair:string,token0:string,token1:string}
-    export interface ProtocolRegisterEvent {factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
+    export interface CustomPairRegisterEvent {_eventName:string,_address:string,_transactionHash:string,pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
+    export interface OwnershipTransferredEvent {_eventName:string,_address:string,_transactionHash:string,previousOwner:string,newOwner:string}
+    export interface PairRegisterEvent {_eventName:string,_address:string,_transactionHash:string,factory:string,pair:string,token0:string,token1:string}
+    export interface ProtocolRegisterEvent {_eventName:string,_address:string,_transactionHash:string,factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
 }

@@ -54,7 +54,7 @@ export declare class OSWAP_Router extends Contract {
         amountA: number | BigNumber;
         reserveA: number | BigNumber;
         reserveB: number | BigNumber;
-    }): Promise<TransactionReceipt>;
+    }): Promise<BigNumber>;
     removeLiquidity(params: {
         tokenA: string;
         tokenB: string;

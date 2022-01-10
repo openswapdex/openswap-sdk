@@ -5,7 +5,7 @@ export class OSWAP_VotingExecutor1 extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(factory:string): Promise<string>{        	
+    deploy(factory:string): Promise<string>{
         return this._deploy(factory);
     }
     async execute(params:string[]): Promise<TransactionReceipt>{
