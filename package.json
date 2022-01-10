@@ -9,7 +9,7 @@
     "buildContracts2": "eth-wallet-build 0.6.11 node_modules/@openswapdex/openswap-core/contracts bin src/contracts \"[{\\\"root\\\":\\\"node_modules/@openswapdex/openswap-core/contracts/\\\",\\\"sources\\\":[\\\"restricted/OSWAP_RestrictedPair.sol\\\",\\\"restricted/OSWAP_RestrictedPair2.sol\\\",\\\"restricted/OSWAP_RestrictedPairCreator.sol\\\"], \\\"optimizerRuns\\\":45000}]\" \"{\\\"contracts/\\\":\\\"\\\"}\"",
     "buildTestContracts": "eth-wallet-build 0.6.11 test/contracts test/bin test/src/contracts",
     "build:lib": "tsc && node esbuild.bundle",
-    "test": "mocha --exit --require ts-node/register test/*.test.ts"
+    "test": "mocha --exit --require ts-node/register --timeout 100000 test/*.test.ts"
   },
   "keywords": [],
   "author": "",
