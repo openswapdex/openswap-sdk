@@ -33,9 +33,9 @@ async function stakeToVote() {
     const govToken = deployment.openSwap;
     const governance = deployment.governance;
 
-    await govToken.mint({account:accounts[0], amount: toWei("100000000")});
-    await govToken.approve({spender:governance.address, amount:toWei("100000000")});
-    await governance.stake(toWei("100000000"));
+    await govToken.mint({address:accounts[0], amount: 100000000});
+    await govToken.approve({spender:governance.address, amount:100000000});
+    await governance.stake(Utils.toDecimals(100000000));
 
     now = (await web3.eth.getBlock('latest')).timestamp;
     now += 2;
@@ -129,12 +129,12 @@ async function addLiquidityETH(from, tokenA, toAddTokenA, staked, orderIndex, am
     const liquidityProvider = deployment.oracleLiquidityProvider;
     const govToken = deployment.openSwap;
 
-    staked = toWei(staked);
+    staked = staked;
     amountIn = toWei(amountIn);
 
     _wallet.defaultAccount = accounts[0];
     // await govToken.transfer({recipient:from, amount:staked});
-    await govToken.mint({account:from, amount:staked});
+    await govToken.mint({address:from, amount:staked});
     _wallet.defaultAccount = from;
     await govToken.approve({spender:liquidityProvider.address, amount:staked})
     if (toAddTokenA){
@@ -166,10 +166,10 @@ describe('OSWAP_OraclePair 1', function () {
         let wethAddr = await weth.deploy();
         let result = await deploy(_wallet, {
             govTokenOptions:{
-                initSupply: Utils.toDecimals(2000000, 18),
+                initSupply: 2000000,
                 initSupplyTo: accounts[0],
                 minter: accounts[0],
-                totalSupply: Utils.toDecimals(1000000000, 18)
+                totalSupply: 1000000000
             },
             tokens: {
                 weth: wethAddr
