@@ -6,6 +6,7 @@ export class OpenSwap {
     _oswap:OpenSwapContract;
 
     constructor(wallet: Wallet, address?: string) {
+        this.address = address;
         this._oswap = new OpenSwapContract(wallet, address);
     }
     async deploy(params:{minter:string,initSupplyTo:string,initSupply:number|BigNumber,totalSupply:number|BigNumber}): Promise<string>{

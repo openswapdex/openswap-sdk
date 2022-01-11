@@ -4420,6 +4420,7 @@ var import_eth_wallet38 = __toModule(require("@ijstech/eth-wallet"));
 var import_eth_wallet37 = __toModule(require("@ijstech/eth-wallet"));
 var OpenSwap2 = class {
   constructor(wallet, address) {
+    this.address = address;
     this._oswap = new OpenSwap(wallet, address);
   }
   async deploy(params) {
