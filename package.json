@@ -5,9 +5,8 @@
   "typings": "types/index.d.ts",
   "main": "lib",
   "scripts": {
-    "build": "eth-wallet-build-2 0.6.11 999999 node_modules/@openswapdex/openswap-core/contracts bin src/contracts \"[{\\\"root\\\":\\\"node_modules/@openswapdex/openswap-core/contracts/\\\",\\\"sources\\\":[\\\"restricted/OSWAP_RestrictedPair.sol\\\",\\\"restricted/OSWAP_RestrictedPair2.sol\\\",\\\"restricted/OSWAP_RestrictedPairCreator.sol\\\"], \\\"optimizerRuns\\\":45000}]\" \"{\\\"contracts/\\\":\\\"\\\"}\" && eth-wallet-build 0.6.11 test/contracts test/bin test/src/contracts && tsc",
-    "buildContracts2": "eth-wallet-build 0.6.11 node_modules/@openswapdex/openswap-core/contracts bin src/contracts \"[{\\\"root\\\":\\\"node_modules/@openswapdex/openswap-core/contracts/\\\",\\\"sources\\\":[\\\"restricted/OSWAP_RestrictedPair.sol\\\",\\\"restricted/OSWAP_RestrictedPair2.sol\\\",\\\"restricted/OSWAP_RestrictedPairCreator.sol\\\"], \\\"optimizerRuns\\\":45000}]\" \"{\\\"contracts/\\\":\\\"\\\"}\"",
-    "buildTestContracts": "eth-wallet-build 0.6.11 test/contracts test/bin test/src/contracts",
+    "build": "eth-wallet-build-2 0.6.11 999999 node_modules/@openswapdex/openswap-core/contracts bin src/contracts \"[{\\\"root\\\":\\\"node_modules/@openswapdex/openswap-core/contracts/\\\",\\\"sources\\\":[\\\"restricted/OSWAP_RestrictedPair.sol\\\",\\\"restricted/OSWAP_RestrictedPair2.sol\\\",\\\"restricted/OSWAP_RestrictedPairCreator.sol\\\"], \\\"optimizerRuns\\\":45000}]\" \"{\\\"contracts/\\\":\\\"\\\"}\"",
+    "build:test": "eth-wallet-build 0.6.11 test/contracts test/bin test/src/contracts",
     "build:lib": "tsc && node esbuild.bundle",
     "test": "mocha --exit --require ts-node/register --timeout 100000 test/*.test.ts"
   },
