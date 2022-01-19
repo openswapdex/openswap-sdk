@@ -3,8 +3,22 @@ var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
@@ -278,11 +292,38 @@ var require_OSWAP_OracleRouter = __commonJS({
   }
 });
 
+// bin/restricted/OSWAP_RestrictedPair.json
+var require_OSWAP_RestrictedPair = __commonJS({
+  "bin/restricted/OSWAP_RestrictedPair.json"(exports, module2) {
+    module2.exports = { abi: [{ inputs: [], stateMutability: "nonpayable", type: "constructor" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "provider", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "index", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amount", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newAmountBalance", type: "uint256" }], name: "AddLiquidity", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "offerIndex", type: "uint256" }, { indexed: true, internalType: "address", name: "trader", type: "address" }, { indexed: false, internalType: "uint256", name: "allocation", type: "uint256" }], name: "ApprovedTrader", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "index", type: "uint256" }], name: "Lock", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "provider", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: false, internalType: "uint256", name: "index", type: "uint256" }, { indexed: false, internalType: "bool", name: "allowAll", type: "bool" }, { indexed: false, internalType: "uint256", name: "restrictedPrice", type: "uint256" }, { indexed: false, internalType: "uint256", name: "startDate", type: "uint256" }, { indexed: false, internalType: "uint256", name: "expire", type: "uint256" }], name: "NewProviderOffer", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "provider", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "index", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amountOut", type: "uint256" }, { indexed: false, internalType: "uint256", name: "receivingOut", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newAmountBalance", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newReceivingBalance", type: "uint256" }], name: "RemoveLiquidity", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "to", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: false, internalType: "uint256", name: "amountIn", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amountOut", type: "uint256" }, { indexed: false, internalType: "uint256", name: "tradeFee", type: "uint256" }, { indexed: false, internalType: "uint256", name: "protocolFee", type: "uint256" }], name: "Swap", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "provider", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "index", type: "uint256" }, { indexed: false, internalType: "uint256", name: "price", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amountOut", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amountIn", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newAmountBalance", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newReceivingBalance", type: "uint256" }], name: "SwappedOneOffer", type: "event" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "index", type: "uint256" }], name: "addLiquidity", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "uint256", name: "", type: "uint256" }], name: "approvedTrader", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "configStore", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }], name: "counter", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }, { internalType: "bool", name: "allowAll", type: "bool" }, { internalType: "uint256", name: "restrictedPrice", type: "uint256" }, { internalType: "uint256", name: "startDate", type: "uint256" }, { internalType: "uint256", name: "expire", type: "uint256" }], name: "createOrder", outputs: [{ internalType: "uint256", name: "index", type: "uint256" }], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "factory", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "feeBalance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "", type: "address" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "address", name: "", type: "address" }, { internalType: "bytes", name: "", type: "bytes" }], name: "getAmountIn", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "tokenIn", type: "address" }, { internalType: "uint256", name: "amountIn", type: "uint256" }, { internalType: "address", name: "trader", type: "address" }, { internalType: "bytes", name: "", type: "bytes" }], name: "getAmountOut", outputs: [{ internalType: "uint256", name: "amountOut", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "offerIndex", type: "uint256" }, { internalType: "uint256", name: "start", type: "uint256" }, { internalType: "uint256", name: "length", type: "uint256" }], name: "getApprovedTrader", outputs: [{ internalType: "address[]", name: "trader", type: "address[]" }, { internalType: "uint256[]", name: "allocation", type: "uint256[]" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "offerIndex", type: "uint256" }], name: "getApprovedTraderLength", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "getBalances", outputs: [{ internalType: "uint256", name: "", type: "uint256" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "getLastBalances", outputs: [{ internalType: "uint256", name: "", type: "uint256" }, { internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "start", type: "uint256" }, { internalType: "uint256", name: "length", type: "uint256" }], name: "getOffers", outputs: [{ internalType: "uint256[]", name: "index", type: "uint256[]" }, { internalType: "address[]", name: "provider", type: "address[]" }, { internalType: "bool[]", name: "lockedAndAllowAll", type: "bool[]" }, { internalType: "uint256[]", name: "receiving", type: "uint256[]" }, { internalType: "uint256[]", name: "amountAndPrice", type: "uint256[]" }, { internalType: "uint256[]", name: "startDateAndExpire", type: "uint256[]" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "_provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "start", type: "uint256" }, { internalType: "uint256", name: "length", type: "uint256" }], name: "getProviderOffer", outputs: [{ internalType: "uint256[]", name: "index", type: "uint256[]" }, { internalType: "address[]", name: "provider", type: "address[]" }, { internalType: "bool[]", name: "lockedAndAllowAll", type: "bool[]" }, { internalType: "uint256[]", name: "receiving", type: "uint256[]" }, { internalType: "uint256[]", name: "amountAndPrice", type: "uint256[]" }, { internalType: "uint256[]", name: "startDateAndExpire", type: "uint256[]" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }], name: "getProviderOfferIndexLength", outputs: [{ internalType: "uint256", name: "length", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "trader", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "start", type: "uint256" }, { internalType: "uint256", name: "length", type: "uint256" }], name: "getTraderOffer", outputs: [{ internalType: "uint256[]", name: "index", type: "uint256[]" }, { internalType: "address[]", name: "provider", type: "address[]" }, { internalType: "bool[]", name: "lockedAndAllowAll", type: "bool[]" }, { internalType: "uint256[]", name: "receiving", type: "uint256[]" }, { internalType: "uint256[]", name: "amountAndPrice", type: "uint256[]" }, { internalType: "uint256[]", name: "startDateAndExpire", type: "uint256[]" }], stateMutability: "view", type: "function" }, { inputs: [], name: "govToken", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "governance", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "_token0", type: "address" }, { internalType: "address", name: "_token1", type: "address" }], name: "initialize", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "address", name: "", type: "address" }], name: "isApprovedTrader", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" }, { inputs: [], name: "isLive", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" }, { inputs: [], name: "lastGovBalance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "lastToken0Balance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "lastToken1Balance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "index", type: "uint256" }], name: "lockOffer", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "uint256", name: "", type: "uint256" }], name: "offers", outputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "locked", type: "bool" }, { internalType: "bool", name: "allowAll", type: "bool" }, { internalType: "uint256", name: "amount", type: "uint256" }, { internalType: "uint256", name: "receiving", type: "uint256" }, { internalType: "uint256", name: "restrictedPrice", type: "uint256" }, { internalType: "uint256", name: "startDate", type: "uint256" }, { internalType: "uint256", name: "expire", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "protocolFeeBalance0", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "protocolFeeBalance1", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "address", name: "", type: "address" }, { internalType: "uint256", name: "", type: "uint256" }], name: "providerOfferIndex", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "redeemProtocolFee", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }], name: "removeAllLiquidity", outputs: [{ internalType: "uint256", name: "amount0", type: "uint256" }, { internalType: "uint256", name: "amount1", type: "uint256" }], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }], name: "removeAllLiquidity1D", outputs: [{ internalType: "uint256", name: "totalAmount", type: "uint256" }, { internalType: "uint256", name: "totalReceiving", type: "uint256" }], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "index", type: "uint256" }, { internalType: "uint256", name: "amountOut", type: "uint256" }, { internalType: "uint256", name: "receivingOut", type: "uint256" }], name: "removeLiquidity", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "restrictedLiquidityProvider", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "scaleDirection", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" }, { inputs: [], name: "scaler", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "offerIndex", type: "uint256" }, { internalType: "address", name: "trader", type: "address" }, { internalType: "uint256", name: "allocation", type: "uint256" }], name: "setApprovedTrader", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "_isLive", type: "bool" }], name: "setLive", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "offerIndex", type: "uint256" }, { internalType: "address[]", name: "trader", type: "address[]" }, { internalType: "uint256[]", name: "allocation", type: "uint256[]" }], name: "setMultipleApprovedTraders", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "uint256", name: "amount0Out", type: "uint256" }, { internalType: "uint256", name: "amount1Out", type: "uint256" }, { internalType: "address", name: "to", type: "address" }, { internalType: "address", name: "trader", type: "address" }, { internalType: "bytes", name: "", type: "bytes" }], name: "swap", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "sync", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "token0", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "token1", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "address", name: "", type: "address" }], name: "traderAllocation", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "address", name: "", type: "address" }, { internalType: "uint256", name: "", type: "uint256" }], name: "traderOffer", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "whitelistFactory", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }] };
+  }
+});
+
+// bin/restricted/OSWAP_RestrictedPair2.json
+var require_OSWAP_RestrictedPair2 = __commonJS({
+  "bin/restricted/OSWAP_RestrictedPair2.json"(exports, module2) {
+    module2.exports = { abi: [{ inputs: [], stateMutability: "nonpayable", type: "constructor" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "provider", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "index", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amount", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newAmountBalance", type: "uint256" }], name: "AddLiquidity", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "offerIndex", type: "uint256" }, { indexed: true, internalType: "address", name: "trader", type: "address" }, { indexed: false, internalType: "uint256", name: "allocation", type: "uint256" }], name: "ApprovedTrader", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "index", type: "uint256" }], name: "Lock", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "provider", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: false, internalType: "uint256", name: "index", type: "uint256" }, { indexed: false, internalType: "bool", name: "allowAll", type: "bool" }, { indexed: false, internalType: "uint256", name: "restrictedPrice", type: "uint256" }, { indexed: false, internalType: "uint256", name: "startDate", type: "uint256" }, { indexed: false, internalType: "uint256", name: "expire", type: "uint256" }], name: "NewProviderOffer", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "provider", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "index", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amountOut", type: "uint256" }, { indexed: false, internalType: "uint256", name: "receivingOut", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newAmountBalance", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newReceivingBalance", type: "uint256" }], name: "RemoveLiquidity", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "to", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: false, internalType: "uint256", name: "amountIn", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amountOut", type: "uint256" }, { indexed: false, internalType: "uint256", name: "tradeFee", type: "uint256" }, { indexed: false, internalType: "uint256", name: "protocolFee", type: "uint256" }], name: "Swap", type: "event" }, { anonymous: false, inputs: [{ indexed: true, internalType: "address", name: "provider", type: "address" }, { indexed: true, internalType: "bool", name: "direction", type: "bool" }, { indexed: true, internalType: "uint256", name: "index", type: "uint256" }, { indexed: false, internalType: "uint256", name: "price", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amountOut", type: "uint256" }, { indexed: false, internalType: "uint256", name: "amountIn", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newAmountBalance", type: "uint256" }, { indexed: false, internalType: "uint256", name: "newReceivingBalance", type: "uint256" }], name: "SwappedOneOffer", type: "event" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "index", type: "uint256" }], name: "addLiquidity", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "uint256", name: "", type: "uint256" }], name: "approvedTrader", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "configStore", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }], name: "counter", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }, { internalType: "bool", name: "allowAll", type: "bool" }, { internalType: "uint256", name: "restrictedPrice", type: "uint256" }, { internalType: "uint256", name: "startDate", type: "uint256" }, { internalType: "uint256", name: "expire", type: "uint256" }], name: "createOrder", outputs: [{ internalType: "uint256", name: "index", type: "uint256" }], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "factory", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "feeBalance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "tokenOut", type: "address" }, { internalType: "uint256", name: "amountOut", type: "uint256" }, { internalType: "address", name: "trader", type: "address" }, { internalType: "bytes", name: "", type: "bytes" }], name: "getAmountIn", outputs: [{ internalType: "uint256", name: "amountIn", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "tokenIn", type: "address" }, { internalType: "uint256", name: "amountIn", type: "uint256" }, { internalType: "address", name: "trader", type: "address" }, { internalType: "bytes", name: "", type: "bytes" }], name: "getAmountOut", outputs: [{ internalType: "uint256", name: "amountOut", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "offerIndex", type: "uint256" }, { internalType: "uint256", name: "start", type: "uint256" }, { internalType: "uint256", name: "length", type: "uint256" }], name: "getApprovedTrader", outputs: [{ internalType: "address[]", name: "trader", type: "address[]" }, { internalType: "uint256[]", name: "allocation", type: "uint256[]" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "offerIndex", type: "uint256" }], name: "getApprovedTraderLength", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "getBalances", outputs: [{ internalType: "uint256", name: "", type: "uint256" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "getLastBalances", outputs: [{ internalType: "uint256", name: "", type: "uint256" }, { internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "start", type: "uint256" }, { internalType: "uint256", name: "length", type: "uint256" }], name: "getOffers", outputs: [{ internalType: "uint256[]", name: "index", type: "uint256[]" }, { internalType: "address[]", name: "provider", type: "address[]" }, { internalType: "bool[]", name: "lockedAndAllowAll", type: "bool[]" }, { internalType: "uint256[]", name: "receiving", type: "uint256[]" }, { internalType: "uint256[]", name: "amountAndPrice", type: "uint256[]" }, { internalType: "uint256[]", name: "startDateAndExpire", type: "uint256[]" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "_provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "start", type: "uint256" }, { internalType: "uint256", name: "length", type: "uint256" }], name: "getProviderOffer", outputs: [{ internalType: "uint256[]", name: "index", type: "uint256[]" }, { internalType: "address[]", name: "provider", type: "address[]" }, { internalType: "bool[]", name: "lockedAndAllowAll", type: "bool[]" }, { internalType: "uint256[]", name: "receiving", type: "uint256[]" }, { internalType: "uint256[]", name: "amountAndPrice", type: "uint256[]" }, { internalType: "uint256[]", name: "startDateAndExpire", type: "uint256[]" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }], name: "getProviderOfferIndexLength", outputs: [{ internalType: "uint256", name: "length", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "trader", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "start", type: "uint256" }, { internalType: "uint256", name: "length", type: "uint256" }], name: "getTraderOffer", outputs: [{ internalType: "uint256[]", name: "index", type: "uint256[]" }, { internalType: "address[]", name: "provider", type: "address[]" }, { internalType: "bool[]", name: "lockedAndAllowAll", type: "bool[]" }, { internalType: "uint256[]", name: "receiving", type: "uint256[]" }, { internalType: "uint256[]", name: "amountAndPrice", type: "uint256[]" }, { internalType: "uint256[]", name: "startDateAndExpire", type: "uint256[]" }], stateMutability: "view", type: "function" }, { inputs: [], name: "govToken", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "governance", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "address", name: "_token0", type: "address" }, { internalType: "address", name: "_token1", type: "address" }], name: "initialize", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "address", name: "", type: "address" }], name: "isApprovedTrader", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" }, { inputs: [], name: "isLive", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" }, { inputs: [], name: "lastGovBalance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "lastToken0Balance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "lastToken1Balance", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "index", type: "uint256" }], name: "lockOffer", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "uint256", name: "", type: "uint256" }], name: "offers", outputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "locked", type: "bool" }, { internalType: "bool", name: "allowAll", type: "bool" }, { internalType: "uint256", name: "amount", type: "uint256" }, { internalType: "uint256", name: "receiving", type: "uint256" }, { internalType: "uint256", name: "restrictedPrice", type: "uint256" }, { internalType: "uint256", name: "startDate", type: "uint256" }, { internalType: "uint256", name: "expire", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "protocolFeeBalance0", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "protocolFeeBalance1", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "address", name: "", type: "address" }, { internalType: "uint256", name: "", type: "uint256" }], name: "providerOfferIndex", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "redeemProtocolFee", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }], name: "removeAllLiquidity", outputs: [{ internalType: "uint256", name: "amount0", type: "uint256" }, { internalType: "uint256", name: "amount1", type: "uint256" }], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }], name: "removeAllLiquidity1D", outputs: [{ internalType: "uint256", name: "totalAmount", type: "uint256" }, { internalType: "uint256", name: "totalReceiving", type: "uint256" }], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "address", name: "provider", type: "address" }, { internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "index", type: "uint256" }, { internalType: "uint256", name: "amountOut", type: "uint256" }, { internalType: "uint256", name: "receivingOut", type: "uint256" }], name: "removeLiquidity", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "restrictedLiquidityProvider", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "scaleDirection", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" }, { inputs: [], name: "scaler", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "offerIndex", type: "uint256" }, { internalType: "address", name: "trader", type: "address" }, { internalType: "uint256", name: "allocation", type: "uint256" }], name: "setApprovedTrader", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "_isLive", type: "bool" }], name: "setLive", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "bool", name: "direction", type: "bool" }, { internalType: "uint256", name: "offerIndex", type: "uint256" }, { internalType: "address[]", name: "trader", type: "address[]" }, { internalType: "uint256[]", name: "allocation", type: "uint256[]" }], name: "setMultipleApprovedTraders", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [{ internalType: "uint256", name: "amount0Out", type: "uint256" }, { internalType: "uint256", name: "amount1Out", type: "uint256" }, { internalType: "address", name: "to", type: "address" }, { internalType: "address", name: "trader", type: "address" }, { internalType: "bytes", name: "", type: "bytes" }], name: "swap", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "sync", outputs: [], stateMutability: "nonpayable", type: "function" }, { inputs: [], name: "token0", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [], name: "token1", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "uint256", name: "", type: "uint256" }, { internalType: "address", name: "", type: "address" }], name: "traderAllocation", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [{ internalType: "bool", name: "", type: "bool" }, { internalType: "address", name: "", type: "address" }, { internalType: "uint256", name: "", type: "uint256" }], name: "traderOffer", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" }, { inputs: [], name: "whitelistFactory", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" }] };
+  }
+});
+
+// bin/restricted/OSWAP_RestrictedPairCreator.json
+var require_OSWAP_RestrictedPairCreator = __commonJS({
+  "bin/restricted/OSWAP_RestrictedPairCreator.json"(exports, module2) {
+    module2.exports = { abi: [{ inputs: [{ internalType: "bytes32", name: "salt", type: "bytes32" }], name: "createPair", outputs: [{ internalType: "address", name: "pair", type: "address" }], stateMutability: "nonpayable", type: "function" }] };
+  }
+});
+
 // src/index.ts
 __export(exports, {
   Contracts: () => contracts_exports,
   OpenSwap: () => OpenSwap2,
   deploy: () => deploy,
+  deployCoreContracts: () => deployCoreContracts,
+  deployHybridRouter: () => deployHybridRouter,
+  deployOracleContracts: () => deployOracleContracts,
+  deployRangeContracts: () => deployRangeContracts,
+  deployRestrictedContracts: () => deployRestrictedContracts,
+  deployRestrictedPairOracle: () => deployRestrictedPairOracle,
   toDeploymentContracts: () => toDeploymentContracts
 });
 
@@ -318,6 +359,9 @@ __export(contracts_exports, {
   OSWAP_RangePairCreator: () => OSWAP_RangePairCreator,
   OSWAP_RestrictedFactory: () => OSWAP_RestrictedFactory,
   OSWAP_RestrictedLiquidityProvider: () => OSWAP_RestrictedLiquidityProvider,
+  OSWAP_RestrictedPair: () => OSWAP_RestrictedPair,
+  OSWAP_RestrictedPair2: () => OSWAP_RestrictedPair2,
+  OSWAP_RestrictedPairCreator: () => OSWAP_RestrictedPairCreator,
   OSWAP_RestrictedPairOracle: () => OSWAP_RestrictedPairOracle,
   OSWAP_Router: () => OSWAP_Router,
   OSWAP_VotingExecutor1: () => OSWAP_VotingExecutor1,
@@ -4413,38 +4457,752 @@ var OSWAP_OracleRouter = class extends import_eth_wallet36.Contract {
   }
 };
 
-// src/deploy.ts
+// src/contracts/restricted/OSWAP_RestrictedPair.ts
+var import_eth_wallet37 = __toModule(require("@ijstech/eth-wallet"));
+var Bin37 = require_OSWAP_RestrictedPair();
+var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
+  constructor(wallet, address) {
+    super(wallet, address, Bin37.abi, Bin37.bytecode);
+  }
+  deploy() {
+    return this._deploy();
+  }
+  parseAddLiquidityEvent(receipt) {
+    let events = this.parseEvents(receipt, "AddLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        index: new import_eth_wallet37.BigNumber(result.index),
+        amount: new import_eth_wallet37.BigNumber(result.amount),
+        newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance)
+      };
+    });
+  }
+  parseApprovedTraderEvent(receipt) {
+    let events = this.parseEvents(receipt, "ApprovedTrader");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        direction: result.direction,
+        offerIndex: new import_eth_wallet37.BigNumber(result.offerIndex),
+        trader: result.trader,
+        allocation: new import_eth_wallet37.BigNumber(result.allocation)
+      };
+    });
+  }
+  parseLockEvent(receipt) {
+    let events = this.parseEvents(receipt, "Lock");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        direction: result.direction,
+        index: new import_eth_wallet37.BigNumber(result.index)
+      };
+    });
+  }
+  parseNewProviderOfferEvent(receipt) {
+    let events = this.parseEvents(receipt, "NewProviderOffer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        index: new import_eth_wallet37.BigNumber(result.index),
+        allowAll: result.allowAll,
+        restrictedPrice: new import_eth_wallet37.BigNumber(result.restrictedPrice),
+        startDate: new import_eth_wallet37.BigNumber(result.startDate),
+        expire: new import_eth_wallet37.BigNumber(result.expire)
+      };
+    });
+  }
+  parseRemoveLiquidityEvent(receipt) {
+    let events = this.parseEvents(receipt, "RemoveLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        index: new import_eth_wallet37.BigNumber(result.index),
+        amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
+        receivingOut: new import_eth_wallet37.BigNumber(result.receivingOut),
+        newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
+        newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance)
+      };
+    });
+  }
+  parseSwapEvent(receipt) {
+    let events = this.parseEvents(receipt, "Swap");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        to: result.to,
+        direction: result.direction,
+        amountIn: new import_eth_wallet37.BigNumber(result.amountIn),
+        amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
+        tradeFee: new import_eth_wallet37.BigNumber(result.tradeFee),
+        protocolFee: new import_eth_wallet37.BigNumber(result.protocolFee)
+      };
+    });
+  }
+  parseSwappedOneOfferEvent(receipt) {
+    let events = this.parseEvents(receipt, "SwappedOneOffer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        index: new import_eth_wallet37.BigNumber(result.index),
+        price: new import_eth_wallet37.BigNumber(result.price),
+        amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
+        amountIn: new import_eth_wallet37.BigNumber(result.amountIn),
+        newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
+        newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance)
+      };
+    });
+  }
+  async addLiquidity(params) {
+    let result = await this.methods("addLiquidity", params.direction, import_eth_wallet37.Utils.toString(params.index));
+    return result;
+  }
+  async approvedTrader(params) {
+    let result = await this.methods("approvedTrader", params.param1, import_eth_wallet37.Utils.toString(params.param2), import_eth_wallet37.Utils.toString(params.param3));
+    return result;
+  }
+  async configStore() {
+    let result = await this.methods("configStore");
+    return result;
+  }
+  async counter(param1) {
+    let result = await this.methods("counter", param1);
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async createOrder(params) {
+    let result = await this.methods("createOrder", params.provider, params.direction, params.allowAll, import_eth_wallet37.Utils.toString(params.restrictedPrice), import_eth_wallet37.Utils.toString(params.startDate), import_eth_wallet37.Utils.toString(params.expire));
+    return result;
+  }
+  async factory() {
+    let result = await this.methods("factory");
+    return result;
+  }
+  async feeBalance() {
+    let result = await this.methods("feeBalance");
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async getAmountIn(params) {
+    let result = await this.methods("getAmountIn", params.param1, import_eth_wallet37.Utils.toString(params.param2), params.param3, params.param4);
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async getAmountOut(params) {
+    let result = await this.methods("getAmountOut", params.tokenIn, import_eth_wallet37.Utils.toString(params.amountIn), params.trader, params.param4);
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async getApprovedTrader(params) {
+    let result = await this.methods("getApprovedTrader", params.direction, import_eth_wallet37.Utils.toString(params.offerIndex), import_eth_wallet37.Utils.toString(params.start), import_eth_wallet37.Utils.toString(params.length));
+    return {
+      trader: result.trader,
+      allocation: result.allocation.map((e) => new import_eth_wallet37.BigNumber(e))
+    };
+  }
+  async getApprovedTraderLength(params) {
+    let result = await this.methods("getApprovedTraderLength", params.direction, import_eth_wallet37.Utils.toString(params.offerIndex));
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async getBalances() {
+    let result = await this.methods("getBalances");
+    return {
+      param1: new import_eth_wallet37.BigNumber(result[0]),
+      param2: new import_eth_wallet37.BigNumber(result[1]),
+      param3: new import_eth_wallet37.BigNumber(result[2])
+    };
+  }
+  async getLastBalances() {
+    let result = await this.methods("getLastBalances");
+    return {
+      param1: new import_eth_wallet37.BigNumber(result[0]),
+      param2: new import_eth_wallet37.BigNumber(result[1])
+    };
+  }
+  async getOffers(params) {
+    let result = await this.methods("getOffers", params.direction, import_eth_wallet37.Utils.toString(params.start), import_eth_wallet37.Utils.toString(params.length));
+    return {
+      index: result.index.map((e) => new import_eth_wallet37.BigNumber(e)),
+      provider: result.provider,
+      lockedAndAllowAll: result.lockedAndAllowAll,
+      receiving: result.receiving.map((e) => new import_eth_wallet37.BigNumber(e)),
+      amountAndPrice: result.amountAndPrice.map((e) => new import_eth_wallet37.BigNumber(e)),
+      startDateAndExpire: result.startDateAndExpire.map((e) => new import_eth_wallet37.BigNumber(e))
+    };
+  }
+  async getProviderOffer(params) {
+    let result = await this.methods("getProviderOffer", params.provider, params.direction, import_eth_wallet37.Utils.toString(params.start), import_eth_wallet37.Utils.toString(params.length));
+    return {
+      index: result.index.map((e) => new import_eth_wallet37.BigNumber(e)),
+      provider: result.provider,
+      lockedAndAllowAll: result.lockedAndAllowAll,
+      receiving: result.receiving.map((e) => new import_eth_wallet37.BigNumber(e)),
+      amountAndPrice: result.amountAndPrice.map((e) => new import_eth_wallet37.BigNumber(e)),
+      startDateAndExpire: result.startDateAndExpire.map((e) => new import_eth_wallet37.BigNumber(e))
+    };
+  }
+  async getProviderOfferIndexLength(params) {
+    let result = await this.methods("getProviderOfferIndexLength", params.provider, params.direction);
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async getTraderOffer(params) {
+    let result = await this.methods("getTraderOffer", params.trader, params.direction, import_eth_wallet37.Utils.toString(params.start), import_eth_wallet37.Utils.toString(params.length));
+    return {
+      index: result.index.map((e) => new import_eth_wallet37.BigNumber(e)),
+      provider: result.provider,
+      lockedAndAllowAll: result.lockedAndAllowAll,
+      receiving: result.receiving.map((e) => new import_eth_wallet37.BigNumber(e)),
+      amountAndPrice: result.amountAndPrice.map((e) => new import_eth_wallet37.BigNumber(e)),
+      startDateAndExpire: result.startDateAndExpire.map((e) => new import_eth_wallet37.BigNumber(e))
+    };
+  }
+  async govToken() {
+    let result = await this.methods("govToken");
+    return result;
+  }
+  async governance() {
+    let result = await this.methods("governance");
+    return result;
+  }
+  async initialize(params) {
+    let result = await this.methods("initialize", params.token0, params.token1);
+    return result;
+  }
+  async isApprovedTrader(params) {
+    let result = await this.methods("isApprovedTrader", params.param1, import_eth_wallet37.Utils.toString(params.param2), params.param3);
+    return result;
+  }
+  async isLive() {
+    let result = await this.methods("isLive");
+    return result;
+  }
+  async lastGovBalance() {
+    let result = await this.methods("lastGovBalance");
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async lastToken0Balance() {
+    let result = await this.methods("lastToken0Balance");
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async lastToken1Balance() {
+    let result = await this.methods("lastToken1Balance");
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async lockOffer(params) {
+    let result = await this.methods("lockOffer", params.direction, import_eth_wallet37.Utils.toString(params.index));
+    return result;
+  }
+  async offers(params) {
+    let result = await this.methods("offers", params.param1, import_eth_wallet37.Utils.toString(params.param2));
+    return {
+      provider: result.provider,
+      locked: result.locked,
+      allowAll: result.allowAll,
+      amount: new import_eth_wallet37.BigNumber(result.amount),
+      receiving: new import_eth_wallet37.BigNumber(result.receiving),
+      restrictedPrice: new import_eth_wallet37.BigNumber(result.restrictedPrice),
+      startDate: new import_eth_wallet37.BigNumber(result.startDate),
+      expire: new import_eth_wallet37.BigNumber(result.expire)
+    };
+  }
+  async protocolFeeBalance0() {
+    let result = await this.methods("protocolFeeBalance0");
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async protocolFeeBalance1() {
+    let result = await this.methods("protocolFeeBalance1");
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async providerOfferIndex(params) {
+    let result = await this.methods("providerOfferIndex", params.param1, params.param2, import_eth_wallet37.Utils.toString(params.param3));
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async redeemProtocolFee() {
+    let result = await this.methods("redeemProtocolFee");
+    return result;
+  }
+  async removeAllLiquidity(provider) {
+    let result = await this.methods("removeAllLiquidity", provider);
+    return result;
+  }
+  async removeAllLiquidity1D(params) {
+    let result = await this.methods("removeAllLiquidity1D", params.provider, params.direction);
+    return result;
+  }
+  async removeLiquidity(params) {
+    let result = await this.methods("removeLiquidity", params.provider, params.direction, import_eth_wallet37.Utils.toString(params.index), import_eth_wallet37.Utils.toString(params.amountOut), import_eth_wallet37.Utils.toString(params.receivingOut));
+    return result;
+  }
+  async restrictedLiquidityProvider() {
+    let result = await this.methods("restrictedLiquidityProvider");
+    return result;
+  }
+  async scaleDirection() {
+    let result = await this.methods("scaleDirection");
+    return result;
+  }
+  async scaler() {
+    let result = await this.methods("scaler");
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async setApprovedTrader(params) {
+    let result = await this.methods("setApprovedTrader", params.direction, import_eth_wallet37.Utils.toString(params.offerIndex), params.trader, import_eth_wallet37.Utils.toString(params.allocation));
+    return result;
+  }
+  async setLive(isLive) {
+    let result = await this.methods("setLive", isLive);
+    return result;
+  }
+  async setMultipleApprovedTraders(params) {
+    let result = await this.methods("setMultipleApprovedTraders", params.direction, import_eth_wallet37.Utils.toString(params.offerIndex), params.trader, import_eth_wallet37.Utils.toString(params.allocation));
+    return result;
+  }
+  async swap(params) {
+    let result = await this.methods("swap", import_eth_wallet37.Utils.toString(params.amount0Out), import_eth_wallet37.Utils.toString(params.amount1Out), params.to, params.trader, params.param5);
+    return result;
+  }
+  async sync() {
+    let result = await this.methods("sync");
+    return result;
+  }
+  async token0() {
+    let result = await this.methods("token0");
+    return result;
+  }
+  async token1() {
+    let result = await this.methods("token1");
+    return result;
+  }
+  async traderAllocation(params) {
+    let result = await this.methods("traderAllocation", params.param1, import_eth_wallet37.Utils.toString(params.param2), params.param3);
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async traderOffer(params) {
+    let result = await this.methods("traderOffer", params.param1, params.param2, import_eth_wallet37.Utils.toString(params.param3));
+    return new import_eth_wallet37.BigNumber(result);
+  }
+  async whitelistFactory() {
+    let result = await this.methods("whitelistFactory");
+    return result;
+  }
+};
+
+// src/contracts/restricted/OSWAP_RestrictedPair2.ts
 var import_eth_wallet38 = __toModule(require("@ijstech/eth-wallet"));
+var Bin38 = require_OSWAP_RestrictedPair2();
+var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
+  constructor(wallet, address) {
+    super(wallet, address, Bin38.abi, Bin38.bytecode);
+  }
+  deploy() {
+    return this._deploy();
+  }
+  parseAddLiquidityEvent(receipt) {
+    let events = this.parseEvents(receipt, "AddLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        index: new import_eth_wallet38.BigNumber(result.index),
+        amount: new import_eth_wallet38.BigNumber(result.amount),
+        newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance)
+      };
+    });
+  }
+  parseApprovedTraderEvent(receipt) {
+    let events = this.parseEvents(receipt, "ApprovedTrader");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        direction: result.direction,
+        offerIndex: new import_eth_wallet38.BigNumber(result.offerIndex),
+        trader: result.trader,
+        allocation: new import_eth_wallet38.BigNumber(result.allocation)
+      };
+    });
+  }
+  parseLockEvent(receipt) {
+    let events = this.parseEvents(receipt, "Lock");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        direction: result.direction,
+        index: new import_eth_wallet38.BigNumber(result.index)
+      };
+    });
+  }
+  parseNewProviderOfferEvent(receipt) {
+    let events = this.parseEvents(receipt, "NewProviderOffer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        index: new import_eth_wallet38.BigNumber(result.index),
+        allowAll: result.allowAll,
+        restrictedPrice: new import_eth_wallet38.BigNumber(result.restrictedPrice),
+        startDate: new import_eth_wallet38.BigNumber(result.startDate),
+        expire: new import_eth_wallet38.BigNumber(result.expire)
+      };
+    });
+  }
+  parseRemoveLiquidityEvent(receipt) {
+    let events = this.parseEvents(receipt, "RemoveLiquidity");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        index: new import_eth_wallet38.BigNumber(result.index),
+        amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
+        receivingOut: new import_eth_wallet38.BigNumber(result.receivingOut),
+        newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
+        newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance)
+      };
+    });
+  }
+  parseSwapEvent(receipt) {
+    let events = this.parseEvents(receipt, "Swap");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        to: result.to,
+        direction: result.direction,
+        amountIn: new import_eth_wallet38.BigNumber(result.amountIn),
+        amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
+        tradeFee: new import_eth_wallet38.BigNumber(result.tradeFee),
+        protocolFee: new import_eth_wallet38.BigNumber(result.protocolFee)
+      };
+    });
+  }
+  parseSwappedOneOfferEvent(receipt) {
+    let events = this.parseEvents(receipt, "SwappedOneOffer");
+    return events.map((result) => {
+      return {
+        _eventName: result._eventName,
+        _address: result._address,
+        _transactionHash: result._transactionHash,
+        provider: result.provider,
+        direction: result.direction,
+        index: new import_eth_wallet38.BigNumber(result.index),
+        price: new import_eth_wallet38.BigNumber(result.price),
+        amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
+        amountIn: new import_eth_wallet38.BigNumber(result.amountIn),
+        newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
+        newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance)
+      };
+    });
+  }
+  async addLiquidity(params) {
+    let result = await this.methods("addLiquidity", params.direction, import_eth_wallet38.Utils.toString(params.index));
+    return result;
+  }
+  async approvedTrader(params) {
+    let result = await this.methods("approvedTrader", params.param1, import_eth_wallet38.Utils.toString(params.param2), import_eth_wallet38.Utils.toString(params.param3));
+    return result;
+  }
+  async configStore() {
+    let result = await this.methods("configStore");
+    return result;
+  }
+  async counter(param1) {
+    let result = await this.methods("counter", param1);
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async createOrder(params) {
+    let result = await this.methods("createOrder", params.provider, params.direction, params.allowAll, import_eth_wallet38.Utils.toString(params.restrictedPrice), import_eth_wallet38.Utils.toString(params.startDate), import_eth_wallet38.Utils.toString(params.expire));
+    return result;
+  }
+  async factory() {
+    let result = await this.methods("factory");
+    return result;
+  }
+  async feeBalance() {
+    let result = await this.methods("feeBalance");
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async getAmountIn(params) {
+    let result = await this.methods("getAmountIn", params.tokenOut, import_eth_wallet38.Utils.toString(params.amountOut), params.trader, params.param4);
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async getAmountOut(params) {
+    let result = await this.methods("getAmountOut", params.tokenIn, import_eth_wallet38.Utils.toString(params.amountIn), params.trader, params.param4);
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async getApprovedTrader(params) {
+    let result = await this.methods("getApprovedTrader", params.direction, import_eth_wallet38.Utils.toString(params.offerIndex), import_eth_wallet38.Utils.toString(params.start), import_eth_wallet38.Utils.toString(params.length));
+    return {
+      trader: result.trader,
+      allocation: result.allocation.map((e) => new import_eth_wallet38.BigNumber(e))
+    };
+  }
+  async getApprovedTraderLength(params) {
+    let result = await this.methods("getApprovedTraderLength", params.direction, import_eth_wallet38.Utils.toString(params.offerIndex));
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async getBalances() {
+    let result = await this.methods("getBalances");
+    return {
+      param1: new import_eth_wallet38.BigNumber(result[0]),
+      param2: new import_eth_wallet38.BigNumber(result[1]),
+      param3: new import_eth_wallet38.BigNumber(result[2])
+    };
+  }
+  async getLastBalances() {
+    let result = await this.methods("getLastBalances");
+    return {
+      param1: new import_eth_wallet38.BigNumber(result[0]),
+      param2: new import_eth_wallet38.BigNumber(result[1])
+    };
+  }
+  async getOffers(params) {
+    let result = await this.methods("getOffers", params.direction, import_eth_wallet38.Utils.toString(params.start), import_eth_wallet38.Utils.toString(params.length));
+    return {
+      index: result.index.map((e) => new import_eth_wallet38.BigNumber(e)),
+      provider: result.provider,
+      lockedAndAllowAll: result.lockedAndAllowAll,
+      receiving: result.receiving.map((e) => new import_eth_wallet38.BigNumber(e)),
+      amountAndPrice: result.amountAndPrice.map((e) => new import_eth_wallet38.BigNumber(e)),
+      startDateAndExpire: result.startDateAndExpire.map((e) => new import_eth_wallet38.BigNumber(e))
+    };
+  }
+  async getProviderOffer(params) {
+    let result = await this.methods("getProviderOffer", params.provider, params.direction, import_eth_wallet38.Utils.toString(params.start), import_eth_wallet38.Utils.toString(params.length));
+    return {
+      index: result.index.map((e) => new import_eth_wallet38.BigNumber(e)),
+      provider: result.provider,
+      lockedAndAllowAll: result.lockedAndAllowAll,
+      receiving: result.receiving.map((e) => new import_eth_wallet38.BigNumber(e)),
+      amountAndPrice: result.amountAndPrice.map((e) => new import_eth_wallet38.BigNumber(e)),
+      startDateAndExpire: result.startDateAndExpire.map((e) => new import_eth_wallet38.BigNumber(e))
+    };
+  }
+  async getProviderOfferIndexLength(params) {
+    let result = await this.methods("getProviderOfferIndexLength", params.provider, params.direction);
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async getTraderOffer(params) {
+    let result = await this.methods("getTraderOffer", params.trader, params.direction, import_eth_wallet38.Utils.toString(params.start), import_eth_wallet38.Utils.toString(params.length));
+    return {
+      index: result.index.map((e) => new import_eth_wallet38.BigNumber(e)),
+      provider: result.provider,
+      lockedAndAllowAll: result.lockedAndAllowAll,
+      receiving: result.receiving.map((e) => new import_eth_wallet38.BigNumber(e)),
+      amountAndPrice: result.amountAndPrice.map((e) => new import_eth_wallet38.BigNumber(e)),
+      startDateAndExpire: result.startDateAndExpire.map((e) => new import_eth_wallet38.BigNumber(e))
+    };
+  }
+  async govToken() {
+    let result = await this.methods("govToken");
+    return result;
+  }
+  async governance() {
+    let result = await this.methods("governance");
+    return result;
+  }
+  async initialize(params) {
+    let result = await this.methods("initialize", params.token0, params.token1);
+    return result;
+  }
+  async isApprovedTrader(params) {
+    let result = await this.methods("isApprovedTrader", params.param1, import_eth_wallet38.Utils.toString(params.param2), params.param3);
+    return result;
+  }
+  async isLive() {
+    let result = await this.methods("isLive");
+    return result;
+  }
+  async lastGovBalance() {
+    let result = await this.methods("lastGovBalance");
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async lastToken0Balance() {
+    let result = await this.methods("lastToken0Balance");
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async lastToken1Balance() {
+    let result = await this.methods("lastToken1Balance");
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async lockOffer(params) {
+    let result = await this.methods("lockOffer", params.direction, import_eth_wallet38.Utils.toString(params.index));
+    return result;
+  }
+  async offers(params) {
+    let result = await this.methods("offers", params.param1, import_eth_wallet38.Utils.toString(params.param2));
+    return {
+      provider: result.provider,
+      locked: result.locked,
+      allowAll: result.allowAll,
+      amount: new import_eth_wallet38.BigNumber(result.amount),
+      receiving: new import_eth_wallet38.BigNumber(result.receiving),
+      restrictedPrice: new import_eth_wallet38.BigNumber(result.restrictedPrice),
+      startDate: new import_eth_wallet38.BigNumber(result.startDate),
+      expire: new import_eth_wallet38.BigNumber(result.expire)
+    };
+  }
+  async protocolFeeBalance0() {
+    let result = await this.methods("protocolFeeBalance0");
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async protocolFeeBalance1() {
+    let result = await this.methods("protocolFeeBalance1");
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async providerOfferIndex(params) {
+    let result = await this.methods("providerOfferIndex", params.param1, params.param2, import_eth_wallet38.Utils.toString(params.param3));
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async redeemProtocolFee() {
+    let result = await this.methods("redeemProtocolFee");
+    return result;
+  }
+  async removeAllLiquidity(provider) {
+    let result = await this.methods("removeAllLiquidity", provider);
+    return result;
+  }
+  async removeAllLiquidity1D(params) {
+    let result = await this.methods("removeAllLiquidity1D", params.provider, params.direction);
+    return result;
+  }
+  async removeLiquidity(params) {
+    let result = await this.methods("removeLiquidity", params.provider, params.direction, import_eth_wallet38.Utils.toString(params.index), import_eth_wallet38.Utils.toString(params.amountOut), import_eth_wallet38.Utils.toString(params.receivingOut));
+    return result;
+  }
+  async restrictedLiquidityProvider() {
+    let result = await this.methods("restrictedLiquidityProvider");
+    return result;
+  }
+  async scaleDirection() {
+    let result = await this.methods("scaleDirection");
+    return result;
+  }
+  async scaler() {
+    let result = await this.methods("scaler");
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async setApprovedTrader(params) {
+    let result = await this.methods("setApprovedTrader", params.direction, import_eth_wallet38.Utils.toString(params.offerIndex), params.trader, import_eth_wallet38.Utils.toString(params.allocation));
+    return result;
+  }
+  async setLive(isLive) {
+    let result = await this.methods("setLive", isLive);
+    return result;
+  }
+  async setMultipleApprovedTraders(params) {
+    let result = await this.methods("setMultipleApprovedTraders", params.direction, import_eth_wallet38.Utils.toString(params.offerIndex), params.trader, import_eth_wallet38.Utils.toString(params.allocation));
+    return result;
+  }
+  async swap(params) {
+    let result = await this.methods("swap", import_eth_wallet38.Utils.toString(params.amount0Out), import_eth_wallet38.Utils.toString(params.amount1Out), params.to, params.trader, params.param5);
+    return result;
+  }
+  async sync() {
+    let result = await this.methods("sync");
+    return result;
+  }
+  async token0() {
+    let result = await this.methods("token0");
+    return result;
+  }
+  async token1() {
+    let result = await this.methods("token1");
+    return result;
+  }
+  async traderAllocation(params) {
+    let result = await this.methods("traderAllocation", params.param1, import_eth_wallet38.Utils.toString(params.param2), params.param3);
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async traderOffer(params) {
+    let result = await this.methods("traderOffer", params.param1, params.param2, import_eth_wallet38.Utils.toString(params.param3));
+    return new import_eth_wallet38.BigNumber(result);
+  }
+  async whitelistFactory() {
+    let result = await this.methods("whitelistFactory");
+    return result;
+  }
+};
+
+// src/contracts/restricted/OSWAP_RestrictedPairCreator.ts
+var import_eth_wallet39 = __toModule(require("@ijstech/eth-wallet"));
+var Bin39 = require_OSWAP_RestrictedPairCreator();
+var OSWAP_RestrictedPairCreator = class extends import_eth_wallet39.Contract {
+  constructor(wallet, address) {
+    super(wallet, address, Bin39.abi, Bin39.bytecode);
+  }
+  deploy() {
+    return this._deploy();
+  }
+  async createPair(salt) {
+    let result = await this.methods("createPair", import_eth_wallet39.Utils.stringToBytes32(salt));
+    return result;
+  }
+};
+
+// src/deploy.ts
+var import_eth_wallet41 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/OpenSwap.ts
-var import_eth_wallet37 = __toModule(require("@ijstech/eth-wallet"));
+var import_eth_wallet40 = __toModule(require("@ijstech/eth-wallet"));
 var OpenSwap2 = class {
   constructor(wallet, address) {
     this.address = address;
     this._oswap = new OpenSwap(wallet, address);
   }
   async deploy(params) {
-    params.initSupply = import_eth_wallet37.Utils.toDecimals(params.initSupply);
-    params.totalSupply = import_eth_wallet37.Utils.toDecimals(params.totalSupply);
+    params.initSupply = import_eth_wallet40.Utils.toDecimals(params.initSupply);
+    params.totalSupply = import_eth_wallet40.Utils.toDecimals(params.totalSupply);
     this.address = await this._oswap.deploy(params);
     return this.address;
   }
   async allowance(params) {
-    return import_eth_wallet37.Utils.fromDecimals(await this._oswap.allowance(params));
+    return import_eth_wallet40.Utils.fromDecimals(await this._oswap.allowance(params));
   }
   async approve(params) {
-    params.amount = import_eth_wallet37.Utils.toDecimals(params.amount);
+    params.amount = import_eth_wallet40.Utils.toDecimals(params.amount);
     let receipt = await this._oswap.approve(params);
     let event = this._oswap.parseApprovalEvent(receipt)[0];
-    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    event.value = import_eth_wallet40.Utils.fromDecimals(event.value);
     return event;
   }
   async balanceOf(account) {
-    return import_eth_wallet37.Utils.fromDecimals(await this._oswap.balanceOf(account));
+    return import_eth_wallet40.Utils.fromDecimals(await this._oswap.balanceOf(account));
   }
   get cap() {
     return (async () => {
-      return import_eth_wallet37.Utils.fromDecimals(await this._oswap.cap());
+      return import_eth_wallet40.Utils.fromDecimals(await this._oswap.cap());
     })();
   }
   get decimals() {
@@ -4453,23 +5211,23 @@ var OpenSwap2 = class {
     })();
   }
   async decreaseAllowance(params) {
-    params.subtractedValue = import_eth_wallet37.Utils.toDecimals(params.subtractedValue);
+    params.subtractedValue = import_eth_wallet40.Utils.toDecimals(params.subtractedValue);
     let receipt = await this._oswap.decreaseAllowance(params);
     let event = this._oswap.parseApprovalEvent(receipt)[0];
-    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    event.value = import_eth_wallet40.Utils.fromDecimals(event.value);
     return event;
   }
   async increaseAllowance(params) {
-    params.addedValue = import_eth_wallet37.Utils.toDecimals(params.addedValue);
+    params.addedValue = import_eth_wallet40.Utils.toDecimals(params.addedValue);
     let receipt = await this._oswap.increaseAllowance(params);
     let event = this._oswap.parseApprovalEvent(receipt)[0];
-    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    event.value = import_eth_wallet40.Utils.fromDecimals(event.value);
     return event;
   }
   async mint(params) {
-    let receipt = await this._oswap.mint({ account: params.address, amount: import_eth_wallet37.Utils.toDecimals(params.amount) });
+    let receipt = await this._oswap.mint({ account: params.address, amount: import_eth_wallet40.Utils.toDecimals(params.amount) });
     let event = this._oswap.parseTransferEvent(receipt)[0];
-    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    event.value = import_eth_wallet40.Utils.fromDecimals(event.value);
     return event;
   }
   get minter() {
@@ -4483,22 +5241,22 @@ var OpenSwap2 = class {
   }
   get totalSupply() {
     return (async () => {
-      return import_eth_wallet37.Utils.fromDecimals(await this._oswap.totalSupply());
+      return import_eth_wallet40.Utils.fromDecimals(await this._oswap.totalSupply());
     })();
   }
   async transfer(params) {
-    let receipt = await this._oswap.transfer({ recipient: params.address, amount: import_eth_wallet37.Utils.toDecimals(params.amount) });
+    let receipt = await this._oswap.transfer({ recipient: params.address, amount: import_eth_wallet40.Utils.toDecimals(params.amount) });
     let event = this._oswap.parseTransferEvent(receipt)[0];
-    event.value = import_eth_wallet37.Utils.fromDecimals(event.value);
+    event.value = import_eth_wallet40.Utils.fromDecimals(event.value);
     return event;
   }
   async transferFrom(params) {
-    params.amount = import_eth_wallet37.Utils.toDecimals(params.amount);
+    params.amount = import_eth_wallet40.Utils.toDecimals(params.amount);
     let receipt = await this._oswap.transferFrom(params);
     let transfer = this._oswap.parseTransferEvent(receipt)[0];
-    transfer.value = import_eth_wallet37.Utils.fromDecimals(transfer.value);
+    transfer.value = import_eth_wallet40.Utils.fromDecimals(transfer.value);
     let approval = this._oswap.parseApprovalEvent(receipt)[0];
-    approval.value = import_eth_wallet37.Utils.fromDecimals(approval.value);
+    approval.value = import_eth_wallet40.Utils.fromDecimals(approval.value);
     return { transfer, approval };
   }
 };
@@ -4506,7 +5264,7 @@ var OpenSwap2 = class {
 // src/deploy.ts
 var DefaultGovOptions = {
   minStakePeriod: 1,
-  tradeFee: 0.28,
+  tradeFee: 0.2,
   protocolFee: 0,
   protocolFeeTo: "",
   profiles: {
@@ -4514,8 +5272,8 @@ var DefaultGovOptions = {
     minExeDelay: [1, 1, 1],
     minVoteDuration: [0, 0, 0],
     maxVoteDuration: [1209600, 1209600, 1209600],
-    minGovTokenToCreateVote: [import_eth_wallet38.Utils.toDecimals(1e5), import_eth_wallet38.Utils.toDecimals(1e5), import_eth_wallet38.Utils.toDecimals(1e5)],
-    minQuorum: [import_eth_wallet38.Utils.toDecimals(0), import_eth_wallet38.Utils.toDecimals(1e7), import_eth_wallet38.Utils.toDecimals(100)]
+    minGovTokenToCreateVote: [import_eth_wallet41.Utils.toDecimals(1e5), import_eth_wallet41.Utils.toDecimals(1e5), import_eth_wallet41.Utils.toDecimals(1e5)],
+    minQuorum: [import_eth_wallet41.Utils.toDecimals(0), import_eth_wallet41.Utils.toDecimals(1e7), import_eth_wallet41.Utils.toDecimals(100)]
   }
 };
 var DefaultGovTokenOptions = {
@@ -4544,6 +5302,166 @@ function toDeploymentContracts(wallet, result) {
     executor2: new OSWAP_VotingExecutor2(wallet, result.votingExecutor2)
   };
 }
+async function deployCoreContracts(wallet, options) {
+  let result = {};
+  if (!options.tokens.oswap) {
+    let oswap = new OpenSwap2(wallet);
+    result.oswap = await oswap.deploy(options.govTokenOptions);
+  } else
+    result.oswap = options.tokens.oswap;
+  if (options.tokens.weth)
+    result.weth = options.tokens.weth;
+  let governance = new OAXDEX_Governance(wallet);
+  result.governance = await governance.deploy({
+    names: options.govOptions.profiles.name,
+    maxVoteDuration: options.govOptions.profiles.maxVoteDuration,
+    minExeDelay: options.govOptions.profiles.minExeDelay,
+    minOaxTokenToCreateVote: options.govOptions.profiles.minGovTokenToCreateVote,
+    minQuorum: options.govOptions.profiles.minQuorum,
+    minStakePeriod: options.govOptions.minStakePeriod,
+    minVoteDuration: options.govOptions.profiles.minVoteDuration,
+    oaxToken: result.oswap
+  });
+  let administrator = new OAXDEX_Administrator(wallet);
+  result.administrator = await administrator.deploy(governance.address);
+  await governance.initAdmin(result.administrator);
+  let votingRegistry = new OAXDEX_VotingRegistry(wallet);
+  result.votingRegistry = await votingRegistry.deploy(result.governance);
+  await governance.setVotingRegister(result.votingRegistry);
+  let pairCreator = new OSWAP_PairCreator(wallet);
+  result.pairCreator = await pairCreator.deploy();
+  let factory = new OSWAP_Factory(wallet);
+  result.factory = await factory.deploy({
+    governance: options.amm.governance || result.governance,
+    pairCreator: result.pairCreator,
+    protocolFee: 0,
+    protocolFeeTo: options.amm.protocolFeeTo || import_eth_wallet41.Utils.nullAddress,
+    tradeFee: 0
+  });
+  let router = new OSWAP_Router(wallet);
+  result.router = await router.deploy({
+    WETH: result.weth,
+    factory: result.factory
+  });
+  let votingExecutor = new OAXDEX_VotingExecutor(wallet);
+  result.votingExecutor = await votingExecutor.deploy({
+    admin: result.administrator,
+    governance: result.governance
+  });
+  await governance.initVotingExecutor([result.votingExecutor]);
+  let votingExecutor1 = new OSWAP_VotingExecutor1(wallet);
+  result.votingExecutor1 = await votingExecutor1.deploy(factory.address);
+  return result;
+}
+async function deployOracleContracts(wallet, options, coreContractsResult) {
+  let result = {};
+  let oraclePairCreator = new OSWAP_OraclePairCreator(wallet);
+  result.oraclePairCreator = await oraclePairCreator.deploy();
+  let oracleFactory = new OSWAP_OracleFactory(wallet);
+  result.oracleFactory = await oracleFactory.deploy({
+    feePerDelegator: options.oracle.feePerDelegator || 0,
+    governance: options.oracle.governance || coreContractsResult.governance,
+    pairCreator: options.oracle.pairCreator || result.oraclePairCreator,
+    protocolFee: options.oracle.protocolFee || 0,
+    protocolFeeTo: options.oracle.protocolFeeTo || import_eth_wallet41.Utils.nullAddress,
+    tradeFee: options.oracle.tradeFee || 0
+  });
+  let oracleRouter = new OSWAP_OracleRouter(wallet);
+  result.oracleRouter = await oracleRouter.deploy({
+    WETH: coreContractsResult.weth,
+    ammFactory: coreContractsResult.factory,
+    oracleFactory: result.oracleFactory
+  });
+  let oracleLiquidityProvider = new OSWAP_OracleLiquidityProvider(wallet);
+  result.oracleLiquidityProvider = await oracleLiquidityProvider.deploy({
+    WETH: coreContractsResult.weth,
+    factory: result.oracleFactory
+  });
+  await oracleFactory.setOracleLiquidityProvider({
+    oracleLiquidityProvider: result.oracleLiquidityProvider,
+    oracleRouter: result.oracleRouter
+  });
+  let votingExecutor2 = new OSWAP_VotingExecutor2(wallet);
+  result.votingExecutor2 = await votingExecutor2.deploy(oracleFactory.address);
+  return result;
+}
+async function deployRangeContracts(wallet, options, weth, hybridRegistry) {
+  let result = {};
+  let rangePairCreator = new OSWAP_RangePairCreator(wallet);
+  result.rangePairCreator = await rangePairCreator.deploy();
+  let rangeFactory = new OSWAP_RangeFactory(wallet);
+  result.rangeFactory = await rangeFactory.deploy({
+    governance: options.governance,
+    oracleFactory: options.oracleFactory,
+    pairCreator: options.pairCreator || result.rangePairCreator,
+    tradeFee: options.tradeFee || 0,
+    stakeAmount: options.stakeAmount || [],
+    liquidityProviderShare: options.liquidityProviderShare || [],
+    protocolFeeTo: options.protocolFeeTo || import_eth_wallet41.Utils.nullAddress
+  });
+  let rangeLiquidityProvider = new OSWAP_RangeLiquidityProvider(wallet);
+  result.rangeLiquidityProvider = await rangeLiquidityProvider.deploy({
+    WETH: weth,
+    factory: result.rangeFactory
+  });
+  await rangeFactory.setRangeLiquidityProvider(result.rangeLiquidityProvider);
+  let votingExecutor3 = new OSWAP_VotingExecutor3(wallet);
+  result.votingExecutor3 = await votingExecutor3.deploy({
+    governance: options.governance,
+    factory: rangeFactory.address,
+    hybridRegistry
+  });
+  return result;
+}
+async function deployRestrictedContracts(wallet, options, weth) {
+  let result = {};
+  if (!options.configStore) {
+    let configStore = new OSWAP_ConfigStore(wallet);
+    result.configStore = await configStore.deploy(options.governance);
+    options.configStore = result.configStore;
+  }
+  let restrictedPairCreator = new OSWAP_RestrictedPairCreator(wallet);
+  result.restrictedPairCreator = await restrictedPairCreator.deploy();
+  let restrictedFactory = new OSWAP_RestrictedFactory(wallet);
+  result.restrictedFactory = await restrictedFactory.deploy({
+    governance: options.governance,
+    whitelistFactory: options.whitelistFactory,
+    pairCreator: options.pairCreator || result.restrictedPairCreator,
+    tradeFee: options.tradeFee || 0,
+    configStore: options.configStore,
+    protocolFee: options.protocolFee || 0,
+    protocolFeeTo: options.protocolFeeTo || import_eth_wallet41.Utils.nullAddress
+  });
+  let restrictedLiquidityProvider = new OSWAP_RestrictedLiquidityProvider(wallet);
+  result.restrictedLiquidityProvider = await restrictedLiquidityProvider.deploy({
+    WETH: weth,
+    factory: result.restrictedFactory
+  });
+  await restrictedFactory.init(result.restrictedLiquidityProvider);
+  let votingExecutor4 = new OSWAP_VotingExecutor4(wallet);
+  result.votingExecutor4 = await votingExecutor4.deploy({
+    governance: options.governance,
+    factory: restrictedFactory.address,
+    configStore: options.configStore
+  });
+  return result;
+}
+async function deployHybridRouter(wallet, coreContractsResult) {
+  let result = {};
+  let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
+  result.hybridRouterRegistry = await hybridRouterRegistry.deploy(coreContractsResult.governance);
+  let hybridRouter = new OSWAP_HybridRouter2(wallet);
+  result.hybridRouter = await hybridRouter.deploy({
+    WETH: coreContractsResult.weth,
+    registry: result.hybridRouterRegistry
+  });
+  return result;
+}
+async function deployRestrictedPairOracle(wallet) {
+  let restrictedPairOracle = new OSWAP_RestrictedPairOracle(wallet);
+  let result = await restrictedPairOracle.deploy();
+  return result;
+}
 function deploy(wallet, options) {
   options = options || {};
   if (!options.govOptions)
@@ -4561,89 +5479,22 @@ function deploy(wallet, options) {
     options.oracle = {};
   return new Promise(async function(resolve, reject) {
     try {
-      let result = {};
-      if (!options.tokens.oswap) {
-        let oswap = new OpenSwap2(wallet);
-        result.oswap = await oswap.deploy(options.govTokenOptions);
-      } else
-        result.oswap = options.tokens.oswap;
-      if (options.tokens.weth)
-        result.weth = options.tokens.weth;
-      let governance = new OAXDEX_Governance(wallet);
-      result.governance = await governance.deploy({
-        names: options.govOptions.profiles.name,
-        maxVoteDuration: options.govOptions.profiles.maxVoteDuration,
-        minExeDelay: options.govOptions.profiles.minExeDelay,
-        minOaxTokenToCreateVote: options.govOptions.profiles.minGovTokenToCreateVote,
-        minQuorum: options.govOptions.profiles.minQuorum,
-        minStakePeriod: options.govOptions.minStakePeriod,
-        minVoteDuration: options.govOptions.profiles.minVoteDuration,
-        oaxToken: result.oswap
-      });
-      let administrator = new OAXDEX_Administrator(wallet);
-      result.administrator = await administrator.deploy(governance.address);
-      await governance.initAdmin(result.administrator);
-      let votingRegistry = new OAXDEX_VotingRegistry(wallet);
-      result.votingRegistry = await votingRegistry.deploy(result.governance);
-      await governance.setVotingRegister(result.votingRegistry);
-      let pairCreator = new OSWAP_PairCreator(wallet);
-      result.pairCreator = await pairCreator.deploy();
-      let factory = new OSWAP_Factory(wallet);
-      result.factory = await factory.deploy({
-        governance: options.amm.governance || result.governance,
-        pairCreator: result.pairCreator,
-        protocolFee: 0,
-        protocolFeeTo: options.amm.protocolFeeTo || import_eth_wallet38.Utils.nullAddress,
-        tradeFee: 0
-      });
-      let oraclePairCreator = new OSWAP_OraclePairCreator(wallet);
-      result.oraclePairCreator = await oraclePairCreator.deploy();
-      let router = new OSWAP_Router(wallet);
-      result.router = await router.deploy({
-        WETH: result.weth,
-        factory: result.factory
-      });
-      let oracleFactory = new OSWAP_OracleFactory(wallet);
-      result.oracleFactory = await oracleFactory.deploy({
-        feePerDelegator: options.oracle.feePerDelegator || 0,
-        governance: options.oracle.governance || result.governance,
-        pairCreator: options.oracle.pairCreator || result.oraclePairCreator,
-        protocolFee: options.oracle.protocolFee || 0,
-        protocolFeeTo: options.oracle.protocolFeeTo || import_eth_wallet38.Utils.nullAddress,
-        tradeFee: options.oracle.tradeFee || 0
-      });
-      let oracleRouter = new OSWAP_OracleRouter(wallet);
-      result.oracleRouter = await oracleRouter.deploy({
-        WETH: result.weth,
-        ammFactory: result.factory,
-        oracleFactory: result.oracleFactory
-      });
-      let oracleLiquidityProvider = new OSWAP_OracleLiquidityProvider(wallet);
-      result.oracleLiquidityProvider = await oracleLiquidityProvider.deploy({
-        WETH: result.weth,
-        factory: result.oracleFactory
-      });
-      await oracleFactory.setOracleLiquidityProvider({
-        oracleLiquidityProvider: result.oracleLiquidityProvider,
-        oracleRouter: result.oracleRouter
-      });
-      let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
-      result.hybridRouterRegistry = await hybridRouterRegistry.deploy(result.governance);
-      let hybridRouter = new OSWAP_HybridRouter2(wallet);
-      result.hybridRouter = await hybridRouter.deploy({
-        WETH: result.weth,
-        registry: result.hybridRouterRegistry
-      });
-      let votingExecutor = new OAXDEX_VotingExecutor(wallet);
-      result.votingExecutor = await votingExecutor.deploy({
-        admin: result.administrator,
-        governance: result.governance
-      });
-      await governance.initVotingExecutor([result.votingExecutor]);
-      let votingExecutor1 = new OSWAP_VotingExecutor1(wallet);
-      result.votingExecutor1 = await votingExecutor1.deploy(factory.address);
-      let votingExecutor2 = new OSWAP_VotingExecutor2(wallet);
-      result.votingExecutor2 = await votingExecutor2.deploy(oracleFactory.address);
+      let coreContractsResult = await deployCoreContracts(wallet, options);
+      let oracleContractsResult = await deployOracleContracts(wallet, options, coreContractsResult);
+      let hybridRouterResult = await deployHybridRouter(wallet, coreContractsResult);
+      let result = __spreadValues(__spreadValues(__spreadValues({}, coreContractsResult), oracleContractsResult), hybridRouterResult);
+      if (options.range) {
+        options.range.governance = coreContractsResult.governance;
+        options.range.oracleFactory = oracleContractsResult.oracleFactory;
+        let rangeContractsResult = await deployRangeContracts(wallet, options.range, coreContractsResult.weth, hybridRouterResult.hybridRouterRegistry);
+        result = __spreadValues(__spreadValues({}, result), rangeContractsResult);
+      }
+      if (options.restricted) {
+        options.restricted.governance = coreContractsResult.governance;
+        options.restricted.whitelistFactory = oracleContractsResult.oracleFactory;
+        let restrictedContractsResult = await deployRestrictedContracts(wallet, options.restricted, coreContractsResult.weth);
+        result = __spreadValues(__spreadValues({}, result), restrictedContractsResult);
+      }
       console.dir(result);
       resolve(result);
     } catch (err) {

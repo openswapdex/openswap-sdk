@@ -14,28 +14,57 @@ import {
     OSWAP_OracleLiquidityProvider, 
     OSWAP_OracleRouter, 
     OSWAP_HybridRouterRegistry, 
-    OSWAP_HybridRouter2
+    OSWAP_HybridRouter2,
+    OSWAP_RangePairCreator,
+    OSWAP_RangeLiquidityProvider,
+    OSWAP_RangeFactory,
+    OSWAP_VotingExecutor3,
+    OSWAP_RestrictedPairCreator,
+    OSWAP_RestrictedLiquidityProvider,
+    OSWAP_RestrictedFactory,
+    OSWAP_VotingExecutor4,
+    OSWAP_ConfigStore,
+    OSWAP_RestrictedPairOracle
 } from './contracts';
 import {OpenSwap} from './OpenSwap';
-export interface IDeploymentResult{
+export interface ICoreContractsDeploymentResult {
     administrator?: string;
-    factory?: string,
-    governance?: string,
-    hybridRouter?: string,
-    hybridRouterRegistry?: string,
-    oracleFactory?: string,    
+    factory?: string;
+    governance?: string;
+    oswap?: string;
+    pairCreator?: string;
+    router?: string;
+    votingRegistry?: string;
+    votingExecutor?: string;
+    votingExecutor1?: string;
+    weth?: string;
+}
+export interface IOracleContractsDeploymentResult {
+    oracleFactory?: string;    
     oracleLiquidityProvider?: string;
     oraclePairCreator?: string;
     oracleRouter?: string;
-    oswap?: string,
-    pairCreator?: string,
-    router?: string,    
-    votingRegistry?: string,
-    votingExecutor?: string,
-    votingExecutor1?: string,
-    votingExecutor2?: string,
-    votingExecutor3?: string,
-    weth?: string
+    votingExecutor2?: string;
+}
+export interface IRangeContractsDeploymentResult {
+    rangeFactory?: string;    
+    rangeLiquidityProvider?: string;
+    rangePairCreator?: string;
+    votingExecutor3?: string;
+}
+export interface IRestrictedContractsDeploymentResult {
+    restrictedFactory?: string;    
+    restrictedLiquidityProvider?: string;
+    restrictedPairCreator?: string;
+    configStore?: string;
+    votingExecutor4?: string;
+}
+export interface IHybridRouterDeploymentResult {
+    hybridRouter?: string;
+    hybridRouterRegistry?: string;
+}
+export interface IDeploymentResult extends ICoreContractsDeploymentResult, IOracleContractsDeploymentResult, 
+IRangeContractsDeploymentResult, IRestrictedContractsDeploymentResult, IHybridRouterDeploymentResult {
 }
 export interface IGovProfile {
     "minExeDelay": number,
@@ -60,7 +89,7 @@ export interface IGovOptions{
 }
 export const DefaultGovOptions: IGovOptions = {
     minStakePeriod: 1,
-    tradeFee: 0.28,
+    tradeFee: 0.2,
     protocolFee: 0,
     protocolFeeTo: '',
     profiles: {
@@ -92,40 +121,60 @@ export interface IAmmOptions{
     tradeFee?: number;
 }
 export interface IOracleFactoryOptions{
-    feePerDelegator?: number|BigNumber,
-    governance?: string,
-    pairCreator?: string,
-    protocolFee?: number|BigNumber,
-    protocolFeeTo?: string,
-    tradeFee?: number|BigNumber
+    feePerDelegator?: number|BigNumber;
+    governance?: string;
+    pairCreator?: string;
+    protocolFee?: number|BigNumber;
+    protocolFeeTo?: string;
+    tradeFee?: number|BigNumber;
+}
+export interface IRangeFactoryOptions{
+    governance?: string;
+    oracleFactory?: string;
+    pairCreator?: string;
+    tradeFee?: number|BigNumber;
+    stakeAmount?: number[]|BigNumber[];
+    liquidityProviderShare?: number[]|BigNumber[];
+    protocolFeeTo?: string;
+}
+export interface IRestrictedFactoryOptions{
+    governance?: string;
+    whitelistFactory?: string;
+    pairCreator?: string;
+    configStore?: string;
+    tradeFee?: number|BigNumber;
+    protocolFee?: number|BigNumber;
+    protocolFeeTo?: string;
 }
 export interface IDeployOptions {
-    govTokenOptions?: IGovTokenOptions,
-    govOptions?: IGovOptions,
-    amm?: IAmmOptions,
-    oracle?: IOracleFactoryOptions,
+    govTokenOptions?: IGovTokenOptions;
+    govOptions?: IGovOptions;
+    amm?: IAmmOptions;
+    oracle?: IOracleFactoryOptions;
+    range?: IRangeFactoryOptions;
+    restricted?: IRestrictedFactoryOptions;
     tokens?: {
-        oswap?: string,
-        weth?: string
+        oswap?: string;
+        weth?: string;
     }
 }
 export interface IDeploymentContracts {
-    openSwap: OpenSwap,
-    governance: OAXDEX_Governance,
-    administrator: OAXDEX_Administrator,
-    registry: OAXDEX_VotingRegistry,
-    pairCreator: OSWAP_PairCreator,
-    factory: OSWAP_Factory,
-    oraclePairCreator: OSWAP_OraclePairCreator,
-    router: OSWAP_Router,
-    oracleFactory: OSWAP_OracleFactory,
-    oracleRouter: OSWAP_OracleRouter,
-    oracleLiquidityProvider: OSWAP_OracleLiquidityProvider,
-    hybridRouterRegistry: OSWAP_HybridRouterRegistry,
-    hybridRouter: OSWAP_HybridRouter2,
-    executor: OAXDEX_VotingExecutor,
-    executor1: OSWAP_VotingExecutor1,
-    executor2: OSWAP_VotingExecutor2,
+    openSwap: OpenSwap;
+    governance: OAXDEX_Governance;
+    administrator: OAXDEX_Administrator;
+    registry: OAXDEX_VotingRegistry;
+    pairCreator: OSWAP_PairCreator;
+    factory: OSWAP_Factory;
+    oraclePairCreator: OSWAP_OraclePairCreator;
+    router: OSWAP_Router;
+    oracleFactory: OSWAP_OracleFactory;
+    oracleRouter: OSWAP_OracleRouter;
+    oracleLiquidityProvider: OSWAP_OracleLiquidityProvider;
+    hybridRouterRegistry: OSWAP_HybridRouterRegistry;
+    hybridRouter: OSWAP_HybridRouter2;
+    executor: OAXDEX_VotingExecutor;
+    executor1: OSWAP_VotingExecutor1;
+    executor2: OSWAP_VotingExecutor2;
 }
 
 export function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult): IDeploymentContracts{
@@ -148,6 +197,202 @@ export function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult)
         executor2: new OSWAP_VotingExecutor2(wallet, result.votingExecutor2)
     }
 }
+
+export async function deployCoreContracts(wallet: Wallet, options: IDeployOptions): Promise<ICoreContractsDeploymentResult>{
+    let result: ICoreContractsDeploymentResult = {};
+    //oswap
+    if (!options.tokens.oswap){
+        let oswap = new OpenSwap(wallet);
+        result.oswap = await oswap.deploy(options.govTokenOptions);                        
+    }
+    else
+        result.oswap = options.tokens.oswap;                        
+    //weth            
+    if (options.tokens.weth)
+        result.weth = options.tokens.weth;           
+    //governance
+    let governance = new OAXDEX_Governance(wallet);
+    result.governance = await governance.deploy({
+        names: options.govOptions.profiles.name, 
+        maxVoteDuration: options.govOptions.profiles.maxVoteDuration,
+        minExeDelay: options.govOptions.profiles.minExeDelay,
+        minOaxTokenToCreateVote: options.govOptions.profiles.minGovTokenToCreateVote,
+        minQuorum: options.govOptions.profiles.minQuorum,
+        minStakePeriod: options.govOptions.minStakePeriod,
+        minVoteDuration: options.govOptions.profiles.minVoteDuration,
+        oaxToken: result.oswap
+    })
+    
+    //administrator
+    let administrator = new OAXDEX_Administrator(wallet);
+    result.administrator = await administrator.deploy(governance.address);
+    await governance.initAdmin(result.administrator);
+    //VotingRegistry	
+    let votingRegistry = new OAXDEX_VotingRegistry(wallet);
+    result.votingRegistry = await votingRegistry.deploy(result.governance);
+    await governance.setVotingRegister(result.votingRegistry);
+    //PairCreator
+    let pairCreator = new OSWAP_PairCreator(wallet);
+    result.pairCreator = await pairCreator.deploy();
+    //Factory
+    let factory = new OSWAP_Factory(wallet);
+    result.factory = await factory.deploy({
+        governance: options.amm.governance || result.governance,
+        pairCreator: result.pairCreator,
+        protocolFee: 0,
+        protocolFeeTo: options.amm.protocolFeeTo || Utils.nullAddress,
+        tradeFee: 0
+    });
+    //Router
+    let router = new OSWAP_Router(wallet);
+    result.router = await router.deploy({
+        WETH: result.weth,
+        factory: result.factory
+    });   
+    //VotingExecutor
+    let votingExecutor = new OAXDEX_VotingExecutor(wallet);
+    result.votingExecutor = await votingExecutor.deploy({
+        admin: result.administrator,
+        governance: result.governance
+    });
+    await governance.initVotingExecutor([result.votingExecutor]);
+    //VotingExecutor1
+    let votingExecutor1 = new OSWAP_VotingExecutor1(wallet);
+    result.votingExecutor1 = await votingExecutor1.deploy(factory.address);    
+
+    return result;
+} 
+
+export async function deployOracleContracts(wallet: Wallet, options: IDeployOptions, coreContractsResult: ICoreContractsDeploymentResult): Promise<IOracleContractsDeploymentResult>{
+    let result: IOracleContractsDeploymentResult = {};
+    //OraclePairCreator
+    let oraclePairCreator = new OSWAP_OraclePairCreator(wallet);
+    result.oraclePairCreator = await oraclePairCreator.deploy();                       
+    //OracleFactory
+    let oracleFactory = new OSWAP_OracleFactory(wallet);
+    result.oracleFactory = await oracleFactory.deploy({
+        feePerDelegator: options.oracle.feePerDelegator || 0,
+        governance: options.oracle.governance || coreContractsResult.governance,
+        pairCreator: options.oracle.pairCreator || result.oraclePairCreator,
+        protocolFee: options.oracle.protocolFee || 0,
+        protocolFeeTo: options.oracle.protocolFeeTo || Utils.nullAddress,
+        tradeFee: options.oracle.tradeFee || 0
+    });
+    //OracleRouter
+    let oracleRouter = new OSWAP_OracleRouter(wallet);
+    result.oracleRouter = await oracleRouter.deploy({
+        WETH: coreContractsResult.weth,
+        ammFactory: coreContractsResult.factory,
+        oracleFactory: result.oracleFactory
+    });
+    //OracleLiquidityProvider
+    let oracleLiquidityProvider = new OSWAP_OracleLiquidityProvider(wallet);
+    result.oracleLiquidityProvider = await oracleLiquidityProvider.deploy({
+        WETH: coreContractsResult.weth,
+        factory: result.oracleFactory
+    });            
+    await oracleFactory.setOracleLiquidityProvider({
+        oracleLiquidityProvider: result.oracleLiquidityProvider,
+        oracleRouter: result.oracleRouter
+    });      
+    //VotingExecutor2
+    let votingExecutor2 = new OSWAP_VotingExecutor2(wallet);
+    result.votingExecutor2 = await votingExecutor2.deploy(oracleFactory.address);  
+    return result;
+} 
+
+export async function deployRangeContracts(wallet: Wallet, options: IRangeFactoryOptions, weth: string, hybridRegistry: string): Promise<IRangeContractsDeploymentResult>{
+    let result: IRangeContractsDeploymentResult = {};
+    //RangePairCreator
+    let rangePairCreator = new OSWAP_RangePairCreator(wallet);
+    result.rangePairCreator = await rangePairCreator.deploy();                       
+    //RangeFactory
+    let rangeFactory = new OSWAP_RangeFactory(wallet);
+    result.rangeFactory = await rangeFactory.deploy({
+        governance: options.governance,
+        oracleFactory: options.oracleFactory,
+        pairCreator: options.pairCreator || result.rangePairCreator,
+        tradeFee: options.tradeFee || 0,
+        stakeAmount: options.stakeAmount || [],
+        liquidityProviderShare: options.liquidityProviderShare || [],
+        protocolFeeTo: options.protocolFeeTo || Utils.nullAddress
+    });
+    //RangeLiquidityProvider
+    let rangeLiquidityProvider = new OSWAP_RangeLiquidityProvider(wallet);
+    result.rangeLiquidityProvider = await rangeLiquidityProvider.deploy({
+        WETH: weth,
+        factory: result.rangeFactory
+    });            
+    await rangeFactory.setRangeLiquidityProvider(result.rangeLiquidityProvider);      
+    //VotingExecutor3
+    let votingExecutor3 = new OSWAP_VotingExecutor3(wallet);
+    result.votingExecutor3 = await votingExecutor3.deploy({
+        governance: options.governance,
+        factory: rangeFactory.address,
+        hybridRegistry: hybridRegistry
+    });  
+    return result;
+} 
+
+export async function deployRestrictedContracts(wallet: Wallet, options: IRestrictedFactoryOptions, weth: string): Promise<IRestrictedContractsDeploymentResult>{
+    let result: IRestrictedContractsDeploymentResult = {};
+    //ConfigStore
+    if (!options.configStore) {
+        let configStore = new OSWAP_ConfigStore(wallet);
+        result.configStore = await configStore.deploy(options.governance);
+        options.configStore = result.configStore;
+    }
+    //RestrictedPairCreator
+    let restrictedPairCreator = new OSWAP_RestrictedPairCreator(wallet);
+    result.restrictedPairCreator = await restrictedPairCreator.deploy();           
+    //RestrictedFactory
+    let restrictedFactory = new OSWAP_RestrictedFactory(wallet);
+    result.restrictedFactory = await restrictedFactory.deploy({
+        governance: options.governance,
+        whitelistFactory: options.whitelistFactory,
+        pairCreator: options.pairCreator || result.restrictedPairCreator,
+        tradeFee: options.tradeFee || 0,
+        configStore: options.configStore,
+        protocolFee: options.protocolFee || 0,
+        protocolFeeTo: options.protocolFeeTo || Utils.nullAddress
+    });
+    //RestrictedLiquidityProvider
+    let restrictedLiquidityProvider = new OSWAP_RestrictedLiquidityProvider(wallet);
+    result.restrictedLiquidityProvider = await restrictedLiquidityProvider.deploy({
+        WETH: weth,
+        factory: result.restrictedFactory
+    });            
+    await restrictedFactory.init(result.restrictedLiquidityProvider);      
+    //VotingExecutor4
+    let votingExecutor4 = new OSWAP_VotingExecutor4(wallet);
+    result.votingExecutor4 = await votingExecutor4.deploy({
+        governance: options.governance,
+        factory: restrictedFactory.address,
+        configStore: options.configStore
+    });  
+    return result;
+} 
+
+export async function deployHybridRouter(wallet: Wallet, coreContractsResult: ICoreContractsDeploymentResult): Promise<IHybridRouterDeploymentResult>{
+    let result: IHybridRouterDeploymentResult = {};
+    //HybridRouterRegistry
+    let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
+    result.hybridRouterRegistry = await hybridRouterRegistry.deploy(coreContractsResult.governance);
+    //HybridRouter
+    let hybridRouter = new OSWAP_HybridRouter2(wallet);
+    result.hybridRouter = await hybridRouter.deploy({
+        WETH: coreContractsResult.weth, 
+        registry: result.hybridRouterRegistry
+    });
+    return result;
+}
+
+export async function deployRestrictedPairOracle(wallet: Wallet){
+    let restrictedPairOracle = new OSWAP_RestrictedPairOracle(wallet);
+    let result = await restrictedPairOracle.deploy();
+    return result;
+}
+
 export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>{
     options = options || <any>{};
     if (!options.govOptions)
@@ -165,112 +410,35 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
         options.oracle = {};
 
     return new Promise(async function(resolve, reject){
-        try{
-            let result: IDeploymentResult = {};            
-            //oswap
-            if (!options.tokens.oswap){
-                let oswap = new OpenSwap(wallet);
-                result.oswap = await oswap.deploy(options.govTokenOptions);                        
+        try {       
+            let coreContractsResult = await deployCoreContracts(wallet, options);
+            let oracleContractsResult = await deployOracleContracts(wallet, options, coreContractsResult);
+            let hybridRouterResult = await deployHybridRouter(wallet, coreContractsResult);
+            let result: IDeploymentResult = {
+                ...coreContractsResult,
+                ...oracleContractsResult,
+                ...hybridRouterResult
+            };  
+
+            if (options.range) {
+                options.range.governance = coreContractsResult.governance;
+                options.range.oracleFactory = oracleContractsResult.oracleFactory;
+                let rangeContractsResult = await deployRangeContracts(wallet, options.range, coreContractsResult.weth, hybridRouterResult.hybridRouterRegistry);
+                result = {
+                    ...result,
+                    ...rangeContractsResult
+                } 
             }
-            else
-                result.oswap = options.tokens.oswap;                        
-            //weth            
-            if (options.tokens.weth)
-                result.weth = options.tokens.weth;           
-            //governance
-			let governance = new OAXDEX_Governance(wallet);
-            result.governance = await governance.deploy({
-                names: options.govOptions.profiles.name, 
-                maxVoteDuration: options.govOptions.profiles.maxVoteDuration,
-                minExeDelay: options.govOptions.profiles.minExeDelay,
-                minOaxTokenToCreateVote: options.govOptions.profiles.minGovTokenToCreateVote,
-                minQuorum: options.govOptions.profiles.minQuorum,
-                minStakePeriod: options.govOptions.minStakePeriod,
-                minVoteDuration: options.govOptions.profiles.minVoteDuration,
-                oaxToken: result.oswap
-            })
-            
-            //administrator
-            let administrator = new OAXDEX_Administrator(wallet);
-            result.administrator = await administrator.deploy(governance.address);
-            await governance.initAdmin(result.administrator);
-            //VotingRegistry	
-            let votingRegistry = new OAXDEX_VotingRegistry(wallet);
-            result.votingRegistry = await votingRegistry.deploy(result.governance);
-            await governance.setVotingRegister(result.votingRegistry);
-            //PairCreator
-            let pairCreator = new OSWAP_PairCreator(wallet);
-			result.pairCreator = await pairCreator.deploy();
-            //Factory
-            let factory = new OSWAP_Factory(wallet);
-			result.factory = await factory.deploy({
-                governance: options.amm.governance || result.governance,
-                pairCreator: result.pairCreator,
-                protocolFee: 0,
-                protocolFeeTo: options.amm.protocolFeeTo || Utils.nullAddress,
-                tradeFee: 0
-            });
-            //OraclePairCreator
-            let oraclePairCreator = new OSWAP_OraclePairCreator(wallet);
-			result.oraclePairCreator = await oraclePairCreator.deploy();            
-            //Router
-            let router = new OSWAP_Router(wallet);
-            result.router = await router.deploy({
-                WETH: result.weth,
-                factory: result.factory
-            });            
-            //OracleFactory
-            let oracleFactory = new OSWAP_OracleFactory(wallet);
-            result.oracleFactory = await oracleFactory.deploy({
-                feePerDelegator: options.oracle.feePerDelegator || 0,
-                governance: options.oracle.governance || result.governance,
-                pairCreator: options.oracle.pairCreator || result.oraclePairCreator,
-                protocolFee: options.oracle.protocolFee || 0,
-                protocolFeeTo: options.oracle.protocolFeeTo || Utils.nullAddress,
-                tradeFee: options.oracle.tradeFee || 0
-            });
-            //OracleRouter
-            let oracleRouter = new OSWAP_OracleRouter(wallet);
-            result.oracleRouter = await oracleRouter.deploy({
-                WETH: result.weth,
-                ammFactory: result.factory,
-                oracleFactory: result.oracleFactory
-            });
-            //OracleLiquidityProvider
-            let oracleLiquidityProvider = new OSWAP_OracleLiquidityProvider(wallet);
-            result.oracleLiquidityProvider = await oracleLiquidityProvider.deploy({
-                WETH: result.weth,
-                factory: result.oracleFactory
-            });            
-            await oracleFactory.setOracleLiquidityProvider({
-                oracleLiquidityProvider: result.oracleLiquidityProvider,
-                oracleRouter: result.oracleRouter
-            });            
-            //HybridRouterRegistry
-            let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
-            result.hybridRouterRegistry = await hybridRouterRegistry.deploy(result.governance);
-            //HybridRouter
-            let hybridRouter = new OSWAP_HybridRouter2(wallet);
-            result.hybridRouter = await hybridRouter.deploy({
-                WETH: result.weth, 
-                registry: result.hybridRouterRegistry
-            });
-            //VotingExecutor
-            let votingExecutor = new OAXDEX_VotingExecutor(wallet);
-            result.votingExecutor = await votingExecutor.deploy({
-                admin: result.administrator,
-                governance: result.governance
-            });
-            await governance.initVotingExecutor([result.votingExecutor]);
-            //VotingExecutor1
-            let votingExecutor1 = new OSWAP_VotingExecutor1(wallet);
-            result.votingExecutor1 = await votingExecutor1.deploy(factory.address);
-            //VotingExecutor2
-            let votingExecutor2 = new OSWAP_VotingExecutor2(wallet);
-            result.votingExecutor2 = await votingExecutor2.deploy(oracleFactory.address);            
-            //VotingExecutor3
-            // let votingExecutor3 = new VotingExecutor3(wallet);
-            // result.votingExecutor3 = await votingExecutor3.deploy(governance.address,factory.address,hybridRouterRegistry.address);
+            if (options.restricted) {
+                options.restricted.governance = coreContractsResult.governance;
+                options.restricted.whitelistFactory = oracleContractsResult.oracleFactory;
+                let restrictedContractsResult = await deployRestrictedContracts(wallet, options.restricted, coreContractsResult.weth);
+                result = {
+                    ...result,
+                    ...restrictedContractsResult
+                }                 
+            }
+
             // await governance.initVotingExecutor([votingExecutor.address, votingExecutor1.address, votingExecutor2.address, votingExecutor3.address]);
             console.dir(result)
             resolve(result)

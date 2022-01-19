@@ -1,25 +1,43 @@
 import { Wallet, BigNumber } from "@ijstech/eth-wallet";
 import { OSWAP_Factory, OSWAP_PairCreator, OSWAP_Router, OSWAP_VotingExecutor1, OAXDEX_Governance, OAXDEX_VotingExecutor, OAXDEX_Administrator, OAXDEX_VotingRegistry, OSWAP_OraclePairCreator, OSWAP_VotingExecutor2, OSWAP_OracleFactory, OSWAP_OracleLiquidityProvider, OSWAP_OracleRouter, OSWAP_HybridRouterRegistry, OSWAP_HybridRouter2 } from './contracts';
 import { OpenSwap } from './OpenSwap';
-export interface IDeploymentResult {
+export interface ICoreContractsDeploymentResult {
     administrator?: string;
     factory?: string;
     governance?: string;
-    hybridRouter?: string;
-    hybridRouterRegistry?: string;
-    oracleFactory?: string;
-    oracleLiquidityProvider?: string;
-    oraclePairCreator?: string;
-    oracleRouter?: string;
     oswap?: string;
     pairCreator?: string;
     router?: string;
     votingRegistry?: string;
     votingExecutor?: string;
     votingExecutor1?: string;
-    votingExecutor2?: string;
-    votingExecutor3?: string;
     weth?: string;
+}
+export interface IOracleContractsDeploymentResult {
+    oracleFactory?: string;
+    oracleLiquidityProvider?: string;
+    oraclePairCreator?: string;
+    oracleRouter?: string;
+    votingExecutor2?: string;
+}
+export interface IRangeContractsDeploymentResult {
+    rangeFactory?: string;
+    rangeLiquidityProvider?: string;
+    rangePairCreator?: string;
+    votingExecutor3?: string;
+}
+export interface IRestrictedContractsDeploymentResult {
+    restrictedFactory?: string;
+    restrictedLiquidityProvider?: string;
+    restrictedPairCreator?: string;
+    configStore?: string;
+    votingExecutor4?: string;
+}
+export interface IHybridRouterDeploymentResult {
+    hybridRouter?: string;
+    hybridRouterRegistry?: string;
+}
+export interface IDeploymentResult extends ICoreContractsDeploymentResult, IOracleContractsDeploymentResult, IRangeContractsDeploymentResult, IRestrictedContractsDeploymentResult, IHybridRouterDeploymentResult {
 }
 export interface IGovProfile {
     "minExeDelay": number;
@@ -65,11 +83,31 @@ export interface IOracleFactoryOptions {
     protocolFeeTo?: string;
     tradeFee?: number | BigNumber;
 }
+export interface IRangeFactoryOptions {
+    governance?: string;
+    oracleFactory?: string;
+    pairCreator?: string;
+    tradeFee?: number | BigNumber;
+    stakeAmount?: number[] | BigNumber[];
+    liquidityProviderShare?: number[] | BigNumber[];
+    protocolFeeTo?: string;
+}
+export interface IRestrictedFactoryOptions {
+    governance?: string;
+    whitelistFactory?: string;
+    pairCreator?: string;
+    configStore?: string;
+    tradeFee?: number | BigNumber;
+    protocolFee?: number | BigNumber;
+    protocolFeeTo?: string;
+}
 export interface IDeployOptions {
     govTokenOptions?: IGovTokenOptions;
     govOptions?: IGovOptions;
     amm?: IAmmOptions;
     oracle?: IOracleFactoryOptions;
+    range?: IRangeFactoryOptions;
+    restricted?: IRestrictedFactoryOptions;
     tokens?: {
         oswap?: string;
         weth?: string;
@@ -94,4 +132,10 @@ export interface IDeploymentContracts {
     executor2: OSWAP_VotingExecutor2;
 }
 export declare function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult): IDeploymentContracts;
+export declare function deployCoreContracts(wallet: Wallet, options: IDeployOptions): Promise<ICoreContractsDeploymentResult>;
+export declare function deployOracleContracts(wallet: Wallet, options: IDeployOptions, coreContractsResult: ICoreContractsDeploymentResult): Promise<IOracleContractsDeploymentResult>;
+export declare function deployRangeContracts(wallet: Wallet, options: IRangeFactoryOptions, weth: string, hybridRegistry: string): Promise<IRangeContractsDeploymentResult>;
+export declare function deployRestrictedContracts(wallet: Wallet, options: IRestrictedFactoryOptions, weth: string): Promise<IRestrictedContractsDeploymentResult>;
+export declare function deployHybridRouter(wallet: Wallet, coreContractsResult: ICoreContractsDeploymentResult): Promise<IHybridRouterDeploymentResult>;
+export declare function deployRestrictedPairOracle(wallet: Wallet): Promise<string>;
 export declare function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>;
