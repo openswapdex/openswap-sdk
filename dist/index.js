@@ -323,6 +323,7 @@ __export(exports, {
   deployOracleContracts: () => deployOracleContracts,
   deployRangeContracts: () => deployRangeContracts,
   deployRestrictedContracts: () => deployRestrictedContracts,
+  deployRestrictedPairOracle: () => deployRestrictedPairOracle,
   toDeploymentContracts: () => toDeploymentContracts
 });
 
@@ -5416,7 +5417,8 @@ async function deployRestrictedContracts(wallet, options, weth) {
   let result = {};
   if (!options.configStore) {
     let configStore = new OSWAP_ConfigStore(wallet);
-    options.configStore = await configStore.deploy(options.governance);
+    result.configStore = await configStore.deploy(options.governance);
+    options.configStore = result.configStore;
   }
   let restrictedPairCreator = new OSWAP_RestrictedPairCreator(wallet);
   result.restrictedPairCreator = await restrictedPairCreator.deploy();
@@ -5453,6 +5455,11 @@ async function deployHybridRouter(wallet, coreContractsResult) {
     WETH: coreContractsResult.weth,
     registry: result.hybridRouterRegistry
   });
+  return result;
+}
+async function deployRestrictedPairOracle(wallet) {
+  let restrictedPairOracle = new OSWAP_RestrictedPairOracle(wallet);
+  let result = await restrictedPairOracle.deploy();
   return result;
 }
 function deploy(wallet, options) {

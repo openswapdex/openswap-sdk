@@ -137,4 +137,5 @@ export declare function deployOracleContracts(wallet: Wallet, options: IDeployOp
 export declare function deployRangeContracts(wallet: Wallet, options: IRangeFactoryOptions, weth: string, hybridRegistry: string): Promise<IRangeContractsDeploymentResult>;
 export declare function deployRestrictedContracts(wallet: Wallet, options: IRestrictedFactoryOptions, weth: string): Promise<IRestrictedContractsDeploymentResult>;
 export declare function deployHybridRouter(wallet: Wallet, coreContractsResult: ICoreContractsDeploymentResult): Promise<IHybridRouterDeploymentResult>;
+export declare function deployRestrictedPairOracle(wallet: Wallet): Promise<string>;
 export declare function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>;

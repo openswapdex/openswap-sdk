@@ -24,6 +24,7 @@ import {
     OSWAP_RestrictedFactory,
     OSWAP_VotingExecutor4,
     OSWAP_ConfigStore,
+    OSWAP_RestrictedPairOracle
 } from './contracts';
 import {OpenSwap} from './OpenSwap';
 export interface ICoreContractsDeploymentResult {
@@ -338,7 +339,8 @@ export async function deployRestrictedContracts(wallet: Wallet, options: IRestri
     //ConfigStore
     if (!options.configStore) {
         let configStore = new OSWAP_ConfigStore(wallet);
-        options.configStore = await configStore.deploy(options.governance);
+        result.configStore = await configStore.deploy(options.governance);
+        options.configStore = result.configStore;
     }
     //RestrictedPairCreator
     let restrictedPairCreator = new OSWAP_RestrictedPairCreator(wallet);
@@ -382,6 +384,12 @@ export async function deployHybridRouter(wallet: Wallet, coreContractsResult: IC
         WETH: coreContractsResult.weth, 
         registry: result.hybridRouterRegistry
     });
+    return result;
+}
+
+export async function deployRestrictedPairOracle(wallet: Wallet){
+    let restrictedPairOracle = new OSWAP_RestrictedPairOracle(wallet);
+    let result = await restrictedPairOracle.deploy();
     return result;
 }
 
