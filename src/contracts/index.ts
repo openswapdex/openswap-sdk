@@ -34,3 +34,6 @@ export { OSWAP_HybridRouter } from './router/OSWAP_HybridRouter';
 export { OSWAP_HybridRouter2 } from './router/OSWAP_HybridRouter2';
 export { OSWAP_HybridRouterRegistry } from './router/OSWAP_HybridRouterRegistry';
 export { OSWAP_OracleRouter } from './router/OSWAP_OracleRouter';
+export { OSWAP_RestrictedPair } from './restricted/OSWAP_RestrictedPair';
+export { OSWAP_RestrictedPair2 } from './restricted/OSWAP_RestrictedPair2';
+export { OSWAP_RestrictedPairCreator } from './restricted/OSWAP_RestrictedPairCreator';
