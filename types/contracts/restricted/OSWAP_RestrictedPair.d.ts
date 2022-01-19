@@ -2,59 +2,13 @@ import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wa
 export declare class OSWAP_RestrictedPair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
-    parseAddLiquidityEvent(receipt: TransactionReceipt): {
-        provider: string;
-        direction: boolean;
-        index: BigNumber;
-        amount: BigNumber;
-        newAmountBalance: BigNumber;
-    }[];
-    parseApprovedTraderEvent(receipt: TransactionReceipt): {
-        direction: boolean;
-        offerIndex: BigNumber;
-        trader: string;
-        allocation: BigNumber;
-    }[];
-    parseLockEvent(receipt: TransactionReceipt): {
-        direction: boolean;
-        index: BigNumber;
-    }[];
-    parseNewProviderOfferEvent(receipt: TransactionReceipt): {
-        provider: string;
-        direction: boolean;
-        index: BigNumber;
-        allowAll: boolean;
-        restrictedPrice: BigNumber;
-        startDate: BigNumber;
-        expire: BigNumber;
-    }[];
-    parseRemoveLiquidityEvent(receipt: TransactionReceipt): {
-        provider: string;
-        direction: boolean;
-        index: BigNumber;
-        amountOut: BigNumber;
-        receivingOut: BigNumber;
-        newAmountBalance: BigNumber;
-        newReceivingBalance: BigNumber;
-    }[];
-    parseSwapEvent(receipt: TransactionReceipt): {
-        to: string;
-        direction: boolean;
-        amountIn: BigNumber;
-        amountOut: BigNumber;
-        tradeFee: BigNumber;
-        protocolFee: BigNumber;
-    }[];
-    parseSwappedOneOfferEvent(receipt: TransactionReceipt): {
-        provider: string;
-        direction: boolean;
-        index: BigNumber;
-        price: BigNumber;
-        amountOut: BigNumber;
-        amountIn: BigNumber;
-        newAmountBalance: BigNumber;
-        newReceivingBalance: BigNumber;
-    }[];
+    parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.AddLiquidityEvent[];
+    parseApprovedTraderEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.ApprovedTraderEvent[];
+    parseLockEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.LockEvent[];
+    parseNewProviderOfferEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.NewProviderOfferEvent[];
+    parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.RemoveLiquidityEvent[];
+    parseSwapEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.SwapEvent[];
+    parseSwappedOneOfferEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.SwappedOneOfferEvent[];
     addLiquidity(params: {
         direction: boolean;
         index: number | BigNumber;
@@ -101,8 +55,15 @@ export declare class OSWAP_RestrictedPair extends Contract {
         direction: boolean;
         offerIndex: number | BigNumber;
     }): Promise<BigNumber>;
-    getBalances(): Promise<[BigNumber, BigNumber, BigNumber]>;
-    getLastBalances(): Promise<[BigNumber, BigNumber]>;
+    getBalances(): Promise<{
+        param1: BigNumber;
+        param2: BigNumber;
+        param3: BigNumber;
+    }>;
+    getLastBalances(): Promise<{
+        param1: BigNumber;
+        param2: BigNumber;
+    }>;
     getOffers(params: {
         direction: boolean;
         start: number | BigNumber;
@@ -234,4 +195,80 @@ export declare class OSWAP_RestrictedPair extends Contract {
         param3: number | BigNumber;
     }): Promise<BigNumber>;
     whitelistFactory(): Promise<string>;
+}
+export declare module OSWAP_RestrictedPair {
+    interface AddLiquidityEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
+        provider: string;
+        direction: boolean;
+        index: BigNumber;
+        amount: BigNumber;
+        newAmountBalance: BigNumber;
+    }
+    interface ApprovedTraderEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
+        direction: boolean;
+        offerIndex: BigNumber;
+        trader: string;
+        allocation: BigNumber;
+    }
+    interface LockEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
+        direction: boolean;
+        index: BigNumber;
+    }
+    interface NewProviderOfferEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
+        provider: string;
+        direction: boolean;
+        index: BigNumber;
+        allowAll: boolean;
+        restrictedPrice: BigNumber;
+        startDate: BigNumber;
+        expire: BigNumber;
+    }
+    interface RemoveLiquidityEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
+        provider: string;
+        direction: boolean;
+        index: BigNumber;
+        amountOut: BigNumber;
+        receivingOut: BigNumber;
+        newAmountBalance: BigNumber;
+        newReceivingBalance: BigNumber;
+    }
+    interface SwapEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
+        to: string;
+        direction: boolean;
+        amountIn: BigNumber;
+        amountOut: BigNumber;
+        tradeFee: BigNumber;
+        protocolFee: BigNumber;
+    }
+    interface SwappedOneOfferEvent {
+        _eventName: string;
+        _address: string;
+        _transactionHash: string;
+        provider: string;
+        direction: boolean;
+        index: BigNumber;
+        price: BigNumber;
+        amountOut: BigNumber;
+        amountIn: BigNumber;
+        newAmountBalance: BigNumber;
+        newReceivingBalance: BigNumber;
+    }
 }
