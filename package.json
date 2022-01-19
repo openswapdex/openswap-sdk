@@ -1,6 +1,6 @@
 {
   "name": "@openswap/sdk",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "typings": "types/index.d.ts",
   "main": "lib",
@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ijstech/eth-wallet": "git+https://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:x-oauth-basic@github.com/ijstech/eth-wallet.git#0.1.8",
+    "@ijstech/eth-wallet": "git+https://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:x-oauth-basic@github.com/ijstech/eth-wallet.git#0.1.9",
     "@openswapdex/openswap-core": "git+https://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:x-oauth-basic@github.com/openswapdex/openswap-core.git"
   },
   "devDependencies": {
