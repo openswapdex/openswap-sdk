@@ -263,7 +263,7 @@ export async function deployCoreContracts(wallet: Wallet, options: IDeployOption
     return result;
 } 
 
-export async function deployOracleContracts(wallet: Wallet, options: IDeployOptions, coreContractsResult: ICoreContractsDeploymentResult): Promise<IOracleContractsDeploymentResult>{
+export async function deployOracleContracts(wallet: Wallet, options: IOracleFactoryOptions, coreContractsResult: ICoreContractsDeploymentResult): Promise<IOracleContractsDeploymentResult>{
     let result: IOracleContractsDeploymentResult = {};
     //OraclePairCreator
     let oraclePairCreator = new OSWAP_OraclePairCreator(wallet);
@@ -271,12 +271,12 @@ export async function deployOracleContracts(wallet: Wallet, options: IDeployOpti
     //OracleFactory
     let oracleFactory = new OSWAP_OracleFactory(wallet);
     result.oracleFactory = await oracleFactory.deploy({
-        feePerDelegator: options.oracle.feePerDelegator || 0,
-        governance: options.oracle.governance || coreContractsResult.governance,
-        pairCreator: options.oracle.pairCreator || result.oraclePairCreator,
-        protocolFee: options.oracle.protocolFee || 0,
-        protocolFeeTo: options.oracle.protocolFeeTo || Utils.nullAddress,
-        tradeFee: options.oracle.tradeFee || 0
+        feePerDelegator: options.feePerDelegator || 0,
+        governance: options.governance || coreContractsResult.governance,
+        pairCreator: options.pairCreator || result.oraclePairCreator,
+        protocolFee: options.protocolFee || 0,
+        protocolFeeTo: options.protocolFeeTo || Utils.nullAddress,
+        tradeFee: options.tradeFee || 0
     });
     //OracleRouter
     let oracleRouter = new OSWAP_OracleRouter(wallet);
@@ -412,7 +412,7 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
     return new Promise(async function(resolve, reject){
         try {       
             let coreContractsResult = await deployCoreContracts(wallet, options);
-            let oracleContractsResult = await deployOracleContracts(wallet, options, coreContractsResult);
+            let oracleContractsResult = await deployOracleContracts(wallet, options.oracle, coreContractsResult);
             let hybridRouterResult = await deployHybridRouter(wallet, coreContractsResult);
             let result: IDeploymentResult = {
                 ...coreContractsResult,
