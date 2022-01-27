@@ -392,9 +392,9 @@ export async function deployRestrictedPairOracle(wallet: Wallet){
 
 export async function deployHybridRouter(wallet: Wallet, options: IHybridRouterOptions): Promise<IHybridRouterDeploymentResult> {
     let result: IHybridRouterDeploymentResult = {};
-    let {name, factory, fee, feeBase, typeCode} = options;
     //HybridRouterRegistry
     if (!options.hybridRouterRegistryAddress) {
+        let {name, factory, fee, feeBase, typeCode} = options;
         let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
         result.hybridRouterRegistry = await hybridRouterRegistry.deploy(options.governance);
         await hybridRouterRegistry.init({
