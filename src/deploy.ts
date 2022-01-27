@@ -146,6 +146,16 @@ export interface IRestrictedFactoryOptions{
     protocolFee?: number|BigNumber;
     protocolFeeTo?: string;
 }
+export interface IHybridRouterOptions{
+    hybridRouterRegistryAddress?: string;
+    weth: string;
+    governance: string;
+    name: string[];
+    factory: string[];
+    fee:number[]|BigNumber[];
+    feeBase:number[]|BigNumber[];
+    typeCode:number[]|BigNumber[];
+}
 export interface IDeployOptions {
     govTokenOptions?: IGovTokenOptions;
     govOptions?: IGovOptions;
@@ -153,6 +163,7 @@ export interface IDeployOptions {
     oracle?: IOracleFactoryOptions;
     range?: IRangeFactoryOptions;
     restricted?: IRestrictedFactoryOptions;
+    hybridRouter?: IHybridRouterOptions;
     tokens?: {
         oswap?: string;
         weth?: string;
@@ -373,23 +384,38 @@ export async function deployRestrictedContracts(wallet: Wallet, options: IRestri
     return result;
 } 
 
-export async function deployHybridRouter(wallet: Wallet, coreContractsResult: ICoreContractsDeploymentResult): Promise<IHybridRouterDeploymentResult>{
-    let result: IHybridRouterDeploymentResult = {};
-    //HybridRouterRegistry
-    let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
-    result.hybridRouterRegistry = await hybridRouterRegistry.deploy(coreContractsResult.governance);
-    //HybridRouter
-    let hybridRouter = new OSWAP_HybridRouter2(wallet);
-    result.hybridRouter = await hybridRouter.deploy({
-        WETH: coreContractsResult.weth, 
-        registry: result.hybridRouterRegistry
-    });
-    return result;
-}
-
 export async function deployRestrictedPairOracle(wallet: Wallet){
     let restrictedPairOracle = new OSWAP_RestrictedPairOracle(wallet);
     let result = await restrictedPairOracle.deploy();
+    return result;
+}
+
+export async function deployHybridRouter(wallet: Wallet, options: IHybridRouterOptions): Promise<IHybridRouterDeploymentResult> {
+    let result: IHybridRouterDeploymentResult = {};
+    let {name, factory, fee, feeBase, typeCode} = options;
+    //HybridRouterRegistry
+    if (!options.hybridRouterRegistryAddress) {
+        let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
+        result.hybridRouterRegistry = await hybridRouterRegistry.deploy(options.governance);
+        await hybridRouterRegistry.init({
+            name,
+            factory,
+            fee,
+            feeBase,
+            typeCode
+        });    
+    }
+    else {
+        result.hybridRouterRegistry = options.hybridRouterRegistryAddress;
+    }
+
+    //HybridRouter
+    let hybridRouter = new OSWAP_HybridRouter2(wallet);
+    result.hybridRouter = await hybridRouter.deploy({
+        WETH: options.weth, 
+        registry: result.hybridRouterRegistry
+    }); 
+    
     return result;
 }
 
@@ -413,30 +439,39 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
         try {       
             let coreContractsResult = await deployCoreContracts(wallet, options);
             let oracleContractsResult = await deployOracleContracts(wallet, options.oracle, coreContractsResult);
-            let hybridRouterResult = await deployHybridRouter(wallet, coreContractsResult);
             let result: IDeploymentResult = {
                 ...coreContractsResult,
-                ...oracleContractsResult,
-                ...hybridRouterResult
+                ...oracleContractsResult
             };  
 
-            if (options.range) {
-                options.range.governance = coreContractsResult.governance;
-                options.range.oracleFactory = oracleContractsResult.oracleFactory;
-                let rangeContractsResult = await deployRangeContracts(wallet, options.range, coreContractsResult.weth, hybridRouterResult.hybridRouterRegistry);
+            if (options.hybridRouter) {
+                options.hybridRouter.governance = coreContractsResult.governance;
+                options.hybridRouter.weth = coreContractsResult.weth;
+                let hybridRouterResult = await deployHybridRouter(wallet, options.hybridRouter);
                 result = {
                     ...result,
-                    ...rangeContractsResult
+                    ...hybridRouterResult
                 } 
-            }
-            if (options.restricted) {
-                options.restricted.governance = coreContractsResult.governance;
-                options.restricted.whitelistFactory = oracleContractsResult.oracleFactory;
-                let restrictedContractsResult = await deployRestrictedContracts(wallet, options.restricted, coreContractsResult.weth);
-                result = {
-                    ...result,
-                    ...restrictedContractsResult
-                }                 
+
+                if (options.range) {
+                    options.range.governance = coreContractsResult.governance;
+                    options.range.oracleFactory = oracleContractsResult.oracleFactory;
+                    let rangeContractsResult = await deployRangeContracts(wallet, options.range, coreContractsResult.weth, hybridRouterResult.hybridRouterRegistry);
+                    result = {
+                        ...result,
+                        ...rangeContractsResult
+                    } 
+                }
+
+                if (options.restricted) {
+                    options.restricted.governance = coreContractsResult.governance;
+                    options.restricted.whitelistFactory = oracleContractsResult.oracleFactory;
+                    let restrictedContractsResult = await deployRestrictedContracts(wallet, options.restricted, coreContractsResult.weth);
+                    result = {
+                        ...result,
+                        ...restrictedContractsResult
+                    }                 
+                } 
             }
 
             // await governance.initVotingExecutor([votingExecutor.address, votingExecutor1.address, votingExecutor2.address, votingExecutor3.address]);

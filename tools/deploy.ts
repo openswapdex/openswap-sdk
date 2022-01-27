@@ -1,7 +1,7 @@
 
 import {Utils, Wallet} from "@ijstech/eth-wallet";
-import {deploy, deployRestrictedPairOracle, deployOracleContracts} from "../src";
-import * as Config from '../data/config';
+import {deploy, deployRestrictedPairOracle, deployOracleContracts, deployHybridRouter} from "../src";
+import * as Config from '../data/config.js';
 
 const rpcUrl = Config.rpcUrl;
 const deployerAddress = Config.deployer.address;
@@ -96,6 +96,24 @@ async function deployAll() {
     });
 }
 
+async function setupHybridRouter(){
+    let wallet = new Wallet(rpcUrl, {
+        address: deployerAddress, 
+        privateKey
+    })   
+    let accounts = await wallet.accounts;
+    wallet.defaultAccount = accounts[0];
+
+    let options = {
+        ...Config.deploymentConfig.hybridRouterRegistry,
+        governance: Config.deploymentConfig.governance,
+        weth: Config.deploymentConfig.weth
+    };
+    let result = await deployHybridRouter(wallet, options);
+    console.log('result', result);
+}
+
 // deployAll();
 // deployOracle();
 // deployPeggedQueue();
+setupHybridRouter();

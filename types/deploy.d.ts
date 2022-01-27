@@ -101,6 +101,16 @@ export interface IRestrictedFactoryOptions {
     protocolFee?: number | BigNumber;
     protocolFeeTo?: string;
 }
+export interface IHybridRouterOptions {
+    hybridRouterRegistryAddress?: string;
+    weth: string;
+    governance: string;
+    name: string[];
+    factory: string[];
+    fee: number[] | BigNumber[];
+    feeBase: number[] | BigNumber[];
+    typeCode: number[] | BigNumber[];
+}
 export interface IDeployOptions {
     govTokenOptions?: IGovTokenOptions;
     govOptions?: IGovOptions;
@@ -108,6 +118,7 @@ export interface IDeployOptions {
     oracle?: IOracleFactoryOptions;
     range?: IRangeFactoryOptions;
     restricted?: IRestrictedFactoryOptions;
+    hybridRouter?: IHybridRouterOptions;
     tokens?: {
         oswap?: string;
         weth?: string;
@@ -133,9 +144,9 @@ export interface IDeploymentContracts {
 }
 export declare function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult): IDeploymentContracts;
 export declare function deployCoreContracts(wallet: Wallet, options: IDeployOptions): Promise<ICoreContractsDeploymentResult>;
-export declare function deployOracleContracts(wallet: Wallet, options: IDeployOptions, coreContractsResult: ICoreContractsDeploymentResult): Promise<IOracleContractsDeploymentResult>;
+export declare function deployOracleContracts(wallet: Wallet, options: IOracleFactoryOptions, coreContractsResult: ICoreContractsDeploymentResult): Promise<IOracleContractsDeploymentResult>;
 export declare function deployRangeContracts(wallet: Wallet, options: IRangeFactoryOptions, weth: string, hybridRegistry: string): Promise<IRangeContractsDeploymentResult>;
 export declare function deployRestrictedContracts(wallet: Wallet, options: IRestrictedFactoryOptions, weth: string): Promise<IRestrictedContractsDeploymentResult>;
-export declare function deployHybridRouter(wallet: Wallet, coreContractsResult: ICoreContractsDeploymentResult): Promise<IHybridRouterDeploymentResult>;
 export declare function deployRestrictedPairOracle(wallet: Wallet): Promise<string>;
+export declare function deployHybridRouter(wallet: Wallet, options: IHybridRouterOptions): Promise<IHybridRouterDeploymentResult>;
 export declare function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>;
