@@ -147,9 +147,9 @@ export interface IRestrictedFactoryOptions{
     protocolFeeTo?: string;
 }
 export interface IHybridRouterOptions{
-    hybridRouterRegistryAddress?: string;
-    weth: string;
-    governance: string;
+    registryAddress?: string;
+    weth?: string;
+    governance?: string;
     name?: string[];
     factory?: string[];
     fee?:number[]|BigNumber[];
@@ -390,23 +390,27 @@ export async function deployRestrictedPairOracle(wallet: Wallet){
     return result;
 }
 
+export async function initHybridRouterRegistry(wallet: Wallet, options: IHybridRouterOptions) {
+    let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet, options.registryAddress);
+    let {name, factory, fee, feeBase, typeCode} = options;
+    await hybridRouterRegistry.init({
+        name,
+        factory,
+        fee,
+        feeBase,
+        typeCode
+    }); 
+}
+
 export async function deployHybridRouter(wallet: Wallet, options: IHybridRouterOptions): Promise<IHybridRouterDeploymentResult> {
     let result: IHybridRouterDeploymentResult = {};
     //HybridRouterRegistry
-    if (!options.hybridRouterRegistryAddress) {
-        let {name, factory, fee, feeBase, typeCode} = options;
+    if (!options.registryAddress) {
         let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
         result.hybridRouterRegistry = await hybridRouterRegistry.deploy(options.governance);
-        await hybridRouterRegistry.init({
-            name,
-            factory,
-            fee,
-            feeBase,
-            typeCode
-        });    
     }
     else {
-        result.hybridRouterRegistry = options.hybridRouterRegistryAddress;
+        result.hybridRouterRegistry = options.registryAddress;
     }
 
     //HybridRouter

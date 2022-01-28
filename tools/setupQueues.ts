@@ -104,7 +104,7 @@ async function setup() {
     let accounts = await wallet.accounts;
     wallet.defaultAccount = accounts[0];
 
-    let hybridRouterRegistryAddress = deploymentConfig.hybridRouter;
+    let hybridRouterRegistryAddress = deploymentConfig.hybridRouterRegistry.address;
     let oracleFactoryAddress = deploymentConfig.oracleFactory;
     let rangeFactoryAddress = deploymentConfig.rangeFactory;
     let restrictedFactoryAddress = deploymentConfig.restrictedFactory;

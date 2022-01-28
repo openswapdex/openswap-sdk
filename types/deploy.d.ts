@@ -102,9 +102,9 @@ export interface IRestrictedFactoryOptions {
     protocolFeeTo?: string;
 }
 export interface IHybridRouterOptions {
-    hybridRouterRegistryAddress?: string;
-    weth: string;
-    governance: string;
+    registryAddress?: string;
+    weth?: string;
+    governance?: string;
     name?: string[];
     factory?: string[];
     fee?: number[] | BigNumber[];
@@ -148,5 +148,6 @@ export declare function deployOracleContracts(wallet: Wallet, options: IOracleFa
 export declare function deployRangeContracts(wallet: Wallet, options: IRangeFactoryOptions, weth: string, hybridRegistry: string): Promise<IRangeContractsDeploymentResult>;
 export declare function deployRestrictedContracts(wallet: Wallet, options: IRestrictedFactoryOptions, weth: string): Promise<IRestrictedContractsDeploymentResult>;
 export declare function deployRestrictedPairOracle(wallet: Wallet): Promise<string>;
+export declare function initHybridRouterRegistry(wallet: Wallet, options: IHybridRouterOptions): Promise<void>;
 export declare function deployHybridRouter(wallet: Wallet, options: IHybridRouterOptions): Promise<IHybridRouterDeploymentResult>;
 export declare function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeploymentResult>;

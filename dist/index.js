@@ -324,6 +324,7 @@ __export(exports, {
   deployRangeContracts: () => deployRangeContracts,
   deployRestrictedContracts: () => deployRestrictedContracts,
   deployRestrictedPairOracle: () => deployRestrictedPairOracle,
+  initHybridRouterRegistry: () => initHybridRouterRegistry,
   toDeploymentContracts: () => toDeploymentContracts
 });
 
@@ -5451,21 +5452,24 @@ async function deployRestrictedPairOracle(wallet) {
   let result = await restrictedPairOracle.deploy();
   return result;
 }
+async function initHybridRouterRegistry(wallet, options) {
+  let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet, options.registryAddress);
+  let { name, factory, fee, feeBase, typeCode } = options;
+  await hybridRouterRegistry.init({
+    name,
+    factory,
+    fee,
+    feeBase,
+    typeCode
+  });
+}
 async function deployHybridRouter(wallet, options) {
   let result = {};
-  if (!options.hybridRouterRegistryAddress) {
-    let { name, factory, fee, feeBase, typeCode } = options;
+  if (!options.registryAddress) {
     let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
     result.hybridRouterRegistry = await hybridRouterRegistry.deploy(options.governance);
-    await hybridRouterRegistry.init({
-      name,
-      factory,
-      fee,
-      feeBase,
-      typeCode
-    });
   } else {
-    result.hybridRouterRegistry = options.hybridRouterRegistryAddress;
+    result.hybridRouterRegistry = options.registryAddress;
   }
   let hybridRouter = new OSWAP_HybridRouter2(wallet);
   result.hybridRouter = await hybridRouter.deploy({
