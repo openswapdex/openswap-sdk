@@ -105,11 +105,11 @@ export interface IHybridRouterOptions {
     hybridRouterRegistryAddress?: string;
     weth: string;
     governance: string;
-    name: string[];
-    factory: string[];
-    fee: number[] | BigNumber[];
-    feeBase: number[] | BigNumber[];
-    typeCode: number[] | BigNumber[];
+    name?: string[];
+    factory?: string[];
+    fee?: number[] | BigNumber[];
+    feeBase?: number[] | BigNumber[];
+    typeCode?: number[] | BigNumber[];
 }
 export interface IDeployOptions {
     govTokenOptions?: IGovTokenOptions;

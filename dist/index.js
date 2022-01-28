@@ -5453,8 +5453,8 @@ async function deployRestrictedPairOracle(wallet) {
 }
 async function deployHybridRouter(wallet, options) {
   let result = {};
-  let { name, factory, fee, feeBase, typeCode } = options;
   if (!options.hybridRouterRegistryAddress) {
+    let { name, factory, fee, feeBase, typeCode } = options;
     let hybridRouterRegistry = new OSWAP_HybridRouterRegistry(wallet);
     result.hybridRouterRegistry = await hybridRouterRegistry.deploy(options.governance);
     await hybridRouterRegistry.init({

@@ -106,6 +106,7 @@ async function setupHybridRouter(){
 
     let options = {
         ...Config.deploymentConfig.hybridRouterRegistry,
+        hybridRouterRegistryAddress: Config.deploymentConfig.hybridRouterRegistry.address,
         governance: Config.deploymentConfig.governance,
         weth: Config.deploymentConfig.weth
     };
