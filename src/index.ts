@@ -6,6 +6,7 @@ export {
     deployRangeContracts, 
     deployRestrictedContracts, 
     deployHybridRouter, 
+    initHybridRouterRegistry,
     deployRestrictedPairOracle,
     IDeploymentResult, 
     IDeploymentContracts, 

@@ -1,7 +1,13 @@
 
 import {Utils, Wallet} from "@ijstech/eth-wallet";
-import {deploy, deployRestrictedPairOracle, deployOracleContracts} from "../src";
-import * as Config from '../data/config';
+import {
+    deploy, 
+    deployRestrictedPairOracle, 
+    deployOracleContracts, 
+    deployHybridRouter,
+    initHybridRouterRegistry
+} from "../src";
+import * as Config from '../data/config.js';
 
 const rpcUrl = Config.rpcUrl;
 const deployerAddress = Config.deployer.address;
@@ -92,10 +98,80 @@ async function deployAll() {
             protocolFee: 10000,
             protocolFeeTo,
             tradeFee: 100
+        },
+        hybridRouter: {
         }
     });
+
+    let hybridRouterRegistryConfig = Config.deploymentConfig.hybridRouterRegistry;
+    let hybridRouterOptions = {
+        registryAddress: result.hybridRouterRegistry,
+        name: [],
+        factory: [],
+        fee: [],
+        feeBase: [],
+        typeCode: []
+    }
+    for (let protocol of hybridRouterRegistryConfig.defaultProtocols){
+        let {protocolType, name, fee, feeBase, typeCode} = protocol;
+        hybridRouterOptions.factory.push(result[protocolType]);
+        hybridRouterOptions.name.push(name);
+        hybridRouterOptions.fee.push(fee);
+        hybridRouterOptions.feeBase.push(feeBase);
+        hybridRouterOptions.typeCode.push(typeCode);
+    }
+    for (let protocol of hybridRouterRegistryConfig.customProtocols){
+        let {factory, name, fee, feeBase, typeCode} = protocol;
+        hybridRouterOptions.factory.push(factory);
+        hybridRouterOptions.name.push(name);
+        hybridRouterOptions.fee.push(fee);
+        hybridRouterOptions.feeBase.push(feeBase);
+        hybridRouterOptions.typeCode.push(typeCode);
+    }
+    await initHybridRouterRegistry(wallet, hybridRouterOptions);
 }
 
-// deployAll();
+async function setupHybridRouter(){
+    let wallet = new Wallet(rpcUrl, {
+        address: deployerAddress, 
+        privateKey
+    })   
+    let accounts = await wallet.accounts;
+    wallet.defaultAccount = accounts[0];
+
+    let hybridRouterRegistryConfig = Config.deploymentConfig.hybridRouterRegistry;
+    let hybridRouterOptions: any = {
+        registryAddress: hybridRouterRegistryConfig.address,
+        governance: Config.deploymentConfig.governance,
+        weth: Config.deploymentConfig.weth,
+        name: [],
+        factory: [],
+        fee: [],
+        feeBase: [],
+        typeCode: []
+    };
+    let result = await deployHybridRouter(wallet, hybridRouterOptions);
+    for (let protocol of hybridRouterRegistryConfig.defaultProtocols){
+        let {factory, name, fee, feeBase, typeCode} = protocol;
+        hybridRouterOptions.factory.push(factory);
+        hybridRouterOptions.name.push(name);
+        hybridRouterOptions.fee.push(fee);
+        hybridRouterOptions.feeBase.push(feeBase);
+        hybridRouterOptions.typeCode.push(typeCode);
+    }
+    for (let protocol of hybridRouterRegistryConfig.customProtocols){
+        let {factory, name, fee, feeBase, typeCode} = protocol;
+        hybridRouterOptions.factory.push(factory);
+        hybridRouterOptions.name.push(name);
+        hybridRouterOptions.fee.push(fee);
+        hybridRouterOptions.feeBase.push(feeBase);
+        hybridRouterOptions.typeCode.push(typeCode);
+    }
+    await initHybridRouterRegistry(wallet, hybridRouterOptions);
+    console.log('result', result);
+}
+
+deployAll();
 // deployOracle();
 // deployPeggedQueue();
+// setupHybridRouter();
