@@ -5,8 +5,8 @@ export class OAXDEX_Governance extends Contract{
     constructor(wallet: Wallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
     }
-    deploy(params:{oaxToken:string,names:string[],minExeDelay:number[]|BigNumber[],minVoteDuration:number[]|BigNumber[],maxVoteDuration:number[]|BigNumber[],minOaxTokenToCreateVote:number[]|BigNumber[],minQuorum:number[]|BigNumber[],minStakePeriod:number|BigNumber}): Promise<string>{
-        return this._deploy(params.oaxToken,Utils.stringToBytes32(params.names),Utils.toString(params.minExeDelay),Utils.toString(params.minVoteDuration),Utils.toString(params.maxVoteDuration),Utils.toString(params.minOaxTokenToCreateVote),Utils.toString(params.minQuorum),Utils.toString(params.minStakePeriod));
+    deploy(params:{oaxToken:string,votingToken:string,names:string[],minExeDelay:number[]|BigNumber[],minVoteDuration:number[]|BigNumber[],maxVoteDuration:number[]|BigNumber[],minOaxTokenToCreateVote:number[]|BigNumber[],minQuorum:number[]|BigNumber[],minStakePeriod:number|BigNumber}): Promise<string>{
+        return this._deploy(params.oaxToken,params.votingToken,Utils.stringToBytes32(params.names),Utils.toString(params.minExeDelay),Utils.toString(params.minVoteDuration),Utils.toString(params.maxVoteDuration),Utils.toString(params.minOaxTokenToCreateVote),Utils.toString(params.minQuorum),Utils.toString(params.minStakePeriod));
     }
     parseAddVotingConfigEvent(receipt: TransactionReceipt): OAXDEX_Governance.AddVotingConfigEvent[]{
         let events = this.parseEvents(receipt, "AddVotingConfig");
@@ -349,6 +349,10 @@ export class OAXDEX_Governance extends Contract{
     }
     async votingRegister(): Promise<string>{
         let result = await this.methods('votingRegister');
+        return result;
+    }
+    async votingToken(): Promise<string>{
+        let result = await this.methods('votingToken');
         return result;
     }
     async votings(param1:number|BigNumber): Promise<string>{
