@@ -6,6 +6,7 @@ export interface ICoreContractsDeploymentResult {
     factory?: string;
     governance?: string;
     oswap?: string;
+    votingToken?: string;
     pairCreator?: string;
     router?: string;
     votingRegistry?: string;
@@ -122,6 +123,7 @@ export interface IDeployOptions {
     tokens?: {
         oswap?: string;
         weth?: string;
+        votingToken?: string;
     };
 }
 export interface IDeploymentContracts {

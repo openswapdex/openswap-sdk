@@ -32,6 +32,7 @@ export interface ICoreContractsDeploymentResult {
     factory?: string;
     governance?: string;
     oswap?: string;
+    votingToken?: string;
     pairCreator?: string;
     router?: string;
     votingRegistry?: string;
@@ -167,6 +168,7 @@ export interface IDeployOptions {
     tokens?: {
         oswap?: string;
         weth?: string;
+        votingToken?: string;
     }
 }
 export interface IDeploymentContracts {
@@ -217,7 +219,14 @@ export async function deployCoreContracts(wallet: Wallet, options: IDeployOption
         result.oswap = await oswap.deploy(options.govTokenOptions);                        
     }
     else
-        result.oswap = options.tokens.oswap;                        
+        result.oswap = options.tokens.oswap; 
+    //votingToken
+    if (!options.tokens.votingToken){
+        result.votingToken = result.oswap;
+    }
+    else {
+        result.votingToken = options.tokens.votingToken;
+    }      
     //weth            
     if (options.tokens.weth)
         result.weth = options.tokens.weth;           
@@ -231,7 +240,8 @@ export async function deployCoreContracts(wallet: Wallet, options: IDeployOption
         minQuorum: options.govOptions.profiles.minQuorum,
         minStakePeriod: options.govOptions.minStakePeriod,
         minVoteDuration: options.govOptions.profiles.minVoteDuration,
-        oaxToken: result.oswap
+        oaxToken: result.oswap,
+        votingToken: result.votingToken
     })
     
     //administrator

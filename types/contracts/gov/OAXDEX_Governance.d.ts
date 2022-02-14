@@ -3,6 +3,7 @@ export declare class OAXDEX_Governance extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(params: {
         oaxToken: string;
+        votingToken: string;
         names: string[];
         minExeDelay: number[] | BigNumber[];
         minVoteDuration: number[] | BigNumber[];
@@ -108,6 +109,7 @@ export declare class OAXDEX_Governance extends Contract {
     votingExecutorLength(): Promise<BigNumber>;
     votingIdx(param1: string): Promise<BigNumber>;
     votingRegister(): Promise<string>;
+    votingToken(): Promise<string>;
     votings(param1: number | BigNumber): Promise<string>;
 }
 export declare module OAXDEX_Governance {
