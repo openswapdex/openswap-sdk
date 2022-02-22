@@ -5,7 +5,12 @@ module.exports = {
         privateKey: ''
     },
     deploymentConfig: {
-        weth: '',
+        tokens: {
+            weth: '',
+            oswap: '',
+            votingToken: ''
+        },  
+        protocolFeeTo: '',
         governance: '',
         ammFactory: '',
         oracleFactory: '',

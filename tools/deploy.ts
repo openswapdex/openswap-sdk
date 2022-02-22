@@ -12,7 +12,7 @@ import * as Config from '../data/config.js';
 const rpcUrl = Config.rpcUrl;
 const deployerAddress = Config.deployer.address;
 const privateKey = Config.deployer.privateKey;
-const protocolFeeTo = Config.deployer.address;
+const protocolFeeTo = Config.deploymentConfig.protocolFeeTo;
 const deploymentConfig = Config.deploymentConfig;
 
 async function deployOracle() {
@@ -40,7 +40,7 @@ async function deployPeggedQueue() {
         protocolFeeTo,
         tradeFee: 100
     }, {
-        weth: deploymentConfig.weth,
+        weth: deploymentConfig.tokens.weth,
         factory: deploymentConfig.ammFactory,
     });
     console.log('result', result);
@@ -54,31 +54,29 @@ async function deployAll() {
     let accounts = await wallet.accounts;
     wallet.defaultAccount = accounts[0];
     let result = await deploy(wallet, {
-        govTokenOptions:{
-            initSupply: Utils.toDecimals(80000000000),
-            initSupplyTo: accounts[0],
-            minter: accounts[0],
-            totalSupply: Utils.toDecimals(5000000000000)
-        },
+        // govTokenOptions:{
+        //     initSupply: Utils.toDecimals(80000000000),
+        //     initSupplyTo: accounts[0],
+        //     minter: accounts[0],
+        //     totalSupply: Utils.toDecimals(5000000000000)
+        // },
         govOptions: {
             minStakePeriod: 1,
             tradeFee: 0.2,
-            protocolFee: 0,
+            protocolFee: 5,
             protocolFeeTo,
             profiles: {
                 name: ['poll','vote','addOldOracleToNewPair'],
                 minExeDelay: [1,1,1],
                 minVoteDuration: [0,0,0],
-                maxVoteDuration: [1209600,1209600,1209600], 
-                minGovTokenToCreateVote: [Utils.toDecimals(100000),Utils.toDecimals(100000),Utils.toDecimals(100000)],
-                minQuorum: [Utils.toDecimals(0),Utils.toDecimals(10000000),Utils.toDecimals(100)]
+                maxVoteDuration: [2592000,1209600,1209600], 
+                minGovTokenToCreateVote: [Utils.toDecimals(100000),Utils.toDecimals(1000000),Utils.toDecimals(100000)],
+                minQuorum: [Utils.toDecimals(0),Utils.toDecimals(20000000),Utils.toDecimals(100)]
             }
         },
-        tokens: {
-            weth: deploymentConfig.weth
-        },
+        tokens: deploymentConfig.tokens,
         amm: {
-            protocolFee: 0,
+            protocolFee: 5000,
             protocolFeeTo,
             tradeFee: 200
         },
@@ -143,7 +141,7 @@ async function setupHybridRouter(){
     let hybridRouterOptions: any = {
         registryAddress: hybridRouterRegistryConfig.address,
         governance: Config.deploymentConfig.governance,
-        weth: Config.deploymentConfig.weth,
+        weth: Config.deploymentConfig.tokens.weth,
         name: [],
         factory: [],
         fee: [],
