@@ -205,27 +205,26 @@ export declare class OSWAP_RestrictedPair2 extends Contract {
 }
 export declare module OSWAP_RestrictedPair2 {
     interface AddLiquidityEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         index: BigNumber;
         amount: BigNumber;
         newAmountBalance: BigNumber;
+        _event: Event;
     }
     interface ApprovedTraderEvent {
-        _event: Event;
         direction: boolean;
         offerIndex: BigNumber;
         trader: string;
         allocation: BigNumber;
+        _event: Event;
     }
     interface LockEvent {
-        _event: Event;
         direction: boolean;
         index: BigNumber;
+        _event: Event;
     }
     interface NewProviderOfferEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         index: BigNumber;
@@ -233,9 +232,9 @@ export declare module OSWAP_RestrictedPair2 {
         restrictedPrice: BigNumber;
         startDate: BigNumber;
         expire: BigNumber;
+        _event: Event;
     }
     interface RemoveLiquidityEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         index: BigNumber;
@@ -243,18 +242,18 @@ export declare module OSWAP_RestrictedPair2 {
         receivingOut: BigNumber;
         newAmountBalance: BigNumber;
         newReceivingBalance: BigNumber;
+        _event: Event;
     }
     interface SwapEvent {
-        _event: Event;
         to: string;
         direction: boolean;
         amountIn: BigNumber;
         amountOut: BigNumber;
         tradeFee: BigNumber;
         protocolFee: BigNumber;
+        _event: Event;
     }
     interface SwappedOneOfferEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         index: BigNumber;
@@ -263,5 +262,6 @@ export declare module OSWAP_RestrictedPair2 {
         amountIn: BigNumber;
         newAmountBalance: BigNumber;
         newReceivingBalance: BigNumber;
+        _event: Event;
     }
 }

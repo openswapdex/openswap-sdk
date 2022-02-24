@@ -127,72 +127,72 @@ export declare class OAXDEX_Governance extends Contract {
 }
 export declare module OAXDEX_Governance {
     interface AddVotingConfigEvent {
-        _event: Event;
         name: string;
         minExeDelay: BigNumber;
         minVoteDuration: BigNumber;
         maxVoteDuration: BigNumber;
         minOaxTokenToCreateVote: BigNumber;
         minQuorum: BigNumber;
+        _event: Event;
     }
     interface ExecutedEvent {
-        _event: Event;
         vote: string;
+        _event: Event;
     }
     interface NewPollEvent {
-        _event: Event;
         poll: string;
+        _event: Event;
     }
     interface NewVoteEvent {
-        _event: Event;
         vote: string;
+        _event: Event;
     }
     interface OwnershipTransferredEvent {
-        _event: Event;
         previousOwner: string;
         newOwner: string;
+        _event: Event;
     }
     interface ParamSetEvent {
-        _event: Event;
         name: string;
         value: string;
+        _event: Event;
     }
     interface ParamSet2Event {
-        _event: Event;
         name: string;
         value1: string;
         value2: string;
+        _event: Event;
     }
     interface PollEvent {
-        _event: Event;
         account: string;
         poll: string;
         option: BigNumber;
+        _event: Event;
     }
     interface SetVotingConfigEvent {
-        _event: Event;
         configName: string;
         paramName: string;
         minExeDelay: BigNumber;
+        _event: Event;
     }
     interface StakeEvent {
-        _event: Event;
         who: string;
         value: BigNumber;
+        _event: Event;
     }
     interface UnstakeEvent {
-        _event: Event;
         who: string;
         value: BigNumber;
+        _event: Event;
     }
     interface VetoEvent {
-        _event: Event;
         vote: string;
+        _event: Event;
     }
     interface VoteEvent {
-        _event: Event;
         account: string;
         vote: string;
         option: BigNumber;
+        _event: Event;
     }
 }

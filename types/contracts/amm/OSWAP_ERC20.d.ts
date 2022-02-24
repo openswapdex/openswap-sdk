@@ -45,15 +45,15 @@ export declare class OSWAP_ERC20 extends Contract {
 }
 export declare module OSWAP_ERC20 {
     interface ApprovalEvent {
-        _event: Event;
         owner: string;
         spender: string;
         value: BigNumber;
+        _event: Event;
     }
     interface TransferEvent {
-        _event: Event;
         from: string;
         to: string;
         value: BigNumber;
+        _event: Event;
     }
 }

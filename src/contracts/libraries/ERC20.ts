@@ -14,10 +14,10 @@ export class ERC20 extends Contract{
     decodeApprovalEvent(event: Event): ERC20.ApprovalEvent{
         let result = event.data;
         return {
-            _event:event,
             owner: result.owner,
             spender: result.spender,
-            value: new BigNumber(result.value)
+            value: new BigNumber(result.value),
+            _event: event
         };
     }
     parseTransferEvent(receipt: TransactionReceipt): ERC20.TransferEvent[]{
@@ -26,10 +26,10 @@ export class ERC20 extends Contract{
     decodeTransferEvent(event: Event): ERC20.TransferEvent{
         let result = event.data;
         return {
-            _event:event,
             from: result.from,
             to: result.to,
-            value: new BigNumber(result.value)
+            value: new BigNumber(result.value),
+            _event: event
         };
     }
     async allowance(params:{owner:string,spender:string}): Promise<BigNumber>{
@@ -78,6 +78,6 @@ export class ERC20 extends Contract{
     }
 }
 export module ERC20{
-    export interface ApprovalEvent {_event:Event,owner:string,spender:string,value:BigNumber}
-    export interface TransferEvent {_event:Event,from:string,to:string,value:BigNumber}
+    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber,_event:Event}
+    export interface TransferEvent {from:string,to:string,value:BigNumber,_event:Event}
 }

@@ -97,50 +97,50 @@ export declare class OSWAP_Pair extends Contract {
 }
 export declare module OSWAP_Pair {
     interface ApprovalEvent {
-        _event: Event;
         owner: string;
         spender: string;
         value: BigNumber;
+        _event: Event;
     }
     interface BurnEvent {
-        _event: Event;
         sender: string;
         amount0: BigNumber;
         amount1: BigNumber;
         to: string;
+        _event: Event;
     }
     interface MintEvent {
-        _event: Event;
         sender: string;
         amount0: BigNumber;
         amount1: BigNumber;
+        _event: Event;
     }
     interface ProtocolFeeSetEvent {
-        _event: Event;
         protocolFee: BigNumber;
+        _event: Event;
     }
     interface SwapEvent {
-        _event: Event;
         sender: string;
         amount0In: BigNumber;
         amount1In: BigNumber;
         amount0Out: BigNumber;
         amount1Out: BigNumber;
         to: string;
+        _event: Event;
     }
     interface SyncEvent {
-        _event: Event;
         reserve0: BigNumber;
         reserve1: BigNumber;
+        _event: Event;
     }
     interface TradeFeeSetEvent {
-        _event: Event;
         tradeFee: BigNumber;
+        _event: Event;
     }
     interface TransferEvent {
-        _event: Event;
         from: string;
         to: string;
         value: BigNumber;
+        _event: Event;
     }
 }

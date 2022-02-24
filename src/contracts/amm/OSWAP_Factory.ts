@@ -14,11 +14,11 @@ export class OSWAP_Factory extends Contract{
     decodePairCreatedEvent(event: Event): OSWAP_Factory.PairCreatedEvent{
         let result = event.data;
         return {
-            _event:event,
             token0: result.token0,
             token1: result.token1,
             pair: result.pair,
-            newSize: new BigNumber(result.newSize)
+            newSize: new BigNumber(result.newSize),
+            _event: event
         };
     }
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairRestartedEvent[]{
@@ -27,8 +27,8 @@ export class OSWAP_Factory extends Contract{
     decodePairRestartedEvent(event: Event): OSWAP_Factory.PairRestartedEvent{
         let result = event.data;
         return {
-            _event:event,
-            pair: result.pair
+            pair: result.pair,
+            _event: event
         };
     }
     parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairShutdownedEvent[]{
@@ -37,8 +37,8 @@ export class OSWAP_Factory extends Contract{
     decodePairShutdownedEvent(event: Event): OSWAP_Factory.PairShutdownedEvent{
         let result = event.data;
         return {
-            _event:event,
-            pair: result.pair
+            pair: result.pair,
+            _event: event
         };
     }
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_Factory.ParamSetEvent[]{
@@ -47,9 +47,9 @@ export class OSWAP_Factory extends Contract{
     decodeParamSetEvent(event: Event): OSWAP_Factory.ParamSetEvent{
         let result = event.data;
         return {
-            _event:event,
             name: result.name,
-            value: result.value
+            value: result.value,
+            _event: event
         };
     }
     parseParamSet2Event(receipt: TransactionReceipt): OSWAP_Factory.ParamSet2Event[]{
@@ -58,10 +58,10 @@ export class OSWAP_Factory extends Contract{
     decodeParamSet2Event(event: Event): OSWAP_Factory.ParamSet2Event{
         let result = event.data;
         return {
-            _event:event,
             name: result.name,
             value1: result.value1,
-            value2: result.value2
+            value2: result.value2,
+            _event: event
         };
     }
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_Factory.RestartedEvent[]{
@@ -70,7 +70,7 @@ export class OSWAP_Factory extends Contract{
     decodeRestartedEvent(event: Event): OSWAP_Factory.RestartedEvent{
         let result = event.data;
         return {
-            _event:event,
+            _event: event
         };
     }
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_Factory.ShutdownedEvent[]{
@@ -79,7 +79,7 @@ export class OSWAP_Factory extends Contract{
     decodeShutdownedEvent(event: Event): OSWAP_Factory.ShutdownedEvent{
         let result = event.data;
         return {
-            _event:event,
+            _event: event
         };
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
@@ -151,11 +151,11 @@ export class OSWAP_Factory extends Contract{
     }
 }
 export module OSWAP_Factory{
-    export interface PairCreatedEvent {_event:Event,token0:string,token1:string,pair:string,newSize:BigNumber}
-    export interface PairRestartedEvent {_event:Event,pair:string}
-    export interface PairShutdownedEvent {_event:Event,pair:string}
-    export interface ParamSetEvent {_event:Event,name:string,value:string}
-    export interface ParamSet2Event {_event:Event,name:string,value1:string,value2:string}
+    export interface PairCreatedEvent {token0:string,token1:string,pair:string,newSize:BigNumber,_event:Event}
+    export interface PairRestartedEvent {pair:string,_event:Event}
+    export interface PairShutdownedEvent {pair:string,_event:Event}
+    export interface ParamSetEvent {name:string,value:string,_event:Event}
+    export interface ParamSet2Event {name:string,value1:string,value2:string,_event:Event}
     export interface RestartedEvent {}
     export interface ShutdownedEvent {}
 }

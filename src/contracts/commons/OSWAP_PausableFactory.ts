@@ -14,8 +14,8 @@ export class OSWAP_PausableFactory extends Contract{
     decodePairRestartedEvent(event: Event): OSWAP_PausableFactory.PairRestartedEvent{
         let result = event.data;
         return {
-            _event:event,
-            pair: result.pair
+            pair: result.pair,
+            _event: event
         };
     }
     parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.PairShutdownedEvent[]{
@@ -24,8 +24,8 @@ export class OSWAP_PausableFactory extends Contract{
     decodePairShutdownedEvent(event: Event): OSWAP_PausableFactory.PairShutdownedEvent{
         let result = event.data;
         return {
-            _event:event,
-            pair: result.pair
+            pair: result.pair,
+            _event: event
         };
     }
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.RestartedEvent[]{
@@ -34,7 +34,7 @@ export class OSWAP_PausableFactory extends Contract{
     decodeRestartedEvent(event: Event): OSWAP_PausableFactory.RestartedEvent{
         let result = event.data;
         return {
-            _event:event,
+            _event: event
         };
     }
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.ShutdownedEvent[]{
@@ -43,7 +43,7 @@ export class OSWAP_PausableFactory extends Contract{
     decodeShutdownedEvent(event: Event): OSWAP_PausableFactory.ShutdownedEvent{
         let result = event.data;
         return {
-            _event:event,
+            _event: event
         };
     }
     async governance(): Promise<string>{
@@ -64,8 +64,8 @@ export class OSWAP_PausableFactory extends Contract{
     }
 }
 export module OSWAP_PausableFactory{
-    export interface PairRestartedEvent {_event:Event,pair:string}
-    export interface PairShutdownedEvent {_event:Event,pair:string}
+    export interface PairRestartedEvent {pair:string,_event:Event}
+    export interface PairShutdownedEvent {pair:string,_event:Event}
     export interface RestartedEvent {}
     export interface ShutdownedEvent {}
 }

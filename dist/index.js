@@ -388,10 +388,10 @@ var OpenSwap = class extends import_eth_wallet.Contract {
   decodeApprovalEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       owner: result.owner,
       spender: result.spender,
-      value: new import_eth_wallet.BigNumber(result.value)
+      value: new import_eth_wallet.BigNumber(result.value),
+      _event: event
     };
   }
   parseTransferEvent(receipt) {
@@ -400,10 +400,10 @@ var OpenSwap = class extends import_eth_wallet.Contract {
   decodeTransferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       from: result.from,
       to: result.to,
-      value: new import_eth_wallet.BigNumber(result.value)
+      value: new import_eth_wallet.BigNumber(result.value),
+      _event: event
     };
   }
   async allowance(params) {
@@ -480,10 +480,10 @@ var OSWAP_ERC20 = class extends import_eth_wallet2.Contract {
   decodeApprovalEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       owner: result.owner,
       spender: result.spender,
-      value: new import_eth_wallet2.BigNumber(result.value)
+      value: new import_eth_wallet2.BigNumber(result.value),
+      _event: event
     };
   }
   parseTransferEvent(receipt) {
@@ -492,10 +492,10 @@ var OSWAP_ERC20 = class extends import_eth_wallet2.Contract {
   decodeTransferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       from: result.from,
       to: result.to,
-      value: new import_eth_wallet2.BigNumber(result.value)
+      value: new import_eth_wallet2.BigNumber(result.value),
+      _event: event
     };
   }
   async EIP712_TYPEHASH() {
@@ -576,11 +576,11 @@ var OSWAP_Factory = class extends import_eth_wallet3.Contract {
   decodePairCreatedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       token0: result.token0,
       token1: result.token1,
       pair: result.pair,
-      newSize: new import_eth_wallet3.BigNumber(result.newSize)
+      newSize: new import_eth_wallet3.BigNumber(result.newSize),
+      _event: event
     };
   }
   parsePairRestartedEvent(receipt) {
@@ -589,8 +589,8 @@ var OSWAP_Factory = class extends import_eth_wallet3.Contract {
   decodePairRestartedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parsePairShutdownedEvent(receipt) {
@@ -599,8 +599,8 @@ var OSWAP_Factory = class extends import_eth_wallet3.Contract {
   decodePairShutdownedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parseParamSetEvent(receipt) {
@@ -609,9 +609,9 @@ var OSWAP_Factory = class extends import_eth_wallet3.Contract {
   decodeParamSetEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
-      value: result.value
+      value: result.value,
+      _event: event
     };
   }
   parseParamSet2Event(receipt) {
@@ -620,10 +620,10 @@ var OSWAP_Factory = class extends import_eth_wallet3.Contract {
   decodeParamSet2Event(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
       value1: result.value1,
-      value2: result.value2
+      value2: result.value2,
+      _event: event
     };
   }
   parseRestartedEvent(receipt) {
@@ -729,10 +729,10 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
   decodeApprovalEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       owner: result.owner,
       spender: result.spender,
-      value: new import_eth_wallet4.BigNumber(result.value)
+      value: new import_eth_wallet4.BigNumber(result.value),
+      _event: event
     };
   }
   parseBurnEvent(receipt) {
@@ -741,11 +741,11 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
   decodeBurnEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       sender: result.sender,
       amount0: new import_eth_wallet4.BigNumber(result.amount0),
       amount1: new import_eth_wallet4.BigNumber(result.amount1),
-      to: result.to
+      to: result.to,
+      _event: event
     };
   }
   parseMintEvent(receipt) {
@@ -754,10 +754,10 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
   decodeMintEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       sender: result.sender,
       amount0: new import_eth_wallet4.BigNumber(result.amount0),
-      amount1: new import_eth_wallet4.BigNumber(result.amount1)
+      amount1: new import_eth_wallet4.BigNumber(result.amount1),
+      _event: event
     };
   }
   parseProtocolFeeSetEvent(receipt) {
@@ -766,8 +766,8 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
   decodeProtocolFeeSetEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      protocolFee: new import_eth_wallet4.BigNumber(result.protocolFee)
+      protocolFee: new import_eth_wallet4.BigNumber(result.protocolFee),
+      _event: event
     };
   }
   parseSwapEvent(receipt) {
@@ -776,13 +776,13 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
   decodeSwapEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       sender: result.sender,
       amount0In: new import_eth_wallet4.BigNumber(result.amount0In),
       amount1In: new import_eth_wallet4.BigNumber(result.amount1In),
       amount0Out: new import_eth_wallet4.BigNumber(result.amount0Out),
       amount1Out: new import_eth_wallet4.BigNumber(result.amount1Out),
-      to: result.to
+      to: result.to,
+      _event: event
     };
   }
   parseSyncEvent(receipt) {
@@ -791,9 +791,9 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
   decodeSyncEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       reserve0: new import_eth_wallet4.BigNumber(result.reserve0),
-      reserve1: new import_eth_wallet4.BigNumber(result.reserve1)
+      reserve1: new import_eth_wallet4.BigNumber(result.reserve1),
+      _event: event
     };
   }
   parseTradeFeeSetEvent(receipt) {
@@ -802,8 +802,8 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
   decodeTradeFeeSetEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      tradeFee: new import_eth_wallet4.BigNumber(result.tradeFee)
+      tradeFee: new import_eth_wallet4.BigNumber(result.tradeFee),
+      _event: event
     };
   }
   parseTransferEvent(receipt) {
@@ -812,10 +812,10 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
   decodeTransferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       from: result.from,
       to: result.to,
-      value: new import_eth_wallet4.BigNumber(result.value)
+      value: new import_eth_wallet4.BigNumber(result.value),
+      _event: event
     };
   }
   async EIP712_TYPEHASH() {
@@ -1143,11 +1143,11 @@ var OSWAP_FactoryBase = class extends import_eth_wallet8.Contract {
   decodePairCreatedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       token0: result.token0,
       token1: result.token1,
       pair: result.pair,
-      newSize: new import_eth_wallet8.BigNumber(result.newSize)
+      newSize: new import_eth_wallet8.BigNumber(result.newSize),
+      _event: event
     };
   }
   parsePairRestartedEvent(receipt) {
@@ -1156,8 +1156,8 @@ var OSWAP_FactoryBase = class extends import_eth_wallet8.Contract {
   decodePairRestartedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parsePairShutdownedEvent(receipt) {
@@ -1166,8 +1166,8 @@ var OSWAP_FactoryBase = class extends import_eth_wallet8.Contract {
   decodePairShutdownedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parseRestartedEvent(receipt) {
@@ -1242,8 +1242,8 @@ var OSWAP_PausableFactory = class extends import_eth_wallet9.Contract {
   decodePairRestartedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parsePairShutdownedEvent(receipt) {
@@ -1252,8 +1252,8 @@ var OSWAP_PausableFactory = class extends import_eth_wallet9.Contract {
   decodePairShutdownedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parseRestartedEvent(receipt) {
@@ -1332,8 +1332,8 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
   decodeAddAdminEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      admin: result.admin
+      admin: result.admin,
+      _event: event
     };
   }
   parseRemoveAdminEvent(receipt) {
@@ -1342,8 +1342,8 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
   decodeRemoveAdminEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      admin: result.admin
+      admin: result.admin,
+      _event: event
     };
   }
   parseSetMaxAdminEvent(receipt) {
@@ -1352,8 +1352,8 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
   decodeSetMaxAdminEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      maxAdmin: new import_eth_wallet11.BigNumber(result.maxAdmin)
+      maxAdmin: new import_eth_wallet11.BigNumber(result.maxAdmin),
+      _event: event
     };
   }
   parseVotedFactoryRestartEvent(receipt) {
@@ -1362,10 +1362,10 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
   decodeVotedFactoryRestartEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       admin: result.admin,
       factory: result.factory,
-      YorN: result.YorN
+      YorN: result.YorN,
+      _event: event
     };
   }
   parseVotedFactoryShutdownEvent(receipt) {
@@ -1374,10 +1374,10 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
   decodeVotedFactoryShutdownEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       admin: result.admin,
       factory: result.factory,
-      YorN: result.YorN
+      YorN: result.YorN,
+      _event: event
     };
   }
   parseVotedPairRestartEvent(receipt) {
@@ -1386,10 +1386,10 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
   decodeVotedPairRestartEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       admin: result.admin,
       pair: result.pair,
-      YorN: result.YorN
+      YorN: result.YorN,
+      _event: event
     };
   }
   parseVotedPairShutdownEvent(receipt) {
@@ -1398,10 +1398,10 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
   decodeVotedPairShutdownEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       admin: result.admin,
       pair: result.pair,
-      YorN: result.YorN
+      YorN: result.YorN,
+      _event: event
     };
   }
   parseVotedVetoEvent(receipt) {
@@ -1410,10 +1410,10 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
   decodeVotedVetoEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       admin: result.admin,
       votingContract: result.votingContract,
-      YorN: result.YorN
+      YorN: result.YorN,
+      _event: event
     };
   }
   async addAdmin(admin) {
@@ -1546,13 +1546,13 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeAddVotingConfigEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
       minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay),
       minVoteDuration: new import_eth_wallet12.BigNumber(result.minVoteDuration),
       maxVoteDuration: new import_eth_wallet12.BigNumber(result.maxVoteDuration),
       minOaxTokenToCreateVote: new import_eth_wallet12.BigNumber(result.minOaxTokenToCreateVote),
-      minQuorum: new import_eth_wallet12.BigNumber(result.minQuorum)
+      minQuorum: new import_eth_wallet12.BigNumber(result.minQuorum),
+      _event: event
     };
   }
   parseExecutedEvent(receipt) {
@@ -1561,8 +1561,8 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeExecutedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      vote: result.vote
+      vote: result.vote,
+      _event: event
     };
   }
   parseNewPollEvent(receipt) {
@@ -1571,8 +1571,8 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeNewPollEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      poll: result.poll
+      poll: result.poll,
+      _event: event
     };
   }
   parseNewVoteEvent(receipt) {
@@ -1581,8 +1581,8 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeNewVoteEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      vote: result.vote
+      vote: result.vote,
+      _event: event
     };
   }
   parseOwnershipTransferredEvent(receipt) {
@@ -1591,9 +1591,9 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeOwnershipTransferredEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       previousOwner: result.previousOwner,
-      newOwner: result.newOwner
+      newOwner: result.newOwner,
+      _event: event
     };
   }
   parseParamSetEvent(receipt) {
@@ -1602,9 +1602,9 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeParamSetEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
-      value: result.value
+      value: result.value,
+      _event: event
     };
   }
   parseParamSet2Event(receipt) {
@@ -1613,10 +1613,10 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeParamSet2Event(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
       value1: result.value1,
-      value2: result.value2
+      value2: result.value2,
+      _event: event
     };
   }
   parsePollEvent(receipt) {
@@ -1625,10 +1625,10 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodePollEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       account: result.account,
       poll: result.poll,
-      option: new import_eth_wallet12.BigNumber(result.option)
+      option: new import_eth_wallet12.BigNumber(result.option),
+      _event: event
     };
   }
   parseSetVotingConfigEvent(receipt) {
@@ -1637,10 +1637,10 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeSetVotingConfigEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       configName: result.configName,
       paramName: result.paramName,
-      minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay)
+      minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay),
+      _event: event
     };
   }
   parseStakeEvent(receipt) {
@@ -1649,9 +1649,9 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeStakeEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       who: result.who,
-      value: new import_eth_wallet12.BigNumber(result.value)
+      value: new import_eth_wallet12.BigNumber(result.value),
+      _event: event
     };
   }
   parseUnstakeEvent(receipt) {
@@ -1660,9 +1660,9 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeUnstakeEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       who: result.who,
-      value: new import_eth_wallet12.BigNumber(result.value)
+      value: new import_eth_wallet12.BigNumber(result.value),
+      _event: event
     };
   }
   parseVetoEvent(receipt) {
@@ -1671,8 +1671,8 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeVetoEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      vote: result.vote
+      vote: result.vote,
+      _event: event
     };
   }
   parseVoteEvent(receipt) {
@@ -1681,10 +1681,10 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
   decodeVoteEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       account: result.account,
       vote: result.vote,
-      option: new import_eth_wallet12.BigNumber(result.option)
+      option: new import_eth_wallet12.BigNumber(result.option),
+      _event: event
     };
   }
   async addVotingConfig(params) {
@@ -2072,10 +2072,10 @@ var ERC20 = class extends import_eth_wallet16.Contract {
   decodeApprovalEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       owner: result.owner,
       spender: result.spender,
-      value: new import_eth_wallet16.BigNumber(result.value)
+      value: new import_eth_wallet16.BigNumber(result.value),
+      _event: event
     };
   }
   parseTransferEvent(receipt) {
@@ -2084,10 +2084,10 @@ var ERC20 = class extends import_eth_wallet16.Contract {
   decodeTransferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       from: result.from,
       to: result.to,
-      value: new import_eth_wallet16.BigNumber(result.value)
+      value: new import_eth_wallet16.BigNumber(result.value),
+      _event: event
     };
   }
   async allowance(params) {
@@ -2172,10 +2172,10 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodeOracleAddedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       token0: result.token0,
       token1: result.token1,
-      oracle: result.oracle
+      oracle: result.oracle,
+      _event: event
     };
   }
   parseOracleScoresEvent(receipt) {
@@ -2184,9 +2184,9 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodeOracleScoresEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       oracle: result.oracle,
-      score: new import_eth_wallet18.BigNumber(result.score)
+      score: new import_eth_wallet18.BigNumber(result.score),
+      _event: event
     };
   }
   parseOwnershipTransferredEvent(receipt) {
@@ -2195,9 +2195,9 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodeOwnershipTransferredEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       previousOwner: result.previousOwner,
-      newOwner: result.newOwner
+      newOwner: result.newOwner,
+      _event: event
     };
   }
   parsePairCreatedEvent(receipt) {
@@ -2206,11 +2206,11 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodePairCreatedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       token0: result.token0,
       token1: result.token1,
       pair: result.pair,
-      newSize: new import_eth_wallet18.BigNumber(result.newSize)
+      newSize: new import_eth_wallet18.BigNumber(result.newSize),
+      _event: event
     };
   }
   parsePairRestartedEvent(receipt) {
@@ -2219,8 +2219,8 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodePairRestartedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parsePairShutdownedEvent(receipt) {
@@ -2229,8 +2229,8 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodePairShutdownedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parseParamSetEvent(receipt) {
@@ -2239,9 +2239,9 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodeParamSetEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
-      value: result.value
+      value: result.value,
+      _event: event
     };
   }
   parseParamSet2Event(receipt) {
@@ -2250,10 +2250,10 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodeParamSet2Event(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
       value1: result.value1,
-      value2: result.value2
+      value2: result.value2,
+      _event: event
     };
   }
   parseRestartedEvent(receipt) {
@@ -2280,9 +2280,9 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
   decodeWhitelistedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       who: result.who,
-      allow: result.allow
+      allow: result.allow,
+      _event: event
     };
   }
   async addOldOracleToNewPair(params) {
@@ -2522,7 +2522,6 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeAddLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       staked: new import_eth_wallet20.BigNumber(result.staked),
@@ -2530,7 +2529,8 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
       newStakeBalance: new import_eth_wallet20.BigNumber(result.newStakeBalance),
       newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
       expire: new import_eth_wallet20.BigNumber(result.expire),
-      enable: result.enable
+      enable: result.enable,
+      _event: event
     };
   }
   parseDelegatorPauseOfferEvent(receipt) {
@@ -2539,10 +2539,10 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeDelegatorPauseOfferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       delegator: result.delegator,
       provider: result.provider,
-      direction: result.direction
+      direction: result.direction,
+      _event: event
     };
   }
   parseDelegatorResumeOfferEvent(receipt) {
@@ -2551,10 +2551,10 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeDelegatorResumeOfferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       delegator: result.delegator,
       provider: result.provider,
-      direction: result.direction
+      direction: result.direction,
+      _event: event
     };
   }
   parseNewProviderEvent(receipt) {
@@ -2563,9 +2563,9 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeNewProviderEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
-      index: new import_eth_wallet20.BigNumber(result.index)
+      index: new import_eth_wallet20.BigNumber(result.index),
+      _event: event
     };
   }
   parseRemoveLiquidityEvent(receipt) {
@@ -2574,7 +2574,6 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeRemoveLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       unstake: new import_eth_wallet20.BigNumber(result.unstake),
@@ -2584,7 +2583,8 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
       newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
       newReserveBalance: new import_eth_wallet20.BigNumber(result.newReserveBalance),
       expire: new import_eth_wallet20.BigNumber(result.expire),
-      enable: result.enable
+      enable: result.enable,
+      _event: event
     };
   }
   parseReplenishEvent(receipt) {
@@ -2593,13 +2593,13 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeReplenishEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
       newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
       newReserveBalance: new import_eth_wallet20.BigNumber(result.newReserveBalance),
-      expire: new import_eth_wallet20.BigNumber(result.expire)
+      expire: new import_eth_wallet20.BigNumber(result.expire),
+      _event: event
     };
   }
   parseSetDelegatorEvent(receipt) {
@@ -2608,9 +2608,9 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeSetDelegatorEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
-      delegator: result.delegator
+      delegator: result.delegator,
+      _event: event
     };
   }
   parseSwapEvent(receipt) {
@@ -2619,14 +2619,14 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeSwapEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       to: result.to,
       direction: result.direction,
       price: new import_eth_wallet20.BigNumber(result.price),
       amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
       amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
       tradeFee: new import_eth_wallet20.BigNumber(result.tradeFee),
-      protocolFee: new import_eth_wallet20.BigNumber(result.protocolFee)
+      protocolFee: new import_eth_wallet20.BigNumber(result.protocolFee),
+      _event: event
     };
   }
   parseSwappedOneProviderEvent(receipt) {
@@ -2635,13 +2635,13 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
   decodeSwappedOneProviderEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
       amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
       newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
-      newCounterReserveBalance: new import_eth_wallet20.BigNumber(result.newCounterReserveBalance)
+      newCounterReserveBalance: new import_eth_wallet20.BigNumber(result.newCounterReserveBalance),
+      _event: event
     };
   }
   async addLiquidity(params) {
@@ -2922,9 +2922,9 @@ var OSWAP_RangeFactory = class extends import_eth_wallet23.Contract {
   decodeOwnershipTransferredEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       previousOwner: result.previousOwner,
-      newOwner: result.newOwner
+      newOwner: result.newOwner,
+      _event: event
     };
   }
   parsePairCreatedEvent(receipt) {
@@ -2933,11 +2933,11 @@ var OSWAP_RangeFactory = class extends import_eth_wallet23.Contract {
   decodePairCreatedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       token0: result.token0,
       token1: result.token1,
       pair: result.pair,
-      newSize: new import_eth_wallet23.BigNumber(result.newSize)
+      newSize: new import_eth_wallet23.BigNumber(result.newSize),
+      _event: event
     };
   }
   parsePairRestartedEvent(receipt) {
@@ -2946,8 +2946,8 @@ var OSWAP_RangeFactory = class extends import_eth_wallet23.Contract {
   decodePairRestartedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parsePairShutdownedEvent(receipt) {
@@ -2956,8 +2956,8 @@ var OSWAP_RangeFactory = class extends import_eth_wallet23.Contract {
   decodePairShutdownedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parseParamSetEvent(receipt) {
@@ -2966,9 +2966,9 @@ var OSWAP_RangeFactory = class extends import_eth_wallet23.Contract {
   decodeParamSetEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
-      value: result.value
+      value: result.value,
+      _event: event
     };
   }
   parseParamSet2Event(receipt) {
@@ -2977,10 +2977,10 @@ var OSWAP_RangeFactory = class extends import_eth_wallet23.Contract {
   decodeParamSet2Event(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
       value1: result.value1,
-      value2: result.value2
+      value2: result.value2,
+      _event: event
     };
   }
   parseRestartedEvent(receipt) {
@@ -3182,7 +3182,6 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   decodeAddLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       staked: new import_eth_wallet25.BigNumber(result.staked),
@@ -3192,7 +3191,8 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
       lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
       upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
       startDate: new import_eth_wallet25.BigNumber(result.startDate),
-      expire: new import_eth_wallet25.BigNumber(result.expire)
+      expire: new import_eth_wallet25.BigNumber(result.expire),
+      _event: event
     };
   }
   parseNewProviderEvent(receipt) {
@@ -3201,9 +3201,9 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   decodeNewProviderEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
-      index: new import_eth_wallet25.BigNumber(result.index)
+      index: new import_eth_wallet25.BigNumber(result.index),
+      _event: event
     };
   }
   parseRemoveAllLiquidityEvent(receipt) {
@@ -3212,11 +3212,11 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   decodeRemoveAllLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       unstake: new import_eth_wallet25.BigNumber(result.unstake),
       amount0Out: new import_eth_wallet25.BigNumber(result.amount0Out),
-      amount1Out: new import_eth_wallet25.BigNumber(result.amount1Out)
+      amount1Out: new import_eth_wallet25.BigNumber(result.amount1Out),
+      _event: event
     };
   }
   parseRemoveLiquidityEvent(receipt) {
@@ -3225,7 +3225,6 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   decodeRemoveLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       unstake: new import_eth_wallet25.BigNumber(result.unstake),
@@ -3237,7 +3236,8 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
       lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
       upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
       startDate: new import_eth_wallet25.BigNumber(result.startDate),
-      expire: new import_eth_wallet25.BigNumber(result.expire)
+      expire: new import_eth_wallet25.BigNumber(result.expire),
+      _event: event
     };
   }
   parseReplenishEvent(receipt) {
@@ -3246,12 +3246,12 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   decodeReplenishEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
       newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
-      newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance)
+      newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance),
+      _event: event
     };
   }
   parseSwapEvent(receipt) {
@@ -3260,14 +3260,14 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   decodeSwapEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       to: result.to,
       direction: result.direction,
       price: new import_eth_wallet25.BigNumber(result.price),
       amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
       amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
       tradeFee: new import_eth_wallet25.BigNumber(result.tradeFee),
-      protocolFee: new import_eth_wallet25.BigNumber(result.protocolFee)
+      protocolFee: new import_eth_wallet25.BigNumber(result.protocolFee),
+      _event: event
     };
   }
   parseSwappedOneProviderEvent(receipt) {
@@ -3276,13 +3276,13 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   decodeSwappedOneProviderEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
       amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
       newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
-      newCounterReserveBalance: new import_eth_wallet25.BigNumber(result.newCounterReserveBalance)
+      newCounterReserveBalance: new import_eth_wallet25.BigNumber(result.newCounterReserveBalance),
+      _event: event
     };
   }
   parseUpdateProviderOfferEvent(receipt) {
@@ -3291,7 +3291,6 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
   decodeUpdateProviderOfferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       replenish: new import_eth_wallet25.BigNumber(result.replenish),
@@ -3301,7 +3300,8 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
       upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
       startDate: new import_eth_wallet25.BigNumber(result.startDate),
       expire: new import_eth_wallet25.BigNumber(result.expire),
-      privateReplenish: result.privateReplenish
+      privateReplenish: result.privateReplenish,
+      _event: event
     };
   }
   async addLiquidity(params) {
@@ -3546,9 +3546,9 @@ var OSWAP_ConfigStore = class extends import_eth_wallet28.Contract {
   decodeParamSetEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
-      value: result.value
+      value: result.value,
+      _event: event
     };
   }
   async customParam(param1) {
@@ -3597,10 +3597,10 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
   decodeOracleAddedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       token0: result.token0,
       token1: result.token1,
-      oracle: result.oracle
+      oracle: result.oracle,
+      _event: event
     };
   }
   parseOwnershipTransferredEvent(receipt) {
@@ -3609,9 +3609,9 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
   decodeOwnershipTransferredEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       previousOwner: result.previousOwner,
-      newOwner: result.newOwner
+      newOwner: result.newOwner,
+      _event: event
     };
   }
   parsePairCreatedEvent(receipt) {
@@ -3620,12 +3620,12 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
   decodePairCreatedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       token0: result.token0,
       token1: result.token1,
       pair: result.pair,
       newPairSize: new import_eth_wallet29.BigNumber(result.newPairSize),
-      newSize: new import_eth_wallet29.BigNumber(result.newSize)
+      newSize: new import_eth_wallet29.BigNumber(result.newSize),
+      _event: event
     };
   }
   parsePairRestartedEvent(receipt) {
@@ -3634,8 +3634,8 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
   decodePairRestartedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parsePairShutdownedEvent(receipt) {
@@ -3644,8 +3644,8 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
   decodePairShutdownedEvent(event) {
     let result = event.data;
     return {
-      _event: event,
-      pair: result.pair
+      pair: result.pair,
+      _event: event
     };
   }
   parseParamSetEvent(receipt) {
@@ -3654,9 +3654,9 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
   decodeParamSetEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
-      value: result.value
+      value: result.value,
+      _event: event
     };
   }
   parseParamSet2Event(receipt) {
@@ -3665,10 +3665,10 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
   decodeParamSet2Event(event) {
     let result = event.data;
     return {
-      _event: event,
       name: result.name,
       value1: result.value1,
-      value2: result.value2
+      value2: result.value2,
+      _event: event
     };
   }
   parseRestartedEvent(receipt) {
@@ -4115,11 +4115,11 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet35.Contract {
   decodeCustomPairRegisterEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       pair: result.pair,
       fee: new import_eth_wallet35.BigNumber(result.fee),
       feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
-      typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
+      typeCode: new import_eth_wallet35.BigNumber(result.typeCode),
+      _event: event
     };
   }
   parseOwnershipTransferredEvent(receipt) {
@@ -4128,9 +4128,9 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet35.Contract {
   decodeOwnershipTransferredEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       previousOwner: result.previousOwner,
-      newOwner: result.newOwner
+      newOwner: result.newOwner,
+      _event: event
     };
   }
   parsePairRegisterEvent(receipt) {
@@ -4139,11 +4139,11 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet35.Contract {
   decodePairRegisterEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       factory: result.factory,
       pair: result.pair,
       token0: result.token0,
-      token1: result.token1
+      token1: result.token1,
+      _event: event
     };
   }
   parseProtocolRegisterEvent(receipt) {
@@ -4152,12 +4152,12 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet35.Contract {
   decodeProtocolRegisterEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       factory: result.factory,
       name: result.name,
       fee: new import_eth_wallet35.BigNumber(result.fee),
       feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
-      typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
+      typeCode: new import_eth_wallet35.BigNumber(result.typeCode),
+      _event: event
     };
   }
   async customPairs(param1) {
@@ -4377,12 +4377,12 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
   decodeAddLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       index: new import_eth_wallet37.BigNumber(result.index),
       amount: new import_eth_wallet37.BigNumber(result.amount),
-      newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance)
+      newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
+      _event: event
     };
   }
   parseApprovedTraderEvent(receipt) {
@@ -4391,11 +4391,11 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
   decodeApprovedTraderEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       direction: result.direction,
       offerIndex: new import_eth_wallet37.BigNumber(result.offerIndex),
       trader: result.trader,
-      allocation: new import_eth_wallet37.BigNumber(result.allocation)
+      allocation: new import_eth_wallet37.BigNumber(result.allocation),
+      _event: event
     };
   }
   parseLockEvent(receipt) {
@@ -4404,9 +4404,9 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
   decodeLockEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       direction: result.direction,
-      index: new import_eth_wallet37.BigNumber(result.index)
+      index: new import_eth_wallet37.BigNumber(result.index),
+      _event: event
     };
   }
   parseNewProviderOfferEvent(receipt) {
@@ -4415,14 +4415,14 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
   decodeNewProviderOfferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       index: new import_eth_wallet37.BigNumber(result.index),
       allowAll: result.allowAll,
       restrictedPrice: new import_eth_wallet37.BigNumber(result.restrictedPrice),
       startDate: new import_eth_wallet37.BigNumber(result.startDate),
-      expire: new import_eth_wallet37.BigNumber(result.expire)
+      expire: new import_eth_wallet37.BigNumber(result.expire),
+      _event: event
     };
   }
   parseRemoveLiquidityEvent(receipt) {
@@ -4431,14 +4431,14 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
   decodeRemoveLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       index: new import_eth_wallet37.BigNumber(result.index),
       amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
       receivingOut: new import_eth_wallet37.BigNumber(result.receivingOut),
       newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
-      newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance)
+      newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance),
+      _event: event
     };
   }
   parseSwapEvent(receipt) {
@@ -4447,13 +4447,13 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
   decodeSwapEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       to: result.to,
       direction: result.direction,
       amountIn: new import_eth_wallet37.BigNumber(result.amountIn),
       amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
       tradeFee: new import_eth_wallet37.BigNumber(result.tradeFee),
-      protocolFee: new import_eth_wallet37.BigNumber(result.protocolFee)
+      protocolFee: new import_eth_wallet37.BigNumber(result.protocolFee),
+      _event: event
     };
   }
   parseSwappedOneOfferEvent(receipt) {
@@ -4462,7 +4462,6 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
   decodeSwappedOneOfferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       index: new import_eth_wallet37.BigNumber(result.index),
@@ -4470,7 +4469,8 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
       amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
       amountIn: new import_eth_wallet37.BigNumber(result.amountIn),
       newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
-      newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance)
+      newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance),
+      _event: event
     };
   }
   async addLiquidity(params) {
@@ -4719,12 +4719,12 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
   decodeAddLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       index: new import_eth_wallet38.BigNumber(result.index),
       amount: new import_eth_wallet38.BigNumber(result.amount),
-      newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance)
+      newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
+      _event: event
     };
   }
   parseApprovedTraderEvent(receipt) {
@@ -4733,11 +4733,11 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
   decodeApprovedTraderEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       direction: result.direction,
       offerIndex: new import_eth_wallet38.BigNumber(result.offerIndex),
       trader: result.trader,
-      allocation: new import_eth_wallet38.BigNumber(result.allocation)
+      allocation: new import_eth_wallet38.BigNumber(result.allocation),
+      _event: event
     };
   }
   parseLockEvent(receipt) {
@@ -4746,9 +4746,9 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
   decodeLockEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       direction: result.direction,
-      index: new import_eth_wallet38.BigNumber(result.index)
+      index: new import_eth_wallet38.BigNumber(result.index),
+      _event: event
     };
   }
   parseNewProviderOfferEvent(receipt) {
@@ -4757,14 +4757,14 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
   decodeNewProviderOfferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       index: new import_eth_wallet38.BigNumber(result.index),
       allowAll: result.allowAll,
       restrictedPrice: new import_eth_wallet38.BigNumber(result.restrictedPrice),
       startDate: new import_eth_wallet38.BigNumber(result.startDate),
-      expire: new import_eth_wallet38.BigNumber(result.expire)
+      expire: new import_eth_wallet38.BigNumber(result.expire),
+      _event: event
     };
   }
   parseRemoveLiquidityEvent(receipt) {
@@ -4773,14 +4773,14 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
   decodeRemoveLiquidityEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       index: new import_eth_wallet38.BigNumber(result.index),
       amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
       receivingOut: new import_eth_wallet38.BigNumber(result.receivingOut),
       newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
-      newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance)
+      newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance),
+      _event: event
     };
   }
   parseSwapEvent(receipt) {
@@ -4789,13 +4789,13 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
   decodeSwapEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       to: result.to,
       direction: result.direction,
       amountIn: new import_eth_wallet38.BigNumber(result.amountIn),
       amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
       tradeFee: new import_eth_wallet38.BigNumber(result.tradeFee),
-      protocolFee: new import_eth_wallet38.BigNumber(result.protocolFee)
+      protocolFee: new import_eth_wallet38.BigNumber(result.protocolFee),
+      _event: event
     };
   }
   parseSwappedOneOfferEvent(receipt) {
@@ -4804,7 +4804,6 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
   decodeSwappedOneOfferEvent(event) {
     let result = event.data;
     return {
-      _event: event,
       provider: result.provider,
       direction: result.direction,
       index: new import_eth_wallet38.BigNumber(result.index),
@@ -4812,7 +4811,8 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
       amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
       amountIn: new import_eth_wallet38.BigNumber(result.amountIn),
       newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
-      newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance)
+      newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance),
+      _event: event
     };
   }
   async addLiquidity(params) {

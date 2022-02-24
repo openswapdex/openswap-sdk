@@ -102,42 +102,42 @@ export declare class OSWAP_RestrictedFactory extends Contract {
 }
 export declare module OSWAP_RestrictedFactory {
     interface OracleAddedEvent {
-        _event: Event;
         token0: string;
         token1: string;
         oracle: string;
+        _event: Event;
     }
     interface OwnershipTransferredEvent {
-        _event: Event;
         previousOwner: string;
         newOwner: string;
+        _event: Event;
     }
     interface PairCreatedEvent {
-        _event: Event;
         token0: string;
         token1: string;
         pair: string;
         newPairSize: BigNumber;
         newSize: BigNumber;
+        _event: Event;
     }
     interface PairRestartedEvent {
-        _event: Event;
         pair: string;
+        _event: Event;
     }
     interface PairShutdownedEvent {
-        _event: Event;
         pair: string;
+        _event: Event;
     }
     interface ParamSetEvent {
-        _event: Event;
         name: string;
         value: string;
+        _event: Event;
     }
     interface ParamSet2Event {
-        _event: Event;
         name: string;
         value1: string;
         value2: string;
+        _event: Event;
     }
     interface RestartedEvent {
     }

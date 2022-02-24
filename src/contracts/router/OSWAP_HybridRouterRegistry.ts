@@ -14,11 +14,11 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     decodeCustomPairRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent{
         let result = event.data;
         return {
-            _event:event,
             pair: result.pair,
             fee: new BigNumber(result.fee),
             feeBase: new BigNumber(result.feeBase),
-            typeCode: new BigNumber(result.typeCode)
+            typeCode: new BigNumber(result.typeCode),
+            _event: event
         };
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.OwnershipTransferredEvent[]{
@@ -27,9 +27,9 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     decodeOwnershipTransferredEvent(event: Event): OSWAP_HybridRouterRegistry.OwnershipTransferredEvent{
         let result = event.data;
         return {
-            _event:event,
             previousOwner: result.previousOwner,
-            newOwner: result.newOwner
+            newOwner: result.newOwner,
+            _event: event
         };
     }
     parsePairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.PairRegisterEvent[]{
@@ -38,11 +38,11 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     decodePairRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.PairRegisterEvent{
         let result = event.data;
         return {
-            _event:event,
             factory: result.factory,
             pair: result.pair,
             token0: result.token0,
-            token1: result.token1
+            token1: result.token1,
+            _event: event
         };
     }
     parseProtocolRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.ProtocolRegisterEvent[]{
@@ -51,12 +51,12 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     decodeProtocolRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.ProtocolRegisterEvent{
         let result = event.data;
         return {
-            _event:event,
             factory: result.factory,
             name: result.name,
             fee: new BigNumber(result.fee),
             feeBase: new BigNumber(result.feeBase),
-            typeCode: new BigNumber(result.typeCode)
+            typeCode: new BigNumber(result.typeCode),
+            _event: event
         };
     }
     async customPairs(param1:string): Promise<{fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}>{
@@ -180,8 +180,8 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     }
 }
 export module OSWAP_HybridRouterRegistry{
-    export interface CustomPairRegisterEvent {_event:Event,pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
-    export interface OwnershipTransferredEvent {_event:Event,previousOwner:string,newOwner:string}
-    export interface PairRegisterEvent {_event:Event,factory:string,pair:string,token0:string,token1:string}
-    export interface ProtocolRegisterEvent {_event:Event,factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
+    export interface CustomPairRegisterEvent {pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber,_event:Event}
+    export interface OwnershipTransferredEvent {previousOwner:string,newOwner:string,_event:Event}
+    export interface PairRegisterEvent {factory:string,pair:string,token0:string,token1:string,_event:Event}
+    export interface ProtocolRegisterEvent {factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber,_event:Event}
 }

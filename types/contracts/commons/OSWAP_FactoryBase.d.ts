@@ -36,19 +36,19 @@ export declare class OSWAP_FactoryBase extends Contract {
 }
 export declare module OSWAP_FactoryBase {
     interface PairCreatedEvent {
-        _event: Event;
         token0: string;
         token1: string;
         pair: string;
         newSize: BigNumber;
+        _event: Event;
     }
     interface PairRestartedEvent {
-        _event: Event;
         pair: string;
+        _event: Event;
     }
     interface PairShutdownedEvent {
-        _event: Event;
         pair: string;
+        _event: Event;
     }
     interface RestartedEvent {
     }

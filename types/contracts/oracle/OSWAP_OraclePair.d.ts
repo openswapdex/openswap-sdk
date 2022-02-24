@@ -181,7 +181,6 @@ export declare class OSWAP_OraclePair extends Contract {
 }
 export declare module OSWAP_OraclePair {
     interface AddLiquidityEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         staked: BigNumber;
@@ -190,26 +189,26 @@ export declare module OSWAP_OraclePair {
         newAmountBalance: BigNumber;
         expire: BigNumber;
         enable: boolean;
+        _event: Event;
     }
     interface DelegatorPauseOfferEvent {
-        _event: Event;
         delegator: string;
         provider: string;
         direction: boolean;
+        _event: Event;
     }
     interface DelegatorResumeOfferEvent {
-        _event: Event;
         delegator: string;
         provider: string;
         direction: boolean;
+        _event: Event;
     }
     interface NewProviderEvent {
-        _event: Event;
         provider: string;
         index: BigNumber;
+        _event: Event;
     }
     interface RemoveLiquidityEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         unstake: BigNumber;
@@ -220,23 +219,23 @@ export declare module OSWAP_OraclePair {
         newReserveBalance: BigNumber;
         expire: BigNumber;
         enable: boolean;
+        _event: Event;
     }
     interface ReplenishEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         amountIn: BigNumber;
         newAmountBalance: BigNumber;
         newReserveBalance: BigNumber;
         expire: BigNumber;
+        _event: Event;
     }
     interface SetDelegatorEvent {
-        _event: Event;
         provider: string;
         delegator: string;
+        _event: Event;
     }
     interface SwapEvent {
-        _event: Event;
         to: string;
         direction: boolean;
         price: BigNumber;
@@ -244,14 +243,15 @@ export declare module OSWAP_OraclePair {
         amountOut: BigNumber;
         tradeFee: BigNumber;
         protocolFee: BigNumber;
+        _event: Event;
     }
     interface SwappedOneProviderEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         amountOut: BigNumber;
         amountIn: BigNumber;
         newAmountBalance: BigNumber;
         newCounterReserveBalance: BigNumber;
+        _event: Event;
     }
 }

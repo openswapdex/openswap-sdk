@@ -14,10 +14,10 @@ export class OpenSwap extends Contract{
     decodeApprovalEvent(event: Event): OpenSwap.ApprovalEvent{
         let result = event.data;
         return {
-            _event:event,
             owner: result.owner,
             spender: result.spender,
-            value: new BigNumber(result.value)
+            value: new BigNumber(result.value),
+            _event: event
         };
     }
     parseTransferEvent(receipt: TransactionReceipt): OpenSwap.TransferEvent[]{
@@ -26,10 +26,10 @@ export class OpenSwap extends Contract{
     decodeTransferEvent(event: Event): OpenSwap.TransferEvent{
         let result = event.data;
         return {
-            _event:event,
             from: result.from,
             to: result.to,
-            value: new BigNumber(result.value)
+            value: new BigNumber(result.value),
+            _event: event
         };
     }
     async allowance(params:{owner:string,spender:string}): Promise<BigNumber>{
@@ -90,6 +90,6 @@ export class OpenSwap extends Contract{
     }
 }
 export module OpenSwap{
-    export interface ApprovalEvent {_event:Event,owner:string,spender:string,value:BigNumber}
-    export interface TransferEvent {_event:Event,from:string,to:string,value:BigNumber}
+    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber,_event:Event}
+    export interface TransferEvent {from:string,to:string,value:BigNumber,_event:Event}
 }

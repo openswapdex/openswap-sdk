@@ -150,7 +150,6 @@ export declare class OSWAP_RangePair extends Contract {
 }
 export declare module OSWAP_RangePair {
     interface AddLiquidityEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         staked: BigNumber;
@@ -161,21 +160,21 @@ export declare module OSWAP_RangePair {
         upperLimit: BigNumber;
         startDate: BigNumber;
         expire: BigNumber;
+        _event: Event;
     }
     interface NewProviderEvent {
-        _event: Event;
         provider: string;
         index: BigNumber;
+        _event: Event;
     }
     interface RemoveAllLiquidityEvent {
-        _event: Event;
         provider: string;
         unstake: BigNumber;
         amount0Out: BigNumber;
         amount1Out: BigNumber;
+        _event: Event;
     }
     interface RemoveLiquidityEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         unstake: BigNumber;
@@ -188,17 +187,17 @@ export declare module OSWAP_RangePair {
         upperLimit: BigNumber;
         startDate: BigNumber;
         expire: BigNumber;
+        _event: Event;
     }
     interface ReplenishEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         amountIn: BigNumber;
         newAmountBalance: BigNumber;
         newReserveBalance: BigNumber;
+        _event: Event;
     }
     interface SwapEvent {
-        _event: Event;
         to: string;
         direction: boolean;
         price: BigNumber;
@@ -206,18 +205,18 @@ export declare module OSWAP_RangePair {
         amountOut: BigNumber;
         tradeFee: BigNumber;
         protocolFee: BigNumber;
+        _event: Event;
     }
     interface SwappedOneProviderEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         amountOut: BigNumber;
         amountIn: BigNumber;
         newAmountBalance: BigNumber;
         newCounterReserveBalance: BigNumber;
+        _event: Event;
     }
     interface UpdateProviderOfferEvent {
-        _event: Event;
         provider: string;
         direction: boolean;
         replenish: BigNumber;
@@ -228,5 +227,6 @@ export declare module OSWAP_RangePair {
         startDate: BigNumber;
         expire: BigNumber;
         privateReplenish: boolean;
+        _event: Event;
     }
 }

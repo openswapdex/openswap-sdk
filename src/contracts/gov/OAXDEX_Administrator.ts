@@ -14,8 +14,8 @@ export class OAXDEX_Administrator extends Contract{
     decodeAddAdminEvent(event: Event): OAXDEX_Administrator.AddAdminEvent{
         let result = event.data;
         return {
-            _event:event,
-            admin: result.admin
+            admin: result.admin,
+            _event: event
         };
     }
     parseRemoveAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.RemoveAdminEvent[]{
@@ -24,8 +24,8 @@ export class OAXDEX_Administrator extends Contract{
     decodeRemoveAdminEvent(event: Event): OAXDEX_Administrator.RemoveAdminEvent{
         let result = event.data;
         return {
-            _event:event,
-            admin: result.admin
+            admin: result.admin,
+            _event: event
         };
     }
     parseSetMaxAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.SetMaxAdminEvent[]{
@@ -34,8 +34,8 @@ export class OAXDEX_Administrator extends Contract{
     decodeSetMaxAdminEvent(event: Event): OAXDEX_Administrator.SetMaxAdminEvent{
         let result = event.data;
         return {
-            _event:event,
-            maxAdmin: new BigNumber(result.maxAdmin)
+            maxAdmin: new BigNumber(result.maxAdmin),
+            _event: event
         };
     }
     parseVotedFactoryRestartEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedFactoryRestartEvent[]{
@@ -44,10 +44,10 @@ export class OAXDEX_Administrator extends Contract{
     decodeVotedFactoryRestartEvent(event: Event): OAXDEX_Administrator.VotedFactoryRestartEvent{
         let result = event.data;
         return {
-            _event:event,
             admin: result.admin,
             factory: result.factory,
-            YorN: result.YorN
+            YorN: result.YorN,
+            _event: event
         };
     }
     parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedFactoryShutdownEvent[]{
@@ -56,10 +56,10 @@ export class OAXDEX_Administrator extends Contract{
     decodeVotedFactoryShutdownEvent(event: Event): OAXDEX_Administrator.VotedFactoryShutdownEvent{
         let result = event.data;
         return {
-            _event:event,
             admin: result.admin,
             factory: result.factory,
-            YorN: result.YorN
+            YorN: result.YorN,
+            _event: event
         };
     }
     parseVotedPairRestartEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedPairRestartEvent[]{
@@ -68,10 +68,10 @@ export class OAXDEX_Administrator extends Contract{
     decodeVotedPairRestartEvent(event: Event): OAXDEX_Administrator.VotedPairRestartEvent{
         let result = event.data;
         return {
-            _event:event,
             admin: result.admin,
             pair: result.pair,
-            YorN: result.YorN
+            YorN: result.YorN,
+            _event: event
         };
     }
     parseVotedPairShutdownEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedPairShutdownEvent[]{
@@ -80,10 +80,10 @@ export class OAXDEX_Administrator extends Contract{
     decodeVotedPairShutdownEvent(event: Event): OAXDEX_Administrator.VotedPairShutdownEvent{
         let result = event.data;
         return {
-            _event:event,
             admin: result.admin,
             pair: result.pair,
-            YorN: result.YorN
+            YorN: result.YorN,
+            _event: event
         };
     }
     parseVotedVetoEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedVetoEvent[]{
@@ -92,10 +92,10 @@ export class OAXDEX_Administrator extends Contract{
     decodeVotedVetoEvent(event: Event): OAXDEX_Administrator.VotedVetoEvent{
         let result = event.data;
         return {
-            _event:event,
             admin: result.admin,
             votingContract: result.votingContract,
-            YorN: result.YorN
+            YorN: result.YorN,
+            _event: event
         };
     }
     async addAdmin(admin:string): Promise<TransactionReceipt>{
@@ -212,12 +212,12 @@ export class OAXDEX_Administrator extends Contract{
     }
 }
 export module OAXDEX_Administrator{
-    export interface AddAdminEvent {_event:Event,admin:string}
-    export interface RemoveAdminEvent {_event:Event,admin:string}
-    export interface SetMaxAdminEvent {_event:Event,maxAdmin:BigNumber}
-    export interface VotedFactoryRestartEvent {_event:Event,admin:string,factory:string,YorN:boolean}
-    export interface VotedFactoryShutdownEvent {_event:Event,admin:string,factory:string,YorN:boolean}
-    export interface VotedPairRestartEvent {_event:Event,admin:string,pair:string,YorN:boolean}
-    export interface VotedPairShutdownEvent {_event:Event,admin:string,pair:string,YorN:boolean}
-    export interface VotedVetoEvent {_event:Event,admin:string,votingContract:string,YorN:boolean}
+    export interface AddAdminEvent {admin:string,_event:Event}
+    export interface RemoveAdminEvent {admin:string,_event:Event}
+    export interface SetMaxAdminEvent {maxAdmin:BigNumber,_event:Event}
+    export interface VotedFactoryRestartEvent {admin:string,factory:string,YorN:boolean,_event:Event}
+    export interface VotedFactoryShutdownEvent {admin:string,factory:string,YorN:boolean,_event:Event}
+    export interface VotedPairRestartEvent {admin:string,pair:string,YorN:boolean,_event:Event}
+    export interface VotedPairShutdownEvent {admin:string,pair:string,YorN:boolean,_event:Event}
+    export interface VotedVetoEvent {admin:string,votingContract:string,YorN:boolean,_event:Event}
 }

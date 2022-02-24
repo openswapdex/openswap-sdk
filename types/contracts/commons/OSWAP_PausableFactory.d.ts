@@ -20,12 +20,12 @@ export declare class OSWAP_PausableFactory extends Contract {
 }
 export declare module OSWAP_PausableFactory {
     interface PairRestartedEvent {
-        _event: Event;
         pair: string;
+        _event: Event;
     }
     interface PairShutdownedEvent {
-        _event: Event;
         pair: string;
+        _event: Event;
     }
     interface RestartedEvent {
     }

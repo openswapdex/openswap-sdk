@@ -14,10 +14,10 @@ export class OSWAP_Pair extends Contract{
     decodeApprovalEvent(event: Event): OSWAP_Pair.ApprovalEvent{
         let result = event.data;
         return {
-            _event:event,
             owner: result.owner,
             spender: result.spender,
-            value: new BigNumber(result.value)
+            value: new BigNumber(result.value),
+            _event: event
         };
     }
     parseBurnEvent(receipt: TransactionReceipt): OSWAP_Pair.BurnEvent[]{
@@ -26,11 +26,11 @@ export class OSWAP_Pair extends Contract{
     decodeBurnEvent(event: Event): OSWAP_Pair.BurnEvent{
         let result = event.data;
         return {
-            _event:event,
             sender: result.sender,
             amount0: new BigNumber(result.amount0),
             amount1: new BigNumber(result.amount1),
-            to: result.to
+            to: result.to,
+            _event: event
         };
     }
     parseMintEvent(receipt: TransactionReceipt): OSWAP_Pair.MintEvent[]{
@@ -39,10 +39,10 @@ export class OSWAP_Pair extends Contract{
     decodeMintEvent(event: Event): OSWAP_Pair.MintEvent{
         let result = event.data;
         return {
-            _event:event,
             sender: result.sender,
             amount0: new BigNumber(result.amount0),
-            amount1: new BigNumber(result.amount1)
+            amount1: new BigNumber(result.amount1),
+            _event: event
         };
     }
     parseProtocolFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.ProtocolFeeSetEvent[]{
@@ -51,8 +51,8 @@ export class OSWAP_Pair extends Contract{
     decodeProtocolFeeSetEvent(event: Event): OSWAP_Pair.ProtocolFeeSetEvent{
         let result = event.data;
         return {
-            _event:event,
-            protocolFee: new BigNumber(result.protocolFee)
+            protocolFee: new BigNumber(result.protocolFee),
+            _event: event
         };
     }
     parseSwapEvent(receipt: TransactionReceipt): OSWAP_Pair.SwapEvent[]{
@@ -61,13 +61,13 @@ export class OSWAP_Pair extends Contract{
     decodeSwapEvent(event: Event): OSWAP_Pair.SwapEvent{
         let result = event.data;
         return {
-            _event:event,
             sender: result.sender,
             amount0In: new BigNumber(result.amount0In),
             amount1In: new BigNumber(result.amount1In),
             amount0Out: new BigNumber(result.amount0Out),
             amount1Out: new BigNumber(result.amount1Out),
-            to: result.to
+            to: result.to,
+            _event: event
         };
     }
     parseSyncEvent(receipt: TransactionReceipt): OSWAP_Pair.SyncEvent[]{
@@ -76,9 +76,9 @@ export class OSWAP_Pair extends Contract{
     decodeSyncEvent(event: Event): OSWAP_Pair.SyncEvent{
         let result = event.data;
         return {
-            _event:event,
             reserve0: new BigNumber(result.reserve0),
-            reserve1: new BigNumber(result.reserve1)
+            reserve1: new BigNumber(result.reserve1),
+            _event: event
         };
     }
     parseTradeFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.TradeFeeSetEvent[]{
@@ -87,8 +87,8 @@ export class OSWAP_Pair extends Contract{
     decodeTradeFeeSetEvent(event: Event): OSWAP_Pair.TradeFeeSetEvent{
         let result = event.data;
         return {
-            _event:event,
-            tradeFee: new BigNumber(result.tradeFee)
+            tradeFee: new BigNumber(result.tradeFee),
+            _event: event
         };
     }
     parseTransferEvent(receipt: TransactionReceipt): OSWAP_Pair.TransferEvent[]{
@@ -97,10 +97,10 @@ export class OSWAP_Pair extends Contract{
     decodeTransferEvent(event: Event): OSWAP_Pair.TransferEvent{
         let result = event.data;
         return {
-            _event:event,
             from: result.from,
             to: result.to,
-            value: new BigNumber(result.value)
+            value: new BigNumber(result.value),
+            _event: event
         };
     }
     async EIP712_TYPEHASH(): Promise<string>{
@@ -257,12 +257,12 @@ export class OSWAP_Pair extends Contract{
     }
 }
 export module OSWAP_Pair{
-    export interface ApprovalEvent {_event:Event,owner:string,spender:string,value:BigNumber}
-    export interface BurnEvent {_event:Event,sender:string,amount0:BigNumber,amount1:BigNumber,to:string}
-    export interface MintEvent {_event:Event,sender:string,amount0:BigNumber,amount1:BigNumber}
-    export interface ProtocolFeeSetEvent {_event:Event,protocolFee:BigNumber}
-    export interface SwapEvent {_event:Event,sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}
-    export interface SyncEvent {_event:Event,reserve0:BigNumber,reserve1:BigNumber}
-    export interface TradeFeeSetEvent {_event:Event,tradeFee:BigNumber}
-    export interface TransferEvent {_event:Event,from:string,to:string,value:BigNumber}
+    export interface ApprovalEvent {owner:string,spender:string,value:BigNumber,_event:Event}
+    export interface BurnEvent {sender:string,amount0:BigNumber,amount1:BigNumber,to:string,_event:Event}
+    export interface MintEvent {sender:string,amount0:BigNumber,amount1:BigNumber,_event:Event}
+    export interface ProtocolFeeSetEvent {protocolFee:BigNumber,_event:Event}
+    export interface SwapEvent {sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string,_event:Event}
+    export interface SyncEvent {reserve0:BigNumber,reserve1:BigNumber,_event:Event}
+    export interface TradeFeeSetEvent {tradeFee:BigNumber,_event:Event}
+    export interface TransferEvent {from:string,to:string,value:BigNumber,_event:Event}
 }

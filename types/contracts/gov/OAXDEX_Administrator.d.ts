@@ -85,45 +85,45 @@ export declare class OAXDEX_Administrator extends Contract {
 }
 export declare module OAXDEX_Administrator {
     interface AddAdminEvent {
-        _event: Event;
         admin: string;
+        _event: Event;
     }
     interface RemoveAdminEvent {
-        _event: Event;
         admin: string;
+        _event: Event;
     }
     interface SetMaxAdminEvent {
-        _event: Event;
         maxAdmin: BigNumber;
+        _event: Event;
     }
     interface VotedFactoryRestartEvent {
-        _event: Event;
         admin: string;
         factory: string;
         YorN: boolean;
+        _event: Event;
     }
     interface VotedFactoryShutdownEvent {
-        _event: Event;
         admin: string;
         factory: string;
         YorN: boolean;
+        _event: Event;
     }
     interface VotedPairRestartEvent {
-        _event: Event;
         admin: string;
         pair: string;
         YorN: boolean;
+        _event: Event;
     }
     interface VotedPairShutdownEvent {
-        _event: Event;
         admin: string;
         pair: string;
         YorN: boolean;
+        _event: Event;
     }
     interface VotedVetoEvent {
-        _event: Event;
         admin: string;
         votingContract: string;
         YorN: boolean;
+        _event: Event;
     }
 }

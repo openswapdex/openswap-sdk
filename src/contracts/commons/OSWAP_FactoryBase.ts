@@ -14,11 +14,11 @@ export class OSWAP_FactoryBase extends Contract{
     decodePairCreatedEvent(event: Event): OSWAP_FactoryBase.PairCreatedEvent{
         let result = event.data;
         return {
-            _event:event,
             token0: result.token0,
             token1: result.token1,
             pair: result.pair,
-            newSize: new BigNumber(result.newSize)
+            newSize: new BigNumber(result.newSize),
+            _event: event
         };
     }
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairRestartedEvent[]{
@@ -27,8 +27,8 @@ export class OSWAP_FactoryBase extends Contract{
     decodePairRestartedEvent(event: Event): OSWAP_FactoryBase.PairRestartedEvent{
         let result = event.data;
         return {
-            _event:event,
-            pair: result.pair
+            pair: result.pair,
+            _event: event
         };
     }
     parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairShutdownedEvent[]{
@@ -37,8 +37,8 @@ export class OSWAP_FactoryBase extends Contract{
     decodePairShutdownedEvent(event: Event): OSWAP_FactoryBase.PairShutdownedEvent{
         let result = event.data;
         return {
-            _event:event,
-            pair: result.pair
+            pair: result.pair,
+            _event: event
         };
     }
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.RestartedEvent[]{
@@ -47,7 +47,7 @@ export class OSWAP_FactoryBase extends Contract{
     decodeRestartedEvent(event: Event): OSWAP_FactoryBase.RestartedEvent{
         let result = event.data;
         return {
-            _event:event,
+            _event: event
         };
     }
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.ShutdownedEvent[]{
@@ -56,7 +56,7 @@ export class OSWAP_FactoryBase extends Contract{
     decodeShutdownedEvent(event: Event): OSWAP_FactoryBase.ShutdownedEvent{
         let result = event.data;
         return {
-            _event:event,
+            _event: event
         };
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
@@ -97,9 +97,9 @@ export class OSWAP_FactoryBase extends Contract{
     }
 }
 export module OSWAP_FactoryBase{
-    export interface PairCreatedEvent {_event:Event,token0:string,token1:string,pair:string,newSize:BigNumber}
-    export interface PairRestartedEvent {_event:Event,pair:string}
-    export interface PairShutdownedEvent {_event:Event,pair:string}
+    export interface PairCreatedEvent {token0:string,token1:string,pair:string,newSize:BigNumber,_event:Event}
+    export interface PairRestartedEvent {pair:string,_event:Event}
+    export interface PairShutdownedEvent {pair:string,_event:Event}
     export interface RestartedEvent {}
     export interface ShutdownedEvent {}
 }

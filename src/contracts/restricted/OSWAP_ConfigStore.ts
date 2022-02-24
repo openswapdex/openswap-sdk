@@ -14,9 +14,9 @@ export class OSWAP_ConfigStore extends Contract{
     decodeParamSetEvent(event: Event): OSWAP_ConfigStore.ParamSetEvent{
         let result = event.data;
         return {
-            _event:event,
             name: result.name,
-            value: result.value
+            value: result.value,
+            _event: event
         };
     }
     async customParam(param1:string): Promise<string>{
@@ -49,5 +49,5 @@ export class OSWAP_ConfigStore extends Contract{
     }
 }
 export module OSWAP_ConfigStore{
-    export interface ParamSetEvent {_event:Event,name:string,value:string}
+    export interface ParamSetEvent {name:string,value:string,_event:Event}
 }
