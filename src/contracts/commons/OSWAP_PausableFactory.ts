@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/commons/OSWAP_PausableFactory.json");
 
 export class OSWAP_PausableFactory extends Contract{
@@ -9,46 +9,42 @@ export class OSWAP_PausableFactory extends Contract{
         return this._deploy(governance);
     }
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.PairRestartedEvent[]{
-        let events = this.parseEvents(receipt, "PairRestarted");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                pair: result.pair
-            };
-        });
+        return this.parseEvents(receipt, "PairRestarted").map(e=>this.decodePairRestartedEvent(e));
+    }
+    decodePairRestartedEvent(event: Event): OSWAP_PausableFactory.PairRestartedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            pair: result.pair
+        };
     }
     parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.PairShutdownedEvent[]{
-        let events = this.parseEvents(receipt, "PairShutdowned");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                pair: result.pair
-            };
-        });
+        return this.parseEvents(receipt, "PairShutdowned").map(e=>this.decodePairShutdownedEvent(e));
+    }
+    decodePairShutdownedEvent(event: Event): OSWAP_PausableFactory.PairShutdownedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            pair: result.pair
+        };
     }
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.RestartedEvent[]{
-        let events = this.parseEvents(receipt, "Restarted");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash
-            };
-        });
+        return this.parseEvents(receipt, "Restarted").map(e=>this.decodeRestartedEvent(e));
+    }
+    decodeRestartedEvent(event: Event): OSWAP_PausableFactory.RestartedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+        };
     }
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.ShutdownedEvent[]{
-        let events = this.parseEvents(receipt, "Shutdowned");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash
-            };
-        });
+        return this.parseEvents(receipt, "Shutdowned").map(e=>this.decodeShutdownedEvent(e));
+    }
+    decodeShutdownedEvent(event: Event): OSWAP_PausableFactory.ShutdownedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+        };
     }
     async governance(): Promise<string>{
         let result = await this.methods('governance');
@@ -68,8 +64,8 @@ export class OSWAP_PausableFactory extends Contract{
     }
 }
 export module OSWAP_PausableFactory{
-    export interface PairRestartedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
-    export interface PairShutdownedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
-    export interface RestartedEvent {_eventName:string,_address:string,_transactionHash:string}
-    export interface ShutdownedEvent {_eventName:string,_address:string,_transactionHash:string}
+    export interface PairRestartedEvent {_event:Event,pair:string}
+    export interface PairShutdownedEvent {_event:Event,pair:string}
+    export interface RestartedEvent {}
+    export interface ShutdownedEvent {}
 }

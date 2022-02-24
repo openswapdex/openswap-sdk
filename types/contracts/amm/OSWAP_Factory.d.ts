@@ -1,4 +1,4 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_Factory extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(params: {
@@ -9,12 +9,19 @@ export declare class OSWAP_Factory extends Contract {
         protocolFeeTo: string;
     }): Promise<string>;
     parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairCreatedEvent[];
+    decodePairCreatedEvent(event: Event): OSWAP_Factory.PairCreatedEvent;
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairRestartedEvent[];
+    decodePairRestartedEvent(event: Event): OSWAP_Factory.PairRestartedEvent;
     parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_Factory.PairShutdownedEvent[];
+    decodePairShutdownedEvent(event: Event): OSWAP_Factory.PairShutdownedEvent;
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_Factory.ParamSetEvent[];
+    decodeParamSetEvent(event: Event): OSWAP_Factory.ParamSetEvent;
     parseParamSet2Event(receipt: TransactionReceipt): OSWAP_Factory.ParamSet2Event[];
+    decodeParamSet2Event(event: Event): OSWAP_Factory.ParamSet2Event;
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_Factory.RestartedEvent[];
+    decodeRestartedEvent(event: Event): OSWAP_Factory.RestartedEvent;
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_Factory.ShutdownedEvent[];
+    decodeShutdownedEvent(event: Event): OSWAP_Factory.ShutdownedEvent;
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
     createPair(params: {
@@ -46,49 +53,33 @@ export declare class OSWAP_Factory extends Contract {
 }
 export declare module OSWAP_Factory {
     interface PairCreatedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         token0: string;
         token1: string;
         pair: string;
         newSize: BigNumber;
     }
     interface PairRestartedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         pair: string;
     }
     interface PairShutdownedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         pair: string;
     }
     interface ParamSetEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         name: string;
         value: string;
     }
     interface ParamSet2Event {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         name: string;
         value1: string;
         value2: string;
     }
     interface RestartedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
     }
     interface ShutdownedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
     }
 }

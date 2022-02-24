@@ -1,9 +1,11 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_ERC20 extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
     parseApprovalEvent(receipt: TransactionReceipt): OSWAP_ERC20.ApprovalEvent[];
+    decodeApprovalEvent(event: Event): OSWAP_ERC20.ApprovalEvent;
     parseTransferEvent(receipt: TransactionReceipt): OSWAP_ERC20.TransferEvent[];
+    decodeTransferEvent(event: Event): OSWAP_ERC20.TransferEvent;
     EIP712_TYPEHASH(): Promise<string>;
     NAME_HASH(): Promise<string>;
     PERMIT_TYPEHASH(): Promise<string>;
@@ -43,17 +45,13 @@ export declare class OSWAP_ERC20 extends Contract {
 }
 export declare module OSWAP_ERC20 {
     interface ApprovalEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         owner: string;
         spender: string;
         value: BigNumber;
     }
     interface TransferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         from: string;
         to: string;
         value: BigNumber;

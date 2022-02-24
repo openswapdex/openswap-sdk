@@ -1,8 +1,9 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_ConfigStore extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(governance: string): Promise<string>;
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_ConfigStore.ParamSetEvent[];
+    decodeParamSetEvent(event: Event): OSWAP_ConfigStore.ParamSetEvent;
     customParam(param1: string): Promise<string>;
     customParamNames(param1: number | BigNumber): Promise<string>;
     customParamNamesIdx(param1: string): Promise<BigNumber>;
@@ -19,9 +20,7 @@ export declare class OSWAP_ConfigStore extends Contract {
 }
 export declare module OSWAP_ConfigStore {
     interface ParamSetEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         name: string;
         value: string;
     }

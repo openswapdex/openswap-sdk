@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/commons/OSWAP_FactoryBase.json");
 
 export class OSWAP_FactoryBase extends Contract{
@@ -9,60 +9,55 @@ export class OSWAP_FactoryBase extends Contract{
         return this._deploy(params.governance,params.pairCreator);
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairCreatedEvent[]{
-        let events = this.parseEvents(receipt, "PairCreated");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                token0: result.token0,
-                token1: result.token1,
-                pair: result.pair,
-                newSize: new BigNumber(result.newSize)
-            };
-        });
+        return this.parseEvents(receipt, "PairCreated").map(e=>this.decodePairCreatedEvent(e));
+    }
+    decodePairCreatedEvent(event: Event): OSWAP_FactoryBase.PairCreatedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            token0: result.token0,
+            token1: result.token1,
+            pair: result.pair,
+            newSize: new BigNumber(result.newSize)
+        };
     }
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairRestartedEvent[]{
-        let events = this.parseEvents(receipt, "PairRestarted");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                pair: result.pair
-            };
-        });
+        return this.parseEvents(receipt, "PairRestarted").map(e=>this.decodePairRestartedEvent(e));
+    }
+    decodePairRestartedEvent(event: Event): OSWAP_FactoryBase.PairRestartedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            pair: result.pair
+        };
     }
     parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairShutdownedEvent[]{
-        let events = this.parseEvents(receipt, "PairShutdowned");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                pair: result.pair
-            };
-        });
+        return this.parseEvents(receipt, "PairShutdowned").map(e=>this.decodePairShutdownedEvent(e));
+    }
+    decodePairShutdownedEvent(event: Event): OSWAP_FactoryBase.PairShutdownedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            pair: result.pair
+        };
     }
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.RestartedEvent[]{
-        let events = this.parseEvents(receipt, "Restarted");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash
-            };
-        });
+        return this.parseEvents(receipt, "Restarted").map(e=>this.decodeRestartedEvent(e));
+    }
+    decodeRestartedEvent(event: Event): OSWAP_FactoryBase.RestartedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+        };
     }
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.ShutdownedEvent[]{
-        let events = this.parseEvents(receipt, "Shutdowned");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash
-            };
-        });
+        return this.parseEvents(receipt, "Shutdowned").map(e=>this.decodeShutdownedEvent(e));
+    }
+    decodeShutdownedEvent(event: Event): OSWAP_FactoryBase.ShutdownedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+        };
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
         let result = await this.methods('allPairs',Utils.toString(param1));
@@ -102,9 +97,9 @@ export class OSWAP_FactoryBase extends Contract{
     }
 }
 export module OSWAP_FactoryBase{
-    export interface PairCreatedEvent {_eventName:string,_address:string,_transactionHash:string,token0:string,token1:string,pair:string,newSize:BigNumber}
-    export interface PairRestartedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
-    export interface PairShutdownedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
-    export interface RestartedEvent {_eventName:string,_address:string,_transactionHash:string}
-    export interface ShutdownedEvent {_eventName:string,_address:string,_transactionHash:string}
+    export interface PairCreatedEvent {_event:Event,token0:string,token1:string,pair:string,newSize:BigNumber}
+    export interface PairRestartedEvent {_event:Event,pair:string}
+    export interface PairShutdownedEvent {_event:Event,pair:string}
+    export interface RestartedEvent {}
+    export interface ShutdownedEvent {}
 }

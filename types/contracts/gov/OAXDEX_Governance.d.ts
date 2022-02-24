@@ -1,30 +1,43 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OAXDEX_Governance extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(params: {
         oaxToken: string;
         votingToken: string;
         names: string[];
-        minExeDelay: number[] | BigNumber[];
-        minVoteDuration: number[] | BigNumber[];
-        maxVoteDuration: number[] | BigNumber[];
-        minOaxTokenToCreateVote: number[] | BigNumber[];
-        minQuorum: number[] | BigNumber[];
+        minExeDelay: (number | BigNumber)[];
+        minVoteDuration: (number | BigNumber)[];
+        maxVoteDuration: (number | BigNumber)[];
+        minOaxTokenToCreateVote: (number | BigNumber)[];
+        minQuorum: (number | BigNumber)[];
         minStakePeriod: number | BigNumber;
     }): Promise<string>;
     parseAddVotingConfigEvent(receipt: TransactionReceipt): OAXDEX_Governance.AddVotingConfigEvent[];
+    decodeAddVotingConfigEvent(event: Event): OAXDEX_Governance.AddVotingConfigEvent;
     parseExecutedEvent(receipt: TransactionReceipt): OAXDEX_Governance.ExecutedEvent[];
+    decodeExecutedEvent(event: Event): OAXDEX_Governance.ExecutedEvent;
     parseNewPollEvent(receipt: TransactionReceipt): OAXDEX_Governance.NewPollEvent[];
+    decodeNewPollEvent(event: Event): OAXDEX_Governance.NewPollEvent;
     parseNewVoteEvent(receipt: TransactionReceipt): OAXDEX_Governance.NewVoteEvent[];
+    decodeNewVoteEvent(event: Event): OAXDEX_Governance.NewVoteEvent;
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): OAXDEX_Governance.OwnershipTransferredEvent[];
+    decodeOwnershipTransferredEvent(event: Event): OAXDEX_Governance.OwnershipTransferredEvent;
     parseParamSetEvent(receipt: TransactionReceipt): OAXDEX_Governance.ParamSetEvent[];
+    decodeParamSetEvent(event: Event): OAXDEX_Governance.ParamSetEvent;
     parseParamSet2Event(receipt: TransactionReceipt): OAXDEX_Governance.ParamSet2Event[];
+    decodeParamSet2Event(event: Event): OAXDEX_Governance.ParamSet2Event;
     parsePollEvent(receipt: TransactionReceipt): OAXDEX_Governance.PollEvent[];
+    decodePollEvent(event: Event): OAXDEX_Governance.PollEvent;
     parseSetVotingConfigEvent(receipt: TransactionReceipt): OAXDEX_Governance.SetVotingConfigEvent[];
+    decodeSetVotingConfigEvent(event: Event): OAXDEX_Governance.SetVotingConfigEvent;
     parseStakeEvent(receipt: TransactionReceipt): OAXDEX_Governance.StakeEvent[];
+    decodeStakeEvent(event: Event): OAXDEX_Governance.StakeEvent;
     parseUnstakeEvent(receipt: TransactionReceipt): OAXDEX_Governance.UnstakeEvent[];
+    decodeUnstakeEvent(event: Event): OAXDEX_Governance.UnstakeEvent;
     parseVetoEvent(receipt: TransactionReceipt): OAXDEX_Governance.VetoEvent[];
+    decodeVetoEvent(event: Event): OAXDEX_Governance.VetoEvent;
     parseVoteEvent(receipt: TransactionReceipt): OAXDEX_Governance.VoteEvent[];
+    decodeVoteEvent(event: Event): OAXDEX_Governance.VoteEvent;
     addVotingConfig(params: {
         name: string;
         minExeDelay: number | BigNumber;
@@ -114,9 +127,7 @@ export declare class OAXDEX_Governance extends Contract {
 }
 export declare module OAXDEX_Governance {
     interface AddVotingConfigEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         name: string;
         minExeDelay: BigNumber;
         minVoteDuration: BigNumber;
@@ -125,85 +136,61 @@ export declare module OAXDEX_Governance {
         minQuorum: BigNumber;
     }
     interface ExecutedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         vote: string;
     }
     interface NewPollEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         poll: string;
     }
     interface NewVoteEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         vote: string;
     }
     interface OwnershipTransferredEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         previousOwner: string;
         newOwner: string;
     }
     interface ParamSetEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         name: string;
         value: string;
     }
     interface ParamSet2Event {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         name: string;
         value1: string;
         value2: string;
     }
     interface PollEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         account: string;
         poll: string;
         option: BigNumber;
     }
     interface SetVotingConfigEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         configName: string;
         paramName: string;
         minExeDelay: BigNumber;
     }
     interface StakeEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         who: string;
         value: BigNumber;
     }
     interface UnstakeEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         who: string;
         value: BigNumber;
     }
     interface VetoEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         vote: string;
     }
     interface VoteEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         account: string;
         vote: string;
         option: BigNumber;

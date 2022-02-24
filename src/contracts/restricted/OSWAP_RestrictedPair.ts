@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/restricted/OSWAP_RestrictedPair.json");
 
 export class OSWAP_RestrictedPair extends Contract{
@@ -9,113 +9,106 @@ export class OSWAP_RestrictedPair extends Contract{
         return this._deploy();
     }
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.AddLiquidityEvent[]{
-        let events = this.parseEvents(receipt, "AddLiquidity");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                index: new BigNumber(result.index),
-                amount: new BigNumber(result.amount),
-                newAmountBalance: new BigNumber(result.newAmountBalance)
-            };
-        });
+        return this.parseEvents(receipt, "AddLiquidity").map(e=>this.decodeAddLiquidityEvent(e));
+    }
+    decodeAddLiquidityEvent(event: Event): OSWAP_RestrictedPair.AddLiquidityEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            index: new BigNumber(result.index),
+            amount: new BigNumber(result.amount),
+            newAmountBalance: new BigNumber(result.newAmountBalance)
+        };
     }
     parseApprovedTraderEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.ApprovedTraderEvent[]{
-        let events = this.parseEvents(receipt, "ApprovedTrader");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                direction: result.direction,
-                offerIndex: new BigNumber(result.offerIndex),
-                trader: result.trader,
-                allocation: new BigNumber(result.allocation)
-            };
-        });
+        return this.parseEvents(receipt, "ApprovedTrader").map(e=>this.decodeApprovedTraderEvent(e));
+    }
+    decodeApprovedTraderEvent(event: Event): OSWAP_RestrictedPair.ApprovedTraderEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            direction: result.direction,
+            offerIndex: new BigNumber(result.offerIndex),
+            trader: result.trader,
+            allocation: new BigNumber(result.allocation)
+        };
     }
     parseLockEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.LockEvent[]{
-        let events = this.parseEvents(receipt, "Lock");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                direction: result.direction,
-                index: new BigNumber(result.index)
-            };
-        });
+        return this.parseEvents(receipt, "Lock").map(e=>this.decodeLockEvent(e));
+    }
+    decodeLockEvent(event: Event): OSWAP_RestrictedPair.LockEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            direction: result.direction,
+            index: new BigNumber(result.index)
+        };
     }
     parseNewProviderOfferEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.NewProviderOfferEvent[]{
-        let events = this.parseEvents(receipt, "NewProviderOffer");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                index: new BigNumber(result.index),
-                allowAll: result.allowAll,
-                restrictedPrice: new BigNumber(result.restrictedPrice),
-                startDate: new BigNumber(result.startDate),
-                expire: new BigNumber(result.expire)
-            };
-        });
+        return this.parseEvents(receipt, "NewProviderOffer").map(e=>this.decodeNewProviderOfferEvent(e));
+    }
+    decodeNewProviderOfferEvent(event: Event): OSWAP_RestrictedPair.NewProviderOfferEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            index: new BigNumber(result.index),
+            allowAll: result.allowAll,
+            restrictedPrice: new BigNumber(result.restrictedPrice),
+            startDate: new BigNumber(result.startDate),
+            expire: new BigNumber(result.expire)
+        };
     }
     parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.RemoveLiquidityEvent[]{
-        let events = this.parseEvents(receipt, "RemoveLiquidity");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                index: new BigNumber(result.index),
-                amountOut: new BigNumber(result.amountOut),
-                receivingOut: new BigNumber(result.receivingOut),
-                newAmountBalance: new BigNumber(result.newAmountBalance),
-                newReceivingBalance: new BigNumber(result.newReceivingBalance)
-            };
-        });
+        return this.parseEvents(receipt, "RemoveLiquidity").map(e=>this.decodeRemoveLiquidityEvent(e));
+    }
+    decodeRemoveLiquidityEvent(event: Event): OSWAP_RestrictedPair.RemoveLiquidityEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            index: new BigNumber(result.index),
+            amountOut: new BigNumber(result.amountOut),
+            receivingOut: new BigNumber(result.receivingOut),
+            newAmountBalance: new BigNumber(result.newAmountBalance),
+            newReceivingBalance: new BigNumber(result.newReceivingBalance)
+        };
     }
     parseSwapEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.SwapEvent[]{
-        let events = this.parseEvents(receipt, "Swap");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                to: result.to,
-                direction: result.direction,
-                amountIn: new BigNumber(result.amountIn),
-                amountOut: new BigNumber(result.amountOut),
-                tradeFee: new BigNumber(result.tradeFee),
-                protocolFee: new BigNumber(result.protocolFee)
-            };
-        });
+        return this.parseEvents(receipt, "Swap").map(e=>this.decodeSwapEvent(e));
+    }
+    decodeSwapEvent(event: Event): OSWAP_RestrictedPair.SwapEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            to: result.to,
+            direction: result.direction,
+            amountIn: new BigNumber(result.amountIn),
+            amountOut: new BigNumber(result.amountOut),
+            tradeFee: new BigNumber(result.tradeFee),
+            protocolFee: new BigNumber(result.protocolFee)
+        };
     }
     parseSwappedOneOfferEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.SwappedOneOfferEvent[]{
-        let events = this.parseEvents(receipt, "SwappedOneOffer");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                index: new BigNumber(result.index),
-                price: new BigNumber(result.price),
-                amountOut: new BigNumber(result.amountOut),
-                amountIn: new BigNumber(result.amountIn),
-                newAmountBalance: new BigNumber(result.newAmountBalance),
-                newReceivingBalance: new BigNumber(result.newReceivingBalance)
-            };
-        });
+        return this.parseEvents(receipt, "SwappedOneOffer").map(e=>this.decodeSwappedOneOfferEvent(e));
+    }
+    decodeSwappedOneOfferEvent(event: Event): OSWAP_RestrictedPair.SwappedOneOfferEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            index: new BigNumber(result.index),
+            price: new BigNumber(result.price),
+            amountOut: new BigNumber(result.amountOut),
+            amountIn: new BigNumber(result.amountIn),
+            newAmountBalance: new BigNumber(result.newAmountBalance),
+            newReceivingBalance: new BigNumber(result.newReceivingBalance)
+        };
     }
     async addLiquidity(params:{direction:boolean,index:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('addLiquidity',params.direction,Utils.toString(params.index));
@@ -313,7 +306,7 @@ export class OSWAP_RestrictedPair extends Contract{
         let result = await this.methods('setLive',isLive);
         return result;
     }
-    async setMultipleApprovedTraders(params:{direction:boolean,offerIndex:number|BigNumber,trader:string[],allocation:number[]|BigNumber[]}): Promise<TransactionReceipt>{
+    async setMultipleApprovedTraders(params:{direction:boolean,offerIndex:number|BigNumber,trader:string[],allocation:(number|BigNumber)[]}): Promise<TransactionReceipt>{
         let result = await this.methods('setMultipleApprovedTraders',params.direction,Utils.toString(params.offerIndex),params.trader,Utils.toString(params.allocation));
         return result;
     }
@@ -347,11 +340,11 @@ export class OSWAP_RestrictedPair extends Contract{
     }
 }
 export module OSWAP_RestrictedPair{
-    export interface AddLiquidityEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,index:BigNumber,amount:BigNumber,newAmountBalance:BigNumber}
-    export interface ApprovedTraderEvent {_eventName:string,_address:string,_transactionHash:string,direction:boolean,offerIndex:BigNumber,trader:string,allocation:BigNumber}
-    export interface LockEvent {_eventName:string,_address:string,_transactionHash:string,direction:boolean,index:BigNumber}
-    export interface NewProviderOfferEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,index:BigNumber,allowAll:boolean,restrictedPrice:BigNumber,startDate:BigNumber,expire:BigNumber}
-    export interface RemoveLiquidityEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,index:BigNumber,amountOut:BigNumber,receivingOut:BigNumber,newAmountBalance:BigNumber,newReceivingBalance:BigNumber}
-    export interface SwapEvent {_eventName:string,_address:string,_transactionHash:string,to:string,direction:boolean,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}
-    export interface SwappedOneOfferEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,index:BigNumber,price:BigNumber,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newReceivingBalance:BigNumber}
+    export interface AddLiquidityEvent {_event:Event,provider:string,direction:boolean,index:BigNumber,amount:BigNumber,newAmountBalance:BigNumber}
+    export interface ApprovedTraderEvent {_event:Event,direction:boolean,offerIndex:BigNumber,trader:string,allocation:BigNumber}
+    export interface LockEvent {_event:Event,direction:boolean,index:BigNumber}
+    export interface NewProviderOfferEvent {_event:Event,provider:string,direction:boolean,index:BigNumber,allowAll:boolean,restrictedPrice:BigNumber,startDate:BigNumber,expire:BigNumber}
+    export interface RemoveLiquidityEvent {_event:Event,provider:string,direction:boolean,index:BigNumber,amountOut:BigNumber,receivingOut:BigNumber,newAmountBalance:BigNumber,newReceivingBalance:BigNumber}
+    export interface SwapEvent {_event:Event,to:string,direction:boolean,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}
+    export interface SwappedOneOfferEvent {_event:Event,provider:string,direction:boolean,index:BigNumber,price:BigNumber,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newReceivingBalance:BigNumber}
 }

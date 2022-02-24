@@ -1,11 +1,15 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_HybridRouterRegistry extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(governance: string): Promise<string>;
     parseCustomPairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent[];
+    decodeCustomPairRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent;
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.OwnershipTransferredEvent[];
+    decodeOwnershipTransferredEvent(event: Event): OSWAP_HybridRouterRegistry.OwnershipTransferredEvent;
     parsePairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.PairRegisterEvent[];
+    decodePairRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.PairRegisterEvent;
     parseProtocolRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.ProtocolRegisterEvent[];
+    decodeProtocolRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.ProtocolRegisterEvent;
     customPairs(param1: string): Promise<{
         fee: BigNumber;
         feeBase: BigNumber;
@@ -25,9 +29,9 @@ export declare class OSWAP_HybridRouterRegistry extends Contract {
     init(params: {
         name: string[];
         factory: string[];
-        fee: number[] | BigNumber[];
-        feeBase: number[] | BigNumber[];
-        typeCode: number[] | BigNumber[];
+        fee: (number | BigNumber)[];
+        feeBase: (number | BigNumber)[];
+        typeCode: (number | BigNumber)[];
     }): Promise<TransactionReceipt>;
     owner(): Promise<string>;
     pairs(param1: string): Promise<{
@@ -80,7 +84,7 @@ export declare class OSWAP_HybridRouterRegistry extends Contract {
     }): Promise<TransactionReceipt>;
     registerPairsByIndex(params: {
         factory: string;
-        index: number[] | BigNumber[];
+        index: (number | BigNumber)[];
     }): Promise<TransactionReceipt>;
     registerPairsByTokens(params: {
         factory: string;
@@ -91,7 +95,7 @@ export declare class OSWAP_HybridRouterRegistry extends Contract {
         factory: string;
         token0: string[];
         token1: string[];
-        pairIndex: number[] | BigNumber[];
+        pairIndex: (number | BigNumber)[];
     }): Promise<TransactionReceipt>;
     registerProtocol(params: {
         name: string;
@@ -105,34 +109,26 @@ export declare class OSWAP_HybridRouterRegistry extends Contract {
 }
 export declare module OSWAP_HybridRouterRegistry {
     interface CustomPairRegisterEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         pair: string;
         fee: BigNumber;
         feeBase: BigNumber;
         typeCode: BigNumber;
     }
     interface OwnershipTransferredEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         previousOwner: string;
         newOwner: string;
     }
     interface PairRegisterEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         factory: string;
         pair: string;
         token0: string;
         token1: string;
     }
     interface ProtocolRegisterEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         factory: string;
         name: string;
         fee: BigNumber;

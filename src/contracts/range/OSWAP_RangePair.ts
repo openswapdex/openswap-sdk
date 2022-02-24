@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/range/OSWAP_RangePair.json");
 
 export class OSWAP_RangePair extends Contract{
@@ -9,140 +9,132 @@ export class OSWAP_RangePair extends Contract{
         return this._deploy();
     }
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.AddLiquidityEvent[]{
-        let events = this.parseEvents(receipt, "AddLiquidity");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                staked: new BigNumber(result.staked),
-                amount: new BigNumber(result.amount),
-                newStakeBalance: new BigNumber(result.newStakeBalance),
-                newAmountBalance: new BigNumber(result.newAmountBalance),
-                lowerLimit: new BigNumber(result.lowerLimit),
-                upperLimit: new BigNumber(result.upperLimit),
-                startDate: new BigNumber(result.startDate),
-                expire: new BigNumber(result.expire)
-            };
-        });
+        return this.parseEvents(receipt, "AddLiquidity").map(e=>this.decodeAddLiquidityEvent(e));
+    }
+    decodeAddLiquidityEvent(event: Event): OSWAP_RangePair.AddLiquidityEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            staked: new BigNumber(result.staked),
+            amount: new BigNumber(result.amount),
+            newStakeBalance: new BigNumber(result.newStakeBalance),
+            newAmountBalance: new BigNumber(result.newAmountBalance),
+            lowerLimit: new BigNumber(result.lowerLimit),
+            upperLimit: new BigNumber(result.upperLimit),
+            startDate: new BigNumber(result.startDate),
+            expire: new BigNumber(result.expire)
+        };
     }
     parseNewProviderEvent(receipt: TransactionReceipt): OSWAP_RangePair.NewProviderEvent[]{
-        let events = this.parseEvents(receipt, "NewProvider");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                index: new BigNumber(result.index)
-            };
-        });
+        return this.parseEvents(receipt, "NewProvider").map(e=>this.decodeNewProviderEvent(e));
+    }
+    decodeNewProviderEvent(event: Event): OSWAP_RangePair.NewProviderEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            index: new BigNumber(result.index)
+        };
     }
     parseRemoveAllLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.RemoveAllLiquidityEvent[]{
-        let events = this.parseEvents(receipt, "RemoveAllLiquidity");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                unstake: new BigNumber(result.unstake),
-                amount0Out: new BigNumber(result.amount0Out),
-                amount1Out: new BigNumber(result.amount1Out)
-            };
-        });
+        return this.parseEvents(receipt, "RemoveAllLiquidity").map(e=>this.decodeRemoveAllLiquidityEvent(e));
+    }
+    decodeRemoveAllLiquidityEvent(event: Event): OSWAP_RangePair.RemoveAllLiquidityEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            unstake: new BigNumber(result.unstake),
+            amount0Out: new BigNumber(result.amount0Out),
+            amount1Out: new BigNumber(result.amount1Out)
+        };
     }
     parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.RemoveLiquidityEvent[]{
-        let events = this.parseEvents(receipt, "RemoveLiquidity");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                unstake: new BigNumber(result.unstake),
-                amountOut: new BigNumber(result.amountOut),
-                reserveOut: new BigNumber(result.reserveOut),
-                newStakeBalance: new BigNumber(result.newStakeBalance),
-                newAmountBalance: new BigNumber(result.newAmountBalance),
-                newReserveBalance: new BigNumber(result.newReserveBalance),
-                lowerLimit: new BigNumber(result.lowerLimit),
-                upperLimit: new BigNumber(result.upperLimit),
-                startDate: new BigNumber(result.startDate),
-                expire: new BigNumber(result.expire)
-            };
-        });
+        return this.parseEvents(receipt, "RemoveLiquidity").map(e=>this.decodeRemoveLiquidityEvent(e));
+    }
+    decodeRemoveLiquidityEvent(event: Event): OSWAP_RangePair.RemoveLiquidityEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            unstake: new BigNumber(result.unstake),
+            amountOut: new BigNumber(result.amountOut),
+            reserveOut: new BigNumber(result.reserveOut),
+            newStakeBalance: new BigNumber(result.newStakeBalance),
+            newAmountBalance: new BigNumber(result.newAmountBalance),
+            newReserveBalance: new BigNumber(result.newReserveBalance),
+            lowerLimit: new BigNumber(result.lowerLimit),
+            upperLimit: new BigNumber(result.upperLimit),
+            startDate: new BigNumber(result.startDate),
+            expire: new BigNumber(result.expire)
+        };
     }
     parseReplenishEvent(receipt: TransactionReceipt): OSWAP_RangePair.ReplenishEvent[]{
-        let events = this.parseEvents(receipt, "Replenish");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                amountIn: new BigNumber(result.amountIn),
-                newAmountBalance: new BigNumber(result.newAmountBalance),
-                newReserveBalance: new BigNumber(result.newReserveBalance)
-            };
-        });
+        return this.parseEvents(receipt, "Replenish").map(e=>this.decodeReplenishEvent(e));
+    }
+    decodeReplenishEvent(event: Event): OSWAP_RangePair.ReplenishEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            amountIn: new BigNumber(result.amountIn),
+            newAmountBalance: new BigNumber(result.newAmountBalance),
+            newReserveBalance: new BigNumber(result.newReserveBalance)
+        };
     }
     parseSwapEvent(receipt: TransactionReceipt): OSWAP_RangePair.SwapEvent[]{
-        let events = this.parseEvents(receipt, "Swap");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                to: result.to,
-                direction: result.direction,
-                price: new BigNumber(result.price),
-                amountIn: new BigNumber(result.amountIn),
-                amountOut: new BigNumber(result.amountOut),
-                tradeFee: new BigNumber(result.tradeFee),
-                protocolFee: new BigNumber(result.protocolFee)
-            };
-        });
+        return this.parseEvents(receipt, "Swap").map(e=>this.decodeSwapEvent(e));
+    }
+    decodeSwapEvent(event: Event): OSWAP_RangePair.SwapEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            to: result.to,
+            direction: result.direction,
+            price: new BigNumber(result.price),
+            amountIn: new BigNumber(result.amountIn),
+            amountOut: new BigNumber(result.amountOut),
+            tradeFee: new BigNumber(result.tradeFee),
+            protocolFee: new BigNumber(result.protocolFee)
+        };
     }
     parseSwappedOneProviderEvent(receipt: TransactionReceipt): OSWAP_RangePair.SwappedOneProviderEvent[]{
-        let events = this.parseEvents(receipt, "SwappedOneProvider");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                amountOut: new BigNumber(result.amountOut),
-                amountIn: new BigNumber(result.amountIn),
-                newAmountBalance: new BigNumber(result.newAmountBalance),
-                newCounterReserveBalance: new BigNumber(result.newCounterReserveBalance)
-            };
-        });
+        return this.parseEvents(receipt, "SwappedOneProvider").map(e=>this.decodeSwappedOneProviderEvent(e));
+    }
+    decodeSwappedOneProviderEvent(event: Event): OSWAP_RangePair.SwappedOneProviderEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            amountOut: new BigNumber(result.amountOut),
+            amountIn: new BigNumber(result.amountIn),
+            newAmountBalance: new BigNumber(result.newAmountBalance),
+            newCounterReserveBalance: new BigNumber(result.newCounterReserveBalance)
+        };
     }
     parseUpdateProviderOfferEvent(receipt: TransactionReceipt): OSWAP_RangePair.UpdateProviderOfferEvent[]{
-        let events = this.parseEvents(receipt, "UpdateProviderOffer");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                provider: result.provider,
-                direction: result.direction,
-                replenish: new BigNumber(result.replenish),
-                newAmountBalance: new BigNumber(result.newAmountBalance),
-                newReserveBalance: new BigNumber(result.newReserveBalance),
-                lowerLimit: new BigNumber(result.lowerLimit),
-                upperLimit: new BigNumber(result.upperLimit),
-                startDate: new BigNumber(result.startDate),
-                expire: new BigNumber(result.expire),
-                privateReplenish: result.privateReplenish
-            };
-        });
+        return this.parseEvents(receipt, "UpdateProviderOffer").map(e=>this.decodeUpdateProviderOfferEvent(e));
+    }
+    decodeUpdateProviderOfferEvent(event: Event): OSWAP_RangePair.UpdateProviderOfferEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            provider: result.provider,
+            direction: result.direction,
+            replenish: new BigNumber(result.replenish),
+            newAmountBalance: new BigNumber(result.newAmountBalance),
+            newReserveBalance: new BigNumber(result.newReserveBalance),
+            lowerLimit: new BigNumber(result.lowerLimit),
+            upperLimit: new BigNumber(result.upperLimit),
+            startDate: new BigNumber(result.startDate),
+            expire: new BigNumber(result.expire),
+            privateReplenish: result.privateReplenish
+        };
     }
     async addLiquidity(params:{provider:string,direction:boolean,staked:number|BigNumber,lowerLimit:number|BigNumber,upperLimit:number|BigNumber,startDate:number|BigNumber,expire:number|BigNumber}): Promise<TransactionReceipt>{
         let result = await this.methods('addLiquidity',params.provider,params.direction,Utils.toString(params.staked),Utils.toString(params.lowerLimit),Utils.toString(params.upperLimit),Utils.toString(params.startDate),Utils.toString(params.expire));
@@ -326,12 +318,12 @@ export class OSWAP_RangePair extends Contract{
     }
 }
 export module OSWAP_RangePair{
-    export interface AddLiquidityEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
-    export interface NewProviderEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,index:BigNumber}
-    export interface RemoveAllLiquidityEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,unstake:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber}
-    export interface RemoveLiquidityEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
-    export interface ReplenishEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber}
-    export interface SwapEvent {_eventName:string,_address:string,_transactionHash:string,to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}
-    export interface SwappedOneProviderEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}
-    export interface UpdateProviderOfferEvent {_eventName:string,_address:string,_transactionHash:string,provider:string,direction:boolean,replenish:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}
+    export interface AddLiquidityEvent {_event:Event,provider:string,direction:boolean,staked:BigNumber,amount:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
+    export interface NewProviderEvent {_event:Event,provider:string,index:BigNumber}
+    export interface RemoveAllLiquidityEvent {_event:Event,provider:string,unstake:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber}
+    export interface RemoveLiquidityEvent {_event:Event,provider:string,direction:boolean,unstake:BigNumber,amountOut:BigNumber,reserveOut:BigNumber,newStakeBalance:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber}
+    export interface ReplenishEvent {_event:Event,provider:string,direction:boolean,amountIn:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber}
+    export interface SwapEvent {_event:Event,to:string,direction:boolean,price:BigNumber,amountIn:BigNumber,amountOut:BigNumber,tradeFee:BigNumber,protocolFee:BigNumber}
+    export interface SwappedOneProviderEvent {_event:Event,provider:string,direction:boolean,amountOut:BigNumber,amountIn:BigNumber,newAmountBalance:BigNumber,newCounterReserveBalance:BigNumber}
+    export interface UpdateProviderOfferEvent {_event:Event,provider:string,direction:boolean,replenish:BigNumber,newAmountBalance:BigNumber,newReserveBalance:BigNumber,lowerLimit:BigNumber,upperLimit:BigNumber,startDate:BigNumber,expire:BigNumber,privateReplenish:boolean}
 }

@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/amm/OSWAP_Pair.json");
 
 export class OSWAP_Pair extends Contract{
@@ -9,107 +9,99 @@ export class OSWAP_Pair extends Contract{
         return this._deploy();
     }
     parseApprovalEvent(receipt: TransactionReceipt): OSWAP_Pair.ApprovalEvent[]{
-        let events = this.parseEvents(receipt, "Approval");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                owner: result.owner,
-                spender: result.spender,
-                value: new BigNumber(result.value)
-            };
-        });
+        return this.parseEvents(receipt, "Approval").map(e=>this.decodeApprovalEvent(e));
+    }
+    decodeApprovalEvent(event: Event): OSWAP_Pair.ApprovalEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            owner: result.owner,
+            spender: result.spender,
+            value: new BigNumber(result.value)
+        };
     }
     parseBurnEvent(receipt: TransactionReceipt): OSWAP_Pair.BurnEvent[]{
-        let events = this.parseEvents(receipt, "Burn");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                sender: result.sender,
-                amount0: new BigNumber(result.amount0),
-                amount1: new BigNumber(result.amount1),
-                to: result.to
-            };
-        });
+        return this.parseEvents(receipt, "Burn").map(e=>this.decodeBurnEvent(e));
+    }
+    decodeBurnEvent(event: Event): OSWAP_Pair.BurnEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            sender: result.sender,
+            amount0: new BigNumber(result.amount0),
+            amount1: new BigNumber(result.amount1),
+            to: result.to
+        };
     }
     parseMintEvent(receipt: TransactionReceipt): OSWAP_Pair.MintEvent[]{
-        let events = this.parseEvents(receipt, "Mint");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                sender: result.sender,
-                amount0: new BigNumber(result.amount0),
-                amount1: new BigNumber(result.amount1)
-            };
-        });
+        return this.parseEvents(receipt, "Mint").map(e=>this.decodeMintEvent(e));
+    }
+    decodeMintEvent(event: Event): OSWAP_Pair.MintEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            sender: result.sender,
+            amount0: new BigNumber(result.amount0),
+            amount1: new BigNumber(result.amount1)
+        };
     }
     parseProtocolFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.ProtocolFeeSetEvent[]{
-        let events = this.parseEvents(receipt, "ProtocolFeeSet");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                protocolFee: new BigNumber(result.protocolFee)
-            };
-        });
+        return this.parseEvents(receipt, "ProtocolFeeSet").map(e=>this.decodeProtocolFeeSetEvent(e));
+    }
+    decodeProtocolFeeSetEvent(event: Event): OSWAP_Pair.ProtocolFeeSetEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            protocolFee: new BigNumber(result.protocolFee)
+        };
     }
     parseSwapEvent(receipt: TransactionReceipt): OSWAP_Pair.SwapEvent[]{
-        let events = this.parseEvents(receipt, "Swap");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                sender: result.sender,
-                amount0In: new BigNumber(result.amount0In),
-                amount1In: new BigNumber(result.amount1In),
-                amount0Out: new BigNumber(result.amount0Out),
-                amount1Out: new BigNumber(result.amount1Out),
-                to: result.to
-            };
-        });
+        return this.parseEvents(receipt, "Swap").map(e=>this.decodeSwapEvent(e));
+    }
+    decodeSwapEvent(event: Event): OSWAP_Pair.SwapEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            sender: result.sender,
+            amount0In: new BigNumber(result.amount0In),
+            amount1In: new BigNumber(result.amount1In),
+            amount0Out: new BigNumber(result.amount0Out),
+            amount1Out: new BigNumber(result.amount1Out),
+            to: result.to
+        };
     }
     parseSyncEvent(receipt: TransactionReceipt): OSWAP_Pair.SyncEvent[]{
-        let events = this.parseEvents(receipt, "Sync");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                reserve0: new BigNumber(result.reserve0),
-                reserve1: new BigNumber(result.reserve1)
-            };
-        });
+        return this.parseEvents(receipt, "Sync").map(e=>this.decodeSyncEvent(e));
+    }
+    decodeSyncEvent(event: Event): OSWAP_Pair.SyncEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            reserve0: new BigNumber(result.reserve0),
+            reserve1: new BigNumber(result.reserve1)
+        };
     }
     parseTradeFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.TradeFeeSetEvent[]{
-        let events = this.parseEvents(receipt, "TradeFeeSet");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                tradeFee: new BigNumber(result.tradeFee)
-            };
-        });
+        return this.parseEvents(receipt, "TradeFeeSet").map(e=>this.decodeTradeFeeSetEvent(e));
+    }
+    decodeTradeFeeSetEvent(event: Event): OSWAP_Pair.TradeFeeSetEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            tradeFee: new BigNumber(result.tradeFee)
+        };
     }
     parseTransferEvent(receipt: TransactionReceipt): OSWAP_Pair.TransferEvent[]{
-        let events = this.parseEvents(receipt, "Transfer");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                from: result.from,
-                to: result.to,
-                value: new BigNumber(result.value)
-            };
-        });
+        return this.parseEvents(receipt, "Transfer").map(e=>this.decodeTransferEvent(e));
+    }
+    decodeTransferEvent(event: Event): OSWAP_Pair.TransferEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            from: result.from,
+            to: result.to,
+            value: new BigNumber(result.value)
+        };
     }
     async EIP712_TYPEHASH(): Promise<string>{
         let result = await this.methods('EIP712_TYPEHASH');
@@ -265,12 +257,12 @@ export class OSWAP_Pair extends Contract{
     }
 }
 export module OSWAP_Pair{
-    export interface ApprovalEvent {_eventName:string,_address:string,_transactionHash:string,owner:string,spender:string,value:BigNumber}
-    export interface BurnEvent {_eventName:string,_address:string,_transactionHash:string,sender:string,amount0:BigNumber,amount1:BigNumber,to:string}
-    export interface MintEvent {_eventName:string,_address:string,_transactionHash:string,sender:string,amount0:BigNumber,amount1:BigNumber}
-    export interface ProtocolFeeSetEvent {_eventName:string,_address:string,_transactionHash:string,protocolFee:BigNumber}
-    export interface SwapEvent {_eventName:string,_address:string,_transactionHash:string,sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}
-    export interface SyncEvent {_eventName:string,_address:string,_transactionHash:string,reserve0:BigNumber,reserve1:BigNumber}
-    export interface TradeFeeSetEvent {_eventName:string,_address:string,_transactionHash:string,tradeFee:BigNumber}
-    export interface TransferEvent {_eventName:string,_address:string,_transactionHash:string,from:string,to:string,value:BigNumber}
+    export interface ApprovalEvent {_event:Event,owner:string,spender:string,value:BigNumber}
+    export interface BurnEvent {_event:Event,sender:string,amount0:BigNumber,amount1:BigNumber,to:string}
+    export interface MintEvent {_event:Event,sender:string,amount0:BigNumber,amount1:BigNumber}
+    export interface ProtocolFeeSetEvent {_event:Event,protocolFee:BigNumber}
+    export interface SwapEvent {_event:Event,sender:string,amount0In:BigNumber,amount1In:BigNumber,amount0Out:BigNumber,amount1Out:BigNumber,to:string}
+    export interface SyncEvent {_event:Event,reserve0:BigNumber,reserve1:BigNumber}
+    export interface TradeFeeSetEvent {_event:Event,tradeFee:BigNumber}
+    export interface TransferEvent {_event:Event,from:string,to:string,value:BigNumber}
 }

@@ -1,15 +1,23 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_Pair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
     parseApprovalEvent(receipt: TransactionReceipt): OSWAP_Pair.ApprovalEvent[];
+    decodeApprovalEvent(event: Event): OSWAP_Pair.ApprovalEvent;
     parseBurnEvent(receipt: TransactionReceipt): OSWAP_Pair.BurnEvent[];
+    decodeBurnEvent(event: Event): OSWAP_Pair.BurnEvent;
     parseMintEvent(receipt: TransactionReceipt): OSWAP_Pair.MintEvent[];
+    decodeMintEvent(event: Event): OSWAP_Pair.MintEvent;
     parseProtocolFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.ProtocolFeeSetEvent[];
+    decodeProtocolFeeSetEvent(event: Event): OSWAP_Pair.ProtocolFeeSetEvent;
     parseSwapEvent(receipt: TransactionReceipt): OSWAP_Pair.SwapEvent[];
+    decodeSwapEvent(event: Event): OSWAP_Pair.SwapEvent;
     parseSyncEvent(receipt: TransactionReceipt): OSWAP_Pair.SyncEvent[];
+    decodeSyncEvent(event: Event): OSWAP_Pair.SyncEvent;
     parseTradeFeeSetEvent(receipt: TransactionReceipt): OSWAP_Pair.TradeFeeSetEvent[];
+    decodeTradeFeeSetEvent(event: Event): OSWAP_Pair.TradeFeeSetEvent;
     parseTransferEvent(receipt: TransactionReceipt): OSWAP_Pair.TransferEvent[];
+    decodeTransferEvent(event: Event): OSWAP_Pair.TransferEvent;
     EIP712_TYPEHASH(): Promise<string>;
     MINIMUM_LIQUIDITY(): Promise<BigNumber>;
     NAME_HASH(): Promise<string>;
@@ -89,40 +97,30 @@ export declare class OSWAP_Pair extends Contract {
 }
 export declare module OSWAP_Pair {
     interface ApprovalEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         owner: string;
         spender: string;
         value: BigNumber;
     }
     interface BurnEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         sender: string;
         amount0: BigNumber;
         amount1: BigNumber;
         to: string;
     }
     interface MintEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         sender: string;
         amount0: BigNumber;
         amount1: BigNumber;
     }
     interface ProtocolFeeSetEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         protocolFee: BigNumber;
     }
     interface SwapEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         sender: string;
         amount0In: BigNumber;
         amount1In: BigNumber;
@@ -131,22 +129,16 @@ export declare module OSWAP_Pair {
         to: string;
     }
     interface SyncEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         reserve0: BigNumber;
         reserve1: BigNumber;
     }
     interface TradeFeeSetEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         tradeFee: BigNumber;
     }
     interface TransferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         from: string;
         to: string;
         value: BigNumber;

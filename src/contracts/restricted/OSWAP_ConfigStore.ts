@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/restricted/OSWAP_ConfigStore.json");
 
 export class OSWAP_ConfigStore extends Contract{
@@ -9,16 +9,15 @@ export class OSWAP_ConfigStore extends Contract{
         return this._deploy(governance);
     }
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_ConfigStore.ParamSetEvent[]{
-        let events = this.parseEvents(receipt, "ParamSet");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                name: result.name,
-                value: result.value
-            };
-        });
+        return this.parseEvents(receipt, "ParamSet").map(e=>this.decodeParamSetEvent(e));
+    }
+    decodeParamSetEvent(event: Event): OSWAP_ConfigStore.ParamSetEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            name: result.name,
+            value: result.value
+        };
     }
     async customParam(param1:string): Promise<string>{
         let result = await this.methods('customParam',Utils.stringToBytes32(param1));
@@ -50,5 +49,5 @@ export class OSWAP_ConfigStore extends Contract{
     }
 }
 export module OSWAP_ConfigStore{
-    export interface ParamSetEvent {_eventName:string,_address:string,_transactionHash:string,name:string,value:string}
+    export interface ParamSetEvent {_event:Event,name:string,value:string}
 }

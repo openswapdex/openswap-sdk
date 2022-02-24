@@ -1,15 +1,23 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_RangePair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.AddLiquidityEvent[];
+    decodeAddLiquidityEvent(event: Event): OSWAP_RangePair.AddLiquidityEvent;
     parseNewProviderEvent(receipt: TransactionReceipt): OSWAP_RangePair.NewProviderEvent[];
+    decodeNewProviderEvent(event: Event): OSWAP_RangePair.NewProviderEvent;
     parseRemoveAllLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.RemoveAllLiquidityEvent[];
+    decodeRemoveAllLiquidityEvent(event: Event): OSWAP_RangePair.RemoveAllLiquidityEvent;
     parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_RangePair.RemoveLiquidityEvent[];
+    decodeRemoveLiquidityEvent(event: Event): OSWAP_RangePair.RemoveLiquidityEvent;
     parseReplenishEvent(receipt: TransactionReceipt): OSWAP_RangePair.ReplenishEvent[];
+    decodeReplenishEvent(event: Event): OSWAP_RangePair.ReplenishEvent;
     parseSwapEvent(receipt: TransactionReceipt): OSWAP_RangePair.SwapEvent[];
+    decodeSwapEvent(event: Event): OSWAP_RangePair.SwapEvent;
     parseSwappedOneProviderEvent(receipt: TransactionReceipt): OSWAP_RangePair.SwappedOneProviderEvent[];
+    decodeSwappedOneProviderEvent(event: Event): OSWAP_RangePair.SwappedOneProviderEvent;
     parseUpdateProviderOfferEvent(receipt: TransactionReceipt): OSWAP_RangePair.UpdateProviderOfferEvent[];
+    decodeUpdateProviderOfferEvent(event: Event): OSWAP_RangePair.UpdateProviderOfferEvent;
     addLiquidity(params: {
         provider: string;
         direction: boolean;
@@ -142,9 +150,7 @@ export declare class OSWAP_RangePair extends Contract {
 }
 export declare module OSWAP_RangePair {
     interface AddLiquidityEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         staked: BigNumber;
@@ -157,25 +163,19 @@ export declare module OSWAP_RangePair {
         expire: BigNumber;
     }
     interface NewProviderEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         index: BigNumber;
     }
     interface RemoveAllLiquidityEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         unstake: BigNumber;
         amount0Out: BigNumber;
         amount1Out: BigNumber;
     }
     interface RemoveLiquidityEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         unstake: BigNumber;
@@ -190,9 +190,7 @@ export declare module OSWAP_RangePair {
         expire: BigNumber;
     }
     interface ReplenishEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         amountIn: BigNumber;
@@ -200,9 +198,7 @@ export declare module OSWAP_RangePair {
         newReserveBalance: BigNumber;
     }
     interface SwapEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         to: string;
         direction: boolean;
         price: BigNumber;
@@ -212,9 +208,7 @@ export declare module OSWAP_RangePair {
         protocolFee: BigNumber;
     }
     interface SwappedOneProviderEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         amountOut: BigNumber;
@@ -223,9 +217,7 @@ export declare module OSWAP_RangePair {
         newCounterReserveBalance: BigNumber;
     }
     interface UpdateProviderOfferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         replenish: BigNumber;

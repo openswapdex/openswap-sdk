@@ -383,30 +383,28 @@ var OpenSwap = class extends import_eth_wallet.Contract {
     return this._deploy(params.minter, params.initSupplyTo, import_eth_wallet.Utils.toString(params.initSupply), import_eth_wallet.Utils.toString(params.totalSupply));
   }
   parseApprovalEvent(receipt) {
-    let events = this.parseEvents(receipt, "Approval");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        owner: result.owner,
-        spender: result.spender,
-        value: new import_eth_wallet.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Approval").map((e) => this.decodeApprovalEvent(e));
+  }
+  decodeApprovalEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      owner: result.owner,
+      spender: result.spender,
+      value: new import_eth_wallet.BigNumber(result.value)
+    };
   }
   parseTransferEvent(receipt) {
-    let events = this.parseEvents(receipt, "Transfer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        from: result.from,
-        to: result.to,
-        value: new import_eth_wallet.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Transfer").map((e) => this.decodeTransferEvent(e));
+  }
+  decodeTransferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      from: result.from,
+      to: result.to,
+      value: new import_eth_wallet.BigNumber(result.value)
+    };
   }
   async allowance(params) {
     let result = await this.methods("allowance", params.owner, params.spender);
@@ -477,30 +475,28 @@ var OSWAP_ERC20 = class extends import_eth_wallet2.Contract {
     return this._deploy();
   }
   parseApprovalEvent(receipt) {
-    let events = this.parseEvents(receipt, "Approval");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        owner: result.owner,
-        spender: result.spender,
-        value: new import_eth_wallet2.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Approval").map((e) => this.decodeApprovalEvent(e));
+  }
+  decodeApprovalEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      owner: result.owner,
+      spender: result.spender,
+      value: new import_eth_wallet2.BigNumber(result.value)
+    };
   }
   parseTransferEvent(receipt) {
-    let events = this.parseEvents(receipt, "Transfer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        from: result.from,
-        to: result.to,
-        value: new import_eth_wallet2.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Transfer").map((e) => this.decodeTransferEvent(e));
+  }
+  decodeTransferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      from: result.from,
+      to: result.to,
+      value: new import_eth_wallet2.BigNumber(result.value)
+    };
   }
   async EIP712_TYPEHASH() {
     let result = await this.methods("EIP712_TYPEHASH");
@@ -575,85 +571,78 @@ var OSWAP_Factory = class extends import_eth_wallet3.Contract {
     return this._deploy(params.governance, params.pairCreator, import_eth_wallet3.Utils.toString(params.tradeFee), import_eth_wallet3.Utils.toString(params.protocolFee), params.protocolFeeTo);
   }
   parsePairCreatedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairCreated");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        token0: result.token0,
-        token1: result.token1,
-        pair: result.pair,
-        newSize: new import_eth_wallet3.BigNumber(result.newSize)
-      };
-    });
+    return this.parseEvents(receipt, "PairCreated").map((e) => this.decodePairCreatedEvent(e));
+  }
+  decodePairCreatedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      token0: result.token0,
+      token1: result.token1,
+      pair: result.pair,
+      newSize: new import_eth_wallet3.BigNumber(result.newSize)
+    };
   }
   parsePairRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairRestarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairRestarted").map((e) => this.decodePairRestartedEvent(e));
+  }
+  decodePairRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parsePairShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairShutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairShutdowned").map((e) => this.decodePairShutdownedEvent(e));
+  }
+  decodePairShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parseParamSetEvent(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value: result.value
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet").map((e) => this.decodeParamSetEvent(e));
+  }
+  decodeParamSetEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value: result.value
+    };
   }
   parseParamSet2Event(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet2");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value1: result.value1,
-        value2: result.value2
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet2").map((e) => this.decodeParamSet2Event(e));
+  }
+  decodeParamSet2Event(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value1: result.value1,
+      value2: result.value2
+    };
   }
   parseRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Restarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Restarted").map((e) => this.decodeRestartedEvent(e));
+  }
+  decodeRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   parseShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Shutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Shutdowned").map((e) => this.decodeShutdownedEvent(e));
+  }
+  decodeShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   async allPairs(param1) {
     let result = await this.methods("allPairs", import_eth_wallet3.Utils.toString(param1));
@@ -735,107 +724,99 @@ var OSWAP_Pair = class extends import_eth_wallet4.Contract {
     return this._deploy();
   }
   parseApprovalEvent(receipt) {
-    let events = this.parseEvents(receipt, "Approval");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        owner: result.owner,
-        spender: result.spender,
-        value: new import_eth_wallet4.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Approval").map((e) => this.decodeApprovalEvent(e));
+  }
+  decodeApprovalEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      owner: result.owner,
+      spender: result.spender,
+      value: new import_eth_wallet4.BigNumber(result.value)
+    };
   }
   parseBurnEvent(receipt) {
-    let events = this.parseEvents(receipt, "Burn");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        sender: result.sender,
-        amount0: new import_eth_wallet4.BigNumber(result.amount0),
-        amount1: new import_eth_wallet4.BigNumber(result.amount1),
-        to: result.to
-      };
-    });
+    return this.parseEvents(receipt, "Burn").map((e) => this.decodeBurnEvent(e));
+  }
+  decodeBurnEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      sender: result.sender,
+      amount0: new import_eth_wallet4.BigNumber(result.amount0),
+      amount1: new import_eth_wallet4.BigNumber(result.amount1),
+      to: result.to
+    };
   }
   parseMintEvent(receipt) {
-    let events = this.parseEvents(receipt, "Mint");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        sender: result.sender,
-        amount0: new import_eth_wallet4.BigNumber(result.amount0),
-        amount1: new import_eth_wallet4.BigNumber(result.amount1)
-      };
-    });
+    return this.parseEvents(receipt, "Mint").map((e) => this.decodeMintEvent(e));
+  }
+  decodeMintEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      sender: result.sender,
+      amount0: new import_eth_wallet4.BigNumber(result.amount0),
+      amount1: new import_eth_wallet4.BigNumber(result.amount1)
+    };
   }
   parseProtocolFeeSetEvent(receipt) {
-    let events = this.parseEvents(receipt, "ProtocolFeeSet");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        protocolFee: new import_eth_wallet4.BigNumber(result.protocolFee)
-      };
-    });
+    return this.parseEvents(receipt, "ProtocolFeeSet").map((e) => this.decodeProtocolFeeSetEvent(e));
+  }
+  decodeProtocolFeeSetEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      protocolFee: new import_eth_wallet4.BigNumber(result.protocolFee)
+    };
   }
   parseSwapEvent(receipt) {
-    let events = this.parseEvents(receipt, "Swap");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        sender: result.sender,
-        amount0In: new import_eth_wallet4.BigNumber(result.amount0In),
-        amount1In: new import_eth_wallet4.BigNumber(result.amount1In),
-        amount0Out: new import_eth_wallet4.BigNumber(result.amount0Out),
-        amount1Out: new import_eth_wallet4.BigNumber(result.amount1Out),
-        to: result.to
-      };
-    });
+    return this.parseEvents(receipt, "Swap").map((e) => this.decodeSwapEvent(e));
+  }
+  decodeSwapEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      sender: result.sender,
+      amount0In: new import_eth_wallet4.BigNumber(result.amount0In),
+      amount1In: new import_eth_wallet4.BigNumber(result.amount1In),
+      amount0Out: new import_eth_wallet4.BigNumber(result.amount0Out),
+      amount1Out: new import_eth_wallet4.BigNumber(result.amount1Out),
+      to: result.to
+    };
   }
   parseSyncEvent(receipt) {
-    let events = this.parseEvents(receipt, "Sync");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        reserve0: new import_eth_wallet4.BigNumber(result.reserve0),
-        reserve1: new import_eth_wallet4.BigNumber(result.reserve1)
-      };
-    });
+    return this.parseEvents(receipt, "Sync").map((e) => this.decodeSyncEvent(e));
+  }
+  decodeSyncEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      reserve0: new import_eth_wallet4.BigNumber(result.reserve0),
+      reserve1: new import_eth_wallet4.BigNumber(result.reserve1)
+    };
   }
   parseTradeFeeSetEvent(receipt) {
-    let events = this.parseEvents(receipt, "TradeFeeSet");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        tradeFee: new import_eth_wallet4.BigNumber(result.tradeFee)
-      };
-    });
+    return this.parseEvents(receipt, "TradeFeeSet").map((e) => this.decodeTradeFeeSetEvent(e));
+  }
+  decodeTradeFeeSetEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      tradeFee: new import_eth_wallet4.BigNumber(result.tradeFee)
+    };
   }
   parseTransferEvent(receipt) {
-    let events = this.parseEvents(receipt, "Transfer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        from: result.from,
-        to: result.to,
-        value: new import_eth_wallet4.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Transfer").map((e) => this.decodeTransferEvent(e));
+  }
+  decodeTransferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      from: result.from,
+      to: result.to,
+      value: new import_eth_wallet4.BigNumber(result.value)
+    };
   }
   async EIP712_TYPEHASH() {
     let result = await this.methods("EIP712_TYPEHASH");
@@ -1157,60 +1138,55 @@ var OSWAP_FactoryBase = class extends import_eth_wallet8.Contract {
     return this._deploy(params.governance, params.pairCreator);
   }
   parsePairCreatedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairCreated");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        token0: result.token0,
-        token1: result.token1,
-        pair: result.pair,
-        newSize: new import_eth_wallet8.BigNumber(result.newSize)
-      };
-    });
+    return this.parseEvents(receipt, "PairCreated").map((e) => this.decodePairCreatedEvent(e));
+  }
+  decodePairCreatedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      token0: result.token0,
+      token1: result.token1,
+      pair: result.pair,
+      newSize: new import_eth_wallet8.BigNumber(result.newSize)
+    };
   }
   parsePairRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairRestarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairRestarted").map((e) => this.decodePairRestartedEvent(e));
+  }
+  decodePairRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parsePairShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairShutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairShutdowned").map((e) => this.decodePairShutdownedEvent(e));
+  }
+  decodePairShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parseRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Restarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Restarted").map((e) => this.decodeRestartedEvent(e));
+  }
+  decodeRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   parseShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Shutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Shutdowned").map((e) => this.decodeShutdownedEvent(e));
+  }
+  decodeShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   async allPairs(param1) {
     let result = await this.methods("allPairs", import_eth_wallet8.Utils.toString(param1));
@@ -1261,46 +1237,42 @@ var OSWAP_PausableFactory = class extends import_eth_wallet9.Contract {
     return this._deploy(governance);
   }
   parsePairRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairRestarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairRestarted").map((e) => this.decodePairRestartedEvent(e));
+  }
+  decodePairRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parsePairShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairShutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairShutdowned").map((e) => this.decodePairShutdownedEvent(e));
+  }
+  decodePairShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parseRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Restarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Restarted").map((e) => this.decodeRestartedEvent(e));
+  }
+  decodeRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   parseShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Shutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Shutdowned").map((e) => this.decodeShutdownedEvent(e));
+  }
+  decodeShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   async governance() {
     let result = await this.methods("governance");
@@ -1355,102 +1327,94 @@ var OAXDEX_Administrator = class extends import_eth_wallet11.Contract {
     return this._deploy(governance);
   }
   parseAddAdminEvent(receipt) {
-    let events = this.parseEvents(receipt, "AddAdmin");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        admin: result.admin
-      };
-    });
+    return this.parseEvents(receipt, "AddAdmin").map((e) => this.decodeAddAdminEvent(e));
+  }
+  decodeAddAdminEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      admin: result.admin
+    };
   }
   parseRemoveAdminEvent(receipt) {
-    let events = this.parseEvents(receipt, "RemoveAdmin");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        admin: result.admin
-      };
-    });
+    return this.parseEvents(receipt, "RemoveAdmin").map((e) => this.decodeRemoveAdminEvent(e));
+  }
+  decodeRemoveAdminEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      admin: result.admin
+    };
   }
   parseSetMaxAdminEvent(receipt) {
-    let events = this.parseEvents(receipt, "SetMaxAdmin");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        maxAdmin: new import_eth_wallet11.BigNumber(result.maxAdmin)
-      };
-    });
+    return this.parseEvents(receipt, "SetMaxAdmin").map((e) => this.decodeSetMaxAdminEvent(e));
+  }
+  decodeSetMaxAdminEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      maxAdmin: new import_eth_wallet11.BigNumber(result.maxAdmin)
+    };
   }
   parseVotedFactoryRestartEvent(receipt) {
-    let events = this.parseEvents(receipt, "VotedFactoryRestart");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        admin: result.admin,
-        factory: result.factory,
-        YorN: result.YorN
-      };
-    });
+    return this.parseEvents(receipt, "VotedFactoryRestart").map((e) => this.decodeVotedFactoryRestartEvent(e));
+  }
+  decodeVotedFactoryRestartEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      admin: result.admin,
+      factory: result.factory,
+      YorN: result.YorN
+    };
   }
   parseVotedFactoryShutdownEvent(receipt) {
-    let events = this.parseEvents(receipt, "VotedFactoryShutdown");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        admin: result.admin,
-        factory: result.factory,
-        YorN: result.YorN
-      };
-    });
+    return this.parseEvents(receipt, "VotedFactoryShutdown").map((e) => this.decodeVotedFactoryShutdownEvent(e));
+  }
+  decodeVotedFactoryShutdownEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      admin: result.admin,
+      factory: result.factory,
+      YorN: result.YorN
+    };
   }
   parseVotedPairRestartEvent(receipt) {
-    let events = this.parseEvents(receipt, "VotedPairRestart");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        admin: result.admin,
-        pair: result.pair,
-        YorN: result.YorN
-      };
-    });
+    return this.parseEvents(receipt, "VotedPairRestart").map((e) => this.decodeVotedPairRestartEvent(e));
+  }
+  decodeVotedPairRestartEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      admin: result.admin,
+      pair: result.pair,
+      YorN: result.YorN
+    };
   }
   parseVotedPairShutdownEvent(receipt) {
-    let events = this.parseEvents(receipt, "VotedPairShutdown");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        admin: result.admin,
-        pair: result.pair,
-        YorN: result.YorN
-      };
-    });
+    return this.parseEvents(receipt, "VotedPairShutdown").map((e) => this.decodeVotedPairShutdownEvent(e));
+  }
+  decodeVotedPairShutdownEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      admin: result.admin,
+      pair: result.pair,
+      YorN: result.YorN
+    };
   }
   parseVotedVetoEvent(receipt) {
-    let events = this.parseEvents(receipt, "VotedVeto");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        admin: result.admin,
-        votingContract: result.votingContract,
-        YorN: result.YorN
-      };
-    });
+    return this.parseEvents(receipt, "VotedVeto").map((e) => this.decodeVotedVetoEvent(e));
+  }
+  decodeVotedVetoEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      admin: result.admin,
+      votingContract: result.votingContract,
+      YorN: result.YorN
+    };
   }
   async addAdmin(admin) {
     let result = await this.methods("addAdmin", admin);
@@ -1577,164 +1541,151 @@ var OAXDEX_Governance = class extends import_eth_wallet12.Contract {
     return this._deploy(params.oaxToken, params.votingToken, import_eth_wallet12.Utils.stringToBytes32(params.names), import_eth_wallet12.Utils.toString(params.minExeDelay), import_eth_wallet12.Utils.toString(params.minVoteDuration), import_eth_wallet12.Utils.toString(params.maxVoteDuration), import_eth_wallet12.Utils.toString(params.minOaxTokenToCreateVote), import_eth_wallet12.Utils.toString(params.minQuorum), import_eth_wallet12.Utils.toString(params.minStakePeriod));
   }
   parseAddVotingConfigEvent(receipt) {
-    let events = this.parseEvents(receipt, "AddVotingConfig");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay),
-        minVoteDuration: new import_eth_wallet12.BigNumber(result.minVoteDuration),
-        maxVoteDuration: new import_eth_wallet12.BigNumber(result.maxVoteDuration),
-        minOaxTokenToCreateVote: new import_eth_wallet12.BigNumber(result.minOaxTokenToCreateVote),
-        minQuorum: new import_eth_wallet12.BigNumber(result.minQuorum)
-      };
-    });
+    return this.parseEvents(receipt, "AddVotingConfig").map((e) => this.decodeAddVotingConfigEvent(e));
+  }
+  decodeAddVotingConfigEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay),
+      minVoteDuration: new import_eth_wallet12.BigNumber(result.minVoteDuration),
+      maxVoteDuration: new import_eth_wallet12.BigNumber(result.maxVoteDuration),
+      minOaxTokenToCreateVote: new import_eth_wallet12.BigNumber(result.minOaxTokenToCreateVote),
+      minQuorum: new import_eth_wallet12.BigNumber(result.minQuorum)
+    };
   }
   parseExecutedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Executed");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        vote: result.vote
-      };
-    });
+    return this.parseEvents(receipt, "Executed").map((e) => this.decodeExecutedEvent(e));
+  }
+  decodeExecutedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      vote: result.vote
+    };
   }
   parseNewPollEvent(receipt) {
-    let events = this.parseEvents(receipt, "NewPoll");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        poll: result.poll
-      };
-    });
+    return this.parseEvents(receipt, "NewPoll").map((e) => this.decodeNewPollEvent(e));
+  }
+  decodeNewPollEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      poll: result.poll
+    };
   }
   parseNewVoteEvent(receipt) {
-    let events = this.parseEvents(receipt, "NewVote");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        vote: result.vote
-      };
-    });
+    return this.parseEvents(receipt, "NewVote").map((e) => this.decodeNewVoteEvent(e));
+  }
+  decodeNewVoteEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      vote: result.vote
+    };
   }
   parseOwnershipTransferredEvent(receipt) {
-    let events = this.parseEvents(receipt, "OwnershipTransferred");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        previousOwner: result.previousOwner,
-        newOwner: result.newOwner
-      };
-    });
+    return this.parseEvents(receipt, "OwnershipTransferred").map((e) => this.decodeOwnershipTransferredEvent(e));
+  }
+  decodeOwnershipTransferredEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      previousOwner: result.previousOwner,
+      newOwner: result.newOwner
+    };
   }
   parseParamSetEvent(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value: result.value
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet").map((e) => this.decodeParamSetEvent(e));
+  }
+  decodeParamSetEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value: result.value
+    };
   }
   parseParamSet2Event(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet2");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value1: result.value1,
-        value2: result.value2
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet2").map((e) => this.decodeParamSet2Event(e));
+  }
+  decodeParamSet2Event(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value1: result.value1,
+      value2: result.value2
+    };
   }
   parsePollEvent(receipt) {
-    let events = this.parseEvents(receipt, "Poll");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        account: result.account,
-        poll: result.poll,
-        option: new import_eth_wallet12.BigNumber(result.option)
-      };
-    });
+    return this.parseEvents(receipt, "Poll").map((e) => this.decodePollEvent(e));
+  }
+  decodePollEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      account: result.account,
+      poll: result.poll,
+      option: new import_eth_wallet12.BigNumber(result.option)
+    };
   }
   parseSetVotingConfigEvent(receipt) {
-    let events = this.parseEvents(receipt, "SetVotingConfig");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        configName: result.configName,
-        paramName: result.paramName,
-        minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay)
-      };
-    });
+    return this.parseEvents(receipt, "SetVotingConfig").map((e) => this.decodeSetVotingConfigEvent(e));
+  }
+  decodeSetVotingConfigEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      configName: result.configName,
+      paramName: result.paramName,
+      minExeDelay: new import_eth_wallet12.BigNumber(result.minExeDelay)
+    };
   }
   parseStakeEvent(receipt) {
-    let events = this.parseEvents(receipt, "Stake");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        who: result.who,
-        value: new import_eth_wallet12.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Stake").map((e) => this.decodeStakeEvent(e));
+  }
+  decodeStakeEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      who: result.who,
+      value: new import_eth_wallet12.BigNumber(result.value)
+    };
   }
   parseUnstakeEvent(receipt) {
-    let events = this.parseEvents(receipt, "Unstake");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        who: result.who,
-        value: new import_eth_wallet12.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Unstake").map((e) => this.decodeUnstakeEvent(e));
+  }
+  decodeUnstakeEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      who: result.who,
+      value: new import_eth_wallet12.BigNumber(result.value)
+    };
   }
   parseVetoEvent(receipt) {
-    let events = this.parseEvents(receipt, "Veto");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        vote: result.vote
-      };
-    });
+    return this.parseEvents(receipt, "Veto").map((e) => this.decodeVetoEvent(e));
+  }
+  decodeVetoEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      vote: result.vote
+    };
   }
   parseVoteEvent(receipt) {
-    let events = this.parseEvents(receipt, "Vote");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        account: result.account,
-        vote: result.vote,
-        option: new import_eth_wallet12.BigNumber(result.option)
-      };
-    });
+    return this.parseEvents(receipt, "Vote").map((e) => this.decodeVoteEvent(e));
+  }
+  decodeVoteEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      account: result.account,
+      vote: result.vote,
+      option: new import_eth_wallet12.BigNumber(result.option)
+    };
   }
   async addVotingConfig(params) {
     let result = await this.methods("addVotingConfig", import_eth_wallet12.Utils.stringToBytes32(params.name), import_eth_wallet12.Utils.toString(params.minExeDelay), import_eth_wallet12.Utils.toString(params.minVoteDuration), import_eth_wallet12.Utils.toString(params.maxVoteDuration), import_eth_wallet12.Utils.toString(params.minOaxTokenToCreateVote), import_eth_wallet12.Utils.toString(params.minQuorum));
@@ -2116,30 +2067,28 @@ var ERC20 = class extends import_eth_wallet16.Contract {
     return this._deploy(params.name, params.symbol);
   }
   parseApprovalEvent(receipt) {
-    let events = this.parseEvents(receipt, "Approval");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        owner: result.owner,
-        spender: result.spender,
-        value: new import_eth_wallet16.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Approval").map((e) => this.decodeApprovalEvent(e));
+  }
+  decodeApprovalEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      owner: result.owner,
+      spender: result.spender,
+      value: new import_eth_wallet16.BigNumber(result.value)
+    };
   }
   parseTransferEvent(receipt) {
-    let events = this.parseEvents(receipt, "Transfer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        from: result.from,
-        to: result.to,
-        value: new import_eth_wallet16.BigNumber(result.value)
-      };
-    });
+    return this.parseEvents(receipt, "Transfer").map((e) => this.decodeTransferEvent(e));
+  }
+  decodeTransferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      from: result.from,
+      to: result.to,
+      value: new import_eth_wallet16.BigNumber(result.value)
+    };
   }
   async allowance(params) {
     let result = await this.methods("allowance", params.owner, params.spender);
@@ -2218,134 +2167,123 @@ var OSWAP_OracleFactory = class extends import_eth_wallet18.Contract {
     return this._deploy(params.governance, params.pairCreator, import_eth_wallet18.Utils.toString(params.tradeFee), import_eth_wallet18.Utils.toString(params.protocolFee), import_eth_wallet18.Utils.toString(params.feePerDelegator), params.protocolFeeTo);
   }
   parseOracleAddedEvent(receipt) {
-    let events = this.parseEvents(receipt, "OracleAdded");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        token0: result.token0,
-        token1: result.token1,
-        oracle: result.oracle
-      };
-    });
+    return this.parseEvents(receipt, "OracleAdded").map((e) => this.decodeOracleAddedEvent(e));
+  }
+  decodeOracleAddedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      token0: result.token0,
+      token1: result.token1,
+      oracle: result.oracle
+    };
   }
   parseOracleScoresEvent(receipt) {
-    let events = this.parseEvents(receipt, "OracleScores");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        oracle: result.oracle,
-        score: new import_eth_wallet18.BigNumber(result.score)
-      };
-    });
+    return this.parseEvents(receipt, "OracleScores").map((e) => this.decodeOracleScoresEvent(e));
+  }
+  decodeOracleScoresEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      oracle: result.oracle,
+      score: new import_eth_wallet18.BigNumber(result.score)
+    };
   }
   parseOwnershipTransferredEvent(receipt) {
-    let events = this.parseEvents(receipt, "OwnershipTransferred");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        previousOwner: result.previousOwner,
-        newOwner: result.newOwner
-      };
-    });
+    return this.parseEvents(receipt, "OwnershipTransferred").map((e) => this.decodeOwnershipTransferredEvent(e));
+  }
+  decodeOwnershipTransferredEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      previousOwner: result.previousOwner,
+      newOwner: result.newOwner
+    };
   }
   parsePairCreatedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairCreated");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        token0: result.token0,
-        token1: result.token1,
-        pair: result.pair,
-        newSize: new import_eth_wallet18.BigNumber(result.newSize)
-      };
-    });
+    return this.parseEvents(receipt, "PairCreated").map((e) => this.decodePairCreatedEvent(e));
+  }
+  decodePairCreatedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      token0: result.token0,
+      token1: result.token1,
+      pair: result.pair,
+      newSize: new import_eth_wallet18.BigNumber(result.newSize)
+    };
   }
   parsePairRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairRestarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairRestarted").map((e) => this.decodePairRestartedEvent(e));
+  }
+  decodePairRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parsePairShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairShutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairShutdowned").map((e) => this.decodePairShutdownedEvent(e));
+  }
+  decodePairShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parseParamSetEvent(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value: result.value
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet").map((e) => this.decodeParamSetEvent(e));
+  }
+  decodeParamSetEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value: result.value
+    };
   }
   parseParamSet2Event(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet2");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value1: result.value1,
-        value2: result.value2
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet2").map((e) => this.decodeParamSet2Event(e));
+  }
+  decodeParamSet2Event(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value1: result.value1,
+      value2: result.value2
+    };
   }
   parseRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Restarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Restarted").map((e) => this.decodeRestartedEvent(e));
+  }
+  decodeRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   parseShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Shutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Shutdowned").map((e) => this.decodeShutdownedEvent(e));
+  }
+  decodeShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   parseWhitelistedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Whitelisted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        who: result.who,
-        allow: result.allow
-      };
-    });
+    return this.parseEvents(receipt, "Whitelisted").map((e) => this.decodeWhitelistedEvent(e));
+  }
+  decodeWhitelistedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      who: result.who,
+      allow: result.allow
+    };
   }
   async addOldOracleToNewPair(params) {
     let result = await this.methods("addOldOracleToNewPair", params.tokenA, params.tokenB, params.oracle);
@@ -2579,141 +2517,132 @@ var OSWAP_OraclePair = class extends import_eth_wallet20.Contract {
     return this._deploy();
   }
   parseAddLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "AddLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        staked: new import_eth_wallet20.BigNumber(result.staked),
-        amount: new import_eth_wallet20.BigNumber(result.amount),
-        newStakeBalance: new import_eth_wallet20.BigNumber(result.newStakeBalance),
-        newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
-        expire: new import_eth_wallet20.BigNumber(result.expire),
-        enable: result.enable
-      };
-    });
+    return this.parseEvents(receipt, "AddLiquidity").map((e) => this.decodeAddLiquidityEvent(e));
+  }
+  decodeAddLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      staked: new import_eth_wallet20.BigNumber(result.staked),
+      amount: new import_eth_wallet20.BigNumber(result.amount),
+      newStakeBalance: new import_eth_wallet20.BigNumber(result.newStakeBalance),
+      newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
+      expire: new import_eth_wallet20.BigNumber(result.expire),
+      enable: result.enable
+    };
   }
   parseDelegatorPauseOfferEvent(receipt) {
-    let events = this.parseEvents(receipt, "DelegatorPauseOffer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        delegator: result.delegator,
-        provider: result.provider,
-        direction: result.direction
-      };
-    });
+    return this.parseEvents(receipt, "DelegatorPauseOffer").map((e) => this.decodeDelegatorPauseOfferEvent(e));
+  }
+  decodeDelegatorPauseOfferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      delegator: result.delegator,
+      provider: result.provider,
+      direction: result.direction
+    };
   }
   parseDelegatorResumeOfferEvent(receipt) {
-    let events = this.parseEvents(receipt, "DelegatorResumeOffer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        delegator: result.delegator,
-        provider: result.provider,
-        direction: result.direction
-      };
-    });
+    return this.parseEvents(receipt, "DelegatorResumeOffer").map((e) => this.decodeDelegatorResumeOfferEvent(e));
+  }
+  decodeDelegatorResumeOfferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      delegator: result.delegator,
+      provider: result.provider,
+      direction: result.direction
+    };
   }
   parseNewProviderEvent(receipt) {
-    let events = this.parseEvents(receipt, "NewProvider");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        index: new import_eth_wallet20.BigNumber(result.index)
-      };
-    });
+    return this.parseEvents(receipt, "NewProvider").map((e) => this.decodeNewProviderEvent(e));
+  }
+  decodeNewProviderEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      index: new import_eth_wallet20.BigNumber(result.index)
+    };
   }
   parseRemoveLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "RemoveLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        unstake: new import_eth_wallet20.BigNumber(result.unstake),
-        amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
-        reserveOut: new import_eth_wallet20.BigNumber(result.reserveOut),
-        newStakeBalance: new import_eth_wallet20.BigNumber(result.newStakeBalance),
-        newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
-        newReserveBalance: new import_eth_wallet20.BigNumber(result.newReserveBalance),
-        expire: new import_eth_wallet20.BigNumber(result.expire),
-        enable: result.enable
-      };
-    });
+    return this.parseEvents(receipt, "RemoveLiquidity").map((e) => this.decodeRemoveLiquidityEvent(e));
+  }
+  decodeRemoveLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      unstake: new import_eth_wallet20.BigNumber(result.unstake),
+      amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
+      reserveOut: new import_eth_wallet20.BigNumber(result.reserveOut),
+      newStakeBalance: new import_eth_wallet20.BigNumber(result.newStakeBalance),
+      newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
+      newReserveBalance: new import_eth_wallet20.BigNumber(result.newReserveBalance),
+      expire: new import_eth_wallet20.BigNumber(result.expire),
+      enable: result.enable
+    };
   }
   parseReplenishEvent(receipt) {
-    let events = this.parseEvents(receipt, "Replenish");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
-        newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
-        newReserveBalance: new import_eth_wallet20.BigNumber(result.newReserveBalance),
-        expire: new import_eth_wallet20.BigNumber(result.expire)
-      };
-    });
+    return this.parseEvents(receipt, "Replenish").map((e) => this.decodeReplenishEvent(e));
+  }
+  decodeReplenishEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
+      newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
+      newReserveBalance: new import_eth_wallet20.BigNumber(result.newReserveBalance),
+      expire: new import_eth_wallet20.BigNumber(result.expire)
+    };
   }
   parseSetDelegatorEvent(receipt) {
-    let events = this.parseEvents(receipt, "SetDelegator");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        delegator: result.delegator
-      };
-    });
+    return this.parseEvents(receipt, "SetDelegator").map((e) => this.decodeSetDelegatorEvent(e));
+  }
+  decodeSetDelegatorEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      delegator: result.delegator
+    };
   }
   parseSwapEvent(receipt) {
-    let events = this.parseEvents(receipt, "Swap");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        to: result.to,
-        direction: result.direction,
-        price: new import_eth_wallet20.BigNumber(result.price),
-        amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
-        amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
-        tradeFee: new import_eth_wallet20.BigNumber(result.tradeFee),
-        protocolFee: new import_eth_wallet20.BigNumber(result.protocolFee)
-      };
-    });
+    return this.parseEvents(receipt, "Swap").map((e) => this.decodeSwapEvent(e));
+  }
+  decodeSwapEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      to: result.to,
+      direction: result.direction,
+      price: new import_eth_wallet20.BigNumber(result.price),
+      amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
+      amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
+      tradeFee: new import_eth_wallet20.BigNumber(result.tradeFee),
+      protocolFee: new import_eth_wallet20.BigNumber(result.protocolFee)
+    };
   }
   parseSwappedOneProviderEvent(receipt) {
-    let events = this.parseEvents(receipt, "SwappedOneProvider");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
-        amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
-        newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
-        newCounterReserveBalance: new import_eth_wallet20.BigNumber(result.newCounterReserveBalance)
-      };
-    });
+    return this.parseEvents(receipt, "SwappedOneProvider").map((e) => this.decodeSwappedOneProviderEvent(e));
+  }
+  decodeSwappedOneProviderEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      amountOut: new import_eth_wallet20.BigNumber(result.amountOut),
+      amountIn: new import_eth_wallet20.BigNumber(result.amountIn),
+      newAmountBalance: new import_eth_wallet20.BigNumber(result.newAmountBalance),
+      newCounterReserveBalance: new import_eth_wallet20.BigNumber(result.newCounterReserveBalance)
+    };
   }
   async addLiquidity(params) {
     let result = await this.methods("addLiquidity", params.provider, params.direction, import_eth_wallet20.Utils.toString(params.staked), import_eth_wallet20.Utils.toString(params.afterIndex), import_eth_wallet20.Utils.toString(params.expire), params.enable);
@@ -2988,97 +2917,89 @@ var OSWAP_RangeFactory = class extends import_eth_wallet23.Contract {
     return this._deploy(params.governance, params.oracleFactory, params.pairCreator, import_eth_wallet23.Utils.toString(params.tradeFee), import_eth_wallet23.Utils.toString(params.stakeAmount), import_eth_wallet23.Utils.toString(params.liquidityProviderShare), params.protocolFeeTo);
   }
   parseOwnershipTransferredEvent(receipt) {
-    let events = this.parseEvents(receipt, "OwnershipTransferred");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        previousOwner: result.previousOwner,
-        newOwner: result.newOwner
-      };
-    });
+    return this.parseEvents(receipt, "OwnershipTransferred").map((e) => this.decodeOwnershipTransferredEvent(e));
+  }
+  decodeOwnershipTransferredEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      previousOwner: result.previousOwner,
+      newOwner: result.newOwner
+    };
   }
   parsePairCreatedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairCreated");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        token0: result.token0,
-        token1: result.token1,
-        pair: result.pair,
-        newSize: new import_eth_wallet23.BigNumber(result.newSize)
-      };
-    });
+    return this.parseEvents(receipt, "PairCreated").map((e) => this.decodePairCreatedEvent(e));
+  }
+  decodePairCreatedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      token0: result.token0,
+      token1: result.token1,
+      pair: result.pair,
+      newSize: new import_eth_wallet23.BigNumber(result.newSize)
+    };
   }
   parsePairRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairRestarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairRestarted").map((e) => this.decodePairRestartedEvent(e));
+  }
+  decodePairRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parsePairShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairShutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairShutdowned").map((e) => this.decodePairShutdownedEvent(e));
+  }
+  decodePairShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parseParamSetEvent(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value: result.value
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet").map((e) => this.decodeParamSetEvent(e));
+  }
+  decodeParamSetEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value: result.value
+    };
   }
   parseParamSet2Event(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet2");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value1: result.value1,
-        value2: result.value2
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet2").map((e) => this.decodeParamSet2Event(e));
+  }
+  decodeParamSet2Event(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value1: result.value1,
+      value2: result.value2
+    };
   }
   parseRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Restarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Restarted").map((e) => this.decodeRestartedEvent(e));
+  }
+  decodeRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   parseShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Shutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Shutdowned").map((e) => this.decodeShutdownedEvent(e));
+  }
+  decodeShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   async allPairs(param1) {
     let result = await this.methods("allPairs", import_eth_wallet23.Utils.toString(param1));
@@ -3256,140 +3177,132 @@ var OSWAP_RangePair = class extends import_eth_wallet25.Contract {
     return this._deploy();
   }
   parseAddLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "AddLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        staked: new import_eth_wallet25.BigNumber(result.staked),
-        amount: new import_eth_wallet25.BigNumber(result.amount),
-        newStakeBalance: new import_eth_wallet25.BigNumber(result.newStakeBalance),
-        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
-        lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
-        upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
-        startDate: new import_eth_wallet25.BigNumber(result.startDate),
-        expire: new import_eth_wallet25.BigNumber(result.expire)
-      };
-    });
+    return this.parseEvents(receipt, "AddLiquidity").map((e) => this.decodeAddLiquidityEvent(e));
+  }
+  decodeAddLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      staked: new import_eth_wallet25.BigNumber(result.staked),
+      amount: new import_eth_wallet25.BigNumber(result.amount),
+      newStakeBalance: new import_eth_wallet25.BigNumber(result.newStakeBalance),
+      newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+      lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
+      upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
+      startDate: new import_eth_wallet25.BigNumber(result.startDate),
+      expire: new import_eth_wallet25.BigNumber(result.expire)
+    };
   }
   parseNewProviderEvent(receipt) {
-    let events = this.parseEvents(receipt, "NewProvider");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        index: new import_eth_wallet25.BigNumber(result.index)
-      };
-    });
+    return this.parseEvents(receipt, "NewProvider").map((e) => this.decodeNewProviderEvent(e));
+  }
+  decodeNewProviderEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      index: new import_eth_wallet25.BigNumber(result.index)
+    };
   }
   parseRemoveAllLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "RemoveAllLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        unstake: new import_eth_wallet25.BigNumber(result.unstake),
-        amount0Out: new import_eth_wallet25.BigNumber(result.amount0Out),
-        amount1Out: new import_eth_wallet25.BigNumber(result.amount1Out)
-      };
-    });
+    return this.parseEvents(receipt, "RemoveAllLiquidity").map((e) => this.decodeRemoveAllLiquidityEvent(e));
+  }
+  decodeRemoveAllLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      unstake: new import_eth_wallet25.BigNumber(result.unstake),
+      amount0Out: new import_eth_wallet25.BigNumber(result.amount0Out),
+      amount1Out: new import_eth_wallet25.BigNumber(result.amount1Out)
+    };
   }
   parseRemoveLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "RemoveLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        unstake: new import_eth_wallet25.BigNumber(result.unstake),
-        amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
-        reserveOut: new import_eth_wallet25.BigNumber(result.reserveOut),
-        newStakeBalance: new import_eth_wallet25.BigNumber(result.newStakeBalance),
-        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
-        newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance),
-        lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
-        upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
-        startDate: new import_eth_wallet25.BigNumber(result.startDate),
-        expire: new import_eth_wallet25.BigNumber(result.expire)
-      };
-    });
+    return this.parseEvents(receipt, "RemoveLiquidity").map((e) => this.decodeRemoveLiquidityEvent(e));
+  }
+  decodeRemoveLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      unstake: new import_eth_wallet25.BigNumber(result.unstake),
+      amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
+      reserveOut: new import_eth_wallet25.BigNumber(result.reserveOut),
+      newStakeBalance: new import_eth_wallet25.BigNumber(result.newStakeBalance),
+      newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+      newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance),
+      lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
+      upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
+      startDate: new import_eth_wallet25.BigNumber(result.startDate),
+      expire: new import_eth_wallet25.BigNumber(result.expire)
+    };
   }
   parseReplenishEvent(receipt) {
-    let events = this.parseEvents(receipt, "Replenish");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
-        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
-        newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance)
-      };
-    });
+    return this.parseEvents(receipt, "Replenish").map((e) => this.decodeReplenishEvent(e));
+  }
+  decodeReplenishEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
+      newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+      newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance)
+    };
   }
   parseSwapEvent(receipt) {
-    let events = this.parseEvents(receipt, "Swap");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        to: result.to,
-        direction: result.direction,
-        price: new import_eth_wallet25.BigNumber(result.price),
-        amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
-        amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
-        tradeFee: new import_eth_wallet25.BigNumber(result.tradeFee),
-        protocolFee: new import_eth_wallet25.BigNumber(result.protocolFee)
-      };
-    });
+    return this.parseEvents(receipt, "Swap").map((e) => this.decodeSwapEvent(e));
+  }
+  decodeSwapEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      to: result.to,
+      direction: result.direction,
+      price: new import_eth_wallet25.BigNumber(result.price),
+      amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
+      amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
+      tradeFee: new import_eth_wallet25.BigNumber(result.tradeFee),
+      protocolFee: new import_eth_wallet25.BigNumber(result.protocolFee)
+    };
   }
   parseSwappedOneProviderEvent(receipt) {
-    let events = this.parseEvents(receipt, "SwappedOneProvider");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
-        amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
-        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
-        newCounterReserveBalance: new import_eth_wallet25.BigNumber(result.newCounterReserveBalance)
-      };
-    });
+    return this.parseEvents(receipt, "SwappedOneProvider").map((e) => this.decodeSwappedOneProviderEvent(e));
+  }
+  decodeSwappedOneProviderEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      amountOut: new import_eth_wallet25.BigNumber(result.amountOut),
+      amountIn: new import_eth_wallet25.BigNumber(result.amountIn),
+      newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+      newCounterReserveBalance: new import_eth_wallet25.BigNumber(result.newCounterReserveBalance)
+    };
   }
   parseUpdateProviderOfferEvent(receipt) {
-    let events = this.parseEvents(receipt, "UpdateProviderOffer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        replenish: new import_eth_wallet25.BigNumber(result.replenish),
-        newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
-        newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance),
-        lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
-        upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
-        startDate: new import_eth_wallet25.BigNumber(result.startDate),
-        expire: new import_eth_wallet25.BigNumber(result.expire),
-        privateReplenish: result.privateReplenish
-      };
-    });
+    return this.parseEvents(receipt, "UpdateProviderOffer").map((e) => this.decodeUpdateProviderOfferEvent(e));
+  }
+  decodeUpdateProviderOfferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      replenish: new import_eth_wallet25.BigNumber(result.replenish),
+      newAmountBalance: new import_eth_wallet25.BigNumber(result.newAmountBalance),
+      newReserveBalance: new import_eth_wallet25.BigNumber(result.newReserveBalance),
+      lowerLimit: new import_eth_wallet25.BigNumber(result.lowerLimit),
+      upperLimit: new import_eth_wallet25.BigNumber(result.upperLimit),
+      startDate: new import_eth_wallet25.BigNumber(result.startDate),
+      expire: new import_eth_wallet25.BigNumber(result.expire),
+      privateReplenish: result.privateReplenish
+    };
   }
   async addLiquidity(params) {
     let result = await this.methods("addLiquidity", params.provider, params.direction, import_eth_wallet25.Utils.toString(params.staked), import_eth_wallet25.Utils.toString(params.lowerLimit), import_eth_wallet25.Utils.toString(params.upperLimit), import_eth_wallet25.Utils.toString(params.startDate), import_eth_wallet25.Utils.toString(params.expire));
@@ -3628,16 +3541,15 @@ var OSWAP_ConfigStore = class extends import_eth_wallet28.Contract {
     return this._deploy(governance);
   }
   parseParamSetEvent(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value: result.value
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet").map((e) => this.decodeParamSetEvent(e));
+  }
+  decodeParamSetEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value: result.value
+    };
   }
   async customParam(param1) {
     let result = await this.methods("customParam", import_eth_wallet28.Utils.stringToBytes32(param1));
@@ -3680,111 +3592,102 @@ var OSWAP_RestrictedFactory = class extends import_eth_wallet29.Contract {
     return this._deploy(params.governance, params.whitelistFactory, params.pairCreator, params.configStore, import_eth_wallet29.Utils.toString(params.tradeFee), import_eth_wallet29.Utils.toString(params.protocolFee), params.protocolFeeTo);
   }
   parseOracleAddedEvent(receipt) {
-    let events = this.parseEvents(receipt, "OracleAdded");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        token0: result.token0,
-        token1: result.token1,
-        oracle: result.oracle
-      };
-    });
+    return this.parseEvents(receipt, "OracleAdded").map((e) => this.decodeOracleAddedEvent(e));
+  }
+  decodeOracleAddedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      token0: result.token0,
+      token1: result.token1,
+      oracle: result.oracle
+    };
   }
   parseOwnershipTransferredEvent(receipt) {
-    let events = this.parseEvents(receipt, "OwnershipTransferred");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        previousOwner: result.previousOwner,
-        newOwner: result.newOwner
-      };
-    });
+    return this.parseEvents(receipt, "OwnershipTransferred").map((e) => this.decodeOwnershipTransferredEvent(e));
+  }
+  decodeOwnershipTransferredEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      previousOwner: result.previousOwner,
+      newOwner: result.newOwner
+    };
   }
   parsePairCreatedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairCreated");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        token0: result.token0,
-        token1: result.token1,
-        pair: result.pair,
-        newPairSize: new import_eth_wallet29.BigNumber(result.newPairSize),
-        newSize: new import_eth_wallet29.BigNumber(result.newSize)
-      };
-    });
+    return this.parseEvents(receipt, "PairCreated").map((e) => this.decodePairCreatedEvent(e));
+  }
+  decodePairCreatedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      token0: result.token0,
+      token1: result.token1,
+      pair: result.pair,
+      newPairSize: new import_eth_wallet29.BigNumber(result.newPairSize),
+      newSize: new import_eth_wallet29.BigNumber(result.newSize)
+    };
   }
   parsePairRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairRestarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairRestarted").map((e) => this.decodePairRestartedEvent(e));
+  }
+  decodePairRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parsePairShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairShutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair
-      };
-    });
+    return this.parseEvents(receipt, "PairShutdowned").map((e) => this.decodePairShutdownedEvent(e));
+  }
+  decodePairShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair
+    };
   }
   parseParamSetEvent(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value: result.value
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet").map((e) => this.decodeParamSetEvent(e));
+  }
+  decodeParamSetEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value: result.value
+    };
   }
   parseParamSet2Event(receipt) {
-    let events = this.parseEvents(receipt, "ParamSet2");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        name: result.name,
-        value1: result.value1,
-        value2: result.value2
-      };
-    });
+    return this.parseEvents(receipt, "ParamSet2").map((e) => this.decodeParamSet2Event(e));
+  }
+  decodeParamSet2Event(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      name: result.name,
+      value1: result.value1,
+      value2: result.value2
+    };
   }
   parseRestartedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Restarted");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Restarted").map((e) => this.decodeRestartedEvent(e));
+  }
+  decodeRestartedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   parseShutdownedEvent(receipt) {
-    let events = this.parseEvents(receipt, "Shutdowned");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash
-      };
-    });
+    return this.parseEvents(receipt, "Shutdowned").map((e) => this.decodeShutdownedEvent(e));
+  }
+  decodeShutdownedEvent(event) {
+    let result = event.data;
+    return {
+      _event: event
+    };
   }
   async addOldOracleToNewPair(params) {
     let result = await this.methods("addOldOracleToNewPair", params.tokenA, params.tokenB, params.oracle);
@@ -4207,59 +4110,55 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_wallet35.Contract {
     return this._deploy(governance);
   }
   parseCustomPairRegisterEvent(receipt) {
-    let events = this.parseEvents(receipt, "CustomPairRegister");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        pair: result.pair,
-        fee: new import_eth_wallet35.BigNumber(result.fee),
-        feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
-        typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
-      };
-    });
+    return this.parseEvents(receipt, "CustomPairRegister").map((e) => this.decodeCustomPairRegisterEvent(e));
+  }
+  decodeCustomPairRegisterEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      pair: result.pair,
+      fee: new import_eth_wallet35.BigNumber(result.fee),
+      feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
+      typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
+    };
   }
   parseOwnershipTransferredEvent(receipt) {
-    let events = this.parseEvents(receipt, "OwnershipTransferred");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        previousOwner: result.previousOwner,
-        newOwner: result.newOwner
-      };
-    });
+    return this.parseEvents(receipt, "OwnershipTransferred").map((e) => this.decodeOwnershipTransferredEvent(e));
+  }
+  decodeOwnershipTransferredEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      previousOwner: result.previousOwner,
+      newOwner: result.newOwner
+    };
   }
   parsePairRegisterEvent(receipt) {
-    let events = this.parseEvents(receipt, "PairRegister");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        factory: result.factory,
-        pair: result.pair,
-        token0: result.token0,
-        token1: result.token1
-      };
-    });
+    return this.parseEvents(receipt, "PairRegister").map((e) => this.decodePairRegisterEvent(e));
+  }
+  decodePairRegisterEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      factory: result.factory,
+      pair: result.pair,
+      token0: result.token0,
+      token1: result.token1
+    };
   }
   parseProtocolRegisterEvent(receipt) {
-    let events = this.parseEvents(receipt, "ProtocolRegister");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        factory: result.factory,
-        name: result.name,
-        fee: new import_eth_wallet35.BigNumber(result.fee),
-        feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
-        typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
-      };
-    });
+    return this.parseEvents(receipt, "ProtocolRegister").map((e) => this.decodeProtocolRegisterEvent(e));
+  }
+  decodeProtocolRegisterEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      factory: result.factory,
+      name: result.name,
+      fee: new import_eth_wallet35.BigNumber(result.fee),
+      feeBase: new import_eth_wallet35.BigNumber(result.feeBase),
+      typeCode: new import_eth_wallet35.BigNumber(result.typeCode)
+    };
   }
   async customPairs(param1) {
     let result = await this.methods("customPairs", param1);
@@ -4473,113 +4372,106 @@ var OSWAP_RestrictedPair = class extends import_eth_wallet37.Contract {
     return this._deploy();
   }
   parseAddLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "AddLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        index: new import_eth_wallet37.BigNumber(result.index),
-        amount: new import_eth_wallet37.BigNumber(result.amount),
-        newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance)
-      };
-    });
+    return this.parseEvents(receipt, "AddLiquidity").map((e) => this.decodeAddLiquidityEvent(e));
+  }
+  decodeAddLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      index: new import_eth_wallet37.BigNumber(result.index),
+      amount: new import_eth_wallet37.BigNumber(result.amount),
+      newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance)
+    };
   }
   parseApprovedTraderEvent(receipt) {
-    let events = this.parseEvents(receipt, "ApprovedTrader");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        direction: result.direction,
-        offerIndex: new import_eth_wallet37.BigNumber(result.offerIndex),
-        trader: result.trader,
-        allocation: new import_eth_wallet37.BigNumber(result.allocation)
-      };
-    });
+    return this.parseEvents(receipt, "ApprovedTrader").map((e) => this.decodeApprovedTraderEvent(e));
+  }
+  decodeApprovedTraderEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      direction: result.direction,
+      offerIndex: new import_eth_wallet37.BigNumber(result.offerIndex),
+      trader: result.trader,
+      allocation: new import_eth_wallet37.BigNumber(result.allocation)
+    };
   }
   parseLockEvent(receipt) {
-    let events = this.parseEvents(receipt, "Lock");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        direction: result.direction,
-        index: new import_eth_wallet37.BigNumber(result.index)
-      };
-    });
+    return this.parseEvents(receipt, "Lock").map((e) => this.decodeLockEvent(e));
+  }
+  decodeLockEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      direction: result.direction,
+      index: new import_eth_wallet37.BigNumber(result.index)
+    };
   }
   parseNewProviderOfferEvent(receipt) {
-    let events = this.parseEvents(receipt, "NewProviderOffer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        index: new import_eth_wallet37.BigNumber(result.index),
-        allowAll: result.allowAll,
-        restrictedPrice: new import_eth_wallet37.BigNumber(result.restrictedPrice),
-        startDate: new import_eth_wallet37.BigNumber(result.startDate),
-        expire: new import_eth_wallet37.BigNumber(result.expire)
-      };
-    });
+    return this.parseEvents(receipt, "NewProviderOffer").map((e) => this.decodeNewProviderOfferEvent(e));
+  }
+  decodeNewProviderOfferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      index: new import_eth_wallet37.BigNumber(result.index),
+      allowAll: result.allowAll,
+      restrictedPrice: new import_eth_wallet37.BigNumber(result.restrictedPrice),
+      startDate: new import_eth_wallet37.BigNumber(result.startDate),
+      expire: new import_eth_wallet37.BigNumber(result.expire)
+    };
   }
   parseRemoveLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "RemoveLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        index: new import_eth_wallet37.BigNumber(result.index),
-        amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
-        receivingOut: new import_eth_wallet37.BigNumber(result.receivingOut),
-        newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
-        newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance)
-      };
-    });
+    return this.parseEvents(receipt, "RemoveLiquidity").map((e) => this.decodeRemoveLiquidityEvent(e));
+  }
+  decodeRemoveLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      index: new import_eth_wallet37.BigNumber(result.index),
+      amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
+      receivingOut: new import_eth_wallet37.BigNumber(result.receivingOut),
+      newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
+      newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance)
+    };
   }
   parseSwapEvent(receipt) {
-    let events = this.parseEvents(receipt, "Swap");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        to: result.to,
-        direction: result.direction,
-        amountIn: new import_eth_wallet37.BigNumber(result.amountIn),
-        amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
-        tradeFee: new import_eth_wallet37.BigNumber(result.tradeFee),
-        protocolFee: new import_eth_wallet37.BigNumber(result.protocolFee)
-      };
-    });
+    return this.parseEvents(receipt, "Swap").map((e) => this.decodeSwapEvent(e));
+  }
+  decodeSwapEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      to: result.to,
+      direction: result.direction,
+      amountIn: new import_eth_wallet37.BigNumber(result.amountIn),
+      amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
+      tradeFee: new import_eth_wallet37.BigNumber(result.tradeFee),
+      protocolFee: new import_eth_wallet37.BigNumber(result.protocolFee)
+    };
   }
   parseSwappedOneOfferEvent(receipt) {
-    let events = this.parseEvents(receipt, "SwappedOneOffer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        index: new import_eth_wallet37.BigNumber(result.index),
-        price: new import_eth_wallet37.BigNumber(result.price),
-        amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
-        amountIn: new import_eth_wallet37.BigNumber(result.amountIn),
-        newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
-        newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance)
-      };
-    });
+    return this.parseEvents(receipt, "SwappedOneOffer").map((e) => this.decodeSwappedOneOfferEvent(e));
+  }
+  decodeSwappedOneOfferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      index: new import_eth_wallet37.BigNumber(result.index),
+      price: new import_eth_wallet37.BigNumber(result.price),
+      amountOut: new import_eth_wallet37.BigNumber(result.amountOut),
+      amountIn: new import_eth_wallet37.BigNumber(result.amountIn),
+      newAmountBalance: new import_eth_wallet37.BigNumber(result.newAmountBalance),
+      newReceivingBalance: new import_eth_wallet37.BigNumber(result.newReceivingBalance)
+    };
   }
   async addLiquidity(params) {
     let result = await this.methods("addLiquidity", params.direction, import_eth_wallet37.Utils.toString(params.index));
@@ -4822,113 +4714,106 @@ var OSWAP_RestrictedPair2 = class extends import_eth_wallet38.Contract {
     return this._deploy();
   }
   parseAddLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "AddLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        index: new import_eth_wallet38.BigNumber(result.index),
-        amount: new import_eth_wallet38.BigNumber(result.amount),
-        newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance)
-      };
-    });
+    return this.parseEvents(receipt, "AddLiquidity").map((e) => this.decodeAddLiquidityEvent(e));
+  }
+  decodeAddLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      index: new import_eth_wallet38.BigNumber(result.index),
+      amount: new import_eth_wallet38.BigNumber(result.amount),
+      newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance)
+    };
   }
   parseApprovedTraderEvent(receipt) {
-    let events = this.parseEvents(receipt, "ApprovedTrader");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        direction: result.direction,
-        offerIndex: new import_eth_wallet38.BigNumber(result.offerIndex),
-        trader: result.trader,
-        allocation: new import_eth_wallet38.BigNumber(result.allocation)
-      };
-    });
+    return this.parseEvents(receipt, "ApprovedTrader").map((e) => this.decodeApprovedTraderEvent(e));
+  }
+  decodeApprovedTraderEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      direction: result.direction,
+      offerIndex: new import_eth_wallet38.BigNumber(result.offerIndex),
+      trader: result.trader,
+      allocation: new import_eth_wallet38.BigNumber(result.allocation)
+    };
   }
   parseLockEvent(receipt) {
-    let events = this.parseEvents(receipt, "Lock");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        direction: result.direction,
-        index: new import_eth_wallet38.BigNumber(result.index)
-      };
-    });
+    return this.parseEvents(receipt, "Lock").map((e) => this.decodeLockEvent(e));
+  }
+  decodeLockEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      direction: result.direction,
+      index: new import_eth_wallet38.BigNumber(result.index)
+    };
   }
   parseNewProviderOfferEvent(receipt) {
-    let events = this.parseEvents(receipt, "NewProviderOffer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        index: new import_eth_wallet38.BigNumber(result.index),
-        allowAll: result.allowAll,
-        restrictedPrice: new import_eth_wallet38.BigNumber(result.restrictedPrice),
-        startDate: new import_eth_wallet38.BigNumber(result.startDate),
-        expire: new import_eth_wallet38.BigNumber(result.expire)
-      };
-    });
+    return this.parseEvents(receipt, "NewProviderOffer").map((e) => this.decodeNewProviderOfferEvent(e));
+  }
+  decodeNewProviderOfferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      index: new import_eth_wallet38.BigNumber(result.index),
+      allowAll: result.allowAll,
+      restrictedPrice: new import_eth_wallet38.BigNumber(result.restrictedPrice),
+      startDate: new import_eth_wallet38.BigNumber(result.startDate),
+      expire: new import_eth_wallet38.BigNumber(result.expire)
+    };
   }
   parseRemoveLiquidityEvent(receipt) {
-    let events = this.parseEvents(receipt, "RemoveLiquidity");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        index: new import_eth_wallet38.BigNumber(result.index),
-        amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
-        receivingOut: new import_eth_wallet38.BigNumber(result.receivingOut),
-        newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
-        newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance)
-      };
-    });
+    return this.parseEvents(receipt, "RemoveLiquidity").map((e) => this.decodeRemoveLiquidityEvent(e));
+  }
+  decodeRemoveLiquidityEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      index: new import_eth_wallet38.BigNumber(result.index),
+      amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
+      receivingOut: new import_eth_wallet38.BigNumber(result.receivingOut),
+      newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
+      newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance)
+    };
   }
   parseSwapEvent(receipt) {
-    let events = this.parseEvents(receipt, "Swap");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        to: result.to,
-        direction: result.direction,
-        amountIn: new import_eth_wallet38.BigNumber(result.amountIn),
-        amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
-        tradeFee: new import_eth_wallet38.BigNumber(result.tradeFee),
-        protocolFee: new import_eth_wallet38.BigNumber(result.protocolFee)
-      };
-    });
+    return this.parseEvents(receipt, "Swap").map((e) => this.decodeSwapEvent(e));
+  }
+  decodeSwapEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      to: result.to,
+      direction: result.direction,
+      amountIn: new import_eth_wallet38.BigNumber(result.amountIn),
+      amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
+      tradeFee: new import_eth_wallet38.BigNumber(result.tradeFee),
+      protocolFee: new import_eth_wallet38.BigNumber(result.protocolFee)
+    };
   }
   parseSwappedOneOfferEvent(receipt) {
-    let events = this.parseEvents(receipt, "SwappedOneOffer");
-    return events.map((result) => {
-      return {
-        _eventName: result._eventName,
-        _address: result._address,
-        _transactionHash: result._transactionHash,
-        provider: result.provider,
-        direction: result.direction,
-        index: new import_eth_wallet38.BigNumber(result.index),
-        price: new import_eth_wallet38.BigNumber(result.price),
-        amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
-        amountIn: new import_eth_wallet38.BigNumber(result.amountIn),
-        newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
-        newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance)
-      };
-    });
+    return this.parseEvents(receipt, "SwappedOneOffer").map((e) => this.decodeSwappedOneOfferEvent(e));
+  }
+  decodeSwappedOneOfferEvent(event) {
+    let result = event.data;
+    return {
+      _event: event,
+      provider: result.provider,
+      direction: result.direction,
+      index: new import_eth_wallet38.BigNumber(result.index),
+      price: new import_eth_wallet38.BigNumber(result.price),
+      amountOut: new import_eth_wallet38.BigNumber(result.amountOut),
+      amountIn: new import_eth_wallet38.BigNumber(result.amountIn),
+      newAmountBalance: new import_eth_wallet38.BigNumber(result.newAmountBalance),
+      newReceivingBalance: new import_eth_wallet38.BigNumber(result.newReceivingBalance)
+    };
   }
   async addLiquidity(params) {
     let result = await this.methods("addLiquidity", params.direction, import_eth_wallet38.Utils.toString(params.index));

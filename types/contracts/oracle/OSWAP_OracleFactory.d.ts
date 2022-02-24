@@ -1,4 +1,4 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_OracleFactory extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(params: {
@@ -10,16 +10,27 @@ export declare class OSWAP_OracleFactory extends Contract {
         protocolFeeTo: string;
     }): Promise<string>;
     parseOracleAddedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OracleAddedEvent[];
+    decodeOracleAddedEvent(event: Event): OSWAP_OracleFactory.OracleAddedEvent;
     parseOracleScoresEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OracleScoresEvent[];
+    decodeOracleScoresEvent(event: Event): OSWAP_OracleFactory.OracleScoresEvent;
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OwnershipTransferredEvent[];
+    decodeOwnershipTransferredEvent(event: Event): OSWAP_OracleFactory.OwnershipTransferredEvent;
     parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.PairCreatedEvent[];
+    decodePairCreatedEvent(event: Event): OSWAP_OracleFactory.PairCreatedEvent;
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.PairRestartedEvent[];
+    decodePairRestartedEvent(event: Event): OSWAP_OracleFactory.PairRestartedEvent;
     parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.PairShutdownedEvent[];
+    decodePairShutdownedEvent(event: Event): OSWAP_OracleFactory.PairShutdownedEvent;
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.ParamSetEvent[];
+    decodeParamSetEvent(event: Event): OSWAP_OracleFactory.ParamSetEvent;
     parseParamSet2Event(receipt: TransactionReceipt): OSWAP_OracleFactory.ParamSet2Event[];
+    decodeParamSet2Event(event: Event): OSWAP_OracleFactory.ParamSet2Event;
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.RestartedEvent[];
+    decodeRestartedEvent(event: Event): OSWAP_OracleFactory.RestartedEvent;
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.ShutdownedEvent[];
+    decodeShutdownedEvent(event: Event): OSWAP_OracleFactory.ShutdownedEvent;
     parseWhitelistedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.WhitelistedEvent[];
+    decodeWhitelistedEvent(event: Event): OSWAP_OracleFactory.WhitelistedEvent;
     addOldOracleToNewPair(params: {
         tokenA: string;
         tokenB: string;
@@ -109,77 +120,53 @@ export declare class OSWAP_OracleFactory extends Contract {
 }
 export declare module OSWAP_OracleFactory {
     interface OracleAddedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         token0: string;
         token1: string;
         oracle: string;
     }
     interface OracleScoresEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         oracle: string;
         score: BigNumber;
     }
     interface OwnershipTransferredEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         previousOwner: string;
         newOwner: string;
     }
     interface PairCreatedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         token0: string;
         token1: string;
         pair: string;
         newSize: BigNumber;
     }
     interface PairRestartedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         pair: string;
     }
     interface PairShutdownedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         pair: string;
     }
     interface ParamSetEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         name: string;
         value: string;
     }
     interface ParamSet2Event {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         name: string;
         value1: string;
         value2: string;
     }
     interface RestartedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
     }
     interface ShutdownedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
     }
     interface WhitelistedEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         who: string;
         allow: boolean;
     }

@@ -1,4 +1,4 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class ERC20 extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(params: {
@@ -6,7 +6,9 @@ export declare class ERC20 extends Contract {
         symbol: string;
     }): Promise<string>;
     parseApprovalEvent(receipt: TransactionReceipt): ERC20.ApprovalEvent[];
+    decodeApprovalEvent(event: Event): ERC20.ApprovalEvent;
     parseTransferEvent(receipt: TransactionReceipt): ERC20.TransferEvent[];
+    decodeTransferEvent(event: Event): ERC20.TransferEvent;
     allowance(params: {
         owner: string;
         spender: string;
@@ -40,17 +42,13 @@ export declare class ERC20 extends Contract {
 }
 export declare module ERC20 {
     interface ApprovalEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         owner: string;
         spender: string;
         value: BigNumber;
     }
     interface TransferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         from: string;
         to: string;
         value: BigNumber;

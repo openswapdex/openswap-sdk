@@ -1,4 +1,4 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OpenSwap extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(params: {
@@ -8,7 +8,9 @@ export declare class OpenSwap extends Contract {
         totalSupply: number | BigNumber;
     }): Promise<string>;
     parseApprovalEvent(receipt: TransactionReceipt): OpenSwap.ApprovalEvent[];
+    decodeApprovalEvent(event: Event): OpenSwap.ApprovalEvent;
     parseTransferEvent(receipt: TransactionReceipt): OpenSwap.TransferEvent[];
+    decodeTransferEvent(event: Event): OpenSwap.TransferEvent;
     allowance(params: {
         owner: string;
         spender: string;
@@ -48,17 +50,13 @@ export declare class OpenSwap extends Contract {
 }
 export declare module OpenSwap {
     interface ApprovalEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         owner: string;
         spender: string;
         value: BigNumber;
     }
     interface TransferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         from: string;
         to: string;
         value: BigNumber;

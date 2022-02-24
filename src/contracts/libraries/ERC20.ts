@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/libraries/ERC20.json");
 
 export class ERC20 extends Contract{
@@ -9,30 +9,28 @@ export class ERC20 extends Contract{
         return this._deploy(params.name,params.symbol);
     }
     parseApprovalEvent(receipt: TransactionReceipt): ERC20.ApprovalEvent[]{
-        let events = this.parseEvents(receipt, "Approval");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                owner: result.owner,
-                spender: result.spender,
-                value: new BigNumber(result.value)
-            };
-        });
+        return this.parseEvents(receipt, "Approval").map(e=>this.decodeApprovalEvent(e));
+    }
+    decodeApprovalEvent(event: Event): ERC20.ApprovalEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            owner: result.owner,
+            spender: result.spender,
+            value: new BigNumber(result.value)
+        };
     }
     parseTransferEvent(receipt: TransactionReceipt): ERC20.TransferEvent[]{
-        let events = this.parseEvents(receipt, "Transfer");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                from: result.from,
-                to: result.to,
-                value: new BigNumber(result.value)
-            };
-        });
+        return this.parseEvents(receipt, "Transfer").map(e=>this.decodeTransferEvent(e));
+    }
+    decodeTransferEvent(event: Event): ERC20.TransferEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            from: result.from,
+            to: result.to,
+            value: new BigNumber(result.value)
+        };
     }
     async allowance(params:{owner:string,spender:string}): Promise<BigNumber>{
         let result = await this.methods('allowance',params.owner,params.spender);
@@ -80,6 +78,6 @@ export class ERC20 extends Contract{
     }
 }
 export module ERC20{
-    export interface ApprovalEvent {_eventName:string,_address:string,_transactionHash:string,owner:string,spender:string,value:BigNumber}
-    export interface TransferEvent {_eventName:string,_address:string,_transactionHash:string,from:string,to:string,value:BigNumber}
+    export interface ApprovalEvent {_event:Event,owner:string,spender:string,value:BigNumber}
+    export interface TransferEvent {_event:Event,from:string,to:string,value:BigNumber}
 }

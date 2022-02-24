@@ -1,16 +1,25 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_OraclePair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_OraclePair.AddLiquidityEvent[];
+    decodeAddLiquidityEvent(event: Event): OSWAP_OraclePair.AddLiquidityEvent;
     parseDelegatorPauseOfferEvent(receipt: TransactionReceipt): OSWAP_OraclePair.DelegatorPauseOfferEvent[];
+    decodeDelegatorPauseOfferEvent(event: Event): OSWAP_OraclePair.DelegatorPauseOfferEvent;
     parseDelegatorResumeOfferEvent(receipt: TransactionReceipt): OSWAP_OraclePair.DelegatorResumeOfferEvent[];
+    decodeDelegatorResumeOfferEvent(event: Event): OSWAP_OraclePair.DelegatorResumeOfferEvent;
     parseNewProviderEvent(receipt: TransactionReceipt): OSWAP_OraclePair.NewProviderEvent[];
+    decodeNewProviderEvent(event: Event): OSWAP_OraclePair.NewProviderEvent;
     parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_OraclePair.RemoveLiquidityEvent[];
+    decodeRemoveLiquidityEvent(event: Event): OSWAP_OraclePair.RemoveLiquidityEvent;
     parseReplenishEvent(receipt: TransactionReceipt): OSWAP_OraclePair.ReplenishEvent[];
+    decodeReplenishEvent(event: Event): OSWAP_OraclePair.ReplenishEvent;
     parseSetDelegatorEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SetDelegatorEvent[];
+    decodeSetDelegatorEvent(event: Event): OSWAP_OraclePair.SetDelegatorEvent;
     parseSwapEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SwapEvent[];
+    decodeSwapEvent(event: Event): OSWAP_OraclePair.SwapEvent;
     parseSwappedOneProviderEvent(receipt: TransactionReceipt): OSWAP_OraclePair.SwappedOneProviderEvent[];
+    decodeSwappedOneProviderEvent(event: Event): OSWAP_OraclePair.SwappedOneProviderEvent;
     addLiquidity(params: {
         provider: string;
         direction: boolean;
@@ -172,9 +181,7 @@ export declare class OSWAP_OraclePair extends Contract {
 }
 export declare module OSWAP_OraclePair {
     interface AddLiquidityEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         staked: BigNumber;
@@ -185,32 +192,24 @@ export declare module OSWAP_OraclePair {
         enable: boolean;
     }
     interface DelegatorPauseOfferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         delegator: string;
         provider: string;
         direction: boolean;
     }
     interface DelegatorResumeOfferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         delegator: string;
         provider: string;
         direction: boolean;
     }
     interface NewProviderEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         index: BigNumber;
     }
     interface RemoveLiquidityEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         unstake: BigNumber;
@@ -223,9 +222,7 @@ export declare module OSWAP_OraclePair {
         enable: boolean;
     }
     interface ReplenishEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         amountIn: BigNumber;
@@ -234,16 +231,12 @@ export declare module OSWAP_OraclePair {
         expire: BigNumber;
     }
     interface SetDelegatorEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         delegator: string;
     }
     interface SwapEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         to: string;
         direction: boolean;
         price: BigNumber;
@@ -253,9 +246,7 @@ export declare module OSWAP_OraclePair {
         protocolFee: BigNumber;
     }
     interface SwappedOneProviderEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         amountOut: BigNumber;

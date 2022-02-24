@@ -1,14 +1,21 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_RestrictedPair extends Contract {
     constructor(wallet: Wallet, address?: string);
     deploy(): Promise<string>;
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.AddLiquidityEvent[];
+    decodeAddLiquidityEvent(event: Event): OSWAP_RestrictedPair.AddLiquidityEvent;
     parseApprovedTraderEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.ApprovedTraderEvent[];
+    decodeApprovedTraderEvent(event: Event): OSWAP_RestrictedPair.ApprovedTraderEvent;
     parseLockEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.LockEvent[];
+    decodeLockEvent(event: Event): OSWAP_RestrictedPair.LockEvent;
     parseNewProviderOfferEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.NewProviderOfferEvent[];
+    decodeNewProviderOfferEvent(event: Event): OSWAP_RestrictedPair.NewProviderOfferEvent;
     parseRemoveLiquidityEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.RemoveLiquidityEvent[];
+    decodeRemoveLiquidityEvent(event: Event): OSWAP_RestrictedPair.RemoveLiquidityEvent;
     parseSwapEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.SwapEvent[];
+    decodeSwapEvent(event: Event): OSWAP_RestrictedPair.SwapEvent;
     parseSwappedOneOfferEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.SwappedOneOfferEvent[];
+    decodeSwappedOneOfferEvent(event: Event): OSWAP_RestrictedPair.SwappedOneOfferEvent;
     addLiquidity(params: {
         direction: boolean;
         index: number | BigNumber;
@@ -172,7 +179,7 @@ export declare class OSWAP_RestrictedPair extends Contract {
         direction: boolean;
         offerIndex: number | BigNumber;
         trader: string[];
-        allocation: number[] | BigNumber[];
+        allocation: (number | BigNumber)[];
     }): Promise<TransactionReceipt>;
     swap(params: {
         amount0Out: number | BigNumber;
@@ -198,9 +205,7 @@ export declare class OSWAP_RestrictedPair extends Contract {
 }
 export declare module OSWAP_RestrictedPair {
     interface AddLiquidityEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         index: BigNumber;
@@ -208,25 +213,19 @@ export declare module OSWAP_RestrictedPair {
         newAmountBalance: BigNumber;
     }
     interface ApprovedTraderEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         direction: boolean;
         offerIndex: BigNumber;
         trader: string;
         allocation: BigNumber;
     }
     interface LockEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         direction: boolean;
         index: BigNumber;
     }
     interface NewProviderOfferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         index: BigNumber;
@@ -236,9 +235,7 @@ export declare module OSWAP_RestrictedPair {
         expire: BigNumber;
     }
     interface RemoveLiquidityEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         index: BigNumber;
@@ -248,9 +245,7 @@ export declare module OSWAP_RestrictedPair {
         newReceivingBalance: BigNumber;
     }
     interface SwapEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         to: string;
         direction: boolean;
         amountIn: BigNumber;
@@ -259,9 +254,7 @@ export declare module OSWAP_RestrictedPair {
         protocolFee: BigNumber;
     }
     interface SwappedOneOfferEvent {
-        _eventName: string;
-        _address: string;
-        _transactionHash: string;
+        _event: Event;
         provider: string;
         direction: boolean;
         index: BigNumber;

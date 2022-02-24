@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/oracle/OSWAP_OracleFactory.json");
 
 export class OSWAP_OracleFactory extends Contract{
@@ -9,134 +9,123 @@ export class OSWAP_OracleFactory extends Contract{
         return this._deploy(params.governance,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.protocolFee),Utils.toString(params.feePerDelegator),params.protocolFeeTo);
     }
     parseOracleAddedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OracleAddedEvent[]{
-        let events = this.parseEvents(receipt, "OracleAdded");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                token0: result.token0,
-                token1: result.token1,
-                oracle: result.oracle
-            };
-        });
+        return this.parseEvents(receipt, "OracleAdded").map(e=>this.decodeOracleAddedEvent(e));
+    }
+    decodeOracleAddedEvent(event: Event): OSWAP_OracleFactory.OracleAddedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            token0: result.token0,
+            token1: result.token1,
+            oracle: result.oracle
+        };
     }
     parseOracleScoresEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OracleScoresEvent[]{
-        let events = this.parseEvents(receipt, "OracleScores");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                oracle: result.oracle,
-                score: new BigNumber(result.score)
-            };
-        });
+        return this.parseEvents(receipt, "OracleScores").map(e=>this.decodeOracleScoresEvent(e));
+    }
+    decodeOracleScoresEvent(event: Event): OSWAP_OracleFactory.OracleScoresEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            oracle: result.oracle,
+            score: new BigNumber(result.score)
+        };
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OwnershipTransferredEvent[]{
-        let events = this.parseEvents(receipt, "OwnershipTransferred");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                previousOwner: result.previousOwner,
-                newOwner: result.newOwner
-            };
-        });
+        return this.parseEvents(receipt, "OwnershipTransferred").map(e=>this.decodeOwnershipTransferredEvent(e));
+    }
+    decodeOwnershipTransferredEvent(event: Event): OSWAP_OracleFactory.OwnershipTransferredEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            previousOwner: result.previousOwner,
+            newOwner: result.newOwner
+        };
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.PairCreatedEvent[]{
-        let events = this.parseEvents(receipt, "PairCreated");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                token0: result.token0,
-                token1: result.token1,
-                pair: result.pair,
-                newSize: new BigNumber(result.newSize)
-            };
-        });
+        return this.parseEvents(receipt, "PairCreated").map(e=>this.decodePairCreatedEvent(e));
+    }
+    decodePairCreatedEvent(event: Event): OSWAP_OracleFactory.PairCreatedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            token0: result.token0,
+            token1: result.token1,
+            pair: result.pair,
+            newSize: new BigNumber(result.newSize)
+        };
     }
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.PairRestartedEvent[]{
-        let events = this.parseEvents(receipt, "PairRestarted");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                pair: result.pair
-            };
-        });
+        return this.parseEvents(receipt, "PairRestarted").map(e=>this.decodePairRestartedEvent(e));
+    }
+    decodePairRestartedEvent(event: Event): OSWAP_OracleFactory.PairRestartedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            pair: result.pair
+        };
     }
     parsePairShutdownedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.PairShutdownedEvent[]{
-        let events = this.parseEvents(receipt, "PairShutdowned");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                pair: result.pair
-            };
-        });
+        return this.parseEvents(receipt, "PairShutdowned").map(e=>this.decodePairShutdownedEvent(e));
+    }
+    decodePairShutdownedEvent(event: Event): OSWAP_OracleFactory.PairShutdownedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            pair: result.pair
+        };
     }
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.ParamSetEvent[]{
-        let events = this.parseEvents(receipt, "ParamSet");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                name: result.name,
-                value: result.value
-            };
-        });
+        return this.parseEvents(receipt, "ParamSet").map(e=>this.decodeParamSetEvent(e));
+    }
+    decodeParamSetEvent(event: Event): OSWAP_OracleFactory.ParamSetEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            name: result.name,
+            value: result.value
+        };
     }
     parseParamSet2Event(receipt: TransactionReceipt): OSWAP_OracleFactory.ParamSet2Event[]{
-        let events = this.parseEvents(receipt, "ParamSet2");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                name: result.name,
-                value1: result.value1,
-                value2: result.value2
-            };
-        });
+        return this.parseEvents(receipt, "ParamSet2").map(e=>this.decodeParamSet2Event(e));
+    }
+    decodeParamSet2Event(event: Event): OSWAP_OracleFactory.ParamSet2Event{
+        let result = event.data;
+        return {
+            _event:event,
+            name: result.name,
+            value1: result.value1,
+            value2: result.value2
+        };
     }
     parseRestartedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.RestartedEvent[]{
-        let events = this.parseEvents(receipt, "Restarted");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash
-            };
-        });
+        return this.parseEvents(receipt, "Restarted").map(e=>this.decodeRestartedEvent(e));
+    }
+    decodeRestartedEvent(event: Event): OSWAP_OracleFactory.RestartedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+        };
     }
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.ShutdownedEvent[]{
-        let events = this.parseEvents(receipt, "Shutdowned");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash
-            };
-        });
+        return this.parseEvents(receipt, "Shutdowned").map(e=>this.decodeShutdownedEvent(e));
+    }
+    decodeShutdownedEvent(event: Event): OSWAP_OracleFactory.ShutdownedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+        };
     }
     parseWhitelistedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.WhitelistedEvent[]{
-        let events = this.parseEvents(receipt, "Whitelisted");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                who: result.who,
-                allow: result.allow
-            };
-        });
+        return this.parseEvents(receipt, "Whitelisted").map(e=>this.decodeWhitelistedEvent(e));
+    }
+    decodeWhitelistedEvent(event: Event): OSWAP_OracleFactory.WhitelistedEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            who: result.who,
+            allow: result.allow
+        };
     }
     async addOldOracleToNewPair(params:{tokenA:string,tokenB:string,oracle:string}): Promise<TransactionReceipt>{
         let result = await this.methods('addOldOracleToNewPair',params.tokenA,params.tokenB,params.oracle);
@@ -311,15 +300,15 @@ export class OSWAP_OracleFactory extends Contract{
     }
 }
 export module OSWAP_OracleFactory{
-    export interface OracleAddedEvent {_eventName:string,_address:string,_transactionHash:string,token0:string,token1:string,oracle:string}
-    export interface OracleScoresEvent {_eventName:string,_address:string,_transactionHash:string,oracle:string,score:BigNumber}
-    export interface OwnershipTransferredEvent {_eventName:string,_address:string,_transactionHash:string,previousOwner:string,newOwner:string}
-    export interface PairCreatedEvent {_eventName:string,_address:string,_transactionHash:string,token0:string,token1:string,pair:string,newSize:BigNumber}
-    export interface PairRestartedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
-    export interface PairShutdownedEvent {_eventName:string,_address:string,_transactionHash:string,pair:string}
-    export interface ParamSetEvent {_eventName:string,_address:string,_transactionHash:string,name:string,value:string}
-    export interface ParamSet2Event {_eventName:string,_address:string,_transactionHash:string,name:string,value1:string,value2:string}
-    export interface RestartedEvent {_eventName:string,_address:string,_transactionHash:string}
-    export interface ShutdownedEvent {_eventName:string,_address:string,_transactionHash:string}
-    export interface WhitelistedEvent {_eventName:string,_address:string,_transactionHash:string,who:string,allow:boolean}
+    export interface OracleAddedEvent {_event:Event,token0:string,token1:string,oracle:string}
+    export interface OracleScoresEvent {_event:Event,oracle:string,score:BigNumber}
+    export interface OwnershipTransferredEvent {_event:Event,previousOwner:string,newOwner:string}
+    export interface PairCreatedEvent {_event:Event,token0:string,token1:string,pair:string,newSize:BigNumber}
+    export interface PairRestartedEvent {_event:Event,pair:string}
+    export interface PairShutdownedEvent {_event:Event,pair:string}
+    export interface ParamSetEvent {_event:Event,name:string,value:string}
+    export interface ParamSet2Event {_event:Event,name:string,value1:string,value2:string}
+    export interface RestartedEvent {}
+    export interface ShutdownedEvent {}
+    export interface WhitelistedEvent {_event:Event,who:string,allow:boolean}
 }

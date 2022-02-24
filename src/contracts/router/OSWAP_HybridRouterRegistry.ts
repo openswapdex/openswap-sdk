@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/router/OSWAP_HybridRouterRegistry.json");
 
 export class OSWAP_HybridRouterRegistry extends Contract{
@@ -9,59 +9,55 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         return this._deploy(governance);
     }
     parseCustomPairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent[]{
-        let events = this.parseEvents(receipt, "CustomPairRegister");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                pair: result.pair,
-                fee: new BigNumber(result.fee),
-                feeBase: new BigNumber(result.feeBase),
-                typeCode: new BigNumber(result.typeCode)
-            };
-        });
+        return this.parseEvents(receipt, "CustomPairRegister").map(e=>this.decodeCustomPairRegisterEvent(e));
+    }
+    decodeCustomPairRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            pair: result.pair,
+            fee: new BigNumber(result.fee),
+            feeBase: new BigNumber(result.feeBase),
+            typeCode: new BigNumber(result.typeCode)
+        };
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.OwnershipTransferredEvent[]{
-        let events = this.parseEvents(receipt, "OwnershipTransferred");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                previousOwner: result.previousOwner,
-                newOwner: result.newOwner
-            };
-        });
+        return this.parseEvents(receipt, "OwnershipTransferred").map(e=>this.decodeOwnershipTransferredEvent(e));
+    }
+    decodeOwnershipTransferredEvent(event: Event): OSWAP_HybridRouterRegistry.OwnershipTransferredEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            previousOwner: result.previousOwner,
+            newOwner: result.newOwner
+        };
     }
     parsePairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.PairRegisterEvent[]{
-        let events = this.parseEvents(receipt, "PairRegister");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                factory: result.factory,
-                pair: result.pair,
-                token0: result.token0,
-                token1: result.token1
-            };
-        });
+        return this.parseEvents(receipt, "PairRegister").map(e=>this.decodePairRegisterEvent(e));
+    }
+    decodePairRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.PairRegisterEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            factory: result.factory,
+            pair: result.pair,
+            token0: result.token0,
+            token1: result.token1
+        };
     }
     parseProtocolRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.ProtocolRegisterEvent[]{
-        let events = this.parseEvents(receipt, "ProtocolRegister");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                factory: result.factory,
-                name: result.name,
-                fee: new BigNumber(result.fee),
-                feeBase: new BigNumber(result.feeBase),
-                typeCode: new BigNumber(result.typeCode)
-            };
-        });
+        return this.parseEvents(receipt, "ProtocolRegister").map(e=>this.decodeProtocolRegisterEvent(e));
+    }
+    decodeProtocolRegisterEvent(event: Event): OSWAP_HybridRouterRegistry.ProtocolRegisterEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            factory: result.factory,
+            name: result.name,
+            fee: new BigNumber(result.fee),
+            feeBase: new BigNumber(result.feeBase),
+            typeCode: new BigNumber(result.typeCode)
+        };
     }
     async customPairs(param1:string): Promise<{fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}>{
         let result = await this.methods('customPairs',param1);
@@ -97,7 +93,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         let result = await this.methods('governance');
         return result;
     }
-    async init(params:{name:string[],factory:string[],fee:number[]|BigNumber[],feeBase:number[]|BigNumber[],typeCode:number[]|BigNumber[]}): Promise<TransactionReceipt>{
+    async init(params:{name:string[],factory:string[],fee:(number|BigNumber)[],feeBase:(number|BigNumber)[],typeCode:(number|BigNumber)[]}): Promise<TransactionReceipt>{
         let result = await this.methods('init',Utils.stringToBytes32(params.name),params.factory,Utils.toString(params.fee),Utils.toString(params.feeBase),Utils.toString(params.typeCode));
         return result;
     }
@@ -158,7 +154,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         let result = await this.methods('registerPairsByAddress2',params.factory,params.pairAddress);
         return result;
     }
-    async registerPairsByIndex(params:{factory:string,index:number[]|BigNumber[]}): Promise<TransactionReceipt>{
+    async registerPairsByIndex(params:{factory:string,index:(number|BigNumber)[]}): Promise<TransactionReceipt>{
         let result = await this.methods('registerPairsByIndex',params.factory,Utils.toString(params.index));
         return result;
     }
@@ -166,7 +162,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         let result = await this.methods('registerPairsByTokens',params.factory,params.token0,params.token1);
         return result;
     }
-    async registerPairsByTokensV3(params:{factory:string,token0:string[],token1:string[],pairIndex:number[]|BigNumber[]}): Promise<TransactionReceipt>{
+    async registerPairsByTokensV3(params:{factory:string,token0:string[],token1:string[],pairIndex:(number|BigNumber)[]}): Promise<TransactionReceipt>{
         let result = await this.methods('registerPairsByTokensV3',params.factory,params.token0,params.token1,Utils.toString(params.pairIndex));
         return result;
     }
@@ -184,8 +180,8 @@ export class OSWAP_HybridRouterRegistry extends Contract{
     }
 }
 export module OSWAP_HybridRouterRegistry{
-    export interface CustomPairRegisterEvent {_eventName:string,_address:string,_transactionHash:string,pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
-    export interface OwnershipTransferredEvent {_eventName:string,_address:string,_transactionHash:string,previousOwner:string,newOwner:string}
-    export interface PairRegisterEvent {_eventName:string,_address:string,_transactionHash:string,factory:string,pair:string,token0:string,token1:string}
-    export interface ProtocolRegisterEvent {_eventName:string,_address:string,_transactionHash:string,factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
+    export interface CustomPairRegisterEvent {_event:Event,pair:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
+    export interface OwnershipTransferredEvent {_event:Event,previousOwner:string,newOwner:string}
+    export interface PairRegisterEvent {_event:Event,factory:string,pair:string,token0:string,token1:string}
+    export interface ProtocolRegisterEvent {_event:Event,factory:string,name:string,fee:BigNumber,feeBase:BigNumber,typeCode:BigNumber}
 }

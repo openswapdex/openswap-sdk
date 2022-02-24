@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/restricted/OSWAP_RestrictedLiquidityProvider.json");
 
 export class OSWAP_RestrictedLiquidityProvider extends Contract{
@@ -16,7 +16,7 @@ export class OSWAP_RestrictedLiquidityProvider extends Contract{
         let result = await this.methods('addLiquidity',params.tokenA,params.tokenB,params.addingTokenA,Utils.toString(params.pairIndex),Utils.toString(params.offerIndex),Utils.toString(params.amountIn),params.allowAll,Utils.toString(params.restrictedPrice),Utils.toString(params.startDate),Utils.toString(params.expire),Utils.toString(params.deadline));
         return result;
     }
-    async addLiquidityAndTrader(params:{param:number[]|BigNumber[],trader:string[],allocation:number[]|BigNumber[]}): Promise<TransactionReceipt>{
+    async addLiquidityAndTrader(params:{param:(number|BigNumber)[],trader:string[],allocation:(number|BigNumber)[]}): Promise<TransactionReceipt>{
         let result = await this.methods('addLiquidityAndTrader',Utils.toString(params.param),params.trader,Utils.toString(params.allocation));
         return result;
     }
@@ -24,7 +24,7 @@ export class OSWAP_RestrictedLiquidityProvider extends Contract{
         let result = await this.methods('addLiquidityETH',params.tokenA,params.addingTokenA,Utils.toString(params.pairIndex),Utils.toString(params.offerIndex),Utils.toString(params.amountAIn),params.allowAll,Utils.toString(params.restrictedPrice),Utils.toString(params.startDate),Utils.toString(params.expire),Utils.toString(params.deadline),_value);
         return result;
     }
-    async addLiquidityETHAndTrader(params:{param:number[]|BigNumber[],trader:string[],allocation:number[]|BigNumber[]},_value:number|BigNumber): Promise<TransactionReceipt>{
+    async addLiquidityETHAndTrader(params:{param:(number|BigNumber)[],trader:string[],allocation:(number|BigNumber)[]},_value:number|BigNumber): Promise<TransactionReceipt>{
         let result = await this.methods('addLiquidityETHAndTrader',Utils.toString(params.param),params.trader,Utils.toString(params.allocation),_value);
         return result;
     }

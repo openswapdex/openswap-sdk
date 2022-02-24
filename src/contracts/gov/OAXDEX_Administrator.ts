@@ -1,4 +1,4 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber} from "@ijstech/eth-wallet";
+import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
 const Bin = require("../../../bin/gov/OAXDEX_Administrator.json");
 
 export class OAXDEX_Administrator extends Contract{
@@ -9,102 +9,94 @@ export class OAXDEX_Administrator extends Contract{
         return this._deploy(governance);
     }
     parseAddAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.AddAdminEvent[]{
-        let events = this.parseEvents(receipt, "AddAdmin");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                admin: result.admin
-            };
-        });
+        return this.parseEvents(receipt, "AddAdmin").map(e=>this.decodeAddAdminEvent(e));
+    }
+    decodeAddAdminEvent(event: Event): OAXDEX_Administrator.AddAdminEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            admin: result.admin
+        };
     }
     parseRemoveAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.RemoveAdminEvent[]{
-        let events = this.parseEvents(receipt, "RemoveAdmin");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                admin: result.admin
-            };
-        });
+        return this.parseEvents(receipt, "RemoveAdmin").map(e=>this.decodeRemoveAdminEvent(e));
+    }
+    decodeRemoveAdminEvent(event: Event): OAXDEX_Administrator.RemoveAdminEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            admin: result.admin
+        };
     }
     parseSetMaxAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.SetMaxAdminEvent[]{
-        let events = this.parseEvents(receipt, "SetMaxAdmin");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                maxAdmin: new BigNumber(result.maxAdmin)
-            };
-        });
+        return this.parseEvents(receipt, "SetMaxAdmin").map(e=>this.decodeSetMaxAdminEvent(e));
+    }
+    decodeSetMaxAdminEvent(event: Event): OAXDEX_Administrator.SetMaxAdminEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            maxAdmin: new BigNumber(result.maxAdmin)
+        };
     }
     parseVotedFactoryRestartEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedFactoryRestartEvent[]{
-        let events = this.parseEvents(receipt, "VotedFactoryRestart");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                admin: result.admin,
-                factory: result.factory,
-                YorN: result.YorN
-            };
-        });
+        return this.parseEvents(receipt, "VotedFactoryRestart").map(e=>this.decodeVotedFactoryRestartEvent(e));
+    }
+    decodeVotedFactoryRestartEvent(event: Event): OAXDEX_Administrator.VotedFactoryRestartEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            admin: result.admin,
+            factory: result.factory,
+            YorN: result.YorN
+        };
     }
     parseVotedFactoryShutdownEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedFactoryShutdownEvent[]{
-        let events = this.parseEvents(receipt, "VotedFactoryShutdown");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                admin: result.admin,
-                factory: result.factory,
-                YorN: result.YorN
-            };
-        });
+        return this.parseEvents(receipt, "VotedFactoryShutdown").map(e=>this.decodeVotedFactoryShutdownEvent(e));
+    }
+    decodeVotedFactoryShutdownEvent(event: Event): OAXDEX_Administrator.VotedFactoryShutdownEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            admin: result.admin,
+            factory: result.factory,
+            YorN: result.YorN
+        };
     }
     parseVotedPairRestartEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedPairRestartEvent[]{
-        let events = this.parseEvents(receipt, "VotedPairRestart");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                admin: result.admin,
-                pair: result.pair,
-                YorN: result.YorN
-            };
-        });
+        return this.parseEvents(receipt, "VotedPairRestart").map(e=>this.decodeVotedPairRestartEvent(e));
+    }
+    decodeVotedPairRestartEvent(event: Event): OAXDEX_Administrator.VotedPairRestartEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            admin: result.admin,
+            pair: result.pair,
+            YorN: result.YorN
+        };
     }
     parseVotedPairShutdownEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedPairShutdownEvent[]{
-        let events = this.parseEvents(receipt, "VotedPairShutdown");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                admin: result.admin,
-                pair: result.pair,
-                YorN: result.YorN
-            };
-        });
+        return this.parseEvents(receipt, "VotedPairShutdown").map(e=>this.decodeVotedPairShutdownEvent(e));
+    }
+    decodeVotedPairShutdownEvent(event: Event): OAXDEX_Administrator.VotedPairShutdownEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            admin: result.admin,
+            pair: result.pair,
+            YorN: result.YorN
+        };
     }
     parseVotedVetoEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedVetoEvent[]{
-        let events = this.parseEvents(receipt, "VotedVeto");
-        return events.map(result => {
-            return {
-                _eventName: result._eventName,
-                _address: result._address,
-                _transactionHash: result._transactionHash,
-                admin: result.admin,
-                votingContract: result.votingContract,
-                YorN: result.YorN
-            };
-        });
+        return this.parseEvents(receipt, "VotedVeto").map(e=>this.decodeVotedVetoEvent(e));
+    }
+    decodeVotedVetoEvent(event: Event): OAXDEX_Administrator.VotedVetoEvent{
+        let result = event.data;
+        return {
+            _event:event,
+            admin: result.admin,
+            votingContract: result.votingContract,
+            YorN: result.YorN
+        };
     }
     async addAdmin(admin:string): Promise<TransactionReceipt>{
         let result = await this.methods('addAdmin',admin);
@@ -220,12 +212,12 @@ export class OAXDEX_Administrator extends Contract{
     }
 }
 export module OAXDEX_Administrator{
-    export interface AddAdminEvent {_eventName:string,_address:string,_transactionHash:string,admin:string}
-    export interface RemoveAdminEvent {_eventName:string,_address:string,_transactionHash:string,admin:string}
-    export interface SetMaxAdminEvent {_eventName:string,_address:string,_transactionHash:string,maxAdmin:BigNumber}
-    export interface VotedFactoryRestartEvent {_eventName:string,_address:string,_transactionHash:string,admin:string,factory:string,YorN:boolean}
-    export interface VotedFactoryShutdownEvent {_eventName:string,_address:string,_transactionHash:string,admin:string,factory:string,YorN:boolean}
-    export interface VotedPairRestartEvent {_eventName:string,_address:string,_transactionHash:string,admin:string,pair:string,YorN:boolean}
-    export interface VotedPairShutdownEvent {_eventName:string,_address:string,_transactionHash:string,admin:string,pair:string,YorN:boolean}
-    export interface VotedVetoEvent {_eventName:string,_address:string,_transactionHash:string,admin:string,votingContract:string,YorN:boolean}
+    export interface AddAdminEvent {_event:Event,admin:string}
+    export interface RemoveAdminEvent {_event:Event,admin:string}
+    export interface SetMaxAdminEvent {_event:Event,maxAdmin:BigNumber}
+    export interface VotedFactoryRestartEvent {_event:Event,admin:string,factory:string,YorN:boolean}
+    export interface VotedFactoryShutdownEvent {_event:Event,admin:string,factory:string,YorN:boolean}
+    export interface VotedPairRestartEvent {_event:Event,admin:string,pair:string,YorN:boolean}
+    export interface VotedPairShutdownEvent {_event:Event,admin:string,pair:string,YorN:boolean}
+    export interface VotedVetoEvent {_event:Event,admin:string,votingContract:string,YorN:boolean}
 }
