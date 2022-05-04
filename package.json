@@ -10,12 +10,14 @@
     "build:contracts": "sol2ts solidity.config.json",
     "build:test": "sol2ts solidity-test.config.json",
     "build:lib": "tsc && node esbuild.bundle",
-    "test": "mocha --exit --require ts-node/register --timeout 100000 test/*.test.ts"
+    "test": "mocha --exit --require ts-node/register --timeout 100000 test/*.test.ts",
+    "build:plugin": "compile 0.6.11 node_modules/@openswapdex/openswap-core/contracts plugin/contracts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ijstech/eth-contract": "git+https://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:x-oauth-basic@github.com/ijstech/eth-contract.git",
     "@ijstech/eth-wallet": "git+https://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:x-oauth-basic@github.com/ijstech/eth-wallet.git",
     "@openswapdex/openswap-core": "git+https://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:x-oauth-basic@github.com/openswapdex/openswap-core.git"
   },
