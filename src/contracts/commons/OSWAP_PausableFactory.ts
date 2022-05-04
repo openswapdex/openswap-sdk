@@ -1,9 +1,10 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
-const Bin = require("../../../bin/commons/OSWAP_PausableFactory.json");
+import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import Bin from "./OSWAP_PausableFactory.json";
 
 export class OSWAP_PausableFactory extends Contract{
-    constructor(wallet: Wallet, address?: string){
+    constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
+        this.assign()
     }
     deploy(governance:string): Promise<string>{
         return this._deploy(governance);
@@ -47,25 +48,45 @@ export class OSWAP_PausableFactory extends Contract{
         };
     }
     async governance(): Promise<string>{
-        let result = await this.methods('governance');
+        let result = await this.call('governance');
         return result;
     }
     async isLive(): Promise<boolean>{
-        let result = await this.methods('isLive');
+        let result = await this.call('isLive');
         return result;
     }
-    async setLive(isLive:boolean): Promise<TransactionReceipt>{
-        let result = await this.methods('setLive',isLive);
+    async setLive_send(isLive:boolean): Promise<TransactionReceipt>{
+        let result = await this.send('setLive',[isLive]);
         return result;
     }
-    async setLiveForPair(params:{pair:string,live:boolean}): Promise<TransactionReceipt>{
-        let result = await this.methods('setLiveForPair',params.pair,params.live);
+    async setLive_call(isLive:boolean): Promise<void>{
+        let result = await this.call('setLive',[isLive]);
+        return;
+    }
+    setLive: {
+        (isLive:boolean): Promise<TransactionReceipt>;
+        call: (isLive:boolean) => Promise<void>;
+    }
+    async setLiveForPair_send(params:{pair:string,live:boolean}): Promise<TransactionReceipt>{
+        let result = await this.send('setLiveForPair',[params.pair,params.live]);
         return result;
+    }
+    async setLiveForPair_call(params:{pair:string,live:boolean}): Promise<void>{
+        let result = await this.call('setLiveForPair',[params.pair,params.live]);
+        return;
+    }
+    setLiveForPair: {
+        (params:{pair:string,live:boolean}): Promise<TransactionReceipt>;
+        call: (params:{pair:string,live:boolean}) => Promise<void>;
+    }
+    private assign(){
+        this.setLive = Object.assign(this.setLive_send, {call:this.setLive_call});
+        this.setLiveForPair = Object.assign(this.setLiveForPair_send, {call:this.setLiveForPair_call});
     }
 }
 export module OSWAP_PausableFactory{
     export interface PairRestartedEvent {pair:string,_event:Event}
     export interface PairShutdownedEvent {pair:string,_event:Event}
-    export interface RestartedEvent {}
-    export interface ShutdownedEvent {}
+    export interface RestartedEvent {_event:Event}
+    export interface ShutdownedEvent {_event:Event}
 }

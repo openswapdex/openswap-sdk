@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_ERC20 extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(): Promise<string>;
     parseApprovalEvent(receipt: TransactionReceipt): OSWAP_ERC20.ApprovalEvent[];
     decodeApprovalEvent(event: Event): OSWAP_ERC20.ApprovalEvent;
@@ -14,15 +14,29 @@ export declare class OSWAP_ERC20 extends Contract {
         param1: string;
         param2: string;
     }): Promise<BigNumber>;
-    approve(params: {
+    approve_send(params: {
         spender: string;
         value: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    approve_call(params: {
+        spender: string;
+        value: number | BigNumber;
+    }): Promise<boolean>;
+    approve: {
+        (params: {
+            spender: string;
+            value: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            spender: string;
+            value: number | BigNumber;
+        }) => Promise<boolean>;
+    };
     balanceOf(param1: string): Promise<BigNumber>;
     decimals(): Promise<BigNumber>;
     name(): Promise<string>;
     nonces(param1: string): Promise<BigNumber>;
-    permit(params: {
+    permit_send(params: {
         owner: string;
         spender: string;
         value: number | BigNumber;
@@ -31,17 +45,78 @@ export declare class OSWAP_ERC20 extends Contract {
         r: string;
         s: string;
     }): Promise<TransactionReceipt>;
+    permit_call(params: {
+        owner: string;
+        spender: string;
+        value: number | BigNumber;
+        deadline: number | BigNumber;
+        v: number | BigNumber;
+        r: string;
+        s: string;
+    }): Promise<void>;
+    permit: {
+        (params: {
+            owner: string;
+            spender: string;
+            value: number | BigNumber;
+            deadline: number | BigNumber;
+            v: number | BigNumber;
+            r: string;
+            s: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            owner: string;
+            spender: string;
+            value: number | BigNumber;
+            deadline: number | BigNumber;
+            v: number | BigNumber;
+            r: string;
+            s: string;
+        }) => Promise<void>;
+    };
     symbol(): Promise<string>;
     totalSupply(): Promise<BigNumber>;
-    transfer(params: {
+    transfer_send(params: {
         to: string;
         value: number | BigNumber;
     }): Promise<TransactionReceipt>;
-    transferFrom(params: {
+    transfer_call(params: {
+        to: string;
+        value: number | BigNumber;
+    }): Promise<boolean>;
+    transfer: {
+        (params: {
+            to: string;
+            value: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            to: string;
+            value: number | BigNumber;
+        }) => Promise<boolean>;
+    };
+    transferFrom_send(params: {
         from: string;
         to: string;
         value: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    transferFrom_call(params: {
+        from: string;
+        to: string;
+        value: number | BigNumber;
+    }): Promise<boolean>;
+    transferFrom: {
+        (params: {
+            from: string;
+            to: string;
+            value: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            from: string;
+            to: string;
+            value: number | BigNumber;
+        }) => Promise<boolean>;
+    };
+    private assign;
 }
 export declare module OSWAP_ERC20 {
     interface ApprovalEvent {

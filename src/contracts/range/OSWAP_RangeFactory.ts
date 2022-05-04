@@ -1,9 +1,10 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
-const Bin = require("../../../bin/range/OSWAP_RangeFactory.json");
+import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import Bin from "./OSWAP_RangeFactory.json";
 
 export class OSWAP_RangeFactory extends Contract{
-    constructor(wallet: Wallet, address?: string){
+    constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
+        this.assign()
     }
     deploy(params:{governance:string,oracleFactory:string,pairCreator:string,tradeFee:number|BigNumber,stakeAmount:(number|BigNumber)[],liquidityProviderShare:(number|BigNumber)[],protocolFeeTo:string}): Promise<string>{
         return this._deploy(params.governance,params.oracleFactory,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare),params.protocolFeeTo);
@@ -94,30 +95,38 @@ export class OSWAP_RangeFactory extends Contract{
         };
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('allPairs',Utils.toString(param1));
+        let result = await this.call('allPairs',[Utils.toString(param1)]);
         return result;
     }
     async allPairsLength(): Promise<BigNumber>{
-        let result = await this.methods('allPairsLength');
+        let result = await this.call('allPairsLength');
         return new BigNumber(result);
     }
     async checkAndGetSwapParams(): Promise<BigNumber>{
-        let result = await this.methods('checkAndGetSwapParams');
+        let result = await this.call('checkAndGetSwapParams');
         return new BigNumber(result);
     }
-    async createPair(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
-        let result = await this.methods('createPair',params.tokenA,params.tokenB);
+    async createPair_send(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
+        let result = await this.send('createPair',[params.tokenA,params.tokenB]);
         return result;
     }
+    async createPair_call(params:{tokenA:string,tokenB:string}): Promise<string>{
+        let result = await this.call('createPair',[params.tokenA,params.tokenB]);
+        return result;
+    }
+    createPair: {
+        (params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>;
+        call: (params:{tokenA:string,tokenB:string}) => Promise<string>;
+    }
     async getAllLiquidityProviderShare(): Promise<{_stakeAmount:BigNumber[],_liquidityProviderShare:BigNumber[]}>{
-        let result = await this.methods('getAllLiquidityProviderShare');
+        let result = await this.call('getAllLiquidityProviderShare');
         return {
             _stakeAmount: result._stakeAmount.map(e=>new BigNumber(e)),
             _liquidityProviderShare: result._liquidityProviderShare.map(e=>new BigNumber(e))
         };
     }
     async getCreateAddresses(): Promise<{_governance:string,_rangeLiquidityProvider:string,_oracleFactory:string}>{
-        let result = await this.methods('getCreateAddresses');
+        let result = await this.call('getCreateAddresses');
         return {
             _governance: result._governance,
             _rangeLiquidityProvider: result._rangeLiquidityProvider,
@@ -125,84 +134,159 @@ export class OSWAP_RangeFactory extends Contract{
         };
     }
     async getLiquidityProviderShare(stake:number|BigNumber): Promise<BigNumber>{
-        let result = await this.methods('getLiquidityProviderShare',Utils.toString(stake));
+        let result = await this.call('getLiquidityProviderShare',[Utils.toString(stake)]);
         return new BigNumber(result);
     }
     async getPair(params:{param1:string,param2:string}): Promise<string>{
-        let result = await this.methods('getPair',params.param1,params.param2);
+        let result = await this.call('getPair',[params.param1,params.param2]);
         return result;
     }
     async governance(): Promise<string>{
-        let result = await this.methods('governance');
+        let result = await this.call('governance');
         return result;
     }
     async isLive(): Promise<boolean>{
-        let result = await this.methods('isLive');
+        let result = await this.call('isLive');
         return result;
     }
     async liquidityProviderShare(param1:number|BigNumber): Promise<BigNumber>{
-        let result = await this.methods('liquidityProviderShare',Utils.toString(param1));
+        let result = await this.call('liquidityProviderShare',[Utils.toString(param1)]);
         return new BigNumber(result);
     }
     async oracleFactory(): Promise<string>{
-        let result = await this.methods('oracleFactory');
+        let result = await this.call('oracleFactory');
         return result;
     }
     async owner(): Promise<string>{
-        let result = await this.methods('owner');
+        let result = await this.call('owner');
         return result;
     }
     async pairCreator(): Promise<string>{
-        let result = await this.methods('pairCreator');
+        let result = await this.call('pairCreator');
         return result;
     }
     async protocolFeeTo(): Promise<string>{
-        let result = await this.methods('protocolFeeTo');
+        let result = await this.call('protocolFeeTo');
         return result;
     }
     async rangeLiquidityProvider(): Promise<string>{
-        let result = await this.methods('rangeLiquidityProvider');
+        let result = await this.call('rangeLiquidityProvider');
         return result;
     }
-    async renounceOwnership(): Promise<TransactionReceipt>{
-        let result = await this.methods('renounceOwnership');
+    async renounceOwnership_send(): Promise<TransactionReceipt>{
+        let result = await this.send('renounceOwnership');
         return result;
     }
-    async setLiquidityProviderShare(params:{stakeAmount:(number|BigNumber)[],liquidityProviderShare:(number|BigNumber)[]}): Promise<TransactionReceipt>{
-        let result = await this.methods('setLiquidityProviderShare',Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare));
+    async renounceOwnership_call(): Promise<void>{
+        let result = await this.call('renounceOwnership');
+        return;
+    }
+    renounceOwnership: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
+    }
+    async setLiquidityProviderShare_send(params:{stakeAmount:(number|BigNumber)[],liquidityProviderShare:(number|BigNumber)[]}): Promise<TransactionReceipt>{
+        let result = await this.send('setLiquidityProviderShare',[Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare)]);
         return result;
     }
-    async setLive(isLive:boolean): Promise<TransactionReceipt>{
-        let result = await this.methods('setLive',isLive);
+    async setLiquidityProviderShare_call(params:{stakeAmount:(number|BigNumber)[],liquidityProviderShare:(number|BigNumber)[]}): Promise<void>{
+        let result = await this.call('setLiquidityProviderShare',[Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare)]);
+        return;
+    }
+    setLiquidityProviderShare: {
+        (params:{stakeAmount:(number|BigNumber)[],liquidityProviderShare:(number|BigNumber)[]}): Promise<TransactionReceipt>;
+        call: (params:{stakeAmount:(number|BigNumber)[],liquidityProviderShare:(number|BigNumber)[]}) => Promise<void>;
+    }
+    async setLive_send(isLive:boolean): Promise<TransactionReceipt>{
+        let result = await this.send('setLive',[isLive]);
         return result;
     }
-    async setLiveForPair(params:{pair:string,live:boolean}): Promise<TransactionReceipt>{
-        let result = await this.methods('setLiveForPair',params.pair,params.live);
+    async setLive_call(isLive:boolean): Promise<void>{
+        let result = await this.call('setLive',[isLive]);
+        return;
+    }
+    setLive: {
+        (isLive:boolean): Promise<TransactionReceipt>;
+        call: (isLive:boolean) => Promise<void>;
+    }
+    async setLiveForPair_send(params:{pair:string,live:boolean}): Promise<TransactionReceipt>{
+        let result = await this.send('setLiveForPair',[params.pair,params.live]);
         return result;
     }
-    async setProtocolFeeTo(protocolFeeTo:string): Promise<TransactionReceipt>{
-        let result = await this.methods('setProtocolFeeTo',protocolFeeTo);
+    async setLiveForPair_call(params:{pair:string,live:boolean}): Promise<void>{
+        let result = await this.call('setLiveForPair',[params.pair,params.live]);
+        return;
+    }
+    setLiveForPair: {
+        (params:{pair:string,live:boolean}): Promise<TransactionReceipt>;
+        call: (params:{pair:string,live:boolean}) => Promise<void>;
+    }
+    async setProtocolFeeTo_send(protocolFeeTo:string): Promise<TransactionReceipt>{
+        let result = await this.send('setProtocolFeeTo',[protocolFeeTo]);
         return result;
     }
-    async setRangeLiquidityProvider(rangeLiquidityProvider:string): Promise<TransactionReceipt>{
-        let result = await this.methods('setRangeLiquidityProvider',rangeLiquidityProvider);
+    async setProtocolFeeTo_call(protocolFeeTo:string): Promise<void>{
+        let result = await this.call('setProtocolFeeTo',[protocolFeeTo]);
+        return;
+    }
+    setProtocolFeeTo: {
+        (protocolFeeTo:string): Promise<TransactionReceipt>;
+        call: (protocolFeeTo:string) => Promise<void>;
+    }
+    async setRangeLiquidityProvider_send(rangeLiquidityProvider:string): Promise<TransactionReceipt>{
+        let result = await this.send('setRangeLiquidityProvider',[rangeLiquidityProvider]);
         return result;
     }
-    async setTradeFee(tradeFee:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setTradeFee',Utils.toString(tradeFee));
+    async setRangeLiquidityProvider_call(rangeLiquidityProvider:string): Promise<void>{
+        let result = await this.call('setRangeLiquidityProvider',[rangeLiquidityProvider]);
+        return;
+    }
+    setRangeLiquidityProvider: {
+        (rangeLiquidityProvider:string): Promise<TransactionReceipt>;
+        call: (rangeLiquidityProvider:string) => Promise<void>;
+    }
+    async setTradeFee_send(tradeFee:number|BigNumber): Promise<TransactionReceipt>{
+        let result = await this.send('setTradeFee',[Utils.toString(tradeFee)]);
         return result;
+    }
+    async setTradeFee_call(tradeFee:number|BigNumber): Promise<void>{
+        let result = await this.call('setTradeFee',[Utils.toString(tradeFee)]);
+        return;
+    }
+    setTradeFee: {
+        (tradeFee:number|BigNumber): Promise<TransactionReceipt>;
+        call: (tradeFee:number|BigNumber) => Promise<void>;
     }
     async stakeAmount(param1:number|BigNumber): Promise<BigNumber>{
-        let result = await this.methods('stakeAmount',Utils.toString(param1));
+        let result = await this.call('stakeAmount',[Utils.toString(param1)]);
         return new BigNumber(result);
     }
     async tradeFee(): Promise<BigNumber>{
-        let result = await this.methods('tradeFee');
+        let result = await this.call('tradeFee');
         return new BigNumber(result);
     }
-    async transferOwnership(newOwner:string): Promise<TransactionReceipt>{
-        let result = await this.methods('transferOwnership',newOwner);
+    async transferOwnership_send(newOwner:string): Promise<TransactionReceipt>{
+        let result = await this.send('transferOwnership',[newOwner]);
         return result;
+    }
+    async transferOwnership_call(newOwner:string): Promise<void>{
+        let result = await this.call('transferOwnership',[newOwner]);
+        return;
+    }
+    transferOwnership: {
+        (newOwner:string): Promise<TransactionReceipt>;
+        call: (newOwner:string) => Promise<void>;
+    }
+    private assign(){
+        this.createPair = Object.assign(this.createPair_send, {call:this.createPair_call});
+        this.renounceOwnership = Object.assign(this.renounceOwnership_send, {call:this.renounceOwnership_call});
+        this.setLiquidityProviderShare = Object.assign(this.setLiquidityProviderShare_send, {call:this.setLiquidityProviderShare_call});
+        this.setLive = Object.assign(this.setLive_send, {call:this.setLive_call});
+        this.setLiveForPair = Object.assign(this.setLiveForPair_send, {call:this.setLiveForPair_call});
+        this.setProtocolFeeTo = Object.assign(this.setProtocolFeeTo_send, {call:this.setProtocolFeeTo_call});
+        this.setRangeLiquidityProvider = Object.assign(this.setRangeLiquidityProvider_send, {call:this.setRangeLiquidityProvider_call});
+        this.setTradeFee = Object.assign(this.setTradeFee_send, {call:this.setTradeFee_call});
+        this.transferOwnership = Object.assign(this.transferOwnership_send, {call:this.transferOwnership_call});
     }
 }
 export module OSWAP_RangeFactory{
@@ -212,6 +296,6 @@ export module OSWAP_RangeFactory{
     export interface PairShutdownedEvent {pair:string,_event:Event}
     export interface ParamSetEvent {name:string,value:string,_event:Event}
     export interface ParamSet2Event {name:string,value1:string,value2:string,_event:Event}
-    export interface RestartedEvent {}
-    export interface ShutdownedEvent {}
+    export interface RestartedEvent {_event:Event}
+    export interface ShutdownedEvent {_event:Event}
 }

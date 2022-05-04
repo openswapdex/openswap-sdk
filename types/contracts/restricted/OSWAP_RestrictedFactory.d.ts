@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_RestrictedFactory extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(params: {
         governance: string;
         whitelistFactory: string;
@@ -28,11 +28,28 @@ export declare class OSWAP_RestrictedFactory extends Contract {
     decodeRestartedEvent(event: Event): OSWAP_RestrictedFactory.RestartedEvent;
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_RestrictedFactory.ShutdownedEvent[];
     decodeShutdownedEvent(event: Event): OSWAP_RestrictedFactory.ShutdownedEvent;
-    addOldOracleToNewPair(params: {
+    addOldOracleToNewPair_send(params: {
         tokenA: string;
         tokenB: string;
         oracle: string;
     }): Promise<TransactionReceipt>;
+    addOldOracleToNewPair_call(params: {
+        tokenA: string;
+        tokenB: string;
+        oracle: string;
+    }): Promise<void>;
+    addOldOracleToNewPair: {
+        (params: {
+            tokenA: string;
+            tokenB: string;
+            oracle: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            tokenA: string;
+            tokenB: string;
+            oracle: string;
+        }) => Promise<void>;
+    };
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
     checkAndGetOracle(params: {
@@ -48,10 +65,24 @@ export declare class OSWAP_RestrictedFactory extends Contract {
         protocolFee_: BigNumber;
     }>;
     configStore(): Promise<string>;
-    createPair(params: {
+    createPair_send(params: {
         tokenA: string;
         tokenB: string;
     }): Promise<TransactionReceipt>;
+    createPair_call(params: {
+        tokenA: string;
+        tokenB: string;
+    }): Promise<string>;
+    createPair: {
+        (params: {
+            tokenA: string;
+            tokenB: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            tokenA: string;
+            tokenB: string;
+        }) => Promise<string>;
+    };
     getCreateAddresses(): Promise<{
         _governance: string;
         _whitelistFactory: string;
@@ -64,7 +95,12 @@ export declare class OSWAP_RestrictedFactory extends Contract {
         param3: number | BigNumber;
     }): Promise<string>;
     governance(): Promise<string>;
-    init(restrictedLiquidityProvider: string): Promise<TransactionReceipt>;
+    init_send(restrictedLiquidityProvider: string): Promise<TransactionReceipt>;
+    init_call(restrictedLiquidityProvider: string): Promise<void>;
+    init: {
+        (restrictedLiquidityProvider: string): Promise<TransactionReceipt>;
+        call: (restrictedLiquidityProvider: string) => Promise<void>;
+    };
     isLive(): Promise<boolean>;
     isOracle(param1: string): Promise<boolean>;
     isPair(pair: string): Promise<boolean>;
@@ -81,24 +117,86 @@ export declare class OSWAP_RestrictedFactory extends Contract {
     }): Promise<BigNumber>;
     protocolFee(): Promise<BigNumber>;
     protocolFeeTo(): Promise<string>;
-    renounceOwnership(): Promise<TransactionReceipt>;
+    renounceOwnership_send(): Promise<TransactionReceipt>;
+    renounceOwnership_call(): Promise<void>;
+    renounceOwnership: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
+    };
     restrictedLiquidityProvider(): Promise<string>;
-    setLive(isLive: boolean): Promise<TransactionReceipt>;
-    setLiveForPair(params: {
+    setLive_send(isLive: boolean): Promise<TransactionReceipt>;
+    setLive_call(isLive: boolean): Promise<void>;
+    setLive: {
+        (isLive: boolean): Promise<TransactionReceipt>;
+        call: (isLive: boolean) => Promise<void>;
+    };
+    setLiveForPair_send(params: {
         pair: string;
         live: boolean;
     }): Promise<TransactionReceipt>;
-    setOracle(params: {
+    setLiveForPair_call(params: {
+        pair: string;
+        live: boolean;
+    }): Promise<void>;
+    setLiveForPair: {
+        (params: {
+            pair: string;
+            live: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            pair: string;
+            live: boolean;
+        }) => Promise<void>;
+    };
+    setOracle_send(params: {
         tokenA: string;
         tokenB: string;
         oracle: string;
     }): Promise<TransactionReceipt>;
-    setProtocolFee(protocolFee: number | BigNumber): Promise<TransactionReceipt>;
-    setProtocolFeeTo(protocolFeeTo: string): Promise<TransactionReceipt>;
-    setTradeFee(tradeFee: number | BigNumber): Promise<TransactionReceipt>;
+    setOracle_call(params: {
+        tokenA: string;
+        tokenB: string;
+        oracle: string;
+    }): Promise<void>;
+    setOracle: {
+        (params: {
+            tokenA: string;
+            tokenB: string;
+            oracle: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            tokenA: string;
+            tokenB: string;
+            oracle: string;
+        }) => Promise<void>;
+    };
+    setProtocolFee_send(protocolFee: number | BigNumber): Promise<TransactionReceipt>;
+    setProtocolFee_call(protocolFee: number | BigNumber): Promise<void>;
+    setProtocolFee: {
+        (protocolFee: number | BigNumber): Promise<TransactionReceipt>;
+        call: (protocolFee: number | BigNumber) => Promise<void>;
+    };
+    setProtocolFeeTo_send(protocolFeeTo: string): Promise<TransactionReceipt>;
+    setProtocolFeeTo_call(protocolFeeTo: string): Promise<void>;
+    setProtocolFeeTo: {
+        (protocolFeeTo: string): Promise<TransactionReceipt>;
+        call: (protocolFeeTo: string) => Promise<void>;
+    };
+    setTradeFee_send(tradeFee: number | BigNumber): Promise<TransactionReceipt>;
+    setTradeFee_call(tradeFee: number | BigNumber): Promise<void>;
+    setTradeFee: {
+        (tradeFee: number | BigNumber): Promise<TransactionReceipt>;
+        call: (tradeFee: number | BigNumber) => Promise<void>;
+    };
     tradeFee(): Promise<BigNumber>;
-    transferOwnership(newOwner: string): Promise<TransactionReceipt>;
+    transferOwnership_send(newOwner: string): Promise<TransactionReceipt>;
+    transferOwnership_call(newOwner: string): Promise<void>;
+    transferOwnership: {
+        (newOwner: string): Promise<TransactionReceipt>;
+        call: (newOwner: string) => Promise<void>;
+    };
     whitelistFactory(): Promise<string>;
+    private assign;
 }
 export declare module OSWAP_RestrictedFactory {
     interface OracleAddedEvent {
@@ -140,7 +238,9 @@ export declare module OSWAP_RestrictedFactory {
         _event: Event;
     }
     interface RestartedEvent {
+        _event: Event;
     }
     interface ShutdownedEvent {
+        _event: Event;
     }
 }

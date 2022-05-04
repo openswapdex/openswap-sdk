@@ -1,13 +1,19 @@
-import { Wallet, Contract, TransactionReceipt } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt } from "@ijstech/eth-wallet";
 export declare class OSWAP_VotingExecutor3 extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(params: {
         governance: string;
         factory: string;
         hybridRegistry: string;
     }): Promise<string>;
-    execute(params: string[]): Promise<TransactionReceipt>;
+    execute_send(params: string[]): Promise<TransactionReceipt>;
+    execute_call(params: string[]): Promise<void>;
+    execute: {
+        (params: string[]): Promise<TransactionReceipt>;
+        call: (params: string[]) => Promise<void>;
+    };
     factory(): Promise<string>;
     governance(): Promise<string>;
     hybridRegistry(): Promise<string>;
+    private assign;
 }

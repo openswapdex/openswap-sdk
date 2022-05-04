@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_FactoryBase extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(params: {
         governance: string;
         pairCreator: string;
@@ -17,10 +17,24 @@ export declare class OSWAP_FactoryBase extends Contract {
     decodeShutdownedEvent(event: Event): OSWAP_FactoryBase.ShutdownedEvent;
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
-    createPair(params: {
+    createPair_send(params: {
         tokenA: string;
         tokenB: string;
     }): Promise<TransactionReceipt>;
+    createPair_call(params: {
+        tokenA: string;
+        tokenB: string;
+    }): Promise<string>;
+    createPair: {
+        (params: {
+            tokenA: string;
+            tokenB: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            tokenA: string;
+            tokenB: string;
+        }) => Promise<string>;
+    };
     getPair(params: {
         param1: string;
         param2: string;
@@ -28,11 +42,31 @@ export declare class OSWAP_FactoryBase extends Contract {
     governance(): Promise<string>;
     isLive(): Promise<boolean>;
     pairCreator(): Promise<string>;
-    setLive(isLive: boolean): Promise<TransactionReceipt>;
-    setLiveForPair(params: {
+    setLive_send(isLive: boolean): Promise<TransactionReceipt>;
+    setLive_call(isLive: boolean): Promise<void>;
+    setLive: {
+        (isLive: boolean): Promise<TransactionReceipt>;
+        call: (isLive: boolean) => Promise<void>;
+    };
+    setLiveForPair_send(params: {
         pair: string;
         live: boolean;
     }): Promise<TransactionReceipt>;
+    setLiveForPair_call(params: {
+        pair: string;
+        live: boolean;
+    }): Promise<void>;
+    setLiveForPair: {
+        (params: {
+            pair: string;
+            live: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            pair: string;
+            live: boolean;
+        }) => Promise<void>;
+    };
+    private assign;
 }
 export declare module OSWAP_FactoryBase {
     interface PairCreatedEvent {
@@ -51,7 +85,9 @@ export declare module OSWAP_FactoryBase {
         _event: Event;
     }
     interface RestartedEvent {
+        _event: Event;
     }
     interface ShutdownedEvent {
+        _event: Event;
     }
 }

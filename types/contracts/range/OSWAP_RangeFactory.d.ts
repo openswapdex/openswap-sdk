@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_RangeFactory extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(params: {
         governance: string;
         oracleFactory: string;
@@ -29,10 +29,24 @@ export declare class OSWAP_RangeFactory extends Contract {
     allPairs(param1: number | BigNumber): Promise<string>;
     allPairsLength(): Promise<BigNumber>;
     checkAndGetSwapParams(): Promise<BigNumber>;
-    createPair(params: {
+    createPair_send(params: {
         tokenA: string;
         tokenB: string;
     }): Promise<TransactionReceipt>;
+    createPair_call(params: {
+        tokenA: string;
+        tokenB: string;
+    }): Promise<string>;
+    createPair: {
+        (params: {
+            tokenA: string;
+            tokenB: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            tokenA: string;
+            tokenB: string;
+        }) => Promise<string>;
+    };
     getAllLiquidityProviderShare(): Promise<{
         _stakeAmount: BigNumber[];
         _liquidityProviderShare: BigNumber[];
@@ -55,22 +69,81 @@ export declare class OSWAP_RangeFactory extends Contract {
     pairCreator(): Promise<string>;
     protocolFeeTo(): Promise<string>;
     rangeLiquidityProvider(): Promise<string>;
-    renounceOwnership(): Promise<TransactionReceipt>;
-    setLiquidityProviderShare(params: {
+    renounceOwnership_send(): Promise<TransactionReceipt>;
+    renounceOwnership_call(): Promise<void>;
+    renounceOwnership: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
+    };
+    setLiquidityProviderShare_send(params: {
         stakeAmount: (number | BigNumber)[];
         liquidityProviderShare: (number | BigNumber)[];
     }): Promise<TransactionReceipt>;
-    setLive(isLive: boolean): Promise<TransactionReceipt>;
-    setLiveForPair(params: {
+    setLiquidityProviderShare_call(params: {
+        stakeAmount: (number | BigNumber)[];
+        liquidityProviderShare: (number | BigNumber)[];
+    }): Promise<void>;
+    setLiquidityProviderShare: {
+        (params: {
+            stakeAmount: (number | BigNumber)[];
+            liquidityProviderShare: (number | BigNumber)[];
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            stakeAmount: (number | BigNumber)[];
+            liquidityProviderShare: (number | BigNumber)[];
+        }) => Promise<void>;
+    };
+    setLive_send(isLive: boolean): Promise<TransactionReceipt>;
+    setLive_call(isLive: boolean): Promise<void>;
+    setLive: {
+        (isLive: boolean): Promise<TransactionReceipt>;
+        call: (isLive: boolean) => Promise<void>;
+    };
+    setLiveForPair_send(params: {
         pair: string;
         live: boolean;
     }): Promise<TransactionReceipt>;
-    setProtocolFeeTo(protocolFeeTo: string): Promise<TransactionReceipt>;
-    setRangeLiquidityProvider(rangeLiquidityProvider: string): Promise<TransactionReceipt>;
-    setTradeFee(tradeFee: number | BigNumber): Promise<TransactionReceipt>;
+    setLiveForPair_call(params: {
+        pair: string;
+        live: boolean;
+    }): Promise<void>;
+    setLiveForPair: {
+        (params: {
+            pair: string;
+            live: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            pair: string;
+            live: boolean;
+        }) => Promise<void>;
+    };
+    setProtocolFeeTo_send(protocolFeeTo: string): Promise<TransactionReceipt>;
+    setProtocolFeeTo_call(protocolFeeTo: string): Promise<void>;
+    setProtocolFeeTo: {
+        (protocolFeeTo: string): Promise<TransactionReceipt>;
+        call: (protocolFeeTo: string) => Promise<void>;
+    };
+    setRangeLiquidityProvider_send(rangeLiquidityProvider: string): Promise<TransactionReceipt>;
+    setRangeLiquidityProvider_call(rangeLiquidityProvider: string): Promise<void>;
+    setRangeLiquidityProvider: {
+        (rangeLiquidityProvider: string): Promise<TransactionReceipt>;
+        call: (rangeLiquidityProvider: string) => Promise<void>;
+    };
+    setTradeFee_send(tradeFee: number | BigNumber): Promise<TransactionReceipt>;
+    setTradeFee_call(tradeFee: number | BigNumber): Promise<void>;
+    setTradeFee: {
+        (tradeFee: number | BigNumber): Promise<TransactionReceipt>;
+        call: (tradeFee: number | BigNumber) => Promise<void>;
+    };
     stakeAmount(param1: number | BigNumber): Promise<BigNumber>;
     tradeFee(): Promise<BigNumber>;
-    transferOwnership(newOwner: string): Promise<TransactionReceipt>;
+    transferOwnership_send(newOwner: string): Promise<TransactionReceipt>;
+    transferOwnership_call(newOwner: string): Promise<void>;
+    transferOwnership: {
+        (newOwner: string): Promise<TransactionReceipt>;
+        call: (newOwner: string) => Promise<void>;
+    };
+    private assign;
 }
 export declare module OSWAP_RangeFactory {
     interface OwnershipTransferredEvent {
@@ -105,7 +178,9 @@ export declare module OSWAP_RangeFactory {
         _event: Event;
     }
     interface RestartedEvent {
+        _event: Event;
     }
     interface ShutdownedEvent {
+        _event: Event;
     }
 }

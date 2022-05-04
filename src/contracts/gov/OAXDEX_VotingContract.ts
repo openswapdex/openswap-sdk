@@ -1,55 +1,64 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
-const Bin = require("../../../bin/gov/OAXDEX_VotingContract.json");
+import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import Bin from "./OAXDEX_VotingContract.json";
 
 export class OAXDEX_VotingContract extends Contract{
-    constructor(wallet: Wallet, address?: string){
+    constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
+        this.assign()
     }
     deploy(params:{governance:string,executor:string,id:number|BigNumber,name:string,options:string[],quorum:number|BigNumber,threshold:number|BigNumber,voteEndTime:number|BigNumber,executeDelay:number|BigNumber,executeParam:string[]}): Promise<string>{
         return this._deploy(params.governance,params.executor,Utils.toString(params.id),Utils.stringToBytes32(params.name),Utils.stringToBytes32(params.options),Utils.toString(params.quorum),Utils.toString(params.threshold),Utils.toString(params.voteEndTime),Utils.toString(params.executeDelay),Utils.stringToBytes32(params.executeParam));
     }
     async _executeParam(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('_executeParam',Utils.toString(param1));
+        let result = await this.call('_executeParam',[Utils.toString(param1)]);
         return result;
     }
     async _options(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('_options',Utils.toString(param1));
+        let result = await this.call('_options',[Utils.toString(param1)]);
         return result;
     }
     async _optionsWeight(param1:number|BigNumber): Promise<BigNumber>{
-        let result = await this.methods('_optionsWeight',Utils.toString(param1));
+        let result = await this.call('_optionsWeight',[Utils.toString(param1)]);
         return new BigNumber(result);
     }
     async accountVoteOption(param1:string): Promise<BigNumber>{
-        let result = await this.methods('accountVoteOption',param1);
+        let result = await this.call('accountVoteOption',[param1]);
         return new BigNumber(result);
     }
     async accountVoteWeight(param1:string): Promise<BigNumber>{
-        let result = await this.methods('accountVoteWeight',param1);
+        let result = await this.call('accountVoteWeight',[param1]);
         return new BigNumber(result);
     }
-    async execute(): Promise<TransactionReceipt>{
-        let result = await this.methods('execute');
+    async execute_send(): Promise<TransactionReceipt>{
+        let result = await this.send('execute');
         return result;
     }
+    async execute_call(): Promise<void>{
+        let result = await this.call('execute');
+        return;
+    }
+    execute: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
+    }
     async executeDelay(): Promise<BigNumber>{
-        let result = await this.methods('executeDelay');
+        let result = await this.call('executeDelay');
         return new BigNumber(result);
     }
     async executeParam(): Promise<string[]>{
-        let result = await this.methods('executeParam');
+        let result = await this.call('executeParam');
         return result;
     }
     async executed(): Promise<boolean>{
-        let result = await this.methods('executed');
+        let result = await this.call('executed');
         return result;
     }
     async executor(): Promise<string>{
-        let result = await this.methods('executor');
+        let result = await this.call('executor');
         return result;
     }
     async getParams(): Promise<{executor_:string,id_:BigNumber,name_:string,options_:string[],voteStartTime_:BigNumber,voteEndTime_:BigNumber,executeDelay_:BigNumber,status_:boolean[],optionsWeight_:BigNumber[],quorum_:BigNumber[],executeParam_:string[]}>{
-        let result = await this.methods('getParams');
+        let result = await this.call('getParams');
         return {
             executor_: result.executor_,
             id_: new BigNumber(result.id_),
@@ -65,67 +74,97 @@ export class OAXDEX_VotingContract extends Contract{
         };
     }
     async governance(): Promise<string>{
-        let result = await this.methods('governance');
+        let result = await this.call('governance');
         return result;
     }
     async id(): Promise<BigNumber>{
-        let result = await this.methods('id');
+        let result = await this.call('id');
         return new BigNumber(result);
     }
     async name(): Promise<string>{
-        let result = await this.methods('name');
+        let result = await this.call('name');
         return result;
     }
     async options(): Promise<string[]>{
-        let result = await this.methods('options');
+        let result = await this.call('options');
         return result;
     }
     async optionsCount(): Promise<BigNumber>{
-        let result = await this.methods('optionsCount');
+        let result = await this.call('optionsCount');
         return new BigNumber(result);
     }
     async optionsWeight(): Promise<BigNumber[]>{
-        let result = await this.methods('optionsWeight');
-        return result;
+        let result = await this.call('optionsWeight');
+        return result.map(e=>new BigNumber(e));
     }
     async quorum(): Promise<BigNumber>{
-        let result = await this.methods('quorum');
+        let result = await this.call('quorum');
         return new BigNumber(result);
     }
     async threshold(): Promise<BigNumber>{
-        let result = await this.methods('threshold');
+        let result = await this.call('threshold');
         return new BigNumber(result);
     }
     async totalVoteWeight(): Promise<BigNumber>{
-        let result = await this.methods('totalVoteWeight');
+        let result = await this.call('totalVoteWeight');
         return new BigNumber(result);
     }
     async totalWeight(): Promise<BigNumber>{
-        let result = await this.methods('totalWeight');
+        let result = await this.call('totalWeight');
         return new BigNumber(result);
     }
-    async updateWeight(account:string): Promise<TransactionReceipt>{
-        let result = await this.methods('updateWeight',account);
+    async updateWeight_send(account:string): Promise<TransactionReceipt>{
+        let result = await this.send('updateWeight',[account]);
         return result;
     }
-    async veto(): Promise<TransactionReceipt>{
-        let result = await this.methods('veto');
+    async updateWeight_call(account:string): Promise<void>{
+        let result = await this.call('updateWeight',[account]);
+        return;
+    }
+    updateWeight: {
+        (account:string): Promise<TransactionReceipt>;
+        call: (account:string) => Promise<void>;
+    }
+    async veto_send(): Promise<TransactionReceipt>{
+        let result = await this.send('veto');
         return result;
+    }
+    async veto_call(): Promise<void>{
+        let result = await this.call('veto');
+        return;
+    }
+    veto: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
     }
     async vetoed(): Promise<boolean>{
-        let result = await this.methods('vetoed');
+        let result = await this.call('vetoed');
         return result;
     }
-    async vote(option:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('vote',Utils.toString(option));
+    async vote_send(option:number|BigNumber): Promise<TransactionReceipt>{
+        let result = await this.send('vote',[Utils.toString(option)]);
         return result;
+    }
+    async vote_call(option:number|BigNumber): Promise<void>{
+        let result = await this.call('vote',[Utils.toString(option)]);
+        return;
+    }
+    vote: {
+        (option:number|BigNumber): Promise<TransactionReceipt>;
+        call: (option:number|BigNumber) => Promise<void>;
     }
     async voteEndTime(): Promise<BigNumber>{
-        let result = await this.methods('voteEndTime');
+        let result = await this.call('voteEndTime');
         return new BigNumber(result);
     }
     async voteStartTime(): Promise<BigNumber>{
-        let result = await this.methods('voteStartTime');
+        let result = await this.call('voteStartTime');
         return new BigNumber(result);
+    }
+    private assign(){
+        this.execute = Object.assign(this.execute_send, {call:this.execute_call});
+        this.updateWeight = Object.assign(this.updateWeight_send, {call:this.updateWeight_call});
+        this.veto = Object.assign(this.veto_send, {call:this.veto_call});
+        this.vote = Object.assign(this.vote_send, {call:this.vote_call});
     }
 }

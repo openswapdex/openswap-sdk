@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OAXDEX_Administrator extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(governance: string): Promise<string>;
     parseAddAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.AddAdminEvent[];
     decodeAddAdminEvent(event: Event): OAXDEX_Administrator.AddAdminEvent;
@@ -18,33 +18,109 @@ export declare class OAXDEX_Administrator extends Contract {
     decodeVotedPairShutdownEvent(event: Event): OAXDEX_Administrator.VotedPairShutdownEvent;
     parseVotedVetoEvent(receipt: TransactionReceipt): OAXDEX_Administrator.VotedVetoEvent[];
     decodeVotedVetoEvent(event: Event): OAXDEX_Administrator.VotedVetoEvent;
-    addAdmin(admin: string): Promise<TransactionReceipt>;
+    addAdmin_send(admin: string): Promise<TransactionReceipt>;
+    addAdmin_call(admin: string): Promise<void>;
+    addAdmin: {
+        (admin: string): Promise<TransactionReceipt>;
+        call: (admin: string) => Promise<void>;
+    };
     admins(param1: number | BigNumber): Promise<string>;
     adminsIdx(param1: string): Promise<BigNumber>;
     allAdmins(): Promise<string[]>;
-    executeFactoryRestart(factory: string): Promise<TransactionReceipt>;
-    executeFactoryShutdown(factory: string): Promise<TransactionReceipt>;
-    executePairRestart(params: {
+    executeFactoryRestart_send(factory: string): Promise<TransactionReceipt>;
+    executeFactoryRestart_call(factory: string): Promise<void>;
+    executeFactoryRestart: {
+        (factory: string): Promise<TransactionReceipt>;
+        call: (factory: string) => Promise<void>;
+    };
+    executeFactoryShutdown_send(factory: string): Promise<TransactionReceipt>;
+    executeFactoryShutdown_call(factory: string): Promise<void>;
+    executeFactoryShutdown: {
+        (factory: string): Promise<TransactionReceipt>;
+        call: (factory: string) => Promise<void>;
+    };
+    executePairRestart_send(params: {
         factory: string;
         pair: string;
     }): Promise<TransactionReceipt>;
-    executePairShutdown(params: {
+    executePairRestart_call(params: {
+        factory: string;
+        pair: string;
+    }): Promise<void>;
+    executePairRestart: {
+        (params: {
+            factory: string;
+            pair: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            factory: string;
+            pair: string;
+        }) => Promise<void>;
+    };
+    executePairShutdown_send(params: {
         factory: string;
         pair: string;
     }): Promise<TransactionReceipt>;
-    executeVetoVoting(votingContract: string): Promise<TransactionReceipt>;
-    factoryRestart(params: {
+    executePairShutdown_call(params: {
+        factory: string;
+        pair: string;
+    }): Promise<void>;
+    executePairShutdown: {
+        (params: {
+            factory: string;
+            pair: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            factory: string;
+            pair: string;
+        }) => Promise<void>;
+    };
+    executeVetoVoting_send(votingContract: string): Promise<TransactionReceipt>;
+    executeVetoVoting_call(votingContract: string): Promise<void>;
+    executeVetoVoting: {
+        (votingContract: string): Promise<TransactionReceipt>;
+        call: (votingContract: string) => Promise<void>;
+    };
+    factoryRestart_send(params: {
         factory: string;
         YorN: boolean;
     }): Promise<TransactionReceipt>;
+    factoryRestart_call(params: {
+        factory: string;
+        YorN: boolean;
+    }): Promise<void>;
+    factoryRestart: {
+        (params: {
+            factory: string;
+            YorN: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            factory: string;
+            YorN: boolean;
+        }) => Promise<void>;
+    };
     factoryRestartVote(params: {
         param1: string;
         param2: string;
     }): Promise<boolean>;
-    factoryShutdown(params: {
+    factoryShutdown_send(params: {
         factory: string;
         YorN: boolean;
     }): Promise<TransactionReceipt>;
+    factoryShutdown_call(params: {
+        factory: string;
+        YorN: boolean;
+    }): Promise<void>;
+    factoryShutdown: {
+        (params: {
+            factory: string;
+            YorN: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            factory: string;
+            YorN: boolean;
+        }) => Promise<void>;
+    };
     factoryShutdownVote(params: {
         param1: string;
         param2: string;
@@ -56,32 +132,85 @@ export declare class OAXDEX_Administrator extends Contract {
     getVetoVotingVote(votingContract: string): Promise<boolean[]>;
     governance(): Promise<string>;
     maxAdmin(): Promise<BigNumber>;
-    pairRestart(params: {
+    pairRestart_send(params: {
         pair: string;
         YorN: boolean;
     }): Promise<TransactionReceipt>;
+    pairRestart_call(params: {
+        pair: string;
+        YorN: boolean;
+    }): Promise<void>;
+    pairRestart: {
+        (params: {
+            pair: string;
+            YorN: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            pair: string;
+            YorN: boolean;
+        }) => Promise<void>;
+    };
     pairRestartVote(params: {
         param1: string;
         param2: string;
     }): Promise<boolean>;
-    pairShutdown(params: {
+    pairShutdown_send(params: {
         pair: string;
         YorN: boolean;
     }): Promise<TransactionReceipt>;
+    pairShutdown_call(params: {
+        pair: string;
+        YorN: boolean;
+    }): Promise<void>;
+    pairShutdown: {
+        (params: {
+            pair: string;
+            YorN: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            pair: string;
+            YorN: boolean;
+        }) => Promise<void>;
+    };
     pairShutdownVote(params: {
         param1: string;
         param2: string;
     }): Promise<boolean>;
-    removeAdmin(admin: string): Promise<TransactionReceipt>;
-    setMaxAdmin(maxAdmin: number | BigNumber): Promise<TransactionReceipt>;
-    vetoVoting(params: {
+    removeAdmin_send(admin: string): Promise<TransactionReceipt>;
+    removeAdmin_call(admin: string): Promise<void>;
+    removeAdmin: {
+        (admin: string): Promise<TransactionReceipt>;
+        call: (admin: string) => Promise<void>;
+    };
+    setMaxAdmin_send(maxAdmin: number | BigNumber): Promise<TransactionReceipt>;
+    setMaxAdmin_call(maxAdmin: number | BigNumber): Promise<void>;
+    setMaxAdmin: {
+        (maxAdmin: number | BigNumber): Promise<TransactionReceipt>;
+        call: (maxAdmin: number | BigNumber) => Promise<void>;
+    };
+    vetoVoting_send(params: {
         votingContract: string;
         YorN: boolean;
     }): Promise<TransactionReceipt>;
+    vetoVoting_call(params: {
+        votingContract: string;
+        YorN: boolean;
+    }): Promise<void>;
+    vetoVoting: {
+        (params: {
+            votingContract: string;
+            YorN: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            votingContract: string;
+            YorN: boolean;
+        }) => Promise<void>;
+    };
     vetoVotingVote(params: {
         param1: string;
         param2: string;
     }): Promise<boolean>;
+    private assign;
 }
 export declare module OAXDEX_Administrator {
     interface AddAdminEvent {

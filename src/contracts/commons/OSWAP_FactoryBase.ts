@@ -1,9 +1,10 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
-const Bin = require("../../../bin/commons/OSWAP_FactoryBase.json");
+import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import Bin from "./OSWAP_FactoryBase.json";
 
 export class OSWAP_FactoryBase extends Contract{
-    constructor(wallet: Wallet, address?: string){
+    constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
+        this.assign()
     }
     deploy(params:{governance:string,pairCreator:string}): Promise<string>{
         return this._deploy(params.governance,params.pairCreator);
@@ -60,46 +61,75 @@ export class OSWAP_FactoryBase extends Contract{
         };
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('allPairs',Utils.toString(param1));
+        let result = await this.call('allPairs',[Utils.toString(param1)]);
         return result;
     }
     async allPairsLength(): Promise<BigNumber>{
-        let result = await this.methods('allPairsLength');
+        let result = await this.call('allPairsLength');
         return new BigNumber(result);
     }
-    async createPair(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
-        let result = await this.methods('createPair',params.tokenA,params.tokenB);
+    async createPair_send(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
+        let result = await this.send('createPair',[params.tokenA,params.tokenB]);
         return result;
     }
+    async createPair_call(params:{tokenA:string,tokenB:string}): Promise<string>{
+        let result = await this.call('createPair',[params.tokenA,params.tokenB]);
+        return result;
+    }
+    createPair: {
+        (params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>;
+        call: (params:{tokenA:string,tokenB:string}) => Promise<string>;
+    }
     async getPair(params:{param1:string,param2:string}): Promise<string>{
-        let result = await this.methods('getPair',params.param1,params.param2);
+        let result = await this.call('getPair',[params.param1,params.param2]);
         return result;
     }
     async governance(): Promise<string>{
-        let result = await this.methods('governance');
+        let result = await this.call('governance');
         return result;
     }
     async isLive(): Promise<boolean>{
-        let result = await this.methods('isLive');
+        let result = await this.call('isLive');
         return result;
     }
     async pairCreator(): Promise<string>{
-        let result = await this.methods('pairCreator');
+        let result = await this.call('pairCreator');
         return result;
     }
-    async setLive(isLive:boolean): Promise<TransactionReceipt>{
-        let result = await this.methods('setLive',isLive);
+    async setLive_send(isLive:boolean): Promise<TransactionReceipt>{
+        let result = await this.send('setLive',[isLive]);
         return result;
     }
-    async setLiveForPair(params:{pair:string,live:boolean}): Promise<TransactionReceipt>{
-        let result = await this.methods('setLiveForPair',params.pair,params.live);
+    async setLive_call(isLive:boolean): Promise<void>{
+        let result = await this.call('setLive',[isLive]);
+        return;
+    }
+    setLive: {
+        (isLive:boolean): Promise<TransactionReceipt>;
+        call: (isLive:boolean) => Promise<void>;
+    }
+    async setLiveForPair_send(params:{pair:string,live:boolean}): Promise<TransactionReceipt>{
+        let result = await this.send('setLiveForPair',[params.pair,params.live]);
         return result;
+    }
+    async setLiveForPair_call(params:{pair:string,live:boolean}): Promise<void>{
+        let result = await this.call('setLiveForPair',[params.pair,params.live]);
+        return;
+    }
+    setLiveForPair: {
+        (params:{pair:string,live:boolean}): Promise<TransactionReceipt>;
+        call: (params:{pair:string,live:boolean}) => Promise<void>;
+    }
+    private assign(){
+        this.createPair = Object.assign(this.createPair_send, {call:this.createPair_call});
+        this.setLive = Object.assign(this.setLive_send, {call:this.setLive_call});
+        this.setLiveForPair = Object.assign(this.setLiveForPair_send, {call:this.setLiveForPair_call});
     }
 }
 export module OSWAP_FactoryBase{
     export interface PairCreatedEvent {token0:string,token1:string,pair:string,newSize:BigNumber,_event:Event}
     export interface PairRestartedEvent {pair:string,_event:Event}
     export interface PairShutdownedEvent {pair:string,_event:Event}
-    export interface RestartedEvent {}
-    export interface ShutdownedEvent {}
+    export interface RestartedEvent {_event:Event}
+    export interface ShutdownedEvent {_event:Event}
 }

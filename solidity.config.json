@@ -1,0 +1,12 @@
+{
+"version": "0.6.11",
+"optimizerRuns": 999999,
+"sourceDir": "node_modules/@openswapdex/openswap-core/contracts",
+"outputDir": "src/contracts",
+"outputObjects": "bytecode",
+"overrides": [{
+        "root":"node_modules/@openswapdex/openswap-core/contracts/",
+        "sources":["restricted/OSWAP_RestrictedPair.sol","restricted/OSWAP_RestrictedPair2.sol","restricted/OSWAP_RestrictedPairCreator.sol"], 
+        "optimizerRuns":45000
+    }]
+}

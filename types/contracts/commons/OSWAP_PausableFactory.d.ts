@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_PausableFactory extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(governance: string): Promise<string>;
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.PairRestartedEvent[];
     decodePairRestartedEvent(event: Event): OSWAP_PausableFactory.PairRestartedEvent;
@@ -12,11 +12,31 @@ export declare class OSWAP_PausableFactory extends Contract {
     decodeShutdownedEvent(event: Event): OSWAP_PausableFactory.ShutdownedEvent;
     governance(): Promise<string>;
     isLive(): Promise<boolean>;
-    setLive(isLive: boolean): Promise<TransactionReceipt>;
-    setLiveForPair(params: {
+    setLive_send(isLive: boolean): Promise<TransactionReceipt>;
+    setLive_call(isLive: boolean): Promise<void>;
+    setLive: {
+        (isLive: boolean): Promise<TransactionReceipt>;
+        call: (isLive: boolean) => Promise<void>;
+    };
+    setLiveForPair_send(params: {
         pair: string;
         live: boolean;
     }): Promise<TransactionReceipt>;
+    setLiveForPair_call(params: {
+        pair: string;
+        live: boolean;
+    }): Promise<void>;
+    setLiveForPair: {
+        (params: {
+            pair: string;
+            live: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            pair: string;
+            live: boolean;
+        }) => Promise<void>;
+    };
+    private assign;
 }
 export declare module OSWAP_PausableFactory {
     interface PairRestartedEvent {
@@ -28,7 +48,9 @@ export declare module OSWAP_PausableFactory {
         _event: Event;
     }
     interface RestartedEvent {
+        _event: Event;
     }
     interface ShutdownedEvent {
+        _event: Event;
     }
 }

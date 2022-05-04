@@ -1,9 +1,10 @@
-import {Wallet, Contract, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
-const Bin = require("../../../bin/amm/OSWAP_Factory.json");
+import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import Bin from "./OSWAP_Factory.json";
 
 export class OSWAP_Factory extends Contract{
-    constructor(wallet: Wallet, address?: string){
+    constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
+        this.assign()
     }
     deploy(params:{governance:string,pairCreator:string,tradeFee:number|BigNumber,protocolFee:number|BigNumber,protocolFeeTo:string}): Promise<string>{
         return this._deploy(params.governance,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.protocolFee),params.protocolFeeTo);
@@ -83,71 +84,127 @@ export class OSWAP_Factory extends Contract{
         };
     }
     async allPairs(param1:number|BigNumber): Promise<string>{
-        let result = await this.methods('allPairs',Utils.toString(param1));
+        let result = await this.call('allPairs',[Utils.toString(param1)]);
         return result;
     }
     async allPairsLength(): Promise<BigNumber>{
-        let result = await this.methods('allPairsLength');
+        let result = await this.call('allPairsLength');
         return new BigNumber(result);
     }
-    async createPair(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
-        let result = await this.methods('createPair',params.tokenA,params.tokenB);
+    async createPair_send(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
+        let result = await this.send('createPair',[params.tokenA,params.tokenB]);
         return result;
     }
+    async createPair_call(params:{tokenA:string,tokenB:string}): Promise<string>{
+        let result = await this.call('createPair',[params.tokenA,params.tokenB]);
+        return result;
+    }
+    createPair: {
+        (params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>;
+        call: (params:{tokenA:string,tokenB:string}) => Promise<string>;
+    }
     async getPair(params:{param1:string,param2:string}): Promise<string>{
-        let result = await this.methods('getPair',params.param1,params.param2);
+        let result = await this.call('getPair',[params.param1,params.param2]);
         return result;
     }
     async governance(): Promise<string>{
-        let result = await this.methods('governance');
+        let result = await this.call('governance');
         return result;
     }
     async isLive(): Promise<boolean>{
-        let result = await this.methods('isLive');
+        let result = await this.call('isLive');
         return result;
     }
     async pairCreator(): Promise<string>{
-        let result = await this.methods('pairCreator');
+        let result = await this.call('pairCreator');
         return result;
     }
     async protocolFee(): Promise<BigNumber>{
-        let result = await this.methods('protocolFee');
+        let result = await this.call('protocolFee');
         return new BigNumber(result);
     }
     async protocolFeeParams(): Promise<{_protocolFee:BigNumber,_protocolFeeTo:string}>{
-        let result = await this.methods('protocolFeeParams');
+        let result = await this.call('protocolFeeParams');
         return {
             _protocolFee: new BigNumber(result._protocolFee),
             _protocolFeeTo: result._protocolFeeTo
         };
     }
     async protocolFeeTo(): Promise<string>{
-        let result = await this.methods('protocolFeeTo');
+        let result = await this.call('protocolFeeTo');
         return result;
     }
-    async setLive(isLive:boolean): Promise<TransactionReceipt>{
-        let result = await this.methods('setLive',isLive);
+    async setLive_send(isLive:boolean): Promise<TransactionReceipt>{
+        let result = await this.send('setLive',[isLive]);
         return result;
     }
-    async setLiveForPair(params:{pair:string,live:boolean}): Promise<TransactionReceipt>{
-        let result = await this.methods('setLiveForPair',params.pair,params.live);
+    async setLive_call(isLive:boolean): Promise<void>{
+        let result = await this.call('setLive',[isLive]);
+        return;
+    }
+    setLive: {
+        (isLive:boolean): Promise<TransactionReceipt>;
+        call: (isLive:boolean) => Promise<void>;
+    }
+    async setLiveForPair_send(params:{pair:string,live:boolean}): Promise<TransactionReceipt>{
+        let result = await this.send('setLiveForPair',[params.pair,params.live]);
         return result;
     }
-    async setProtocolFee(protocolFee:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setProtocolFee',Utils.toString(protocolFee));
+    async setLiveForPair_call(params:{pair:string,live:boolean}): Promise<void>{
+        let result = await this.call('setLiveForPair',[params.pair,params.live]);
+        return;
+    }
+    setLiveForPair: {
+        (params:{pair:string,live:boolean}): Promise<TransactionReceipt>;
+        call: (params:{pair:string,live:boolean}) => Promise<void>;
+    }
+    async setProtocolFee_send(protocolFee:number|BigNumber): Promise<TransactionReceipt>{
+        let result = await this.send('setProtocolFee',[Utils.toString(protocolFee)]);
         return result;
     }
-    async setProtocolFeeTo(protocolFeeTo:string): Promise<TransactionReceipt>{
-        let result = await this.methods('setProtocolFeeTo',protocolFeeTo);
+    async setProtocolFee_call(protocolFee:number|BigNumber): Promise<void>{
+        let result = await this.call('setProtocolFee',[Utils.toString(protocolFee)]);
+        return;
+    }
+    setProtocolFee: {
+        (protocolFee:number|BigNumber): Promise<TransactionReceipt>;
+        call: (protocolFee:number|BigNumber) => Promise<void>;
+    }
+    async setProtocolFeeTo_send(protocolFeeTo:string): Promise<TransactionReceipt>{
+        let result = await this.send('setProtocolFeeTo',[protocolFeeTo]);
         return result;
     }
-    async setTradeFee(tradeFee:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.methods('setTradeFee',Utils.toString(tradeFee));
+    async setProtocolFeeTo_call(protocolFeeTo:string): Promise<void>{
+        let result = await this.call('setProtocolFeeTo',[protocolFeeTo]);
+        return;
+    }
+    setProtocolFeeTo: {
+        (protocolFeeTo:string): Promise<TransactionReceipt>;
+        call: (protocolFeeTo:string) => Promise<void>;
+    }
+    async setTradeFee_send(tradeFee:number|BigNumber): Promise<TransactionReceipt>{
+        let result = await this.send('setTradeFee',[Utils.toString(tradeFee)]);
         return result;
+    }
+    async setTradeFee_call(tradeFee:number|BigNumber): Promise<void>{
+        let result = await this.call('setTradeFee',[Utils.toString(tradeFee)]);
+        return;
+    }
+    setTradeFee: {
+        (tradeFee:number|BigNumber): Promise<TransactionReceipt>;
+        call: (tradeFee:number|BigNumber) => Promise<void>;
     }
     async tradeFee(): Promise<BigNumber>{
-        let result = await this.methods('tradeFee');
+        let result = await this.call('tradeFee');
         return new BigNumber(result);
+    }
+    private assign(){
+        this.createPair = Object.assign(this.createPair_send, {call:this.createPair_call});
+        this.setLive = Object.assign(this.setLive_send, {call:this.setLive_call});
+        this.setLiveForPair = Object.assign(this.setLiveForPair_send, {call:this.setLiveForPair_call});
+        this.setProtocolFee = Object.assign(this.setProtocolFee_send, {call:this.setProtocolFee_call});
+        this.setProtocolFeeTo = Object.assign(this.setProtocolFeeTo_send, {call:this.setProtocolFeeTo_call});
+        this.setTradeFee = Object.assign(this.setTradeFee_send, {call:this.setTradeFee_call});
     }
 }
 export module OSWAP_Factory{
@@ -156,6 +213,6 @@ export module OSWAP_Factory{
     export interface PairShutdownedEvent {pair:string,_event:Event}
     export interface ParamSetEvent {name:string,value:string,_event:Event}
     export interface ParamSet2Event {name:string,value1:string,value2:string,_event:Event}
-    export interface RestartedEvent {}
-    export interface ShutdownedEvent {}
+    export interface RestartedEvent {_event:Event}
+    export interface ShutdownedEvent {_event:Event}
 }

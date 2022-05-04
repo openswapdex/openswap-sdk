@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
 export declare class OAXDEX_VotingContract extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(params: {
         governance: string;
         executor: string;
@@ -18,7 +18,12 @@ export declare class OAXDEX_VotingContract extends Contract {
     _optionsWeight(param1: number | BigNumber): Promise<BigNumber>;
     accountVoteOption(param1: string): Promise<BigNumber>;
     accountVoteWeight(param1: string): Promise<BigNumber>;
-    execute(): Promise<TransactionReceipt>;
+    execute_send(): Promise<TransactionReceipt>;
+    execute_call(): Promise<void>;
+    execute: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
+    };
     executeDelay(): Promise<BigNumber>;
     executeParam(): Promise<string[]>;
     executed(): Promise<boolean>;
@@ -46,10 +51,26 @@ export declare class OAXDEX_VotingContract extends Contract {
     threshold(): Promise<BigNumber>;
     totalVoteWeight(): Promise<BigNumber>;
     totalWeight(): Promise<BigNumber>;
-    updateWeight(account: string): Promise<TransactionReceipt>;
-    veto(): Promise<TransactionReceipt>;
+    updateWeight_send(account: string): Promise<TransactionReceipt>;
+    updateWeight_call(account: string): Promise<void>;
+    updateWeight: {
+        (account: string): Promise<TransactionReceipt>;
+        call: (account: string) => Promise<void>;
+    };
+    veto_send(): Promise<TransactionReceipt>;
+    veto_call(): Promise<void>;
+    veto: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
+    };
     vetoed(): Promise<boolean>;
-    vote(option: number | BigNumber): Promise<TransactionReceipt>;
+    vote_send(option: number | BigNumber): Promise<TransactionReceipt>;
+    vote_call(option: number | BigNumber): Promise<void>;
+    vote: {
+        (option: number | BigNumber): Promise<TransactionReceipt>;
+        call: (option: number | BigNumber) => Promise<void>;
+    };
     voteEndTime(): Promise<BigNumber>;
     voteStartTime(): Promise<BigNumber>;
+    private assign;
 }

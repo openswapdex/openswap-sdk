@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_RestrictedPair extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(): Promise<string>;
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.AddLiquidityEvent[];
     decodeAddLiquidityEvent(event: Event): OSWAP_RestrictedPair.AddLiquidityEvent;
@@ -16,10 +16,24 @@ export declare class OSWAP_RestrictedPair extends Contract {
     decodeSwapEvent(event: Event): OSWAP_RestrictedPair.SwapEvent;
     parseSwappedOneOfferEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.SwappedOneOfferEvent[];
     decodeSwappedOneOfferEvent(event: Event): OSWAP_RestrictedPair.SwappedOneOfferEvent;
-    addLiquidity(params: {
+    addLiquidity_send(params: {
         direction: boolean;
         index: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    addLiquidity_call(params: {
+        direction: boolean;
+        index: number | BigNumber;
+    }): Promise<void>;
+    addLiquidity: {
+        (params: {
+            direction: boolean;
+            index: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            direction: boolean;
+            index: number | BigNumber;
+        }) => Promise<void>;
+    };
     approvedTrader(params: {
         param1: boolean;
         param2: number | BigNumber;
@@ -27,7 +41,7 @@ export declare class OSWAP_RestrictedPair extends Contract {
     }): Promise<string>;
     configStore(): Promise<string>;
     counter(param1: boolean): Promise<BigNumber>;
-    createOrder(params: {
+    createOrder_send(params: {
         provider: string;
         direction: boolean;
         allowAll: boolean;
@@ -35,6 +49,32 @@ export declare class OSWAP_RestrictedPair extends Contract {
         startDate: number | BigNumber;
         expire: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    createOrder_call(params: {
+        provider: string;
+        direction: boolean;
+        allowAll: boolean;
+        restrictedPrice: number | BigNumber;
+        startDate: number | BigNumber;
+        expire: number | BigNumber;
+    }): Promise<BigNumber>;
+    createOrder: {
+        (params: {
+            provider: string;
+            direction: boolean;
+            allowAll: boolean;
+            restrictedPrice: number | BigNumber;
+            startDate: number | BigNumber;
+            expire: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            provider: string;
+            direction: boolean;
+            allowAll: boolean;
+            restrictedPrice: number | BigNumber;
+            startDate: number | BigNumber;
+            expire: number | BigNumber;
+        }) => Promise<BigNumber>;
+    };
     factory(): Promise<string>;
     feeBalance(): Promise<BigNumber>;
     getAmountIn(params: {
@@ -115,10 +155,24 @@ export declare class OSWAP_RestrictedPair extends Contract {
     }>;
     govToken(): Promise<string>;
     governance(): Promise<string>;
-    initialize(params: {
+    initialize_send(params: {
         token0: string;
         token1: string;
     }): Promise<TransactionReceipt>;
+    initialize_call(params: {
+        token0: string;
+        token1: string;
+    }): Promise<void>;
+    initialize: {
+        (params: {
+            token0: string;
+            token1: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            token0: string;
+            token1: string;
+        }) => Promise<void>;
+    };
     isApprovedTrader(params: {
         param1: boolean;
         param2: number | BigNumber;
@@ -128,10 +182,24 @@ export declare class OSWAP_RestrictedPair extends Contract {
     lastGovBalance(): Promise<BigNumber>;
     lastToken0Balance(): Promise<BigNumber>;
     lastToken1Balance(): Promise<BigNumber>;
-    lockOffer(params: {
+    lockOffer_send(params: {
         direction: boolean;
         index: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    lockOffer_call(params: {
+        direction: boolean;
+        index: number | BigNumber;
+    }): Promise<void>;
+    lockOffer: {
+        (params: {
+            direction: boolean;
+            index: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            direction: boolean;
+            index: number | BigNumber;
+        }) => Promise<void>;
+    };
     offers(params: {
         param1: boolean;
         param2: number | BigNumber;
@@ -152,43 +220,175 @@ export declare class OSWAP_RestrictedPair extends Contract {
         param2: string;
         param3: number | BigNumber;
     }): Promise<BigNumber>;
-    redeemProtocolFee(): Promise<TransactionReceipt>;
-    removeAllLiquidity(provider: string): Promise<TransactionReceipt>;
-    removeAllLiquidity1D(params: {
+    redeemProtocolFee_send(): Promise<TransactionReceipt>;
+    redeemProtocolFee_call(): Promise<void>;
+    redeemProtocolFee: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
+    };
+    removeAllLiquidity_send(provider: string): Promise<TransactionReceipt>;
+    removeAllLiquidity_call(provider: string): Promise<{
+        amount0: BigNumber;
+        amount1: BigNumber;
+    }>;
+    removeAllLiquidity: {
+        (provider: string): Promise<TransactionReceipt>;
+        call: (provider: string) => Promise<{
+            amount0: BigNumber;
+            amount1: BigNumber;
+        }>;
+    };
+    removeAllLiquidity1D_send(params: {
         provider: string;
         direction: boolean;
     }): Promise<TransactionReceipt>;
-    removeLiquidity(params: {
+    removeAllLiquidity1D_call(params: {
+        provider: string;
+        direction: boolean;
+    }): Promise<{
+        totalAmount: BigNumber;
+        totalReceiving: BigNumber;
+    }>;
+    removeAllLiquidity1D: {
+        (params: {
+            provider: string;
+            direction: boolean;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            provider: string;
+            direction: boolean;
+        }) => Promise<{
+            totalAmount: BigNumber;
+            totalReceiving: BigNumber;
+        }>;
+    };
+    removeLiquidity_send(params: {
         provider: string;
         direction: boolean;
         index: number | BigNumber;
         amountOut: number | BigNumber;
         receivingOut: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    removeLiquidity_call(params: {
+        provider: string;
+        direction: boolean;
+        index: number | BigNumber;
+        amountOut: number | BigNumber;
+        receivingOut: number | BigNumber;
+    }): Promise<void>;
+    removeLiquidity: {
+        (params: {
+            provider: string;
+            direction: boolean;
+            index: number | BigNumber;
+            amountOut: number | BigNumber;
+            receivingOut: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            provider: string;
+            direction: boolean;
+            index: number | BigNumber;
+            amountOut: number | BigNumber;
+            receivingOut: number | BigNumber;
+        }) => Promise<void>;
+    };
     restrictedLiquidityProvider(): Promise<string>;
     scaleDirection(): Promise<boolean>;
     scaler(): Promise<BigNumber>;
-    setApprovedTrader(params: {
+    setApprovedTrader_send(params: {
         direction: boolean;
         offerIndex: number | BigNumber;
         trader: string;
         allocation: number | BigNumber;
     }): Promise<TransactionReceipt>;
-    setLive(isLive: boolean): Promise<TransactionReceipt>;
-    setMultipleApprovedTraders(params: {
+    setApprovedTrader_call(params: {
+        direction: boolean;
+        offerIndex: number | BigNumber;
+        trader: string;
+        allocation: number | BigNumber;
+    }): Promise<void>;
+    setApprovedTrader: {
+        (params: {
+            direction: boolean;
+            offerIndex: number | BigNumber;
+            trader: string;
+            allocation: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            direction: boolean;
+            offerIndex: number | BigNumber;
+            trader: string;
+            allocation: number | BigNumber;
+        }) => Promise<void>;
+    };
+    setLive_send(isLive: boolean): Promise<TransactionReceipt>;
+    setLive_call(isLive: boolean): Promise<void>;
+    setLive: {
+        (isLive: boolean): Promise<TransactionReceipt>;
+        call: (isLive: boolean) => Promise<void>;
+    };
+    setMultipleApprovedTraders_send(params: {
         direction: boolean;
         offerIndex: number | BigNumber;
         trader: string[];
         allocation: (number | BigNumber)[];
     }): Promise<TransactionReceipt>;
-    swap(params: {
+    setMultipleApprovedTraders_call(params: {
+        direction: boolean;
+        offerIndex: number | BigNumber;
+        trader: string[];
+        allocation: (number | BigNumber)[];
+    }): Promise<void>;
+    setMultipleApprovedTraders: {
+        (params: {
+            direction: boolean;
+            offerIndex: number | BigNumber;
+            trader: string[];
+            allocation: (number | BigNumber)[];
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            direction: boolean;
+            offerIndex: number | BigNumber;
+            trader: string[];
+            allocation: (number | BigNumber)[];
+        }) => Promise<void>;
+    };
+    swap_send(params: {
         amount0Out: number | BigNumber;
         amount1Out: number | BigNumber;
         to: string;
         trader: string;
         param5: string;
     }): Promise<TransactionReceipt>;
-    sync(): Promise<TransactionReceipt>;
+    swap_call(params: {
+        amount0Out: number | BigNumber;
+        amount1Out: number | BigNumber;
+        to: string;
+        trader: string;
+        param5: string;
+    }): Promise<void>;
+    swap: {
+        (params: {
+            amount0Out: number | BigNumber;
+            amount1Out: number | BigNumber;
+            to: string;
+            trader: string;
+            param5: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            amount0Out: number | BigNumber;
+            amount1Out: number | BigNumber;
+            to: string;
+            trader: string;
+            param5: string;
+        }) => Promise<void>;
+    };
+    sync_send(): Promise<TransactionReceipt>;
+    sync_call(): Promise<void>;
+    sync: {
+        (): Promise<TransactionReceipt>;
+        call: () => Promise<void>;
+    };
     token0(): Promise<string>;
     token1(): Promise<string>;
     traderAllocation(params: {
@@ -202,6 +402,7 @@ export declare class OSWAP_RestrictedPair extends Contract {
         param3: number | BigNumber;
     }): Promise<BigNumber>;
     whitelistFactory(): Promise<string>;
+    private assign;
 }
 export declare module OSWAP_RestrictedPair {
     interface AddLiquidityEvent {

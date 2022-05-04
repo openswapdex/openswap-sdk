@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
 export declare class OSWAP_HybridRouter2 extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(params: {
         registry: string;
         WETH: string;
@@ -39,28 +39,109 @@ export declare class OSWAP_HybridRouter2 extends Contract {
         tokenOut: string;
     }): Promise<string[]>;
     registry(): Promise<string>;
-    swapETHForExactTokens(params: {
+    swapETHForExactTokens_send(params: {
         amountOut: number | BigNumber;
         pair: string[];
         to: string;
         deadline: number | BigNumber;
         data: string;
     }, _value: number | BigNumber): Promise<TransactionReceipt>;
-    swapExactETHForTokens(params: {
+    swapETHForExactTokens_call(params: {
+        amountOut: number | BigNumber;
+        pair: string[];
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }, _value: number | BigNumber): Promise<{
+        path: string[];
+        amounts: BigNumber[];
+    }>;
+    swapETHForExactTokens: {
+        (params: {
+            amountOut: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }, _value: number | BigNumber): Promise<TransactionReceipt>;
+        call: (params: {
+            amountOut: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }, _value: number | BigNumber) => Promise<{
+            path: string[];
+            amounts: BigNumber[];
+        }>;
+    };
+    swapExactETHForTokens_send(params: {
         amountOutMin: number | BigNumber;
         pair: string[];
         to: string;
         deadline: number | BigNumber;
         data: string;
     }, _value: number | BigNumber): Promise<TransactionReceipt>;
-    swapExactETHForTokensSupportingFeeOnTransferTokens(params: {
+    swapExactETHForTokens_call(params: {
+        amountOutMin: number | BigNumber;
+        pair: string[];
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }, _value: number | BigNumber): Promise<{
+        path: string[];
+        amounts: BigNumber[];
+    }>;
+    swapExactETHForTokens: {
+        (params: {
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }, _value: number | BigNumber): Promise<TransactionReceipt>;
+        call: (params: {
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }, _value: number | BigNumber) => Promise<{
+            path: string[];
+            amounts: BigNumber[];
+        }>;
+    };
+    swapExactETHForTokensSupportingFeeOnTransferTokens_send(params: {
         amountOutMin: number | BigNumber;
         pair: string[];
         to: string;
         deadline: number | BigNumber;
         data: string;
     }, _value: number | BigNumber): Promise<TransactionReceipt>;
-    swapExactTokensForETH(params: {
+    swapExactETHForTokensSupportingFeeOnTransferTokens_call(params: {
+        amountOutMin: number | BigNumber;
+        pair: string[];
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }, _value: number | BigNumber): Promise<void>;
+    swapExactETHForTokensSupportingFeeOnTransferTokens: {
+        (params: {
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }, _value: number | BigNumber): Promise<TransactionReceipt>;
+        call: (params: {
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }, _value: number | BigNumber) => Promise<void>;
+    };
+    swapExactTokensForETH_send(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
         pair: string[];
@@ -68,7 +149,39 @@ export declare class OSWAP_HybridRouter2 extends Contract {
         deadline: number | BigNumber;
         data: string;
     }): Promise<TransactionReceipt>;
-    swapExactTokensForETHSupportingFeeOnTransferTokens(params: {
+    swapExactTokensForETH_call(params: {
+        amountIn: number | BigNumber;
+        amountOutMin: number | BigNumber;
+        pair: string[];
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }): Promise<{
+        path: string[];
+        amounts: BigNumber[];
+    }>;
+    swapExactTokensForETH: {
+        (params: {
+            amountIn: number | BigNumber;
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            amountIn: number | BigNumber;
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }) => Promise<{
+            path: string[];
+            amounts: BigNumber[];
+        }>;
+    };
+    swapExactTokensForETHSupportingFeeOnTransferTokens_send(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
         pair: string[];
@@ -76,7 +189,33 @@ export declare class OSWAP_HybridRouter2 extends Contract {
         deadline: number | BigNumber;
         data: string;
     }): Promise<TransactionReceipt>;
-    swapExactTokensForTokens(params: {
+    swapExactTokensForETHSupportingFeeOnTransferTokens_call(params: {
+        amountIn: number | BigNumber;
+        amountOutMin: number | BigNumber;
+        pair: string[];
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }): Promise<void>;
+    swapExactTokensForETHSupportingFeeOnTransferTokens: {
+        (params: {
+            amountIn: number | BigNumber;
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            amountIn: number | BigNumber;
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }) => Promise<void>;
+    };
+    swapExactTokensForTokens_send(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
         pair: string[];
@@ -85,7 +224,42 @@ export declare class OSWAP_HybridRouter2 extends Contract {
         deadline: number | BigNumber;
         data: string;
     }): Promise<TransactionReceipt>;
-    swapExactTokensForTokensSupportingFeeOnTransferTokens(params: {
+    swapExactTokensForTokens_call(params: {
+        amountIn: number | BigNumber;
+        amountOutMin: number | BigNumber;
+        pair: string[];
+        tokenIn: string;
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }): Promise<{
+        path: string[];
+        amounts: BigNumber[];
+    }>;
+    swapExactTokensForTokens: {
+        (params: {
+            amountIn: number | BigNumber;
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            tokenIn: string;
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            amountIn: number | BigNumber;
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            tokenIn: string;
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }) => Promise<{
+            path: string[];
+            amounts: BigNumber[];
+        }>;
+    };
+    swapExactTokensForTokensSupportingFeeOnTransferTokens_send(params: {
         amountIn: number | BigNumber;
         amountOutMin: number | BigNumber;
         pair: string[];
@@ -94,7 +268,36 @@ export declare class OSWAP_HybridRouter2 extends Contract {
         deadline: number | BigNumber;
         data: string;
     }): Promise<TransactionReceipt>;
-    swapTokensForExactETH(params: {
+    swapExactTokensForTokensSupportingFeeOnTransferTokens_call(params: {
+        amountIn: number | BigNumber;
+        amountOutMin: number | BigNumber;
+        pair: string[];
+        tokenIn: string;
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }): Promise<void>;
+    swapExactTokensForTokensSupportingFeeOnTransferTokens: {
+        (params: {
+            amountIn: number | BigNumber;
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            tokenIn: string;
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            amountIn: number | BigNumber;
+            amountOutMin: number | BigNumber;
+            pair: string[];
+            tokenIn: string;
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }) => Promise<void>;
+    };
+    swapTokensForExactETH_send(params: {
         amountOut: number | BigNumber;
         amountInMax: number | BigNumber;
         pair: string[];
@@ -102,7 +305,39 @@ export declare class OSWAP_HybridRouter2 extends Contract {
         deadline: number | BigNumber;
         data: string;
     }): Promise<TransactionReceipt>;
-    swapTokensForExactTokens(params: {
+    swapTokensForExactETH_call(params: {
+        amountOut: number | BigNumber;
+        amountInMax: number | BigNumber;
+        pair: string[];
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }): Promise<{
+        path: string[];
+        amounts: BigNumber[];
+    }>;
+    swapTokensForExactETH: {
+        (params: {
+            amountOut: number | BigNumber;
+            amountInMax: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            amountOut: number | BigNumber;
+            amountInMax: number | BigNumber;
+            pair: string[];
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }) => Promise<{
+            path: string[];
+            amounts: BigNumber[];
+        }>;
+    };
+    swapTokensForExactTokens_send(params: {
         amountOut: number | BigNumber;
         amountInMax: number | BigNumber;
         pair: string[];
@@ -111,4 +346,40 @@ export declare class OSWAP_HybridRouter2 extends Contract {
         deadline: number | BigNumber;
         data: string;
     }): Promise<TransactionReceipt>;
+    swapTokensForExactTokens_call(params: {
+        amountOut: number | BigNumber;
+        amountInMax: number | BigNumber;
+        pair: string[];
+        tokenOut: string;
+        to: string;
+        deadline: number | BigNumber;
+        data: string;
+    }): Promise<{
+        path: string[];
+        amounts: BigNumber[];
+    }>;
+    swapTokensForExactTokens: {
+        (params: {
+            amountOut: number | BigNumber;
+            amountInMax: number | BigNumber;
+            pair: string[];
+            tokenOut: string;
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            amountOut: number | BigNumber;
+            amountInMax: number | BigNumber;
+            pair: string[];
+            tokenOut: string;
+            to: string;
+            deadline: number | BigNumber;
+            data: string;
+        }) => Promise<{
+            path: string[];
+            amounts: BigNumber[];
+        }>;
+    };
+    private assign;
 }

@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class ERC20 extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(params: {
         name: string;
         symbol: string;
@@ -13,32 +13,106 @@ export declare class ERC20 extends Contract {
         owner: string;
         spender: string;
     }): Promise<BigNumber>;
-    approve(params: {
+    approve_send(params: {
         spender: string;
         amount: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    approve_call(params: {
+        spender: string;
+        amount: number | BigNumber;
+    }): Promise<boolean>;
+    approve: {
+        (params: {
+            spender: string;
+            amount: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            spender: string;
+            amount: number | BigNumber;
+        }) => Promise<boolean>;
+    };
     balanceOf(account: string): Promise<BigNumber>;
     decimals(): Promise<BigNumber>;
-    decreaseAllowance(params: {
+    decreaseAllowance_send(params: {
         spender: string;
         subtractedValue: number | BigNumber;
     }): Promise<TransactionReceipt>;
-    increaseAllowance(params: {
+    decreaseAllowance_call(params: {
+        spender: string;
+        subtractedValue: number | BigNumber;
+    }): Promise<boolean>;
+    decreaseAllowance: {
+        (params: {
+            spender: string;
+            subtractedValue: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            spender: string;
+            subtractedValue: number | BigNumber;
+        }) => Promise<boolean>;
+    };
+    increaseAllowance_send(params: {
         spender: string;
         addedValue: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    increaseAllowance_call(params: {
+        spender: string;
+        addedValue: number | BigNumber;
+    }): Promise<boolean>;
+    increaseAllowance: {
+        (params: {
+            spender: string;
+            addedValue: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            spender: string;
+            addedValue: number | BigNumber;
+        }) => Promise<boolean>;
+    };
     name(): Promise<string>;
     symbol(): Promise<string>;
     totalSupply(): Promise<BigNumber>;
-    transfer(params: {
+    transfer_send(params: {
         recipient: string;
         amount: number | BigNumber;
     }): Promise<TransactionReceipt>;
-    transferFrom(params: {
+    transfer_call(params: {
+        recipient: string;
+        amount: number | BigNumber;
+    }): Promise<boolean>;
+    transfer: {
+        (params: {
+            recipient: string;
+            amount: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            recipient: string;
+            amount: number | BigNumber;
+        }) => Promise<boolean>;
+    };
+    transferFrom_send(params: {
         sender: string;
         recipient: string;
         amount: number | BigNumber;
     }): Promise<TransactionReceipt>;
+    transferFrom_call(params: {
+        sender: string;
+        recipient: string;
+        amount: number | BigNumber;
+    }): Promise<boolean>;
+    transferFrom: {
+        (params: {
+            sender: string;
+            recipient: string;
+            amount: number | BigNumber;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            sender: string;
+            recipient: string;
+            amount: number | BigNumber;
+        }) => Promise<boolean>;
+    };
+    private assign;
 }
 export declare module ERC20 {
     interface ApprovalEvent {

@@ -1,6 +1,6 @@
-import { Wallet, Contract, BigNumber } from "@ijstech/eth-wallet";
+import { IWallet, Contract, BigNumber } from "@ijstech/eth-wallet";
 export declare class OSWAP_RestrictedPairOracle extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(): Promise<string>;
     WEI(): Promise<BigNumber>;
     decimals(): Promise<BigNumber>;
@@ -24,4 +24,5 @@ export declare class OSWAP_RestrictedPairOracle extends Contract {
         param1: string;
         param2: string;
     }): Promise<boolean>;
+    private assign;
 }

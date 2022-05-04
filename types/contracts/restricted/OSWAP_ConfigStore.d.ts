@@ -1,6 +1,6 @@
-import { Wallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
 export declare class OSWAP_ConfigStore extends Contract {
-    constructor(wallet: Wallet, address?: string);
+    constructor(wallet: IWallet, address?: string);
     deploy(governance: string): Promise<string>;
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_ConfigStore.ParamSetEvent[];
     decodeParamSetEvent(event: Event): OSWAP_ConfigStore.ParamSetEvent;
@@ -9,14 +9,43 @@ export declare class OSWAP_ConfigStore extends Contract {
     customParamNamesIdx(param1: string): Promise<BigNumber>;
     customParamNamesLength(): Promise<BigNumber>;
     governance(): Promise<string>;
-    setCustomParam(params: {
+    setCustomParam_send(params: {
         paramName: string;
         paramValue: string;
     }): Promise<TransactionReceipt>;
-    setMultiCustomParam(params: {
+    setCustomParam_call(params: {
+        paramName: string;
+        paramValue: string;
+    }): Promise<void>;
+    setCustomParam: {
+        (params: {
+            paramName: string;
+            paramValue: string;
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            paramName: string;
+            paramValue: string;
+        }) => Promise<void>;
+    };
+    setMultiCustomParam_send(params: {
         paramName: string[];
         paramValue: string[];
     }): Promise<TransactionReceipt>;
+    setMultiCustomParam_call(params: {
+        paramName: string[];
+        paramValue: string[];
+    }): Promise<void>;
+    setMultiCustomParam: {
+        (params: {
+            paramName: string[];
+            paramValue: string[];
+        }): Promise<TransactionReceipt>;
+        call: (params: {
+            paramName: string[];
+            paramValue: string[];
+        }) => Promise<void>;
+    };
+    private assign;
 }
 export declare module OSWAP_ConfigStore {
     interface ParamSetEvent {
