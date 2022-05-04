@@ -5,10 +5,10 @@
   "typings": "types/index.d.ts",
   "main": "lib",
   "scripts": {
-    "build": "npm run _build && npm run updateHash && npm run _build",
+    "build": "npm run build:contracts && npm run updateHash && npm run build:contracts",
     "updateHash": "ts-node tools/updateHash.ts",
-    "_build": "sol2ts solidity.config.json",
-    "build:test": "eth-wallet-build 0.6.11 test/contracts test/bin test/src/contracts",
+    "build:contracts": "sol2ts solidity.config.json",
+    "build:test": "sol2ts solidity-test.config.json",
     "build:lib": "tsc && node esbuild.bundle",
     "test": "mocha --exit --require ts-node/register --timeout 100000 test/*.test.ts"
   },
