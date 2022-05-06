@@ -17,9 +17,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ijstech/eth-contract": "git+https://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:x-oauth-basic@github.com/ijstech/eth-contract.git",
-    "@ijstech/eth-wallet": "git+https://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:x-oauth-basic@github.com/ijstech/eth-wallet.git",
-    "@openswapdex/openswap-core": "git+https://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:x-oauth-basic@github.com/openswapdex/openswap-core.git"
+    "@ijstech/eth-contract": "git+https://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:x-oauth-basic@github.com/ijstech/eth-contract.git",
+    "@ijstech/eth-wallet": "git+https://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:x-oauth-basic@github.com/ijstech/eth-wallet.git",
+    "@openswapdex/openswap-core": "git+https://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:x-oauth-basic@github.com/openswapdex/openswap-core.git"
   },
   "devDependencies": {
     "@openzeppelin/contracts": "3.4.2",
