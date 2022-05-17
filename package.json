@@ -11,6 +11,7 @@
     "build:test": "sol2ts solidity-test.config.json",
     "build:lib": "tsc && node esbuild.bundle",
     "test": "mocha --exit --require ts-node/register --timeout 100000 test/*.test.ts",
+    "test:hybridRouter": "mocha --ui tdd --exit --require ts-node/register --timeout 100000 test/hybridRouter.test.ts",
     "build:plugin": "compile 0.6.11 node_modules/@openswapdex/openswap-core/contracts plugin/contracts"
   },
   "keywords": [],
