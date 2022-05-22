@@ -276,11 +276,9 @@ export async function deployCoreContracts(wallet: Wallet, options: IDeployOption
         admin: result.administrator,
         governance: result.governance
     });
-    await governance.initVotingExecutor([result.votingExecutor]);
     //VotingExecutor1
     let votingExecutor1 = new OSWAP_VotingExecutor1(wallet);
     result.votingExecutor1 = await votingExecutor1.deploy(factory.address);    
-
     return result;
 } 
 
@@ -487,8 +485,15 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
                     }                 
                 } 
             }
-
-            // await governance.initVotingExecutor([votingExecutor.address, votingExecutor1.address, votingExecutor2.address, votingExecutor3.address]);
+            let governance = new OAXDEX_Governance(wallet, coreContractsResult.governance);
+            await governance.initVotingExecutor([
+                result.votingExecutor, 
+                result.votingExecutor1, 
+                result.votingExecutor2,
+                result.votingExecutor3,
+                result.votingExecutor4,
+                result.hybridRouterRegistry
+            ].filter(Boolean));
             console.dir(result)
             resolve(result)
         }
