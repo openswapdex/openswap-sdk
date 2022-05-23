@@ -7,7 +7,7 @@ export class OSWAP_Pair extends Contract{
         this.assign()
     }
     deploy(): Promise<string>{
-        return this._deploy();
+        return this.__deploy();
     }
     parseApprovalEvent(receipt: TransactionReceipt): OSWAP_Pair.ApprovalEvent[]{
         return this.parseEvents(receipt, "Approval").map(e=>this.decodeApprovalEvent(e));
@@ -272,11 +272,11 @@ export class OSWAP_Pair extends Contract{
         call: (to:string) => Promise<void>;
     }
     async swap_send(params:{amount0Out:number|BigNumber,amount1Out:number|BigNumber,to:string,data:string}): Promise<TransactionReceipt>{
-        let result = await this.send('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,params.data]);
+        let result = await this.send('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,Utils.stringToBytes(params.data)]);
         return result;
     }
     async swap_call(params:{amount0Out:number|BigNumber,amount1Out:number|BigNumber,to:string,data:string}): Promise<void>{
-        let result = await this.call('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,params.data]);
+        let result = await this.call('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,Utils.stringToBytes(params.data)]);
         return;
     }
     swap: {

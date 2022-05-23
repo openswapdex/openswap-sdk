@@ -7,7 +7,7 @@ export class OSWAP_VotingExecutor4 extends Contract{
         this.assign()
     }
     deploy(params:{governance:string,factory:string,configStore:string}): Promise<string>{
-        return this._deploy(params.governance,params.factory,params.configStore);
+        return this.__deploy([params.governance,params.factory,params.configStore]);
     }
     async configStore(): Promise<string>{
         let result = await this.call('configStore');

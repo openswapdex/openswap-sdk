@@ -7,7 +7,7 @@ export class OSWAP_CertiKSecurityOracle extends Contract{
         this.assign()
     }
     deploy(oracleAddress:string): Promise<string>{
-        return this._deploy(oracleAddress);
+        return this.__deploy([oracleAddress]);
     }
     async getSecurityScore(oracle:string): Promise<BigNumber>{
         let result = await this.call('getSecurityScore',[oracle]);

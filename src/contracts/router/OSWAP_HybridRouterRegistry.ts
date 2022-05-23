@@ -7,7 +7,7 @@ export class OSWAP_HybridRouterRegistry extends Contract{
         this.assign()
     }
     deploy(governance:string): Promise<string>{
-        return this._deploy(governance);
+        return this.__deploy([governance]);
     }
     parseCustomPairRegisterEvent(receipt: TransactionReceipt): OSWAP_HybridRouterRegistry.CustomPairRegisterEvent[]{
         return this.parseEvents(receipt, "CustomPairRegister").map(e=>this.decodeCustomPairRegisterEvent(e));

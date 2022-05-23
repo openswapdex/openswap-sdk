@@ -7,7 +7,7 @@ export class OAXDEX_Administrator extends Contract{
         this.assign()
     }
     deploy(governance:string): Promise<string>{
-        return this._deploy(governance);
+        return this.__deploy([governance]);
     }
     parseAddAdminEvent(receipt: TransactionReceipt): OAXDEX_Administrator.AddAdminEvent[]{
         return this.parseEvents(receipt, "AddAdmin").map(e=>this.decodeAddAdminEvent(e));

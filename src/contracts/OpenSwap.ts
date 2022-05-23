@@ -7,7 +7,7 @@ export class OpenSwap extends Contract{
         this.assign()
     }
     deploy(params:{minter:string,initSupplyTo:string,initSupply:number|BigNumber,totalSupply:number|BigNumber}): Promise<string>{
-        return this._deploy(params.minter,params.initSupplyTo,Utils.toString(params.initSupply),Utils.toString(params.totalSupply));
+        return this.__deploy([params.minter,params.initSupplyTo,Utils.toString(params.initSupply),Utils.toString(params.totalSupply)]);
     }
     parseApprovalEvent(receipt: TransactionReceipt): OpenSwap.ApprovalEvent[]{
         return this.parseEvents(receipt, "Approval").map(e=>this.decodeApprovalEvent(e));

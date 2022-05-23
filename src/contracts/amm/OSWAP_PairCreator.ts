@@ -7,7 +7,7 @@ export class OSWAP_PairCreator extends Contract{
         this.assign()
     }
     deploy(): Promise<string>{
-        return this._deploy();
+        return this.__deploy();
     }
     async createPair_send(salt:string): Promise<TransactionReceipt>{
         let result = await this.send('createPair',[Utils.stringToBytes32(salt)]);

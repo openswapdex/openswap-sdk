@@ -7,7 +7,7 @@ export class OSWAP_RestrictedLiquidityProvider extends Contract{
         this.assign()
     }
     deploy(params:{factory:string,WETH:string}): Promise<string>{
-        return this._deploy(params.factory,params.WETH);
+        return this.__deploy([params.factory,params.WETH]);
     }
     async WETH(): Promise<string>{
         let result = await this.call('WETH');

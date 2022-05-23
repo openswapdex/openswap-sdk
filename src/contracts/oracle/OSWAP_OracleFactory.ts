@@ -7,7 +7,7 @@ export class OSWAP_OracleFactory extends Contract{
         this.assign()
     }
     deploy(params:{governance:string,pairCreator:string,tradeFee:number|BigNumber,protocolFee:number|BigNumber,feePerDelegator:number|BigNumber,protocolFeeTo:string}): Promise<string>{
-        return this._deploy(params.governance,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.protocolFee),Utils.toString(params.feePerDelegator),params.protocolFeeTo);
+        return this.__deploy([params.governance,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.protocolFee),Utils.toString(params.feePerDelegator),params.protocolFeeTo]);
     }
     parseOracleAddedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OracleAddedEvent[]{
         return this.parseEvents(receipt, "OracleAdded").map(e=>this.decodeOracleAddedEvent(e));

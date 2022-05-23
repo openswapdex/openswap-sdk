@@ -7,7 +7,7 @@ export class OSWAP_RestrictedPair extends Contract{
         this.assign()
     }
     deploy(): Promise<string>{
-        return this._deploy();
+        return this.__deploy();
     }
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_RestrictedPair.AddLiquidityEvent[]{
         return this.parseEvents(receipt, "AddLiquidity").map(e=>this.decodeAddLiquidityEvent(e));
@@ -156,11 +156,11 @@ export class OSWAP_RestrictedPair extends Contract{
         return new BigNumber(result);
     }
     async getAmountIn(params:{param1:string,param2:number|BigNumber,param3:string,param4:string}): Promise<BigNumber>{
-        let result = await this.call('getAmountIn',[params.param1,Utils.toString(params.param2),params.param3,params.param4]);
+        let result = await this.call('getAmountIn',[params.param1,Utils.toString(params.param2),params.param3,Utils.stringToBytes(params.param4)]);
         return new BigNumber(result);
     }
     async getAmountOut(params:{tokenIn:string,amountIn:number|BigNumber,trader:string,param4:string}): Promise<BigNumber>{
-        let result = await this.call('getAmountOut',[params.tokenIn,Utils.toString(params.amountIn),params.trader,params.param4]);
+        let result = await this.call('getAmountOut',[params.tokenIn,Utils.toString(params.amountIn),params.trader,Utils.stringToBytes(params.param4)]);
         return new BigNumber(result);
     }
     async getApprovedTrader(params:{direction:boolean,offerIndex:number|BigNumber,start:number|BigNumber,length:number|BigNumber}): Promise<{trader:string[],allocation:BigNumber[]}>{
@@ -406,11 +406,11 @@ export class OSWAP_RestrictedPair extends Contract{
         call: (params:{direction:boolean,offerIndex:number|BigNumber,trader:string[],allocation:(number|BigNumber)[]}) => Promise<void>;
     }
     async swap_send(params:{amount0Out:number|BigNumber,amount1Out:number|BigNumber,to:string,trader:string,param5:string}): Promise<TransactionReceipt>{
-        let result = await this.send('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,params.trader,params.param5]);
+        let result = await this.send('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,params.trader,Utils.stringToBytes(params.param5)]);
         return result;
     }
     async swap_call(params:{amount0Out:number|BigNumber,amount1Out:number|BigNumber,to:string,trader:string,param5:string}): Promise<void>{
-        let result = await this.call('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,params.trader,params.param5]);
+        let result = await this.call('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,params.trader,Utils.stringToBytes(params.param5)]);
         return;
     }
     swap: {

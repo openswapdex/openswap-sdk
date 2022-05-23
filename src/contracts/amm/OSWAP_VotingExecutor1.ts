@@ -7,7 +7,7 @@ export class OSWAP_VotingExecutor1 extends Contract{
         this.assign()
     }
     deploy(factory:string): Promise<string>{
-        return this._deploy(factory);
+        return this.__deploy([factory]);
     }
     async execute_send(params:string[]): Promise<TransactionReceipt>{
         let result = await this.send('execute',[Utils.stringToBytes32(params)]);

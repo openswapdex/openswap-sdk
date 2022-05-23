@@ -7,7 +7,7 @@ export class OSWAP_FactoryBase extends Contract{
         this.assign()
     }
     deploy(params:{governance:string,pairCreator:string}): Promise<string>{
-        return this._deploy(params.governance,params.pairCreator);
+        return this.__deploy([params.governance,params.pairCreator]);
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_FactoryBase.PairCreatedEvent[]{
         return this.parseEvents(receipt, "PairCreated").map(e=>this.decodePairCreatedEvent(e));

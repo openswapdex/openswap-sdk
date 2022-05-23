@@ -7,7 +7,7 @@ export class OSWAP_OraclePair extends Contract{
         this.assign()
     }
     deploy(): Promise<string>{
-        return this._deploy();
+        return this.__deploy();
     }
     parseAddLiquidityEvent(receipt: TransactionReceipt): OSWAP_OraclePair.AddLiquidityEvent[]{
         return this.parseEvents(receipt, "AddLiquidity").map(e=>this.decodeAddLiquidityEvent(e));
@@ -177,11 +177,11 @@ export class OSWAP_OraclePair extends Contract{
         return new BigNumber(result);
     }
     async getAmountIn(params:{tokenOut:string,amountOut:number|BigNumber,data:string}): Promise<BigNumber>{
-        let result = await this.call('getAmountIn',[params.tokenOut,Utils.toString(params.amountOut),params.data]);
+        let result = await this.call('getAmountIn',[params.tokenOut,Utils.toString(params.amountOut),Utils.stringToBytes(params.data)]);
         return new BigNumber(result);
     }
     async getAmountOut(params:{tokenIn:string,amountIn:number|BigNumber,data:string}): Promise<BigNumber>{
-        let result = await this.call('getAmountOut',[params.tokenIn,Utils.toString(params.amountIn),params.data]);
+        let result = await this.call('getAmountOut',[params.tokenIn,Utils.toString(params.amountIn),Utils.stringToBytes(params.data)]);
         return new BigNumber(result);
     }
     async getBalances(): Promise<{param1:BigNumber,param2:BigNumber,param3:BigNumber}>{
@@ -200,7 +200,7 @@ export class OSWAP_OraclePair extends Contract{
         };
     }
     async getLatestPrice(params:{direction:boolean,payload:string}): Promise<BigNumber>{
-        let result = await this.call('getLatestPrice',[params.direction,params.payload]);
+        let result = await this.call('getLatestPrice',[params.direction,Utils.stringToBytes(params.payload)]);
         return new BigNumber(result);
     }
     async getProviderOffer(params:{provider:string,direction:boolean}): Promise<{index:BigNumber,staked:BigNumber,amount:BigNumber,reserve:BigNumber,expire:BigNumber,privateReplenish:boolean}>{
@@ -442,11 +442,11 @@ export class OSWAP_OraclePair extends Contract{
         return new BigNumber(result);
     }
     async swap_send(params:{amount0Out:number|BigNumber,amount1Out:number|BigNumber,to:string,data:string}): Promise<TransactionReceipt>{
-        let result = await this.send('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,params.data]);
+        let result = await this.send('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,Utils.stringToBytes(params.data)]);
         return result;
     }
     async swap_call(params:{amount0Out:number|BigNumber,amount1Out:number|BigNumber,to:string,data:string}): Promise<void>{
-        let result = await this.call('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,params.data]);
+        let result = await this.call('swap',[Utils.toString(params.amount0Out),Utils.toString(params.amount1Out),params.to,Utils.stringToBytes(params.data)]);
         return;
     }
     swap: {

@@ -7,18 +7,18 @@ export class OSWAP_HybridRouter extends Contract{
         this.assign()
     }
     deploy(params:{oracleFactory:string,WETH:string}): Promise<string>{
-        return this._deploy(params.oracleFactory,params.WETH);
+        return this.__deploy([params.oracleFactory,params.WETH]);
     }
     async WETH(): Promise<string>{
         let result = await this.call('WETH');
         return result;
     }
     async getAmountsIn(params:{amountOut:number|BigNumber,path:string[],pair:string[],fee:(number|BigNumber)[],data:string}): Promise<BigNumber[]>{
-        let result = await this.call('getAmountsIn',[Utils.toString(params.amountOut),params.path,params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.call('getAmountsIn',[Utils.toString(params.amountOut),params.path,params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result.map(e=>new BigNumber(e));
     }
     async getAmountsOut(params:{amountIn:number|BigNumber,path:string[],pair:string[],fee:(number|BigNumber)[],data:string}): Promise<BigNumber[]>{
-        let result = await this.call('getAmountsOut',[Utils.toString(params.amountIn),params.path,params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.call('getAmountsOut',[Utils.toString(params.amountIn),params.path,params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result.map(e=>new BigNumber(e));
     }
     async oracleFactory(): Promise<string>{
@@ -30,11 +30,11 @@ export class OSWAP_HybridRouter extends Contract{
         return result;
     }
     async swapETHForExactTokens_send(params:{amountOut:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string},_value:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.send('swapETHForExactTokens',[Utils.toString(params.amountOut),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data], {value:_value});
+        let result = await this.send('swapETHForExactTokens',[Utils.toString(params.amountOut),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)], {value:_value});
         return result;
     }
     async swapETHForExactTokens_call(params:{amountOut:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string},_value:number|BigNumber): Promise<BigNumber[]>{
-        let result = await this.call('swapETHForExactTokens',[Utils.toString(params.amountOut),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data], {value:_value});
+        let result = await this.call('swapETHForExactTokens',[Utils.toString(params.amountOut),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)], {value:_value});
         return result.map(e=>new BigNumber(e));
     }
     swapETHForExactTokens: {
@@ -42,11 +42,11 @@ export class OSWAP_HybridRouter extends Contract{
         call: (params:{amountOut:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string},_value:number|BigNumber) => Promise<BigNumber[]>;
     }
     async swapExactETHForTokens_send(params:{amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string},_value:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.send('swapExactETHForTokens',[Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data], {value:_value});
+        let result = await this.send('swapExactETHForTokens',[Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)], {value:_value});
         return result;
     }
     async swapExactETHForTokens_call(params:{amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string},_value:number|BigNumber): Promise<BigNumber[]>{
-        let result = await this.call('swapExactETHForTokens',[Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data], {value:_value});
+        let result = await this.call('swapExactETHForTokens',[Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)], {value:_value});
         return result.map(e=>new BigNumber(e));
     }
     swapExactETHForTokens: {
@@ -66,11 +66,11 @@ export class OSWAP_HybridRouter extends Contract{
         call: (params:{amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[]},_value:number|BigNumber) => Promise<void>;
     }
     async swapExactTokensForETH_send(params:{amountIn:number|BigNumber,amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}): Promise<TransactionReceipt>{
-        let result = await this.send('swapExactTokensForETH',[Utils.toString(params.amountIn),Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.send('swapExactTokensForETH',[Utils.toString(params.amountIn),Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result;
     }
     async swapExactTokensForETH_call(params:{amountIn:number|BigNumber,amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}): Promise<BigNumber[]>{
-        let result = await this.call('swapExactTokensForETH',[Utils.toString(params.amountIn),Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.call('swapExactTokensForETH',[Utils.toString(params.amountIn),Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result.map(e=>new BigNumber(e));
     }
     swapExactTokensForETH: {
@@ -90,11 +90,11 @@ export class OSWAP_HybridRouter extends Contract{
         call: (params:{amountIn:number|BigNumber,amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[]}) => Promise<void>;
     }
     async swapExactTokensForTokens_send(params:{amountIn:number|BigNumber,amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}): Promise<TransactionReceipt>{
-        let result = await this.send('swapExactTokensForTokens',[Utils.toString(params.amountIn),Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.send('swapExactTokensForTokens',[Utils.toString(params.amountIn),Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result;
     }
     async swapExactTokensForTokens_call(params:{amountIn:number|BigNumber,amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}): Promise<BigNumber[]>{
-        let result = await this.call('swapExactTokensForTokens',[Utils.toString(params.amountIn),Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.call('swapExactTokensForTokens',[Utils.toString(params.amountIn),Utils.toString(params.amountOutMin),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result.map(e=>new BigNumber(e));
     }
     swapExactTokensForTokens: {
@@ -114,11 +114,11 @@ export class OSWAP_HybridRouter extends Contract{
         call: (params:{amountIn:number|BigNumber,amountOutMin:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[]}) => Promise<void>;
     }
     async swapTokensForExactETH_send(params:{amountOut:number|BigNumber,amountInMax:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}): Promise<TransactionReceipt>{
-        let result = await this.send('swapTokensForExactETH',[Utils.toString(params.amountOut),Utils.toString(params.amountInMax),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.send('swapTokensForExactETH',[Utils.toString(params.amountOut),Utils.toString(params.amountInMax),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result;
     }
     async swapTokensForExactETH_call(params:{amountOut:number|BigNumber,amountInMax:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}): Promise<BigNumber[]>{
-        let result = await this.call('swapTokensForExactETH',[Utils.toString(params.amountOut),Utils.toString(params.amountInMax),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.call('swapTokensForExactETH',[Utils.toString(params.amountOut),Utils.toString(params.amountInMax),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result.map(e=>new BigNumber(e));
     }
     swapTokensForExactETH: {
@@ -126,11 +126,11 @@ export class OSWAP_HybridRouter extends Contract{
         call: (params:{amountOut:number|BigNumber,amountInMax:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}) => Promise<BigNumber[]>;
     }
     async swapTokensForExactTokens_send(params:{amountOut:number|BigNumber,amountInMax:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}): Promise<TransactionReceipt>{
-        let result = await this.send('swapTokensForExactTokens',[Utils.toString(params.amountOut),Utils.toString(params.amountInMax),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.send('swapTokensForExactTokens',[Utils.toString(params.amountOut),Utils.toString(params.amountInMax),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result;
     }
     async swapTokensForExactTokens_call(params:{amountOut:number|BigNumber,amountInMax:number|BigNumber,path:string[],to:string,deadline:number|BigNumber,pair:string[],fee:(number|BigNumber)[],data:string}): Promise<BigNumber[]>{
-        let result = await this.call('swapTokensForExactTokens',[Utils.toString(params.amountOut),Utils.toString(params.amountInMax),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),params.data]);
+        let result = await this.call('swapTokensForExactTokens',[Utils.toString(params.amountOut),Utils.toString(params.amountInMax),params.path,params.to,Utils.toString(params.deadline),params.pair,Utils.toString(params.fee),Utils.stringToBytes(params.data)]);
         return result.map(e=>new BigNumber(e));
     }
     swapTokensForExactTokens: {

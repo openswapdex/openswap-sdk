@@ -7,7 +7,7 @@ export class OAXDEX_VotingContract extends Contract{
         this.assign()
     }
     deploy(params:{governance:string,executor:string,id:number|BigNumber,name:string,options:string[],quorum:number|BigNumber,threshold:number|BigNumber,voteEndTime:number|BigNumber,executeDelay:number|BigNumber,executeParam:string[]}): Promise<string>{
-        return this._deploy(params.governance,params.executor,Utils.toString(params.id),Utils.stringToBytes32(params.name),Utils.stringToBytes32(params.options),Utils.toString(params.quorum),Utils.toString(params.threshold),Utils.toString(params.voteEndTime),Utils.toString(params.executeDelay),Utils.stringToBytes32(params.executeParam));
+        return this.__deploy([params.governance,params.executor,Utils.toString(params.id),Utils.stringToBytes32(params.name),Utils.stringToBytes32(params.options),Utils.toString(params.quorum),Utils.toString(params.threshold),Utils.toString(params.voteEndTime),Utils.toString(params.executeDelay),Utils.stringToBytes32(params.executeParam)]);
     }
     async _executeParam(param1:number|BigNumber): Promise<string>{
         let result = await this.call('_executeParam',[Utils.toString(param1)]);

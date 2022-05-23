@@ -7,7 +7,7 @@ export class OSWAP_ConfigStore extends Contract{
         this.assign()
     }
     deploy(governance:string): Promise<string>{
-        return this._deploy(governance);
+        return this.__deploy([governance]);
     }
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_ConfigStore.ParamSetEvent[]{
         return this.parseEvents(receipt, "ParamSet").map(e=>this.decodeParamSetEvent(e));

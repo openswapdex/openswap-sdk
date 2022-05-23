@@ -7,7 +7,7 @@ export class OSWAP_RestrictedPairOracle extends Contract{
         this.assign()
     }
     deploy(): Promise<string>{
-        return this._deploy();
+        return this.__deploy();
     }
     async WEI(): Promise<BigNumber>{
         let result = await this.call('WEI');
@@ -18,11 +18,11 @@ export class OSWAP_RestrictedPairOracle extends Contract{
         return new BigNumber(result);
     }
     async getLatestPrice(params:{from:string,to:string,payload:string}): Promise<BigNumber>{
-        let result = await this.call('getLatestPrice',[params.from,params.to,params.payload]);
+        let result = await this.call('getLatestPrice',[params.from,params.to,Utils.stringToBytes(params.payload)]);
         return new BigNumber(result);
     }
     async getRatio(params:{from:string,to:string,param3:number|BigNumber,param4:number|BigNumber,param5:string,payload:string}): Promise<{numerator:BigNumber,denominator:BigNumber}>{
-        let result = await this.call('getRatio',[params.from,params.to,Utils.toString(params.param3),Utils.toString(params.param4),params.param5,params.payload]);
+        let result = await this.call('getRatio',[params.from,params.to,Utils.toString(params.param3),Utils.toString(params.param4),params.param5,Utils.stringToBytes(params.payload)]);
         return {
             numerator: new BigNumber(result.numerator),
             denominator: new BigNumber(result.denominator)

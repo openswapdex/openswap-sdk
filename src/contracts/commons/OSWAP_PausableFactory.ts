@@ -7,7 +7,7 @@ export class OSWAP_PausableFactory extends Contract{
         this.assign()
     }
     deploy(governance:string): Promise<string>{
-        return this._deploy(governance);
+        return this.__deploy([governance]);
     }
     parsePairRestartedEvent(receipt: TransactionReceipt): OSWAP_PausableFactory.PairRestartedEvent[]{
         return this.parseEvents(receipt, "PairRestarted").map(e=>this.decodePairRestartedEvent(e));

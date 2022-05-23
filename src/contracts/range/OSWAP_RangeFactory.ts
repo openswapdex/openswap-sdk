@@ -7,7 +7,7 @@ export class OSWAP_RangeFactory extends Contract{
         this.assign()
     }
     deploy(params:{governance:string,oracleFactory:string,pairCreator:string,tradeFee:number|BigNumber,stakeAmount:(number|BigNumber)[],liquidityProviderShare:(number|BigNumber)[],protocolFeeTo:string}): Promise<string>{
-        return this._deploy(params.governance,params.oracleFactory,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare),params.protocolFeeTo);
+        return this.__deploy([params.governance,params.oracleFactory,params.pairCreator,Utils.toString(params.tradeFee),Utils.toString(params.stakeAmount),Utils.toString(params.liquidityProviderShare),params.protocolFeeTo]);
     }
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.OwnershipTransferredEvent[]{
         return this.parseEvents(receipt, "OwnershipTransferred").map(e=>this.decodeOwnershipTransferredEvent(e));

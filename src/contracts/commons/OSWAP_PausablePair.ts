@@ -7,7 +7,7 @@ export class OSWAP_PausablePair extends Contract{
         this.assign()
     }
     deploy(): Promise<string>{
-        return this._deploy();
+        return this.__deploy();
     }
     async factory(): Promise<string>{
         let result = await this.call('factory');

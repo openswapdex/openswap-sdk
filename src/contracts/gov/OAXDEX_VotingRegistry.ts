@@ -7,7 +7,7 @@ export class OAXDEX_VotingRegistry extends Contract{
         this.assign()
     }
     deploy(governance:string): Promise<string>{
-        return this._deploy(governance);
+        return this.__deploy([governance]);
     }
     async governance(): Promise<string>{
         let result = await this.call('governance');

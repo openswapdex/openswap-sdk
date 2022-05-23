@@ -7,7 +7,7 @@ export class OAXDEX_VotingExecutor extends Contract{
         this.assign()
     }
     deploy(params:{governance:string,admin:string}): Promise<string>{
-        return this._deploy(params.governance,params.admin);
+        return this.__deploy([params.governance,params.admin]);
     }
     async admin(): Promise<string>{
         let result = await this.call('admin');

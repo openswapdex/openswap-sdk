@@ -7,7 +7,7 @@ export class OAXDEX_Governance extends Contract{
         this.assign()
     }
     deploy(params:{oaxToken:string,votingToken:string,names:string[],minExeDelay:(number|BigNumber)[],minVoteDuration:(number|BigNumber)[],maxVoteDuration:(number|BigNumber)[],minOaxTokenToCreateVote:(number|BigNumber)[],minQuorum:(number|BigNumber)[],minStakePeriod:number|BigNumber}): Promise<string>{
-        return this._deploy(params.oaxToken,params.votingToken,Utils.stringToBytes32(params.names),Utils.toString(params.minExeDelay),Utils.toString(params.minVoteDuration),Utils.toString(params.maxVoteDuration),Utils.toString(params.minOaxTokenToCreateVote),Utils.toString(params.minQuorum),Utils.toString(params.minStakePeriod));
+        return this.__deploy([params.oaxToken,params.votingToken,Utils.stringToBytes32(params.names),Utils.toString(params.minExeDelay),Utils.toString(params.minVoteDuration),Utils.toString(params.maxVoteDuration),Utils.toString(params.minOaxTokenToCreateVote),Utils.toString(params.minQuorum),Utils.toString(params.minStakePeriod)]);
     }
     parseAddVotingConfigEvent(receipt: TransactionReceipt): OAXDEX_Governance.AddVotingConfigEvent[]{
         return this.parseEvents(receipt, "AddVotingConfig").map(e=>this.decodeAddVotingConfigEvent(e));
