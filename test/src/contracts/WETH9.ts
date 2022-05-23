@@ -7,7 +7,7 @@ export class WETH9 extends Contract{
         this.assign()
     }
     deploy(): Promise<string>{
-        return this._deploy();
+        return this.__deploy();
     }
     parseApprovalEvent(receipt: TransactionReceipt): WETH9.ApprovalEvent[]{
         return this.parseEvents(receipt, "Approval").map(e=>this.decodeApprovalEvent(e));

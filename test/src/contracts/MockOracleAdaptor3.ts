@@ -7,18 +7,18 @@ export class MockOracleAdaptor3 extends Contract{
         this.assign()
     }
     deploy(params:{weth:string,decimals:number|BigNumber,tokens:string[],prices:(number|BigNumber)[]}): Promise<string>{
-        return this._deploy(params.weth,Utils.toString(params.decimals),params.tokens,Utils.toString(params.prices));
+        return this.__deploy([params.weth,Utils.toString(params.decimals),params.tokens,Utils.toString(params.prices)]);
     }
     async decimals(): Promise<BigNumber>{
         let result = await this.call('decimals');
         return new BigNumber(result);
     }
     async getLatestPrice(params:{from:string,to:string,param3:string}): Promise<BigNumber>{
-        let result = await this.call('getLatestPrice',[params.from,params.to,params.param3]);
+        let result = await this.call('getLatestPrice',[params.from,params.to,Utils.stringToBytes(params.param3)]);
         return new BigNumber(result);
     }
     async getRatio(params:{from:string,to:string,param3:number|BigNumber,param4:number|BigNumber,param5:string}): Promise<{numerator:BigNumber,denominator:BigNumber}>{
-        let result = await this.call('getRatio',[params.from,params.to,Utils.toString(params.param3),Utils.toString(params.param4),params.param5]);
+        let result = await this.call('getRatio',[params.from,params.to,Utils.toString(params.param3),Utils.toString(params.param4),Utils.stringToBytes(params.param5)]);
         return {
             numerator: new BigNumber(result.numerator),
             denominator: new BigNumber(result.denominator)

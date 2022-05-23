@@ -7,7 +7,7 @@ export class ERC20DelayFixedSupply extends Contract{
         this.assign()
     }
     deploy(params:{minter:string,name:string,symbol:string}): Promise<string>{
-        return this._deploy(params.minter,params.name,params.symbol);
+        return this.__deploy([params.minter,params.name,params.symbol]);
     }
     parseApprovalEvent(receipt: TransactionReceipt): ERC20DelayFixedSupply.ApprovalEvent[]{
         return this.parseEvents(receipt, "Approval").map(e=>this.decodeApprovalEvent(e));

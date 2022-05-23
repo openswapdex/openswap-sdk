@@ -7,7 +7,7 @@ export class MockSecurityOracle extends Contract{
         this.assign()
     }
     deploy(): Promise<string>{
-        return this._deploy();
+        return this.__deploy();
     }
     async getSecurityScore(oracle:string): Promise<BigNumber>{
         let result = await this.call('getSecurityScore',[oracle]);

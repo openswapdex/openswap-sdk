@@ -1,7 +1,7 @@
 import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
-import Bin from "./MockAmmFactory.json";
+import Bin from "./EvilAmmFactory.json";
 
-export class MockAmmFactory extends Contract{
+export class EvilAmmFactory extends Contract{
     constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
         this.assign()
@@ -9,10 +9,10 @@ export class MockAmmFactory extends Contract{
     deploy(): Promise<string>{
         return this.__deploy();
     }
-    parsePairCreatedEvent(receipt: TransactionReceipt): MockAmmFactory.PairCreatedEvent[]{
+    parsePairCreatedEvent(receipt: TransactionReceipt): EvilAmmFactory.PairCreatedEvent[]{
         return this.parseEvents(receipt, "PairCreated").map(e=>this.decodePairCreatedEvent(e));
     }
-    decodePairCreatedEvent(event: Event): MockAmmFactory.PairCreatedEvent{
+    decodePairCreatedEvent(event: Event): EvilAmmFactory.PairCreatedEvent{
         let result = event.data;
         return {
             token0: result.token0,
@@ -55,6 +55,6 @@ export class MockAmmFactory extends Contract{
         this.setPair = Object.assign(this.setPair_send, {call:this.setPair_call});
     }
 }
-export module MockAmmFactory{
+export module EvilAmmFactory{
     export interface PairCreatedEvent {token0:string,token1:string,pair:string,newSize:BigNumber,_event:Event}
 }
