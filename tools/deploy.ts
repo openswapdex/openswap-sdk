@@ -138,7 +138,7 @@ async function setupHybridRouter(){
     wallet.defaultAccount = accounts[0];
 
     let hybridRouterRegistryConfig = Config.deploymentConfig.hybridRouterRegistry;
-    let hybridRouterOptions: any = {
+    let hybridRouterOptions = {
         registryAddress: hybridRouterRegistryConfig.address,
         governance: Config.deploymentConfig.governance,
         weth: Config.deploymentConfig.tokens.weth,
@@ -157,6 +157,7 @@ async function setupHybridRouter(){
         hybridRouterOptions.feeBase.push(feeBase);
         hybridRouterOptions.typeCode.push(typeCode);
     }
+    hybridRouterOptions.registryAddress = result.hybridRouterRegistry;
     for (let protocol of hybridRouterRegistryConfig.customProtocols){
         let {factory, name, fee, feeBase, typeCode} = protocol;
         hybridRouterOptions.factory.push(factory);
