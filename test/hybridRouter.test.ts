@@ -1,7 +1,7 @@
 import 'mocha';
 import { Utils, Wallet, Erc20, BigNumber } from "@ijstech/eth-wallet";
 import { Contracts, deploy, initHybridRouterRegistry, IDeploymentResult } from '../src';
-import * as Ganache from "ganache-cli";
+import * as Ganache from "ganache";
 import * as assert from 'assert';
 import { expect } from 'chai';
 import { TestERC20, EvilAmmPair, EvilAmmFactory } from '../test/src/contracts';

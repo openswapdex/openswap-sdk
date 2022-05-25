@@ -1,5 +1,5 @@
 import {Utils, Wallet, BigNumber} from "@ijstech/eth-wallet";
-const Ganache = require("ganache-cli");
+const Ganache = require("ganache");
 const {expect, use} = require("chai");
 
 import {OpenSwap as OpenSwapContract} from '../src/contracts';
