@@ -1,9 +1,11 @@
+import 'mocha';
 import {Utils, Wallet, BigNumber} from "@ijstech/eth-wallet";
 import {ERC20DelayFixedSupply} from "./src/contracts";
+
 const {expect, use} = require("chai");
 use(require('chai-bignumber')(BigNumber));
 
-const Ganache = require("ganache-cli");
+const Ganache = require("ganache");
 
 let _provider = Ganache.provider();
 let _wallet = new Wallet(_provider);

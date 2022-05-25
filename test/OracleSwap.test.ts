@@ -1,3 +1,4 @@
+import 'mocha';
 import BigNumber from 'bignumber.js';
 import { padLeft, padRight, numberToBytes32, addressToBytes32, stringToBytes32, addressToBytes32Right, setTime, print } from "./helper";
 import Web3 from "web3";

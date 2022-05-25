@@ -3,7 +3,7 @@ import {Utils, Wallet} from "@ijstech/eth-wallet";
 import {deploy} from "../src";
 import {OSWAP_Factory} from "../src/contracts";
 import {WETH9} from './src/contracts';
-import * as Ganache from "ganache-cli";
+import * as Ganache from "ganache";
 import * as assert from 'assert';
 
 suite('##Deploy Contracts to Ganache', function() {

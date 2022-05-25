@@ -1,3 +1,4 @@
+import 'mocha';
 import {Utils, Wallet, BigNumber} from "@ijstech/eth-wallet";
 const Ganache = require("ganache");
 const {expect, use} = require("chai");

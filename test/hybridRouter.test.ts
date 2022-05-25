@@ -6,7 +6,7 @@ import * as assert from 'assert';
 import { expect } from 'chai';
 import { TestERC20, EvilAmmPair, EvilAmmFactory } from '../test/src/contracts';
 
-suite('##Contracts', function () {
+describe('##Contracts', function () {
   this.timeout(40000);
   let provider = Ganache.provider()
   let wallet = new Wallet(provider);
@@ -99,11 +99,11 @@ suite('##Contracts', function () {
     await wallet.setBlockTime(voteEndTime + exeDelay + 1);
     return votingContract;
   }
-  setup(async function () {
+  before(async function () {
     accounts = await wallet.accounts;
     deployer = accounts[0];
   })
-  test('Deploy contracts', async function () {
+  it('Deploy contracts', async function () {
     console.log('accounts', accounts);
     wallet.defaultAccount = deployer;
     let protocolFeeTo = deployer;
@@ -205,7 +205,7 @@ suite('##Contracts', function () {
     }
     await initHybridRouterRegistry(wallet, hybridRouterOptions);
   })
-  test('Create Pairs', async function () {
+  it('Create Pairs', async function () {
     wallet.defaultAccount = deployer;
     cake = new TestERC20(wallet);
     let cakeAddress = await cake.deploy({
@@ -237,7 +237,7 @@ suite('##Contracts', function () {
     let event = factory.parsePairCreatedEvent(receipt)[0];
     CakeOswapPair = event.pair;
   })
-  test('Register Pairs to Hybrid Router Registry', async function () {
+  it('Register Pairs to Hybrid Router Registry', async function () {
     wallet.defaultAccount = deployer;
     hybridRouterRegistry = new Contracts.OSWAP_HybridRouterRegistry(wallet, deployedContracts.hybridRouterRegistry);
     await hybridRouterRegistry.registerPairByAddress({
@@ -245,7 +245,7 @@ suite('##Contracts', function () {
       pairAddress: CakeOswapPair
     })
   })
-  test('Register an invalid pair to Hybrid Router Registry', async function () {
+  it('Register an invalid pair to Hybrid Router Registry', async function () {
     wallet.defaultAccount = deployer;
     let fakePair = new EvilAmmPair(wallet);
     let fakePairAddress;
@@ -274,7 +274,7 @@ suite('##Contracts', function () {
       assert.strictEqual(error.message, 'VM Exception while processing transaction: revert invalid pair');
     }
   })
-  test('Swap with hybrid router', async function () {
+  it('Swap with hybrid router', async function () {
     wallet.defaultAccount = deployer;
     let hybridRouter = new Contracts.OSWAP_HybridRouter2(wallet, deployedContracts.hybridRouter);
     const deadline = Math.floor(Date.now() / 1000 + 30 * 60);
@@ -297,7 +297,7 @@ suite('##Contracts', function () {
     let oswapBalance = await oswap.balanceOf(deployer);
     console.log('oswapBalance', oswapBalance.toFixed());
   })
-  test('Try to steal funds by Registering an evil factory to Hybrid Router Registry', async function () {
+  it('Try to steal funds by Registering an evil factory to Hybrid Router Registry', async function () {
     wallet.defaultAccount = deployer;
     let evilAmmFactory = new EvilAmmFactory(wallet);
     let evilAmmFactoryAddress = await evilAmmFactory.deploy();
