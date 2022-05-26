@@ -23,7 +23,7 @@
   "devDependencies": {
     "@ijstech/eth-contract": "git+https://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:x-oauth-basic@github.com/ijstech/eth-contract.git",
     "@ijstech/eth-wallet": "git+https://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:x-oauth-basic@github.com/ijstech/eth-wallet.git",
-    "@openswapdex/openswap-core": "git+https://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:x-oauth-basic@github.com/openswapdex/openswap-core.git",
+    "@openswap/openswap-core": "git+https://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:x-oauth-basic@github.com/openswapdex/openswap-core.git",
     "@openzeppelin/contracts": "4.6.0",
     "@types/chai": "4.3.0",
     "@types/mocha": "9.0.0",
