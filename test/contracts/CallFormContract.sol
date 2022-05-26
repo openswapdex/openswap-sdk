@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity =0.6.11;
 
-import '@openswapdex/openswap-core/contracts/interfaces/IWETH.sol';
-import '@openswapdex/openswap-core/contracts/interfaces/IERC20.sol';
-import '@openswapdex/openswap-core/contracts/commons/interfaces/IOSWAP_FactoryBase.sol';
-import '@openswapdex/openswap-core/contracts/oracle/interfaces/IOSWAP_OraclePair.sol';
-import '@openswapdex/openswap-core/contracts/router/interfaces/IOSWAP_OracleRouter.sol';
+import '@openswap/openswap-core/contracts/interfaces/IWETH.sol';
+import '@openswap/openswap-core/contracts/interfaces/IERC20.sol';
+import '@openswap/openswap-core/contracts/commons/interfaces/IOSWAP_FactoryBase.sol';
+import '@openswap/openswap-core/contracts/oracle/interfaces/IOSWAP_OraclePair.sol';
+import '@openswap/openswap-core/contracts/router/interfaces/IOSWAP_OracleRouter.sol';
 
 contract CallFormContract {
     address public weth;

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Web3 from 'web3';
 
-const sourceDir = "node_modules/@openswapdex/openswap-core/contracts/";
+const sourceDir = "node_modules/@openswap/openswap-core/contracts/";
 async function updateHash(){
     const SOURCE = ["amm/OSWAP_Pair", "oracle/OSWAP_OraclePair", "range/OSWAP_RangePair", "restricted/OSWAP_RestrictedPair"];
 

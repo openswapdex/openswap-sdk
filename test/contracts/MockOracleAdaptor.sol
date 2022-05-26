@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity =0.6.11;
 
-import "@openswapdex/openswap-core/contracts/oracle/interfaces/IOSWAP_OracleAdaptor.sol";
-import "@openswapdex/openswap-core/contracts/libraries/SafeMath.sol";
+import "@openswap/openswap-core/contracts/oracle/interfaces/IOSWAP_OracleAdaptor.sol";
+import "@openswap/openswap-core/contracts/libraries/SafeMath.sol";
 
 contract MockOracleAdaptor3 is IOSWAP_OracleAdaptor {
     using SafeMath for uint256;
