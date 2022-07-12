@@ -9,10 +9,17 @@
         "root":"node_modules/@openswap/openswap-core/contracts/",
         "sources":[
             "restricted/OSWAP_RestrictedPair.sol",
-            "restricted/OSWAP_RestrictedPair2.sol",
             "restricted/OSWAP_RestrictedPairCreator.sol"
         ], 
         "optimizerRuns":45000
+    },
+    {
+        "root":"node_modules/@openswap/openswap-core/contracts/",
+        "sources":[
+            "restricted/OSWAP_RestrictedPair2.sol",
+            "restricted/OSWAP_RestrictedPair3.sol"
+        ], 
+        "optimizerRuns":25000
     },
     {
         "root":"node_modules/@openswap/openswap-core/contracts/",
