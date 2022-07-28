@@ -4,7 +4,7 @@ import Web3 from 'web3';
 
 const sourceDir = "node_modules/@openswap/openswap-core/contracts/";
 async function updateHash(){
-    const SOURCE = ["amm/OSWAP_Pair", "oracle/OSWAP_OraclePair", "range/OSWAP_RangePair", "restricted/OSWAP_RestrictedPair"];
+    const SOURCE = ["amm/OSWAP_Pair", "oracle/OSWAP_OraclePair", "range/OSWAP_RangePair", "restricted/OSWAP_RestrictedPair1", "restricted/OSWAP_RestrictedPair3", "restricted/OSWAP_RestrictedPair4"];
 
     var hex = [];
     for (var i = 0 ; i < SOURCE.length ; i++) {
@@ -45,9 +45,19 @@ async function updateHash(){
     data = data.replace(/\/\*range\*\/hex\'[a-f0-9]{64}\'/,`/*range*/hex'${hex[2]}'`);
     fs.writeFileSync(RangeLiquidityProvider, data);
 
-        const RestrictedLiquidityProvider = path.join(__dirname,"../" + sourceDir + "restricted/OSWAP_RestrictedLiquidityProvider.sol");
-    var data = fs.readFileSync(RestrictedLiquidityProvider, 'utf-8');
+    const RestrictedLiquidityProvider1 = path.join(__dirname,"../" + sourceDir + "restricted/OSWAP_RestrictedLiquidityProvider1.sol");
+    var data = fs.readFileSync(RestrictedLiquidityProvider1, 'utf-8');
     data = data.replace(/\/\*restricted\*\/hex\'[a-f0-9]{64}\'/,`/*restricted*/hex'${hex[3]}'`);
-    fs.writeFileSync(RestrictedLiquidityProvider, data);
+    fs.writeFileSync(RestrictedLiquidityProvider1, data);
+
+    const RestrictedLiquidityProvider3 = path.join(__dirname,"../" + sourceDir + "restricted/OSWAP_RestrictedLiquidityProvider3.sol");
+    var data = fs.readFileSync(RestrictedLiquidityProvider3, 'utf-8');
+    data = data.replace(/\/\*restricted\*\/hex\'[a-f0-9]{64}\'/,`/*restricted*/hex'${hex[4]}'`);
+    fs.writeFileSync(RestrictedLiquidityProvider3, data);
+
+    const RestrictedLiquidityProvider4 = path.join(__dirname,"../" + sourceDir + "restricted/OSWAP_RestrictedLiquidityProvider4.sol");
+    var data = fs.readFileSync(RestrictedLiquidityProvider4, 'utf-8');
+    data = data.replace(/\/\*restricted\*\/hex\'[a-f0-9]{64}\'/,`/*restricted*/hex'${hex[5]}'`);
+    fs.writeFileSync(RestrictedLiquidityProvider4, data);
 }
 updateHash();
