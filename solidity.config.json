@@ -13,7 +13,7 @@
             "restricted/OSWAP_RestrictedPair4.sol",
             "restricted/OSWAP_RestrictedPairCreator.sol"
         ], 
-        "optimizerRuns":25000
+        "optimizerRuns":5000
     },
     {
         "root":"node_modules/@openswap/openswap-core/contracts/",
