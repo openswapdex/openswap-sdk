@@ -2,11 +2,15 @@
 import {Utils, Wallet} from "@ijstech/eth-wallet";
 import { MockOracleAdaptor, MockAmmFactory, MockAmmPair } from './src/contracts';
 import Web3 from 'web3';
+import * as Config from '../data/config';
 
 async function main() {
-    let rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/";
+    let rpcUrl = Config.rpcUrl;
     let provider = new Web3.providers.HttpProvider(rpcUrl);
-    let _wallet = new Wallet(provider, {address:"0x2Ce2eaa52c49C66f07366689b41bD21c70ae1059",privateKey:"0x13354D7DAE86425992037BF4D4D73181D58E97A516EA1F268D4DD518B45B8A5E"});
+    let _wallet = new Wallet(provider, {
+        address: Config.deployer.address,
+        privateKey: Config.deployer.privateKey
+    });
 
     let price = 1/400;
     const oracle = new MockOracleAdaptor(_wallet);
