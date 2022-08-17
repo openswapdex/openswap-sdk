@@ -1,6 +1,6 @@
 {
   "name": "@openswap/sdk",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "typings": "types/index.d.ts",
   "main": "lib",
@@ -18,12 +18,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@ijstech/eth-contract": "git+https://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:x-oauth-basic@github.com/ijstech/eth-contract.git",
-    "@ijstech/eth-wallet": "git+https://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:x-oauth-basic@github.com/ijstech/eth-wallet.git",
-    "@openswap/openswap-core": "git+https://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:x-oauth-basic@github.com/openswapdex/openswap-core.git",
+    "@ijstech/eth-contract": "https://github.com/ijstech/eth-contract",
+    "@ijstech/eth-wallet": "https://github.com/ijstech/eth-wallet",
     "@openzeppelin/contracts": "4.6.0",
     "@types/chai": "4.3.0",
     "@types/mocha": "9.0.0",
