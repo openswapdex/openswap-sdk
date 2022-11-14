@@ -20,8 +20,8 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "@ijstech/eth-contract": "https://github.com/ijstech/eth-contract",
-    "@ijstech/eth-wallet": "https://github.com/ijstech/eth-wallet",
+    "@ijstech/eth-contract": "0.1.4",
+    "@ijstech/eth-wallet": "0.1.23",
     "@openzeppelin/contracts": "4.6.0",
     "@types/chai": "4.3.0",
     "@types/mocha": "9.0.0",
