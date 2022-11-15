@@ -20,7 +20,7 @@ import {
     OSWAP_RangeFactory,
     OSWAP_VotingExecutor3,
     OSWAP_RestrictedPairCreator,
-    OSWAP_RestrictedLiquidityProvider,
+    OSWAP_RestrictedLiquidityProvider1,
     OSWAP_RestrictedFactory,
     OSWAP_VotingExecutor4,
     OSWAP_ConfigStore,
@@ -376,7 +376,7 @@ export async function deployRestrictedContracts(wallet: Wallet, options: IRestri
         protocolFeeTo: options.protocolFeeTo || Utils.nullAddress
     });
     //RestrictedLiquidityProvider
-    let restrictedLiquidityProvider = new OSWAP_RestrictedLiquidityProvider(wallet);
+    let restrictedLiquidityProvider = new OSWAP_RestrictedLiquidityProvider1(wallet);
     result.restrictedLiquidityProvider = await restrictedLiquidityProvider.deploy({
         WETH: weth,
         factory: result.restrictedFactory
