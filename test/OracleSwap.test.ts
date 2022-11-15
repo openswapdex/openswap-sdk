@@ -1,11 +1,11 @@
 import 'mocha';
 import BigNumber from 'bignumber.js';
-import { padLeft, padRight, numberToBytes32, addressToBytes32, stringToBytes32, addressToBytes32Right, setTime, print } from "./helper";
+import { padLeft, padRight, numberToBytes32, addressToBytes32, stringToBytes32, addressToBytes32Right, print } from "./helper";
 import Web3 from "web3";
 const { expect } = require('chai');
 import * as Ganache from "ganache";
 
-import { Contract } from "@ijstech/eth-wallet";
+import { Contract } from "@ijstech/eth-contract";
 
 import { OAXDEX_VotingContract, OSWAP_OraclePair } from '../src/contracts';
 import { TestERC20, MockOracleAdaptor, WETH9, MockAmmFactory, MockAmmPair } from './src/contracts';
@@ -40,7 +40,7 @@ async function stakeToVote() {
 
     now = (await web3.eth.getBlock('latest')).timestamp;
     now += 2;
-    await setTime(_provider, now);
+    await _wallet.setBlockTime(now);
 
     await governance.unlockStake();
 }
@@ -67,7 +67,7 @@ async function newVote(executor, type, quorum, param) {
     let voting = new OAXDEX_VotingContract(_wallet, voteAddr);
     receipt = await voting.vote(0);
 
-    await setTime(_provider, voteEndTime + exeDelay + 1);
+    await _wallet.setBlockTime(voteEndTime + exeDelay + 1);
 
     return voting;
 }

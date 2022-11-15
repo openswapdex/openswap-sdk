@@ -6,7 +6,6 @@
 "outputObjects": "bytecode",
 "overrides": [
     {
-        "root":"contracts/",
         "sources":[
             "restricted/OSWAP_RestrictedPair1.sol",
             "restricted/OSWAP_RestrictedPair3.sol",
@@ -16,7 +15,6 @@
         "optimizerRuns":5000
     },
     {
-        "root":"contracts/",
         "sources":[
             "router/OSWAP_HybridRouter2.sol"
         ], 
