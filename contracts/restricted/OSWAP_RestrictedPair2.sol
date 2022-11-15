@@ -1,5 +1,5 @@
-// // SPDX-License-Identifier: GPL-3.0-only
-// pragma solidity =0.6.11;
+// SPDX-License-Identifier: GPL-3.0-only
+pragma solidity =0.6.11;
 
 // import './interfaces/IOSWAP_RestrictedPair2.sol';
 // import '../interfaces/IERC20.sol';

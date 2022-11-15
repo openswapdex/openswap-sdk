@@ -1,49 +1,23 @@
-import { IWallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-contract";
+export interface INewVoteParams {
+    executor: string;
+    name: string;
+    options: string[];
+    quorum: number | BigNumber;
+    threshold: number | BigNumber;
+    voteEndTime: number | BigNumber;
+    executeDelay: number | BigNumber;
+    executeParam: string[];
+}
 export declare class OAXDEX_VotingRegistry extends Contract {
     constructor(wallet: IWallet, address?: string);
     deploy(governance: string): Promise<string>;
-    governance(): Promise<string>;
-    newVote_send(params: {
-        executor: string;
-        name: string;
-        options: string[];
-        quorum: number | BigNumber;
-        threshold: number | BigNumber;
-        voteEndTime: number | BigNumber;
-        executeDelay: number | BigNumber;
-        executeParam: string[];
-    }): Promise<TransactionReceipt>;
-    newVote_call(params: {
-        executor: string;
-        name: string;
-        options: string[];
-        quorum: number | BigNumber;
-        threshold: number | BigNumber;
-        voteEndTime: number | BigNumber;
-        executeDelay: number | BigNumber;
-        executeParam: string[];
-    }): Promise<void>;
+    governance: {
+        (): Promise<string>;
+    };
     newVote: {
-        (params: {
-            executor: string;
-            name: string;
-            options: string[];
-            quorum: number | BigNumber;
-            threshold: number | BigNumber;
-            voteEndTime: number | BigNumber;
-            executeDelay: number | BigNumber;
-            executeParam: string[];
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            executor: string;
-            name: string;
-            options: string[];
-            quorum: number | BigNumber;
-            threshold: number | BigNumber;
-            voteEndTime: number | BigNumber;
-            executeDelay: number | BigNumber;
-            executeParam: string[];
-        }) => Promise<void>;
+        (params: INewVoteParams): Promise<TransactionReceipt>;
+        call: (params: INewVoteParams) => Promise<void>;
     };
     private assign;
 }

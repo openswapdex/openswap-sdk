@@ -1,382 +1,189 @@
-import { IWallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber } from "@ijstech/eth-contract";
+export interface IDeployParams {
+    registry: string;
+    WETH: string;
+}
+export interface IGetAmountsInEndsWithParams {
+    amountOut: number | BigNumber;
+    pair: string[];
+    tokenOut: string;
+    data: string;
+}
+export interface IGetAmountsInStartsWithParams {
+    amountOut: number | BigNumber;
+    pair: string[];
+    tokenIn: string;
+    data: string;
+}
+export interface IGetAmountsOutEndsWithParams {
+    amountIn: number | BigNumber;
+    pair: string[];
+    tokenOut: string;
+    data: string;
+}
+export interface IGetAmountsOutStartsWithParams {
+    amountIn: number | BigNumber;
+    pair: string[];
+    tokenIn: string;
+    data: string;
+}
+export interface IGetPathInParams {
+    pair: string[];
+    tokenIn: string;
+}
+export interface IGetPathOutParams {
+    pair: string[];
+    tokenOut: string;
+}
+export interface ISwapETHForExactTokensParams {
+    amountOut: number | BigNumber;
+    pair: string[];
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
+export interface ISwapExactETHForTokensParams {
+    amountOutMin: number | BigNumber;
+    pair: string[];
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
+export interface ISwapExactETHForTokensSupportingFeeOnTransferTokensParams {
+    amountOutMin: number | BigNumber;
+    pair: string[];
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
+export interface ISwapExactTokensForETHParams {
+    amountIn: number | BigNumber;
+    amountOutMin: number | BigNumber;
+    pair: string[];
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
+export interface ISwapExactTokensForETHSupportingFeeOnTransferTokensParams {
+    amountIn: number | BigNumber;
+    amountOutMin: number | BigNumber;
+    pair: string[];
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
+export interface ISwapExactTokensForTokensParams {
+    amountIn: number | BigNumber;
+    amountOutMin: number | BigNumber;
+    pair: string[];
+    tokenIn: string;
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
+export interface ISwapExactTokensForTokensSupportingFeeOnTransferTokensParams {
+    amountIn: number | BigNumber;
+    amountOutMin: number | BigNumber;
+    pair: string[];
+    tokenIn: string;
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
+export interface ISwapTokensForExactETHParams {
+    amountOut: number | BigNumber;
+    amountInMax: number | BigNumber;
+    pair: string[];
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
+export interface ISwapTokensForExactTokensParams {
+    amountOut: number | BigNumber;
+    amountInMax: number | BigNumber;
+    pair: string[];
+    tokenOut: string;
+    to: string;
+    deadline: number | BigNumber;
+    data: string;
+}
 export declare class OSWAP_HybridRouter2 extends Contract {
     constructor(wallet: IWallet, address?: string);
-    deploy(params: {
-        registry: string;
-        WETH: string;
-    }): Promise<string>;
-    WETH(): Promise<string>;
-    getAmountsInEndsWith(params: {
-        amountOut: number | BigNumber;
-        pair: string[];
-        tokenOut: string;
-        data: string;
-    }): Promise<BigNumber[]>;
-    getAmountsInStartsWith(params: {
-        amountOut: number | BigNumber;
-        pair: string[];
-        tokenIn: string;
-        data: string;
-    }): Promise<BigNumber[]>;
-    getAmountsOutEndsWith(params: {
-        amountIn: number | BigNumber;
-        pair: string[];
-        tokenOut: string;
-        data: string;
-    }): Promise<BigNumber[]>;
-    getAmountsOutStartsWith(params: {
-        amountIn: number | BigNumber;
-        pair: string[];
-        tokenIn: string;
-        data: string;
-    }): Promise<BigNumber[]>;
-    getPathIn(params: {
-        pair: string[];
-        tokenIn: string;
-    }): Promise<string[]>;
-    getPathOut(params: {
-        pair: string[];
-        tokenOut: string;
-    }): Promise<string[]>;
-    registry(): Promise<string>;
-    swapETHForExactTokens_send(params: {
-        amountOut: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }, _value: number | BigNumber): Promise<TransactionReceipt>;
-    swapETHForExactTokens_call(params: {
-        amountOut: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }, _value: number | BigNumber): Promise<{
-        path: string[];
-        amounts: BigNumber[];
-    }>;
+    deploy(params: IDeployParams): Promise<string>;
+    WETH: {
+        (): Promise<string>;
+    };
+    getAmountsInEndsWith: {
+        (params: IGetAmountsInEndsWithParams): Promise<BigNumber[]>;
+    };
+    getAmountsInStartsWith: {
+        (params: IGetAmountsInStartsWithParams): Promise<BigNumber[]>;
+    };
+    getAmountsOutEndsWith: {
+        (params: IGetAmountsOutEndsWithParams): Promise<BigNumber[]>;
+    };
+    getAmountsOutStartsWith: {
+        (params: IGetAmountsOutStartsWithParams): Promise<BigNumber[]>;
+    };
+    getPathIn: {
+        (params: IGetPathInParams): Promise<string[]>;
+    };
+    getPathOut: {
+        (params: IGetPathOutParams): Promise<string[]>;
+    };
+    registry: {
+        (): Promise<string>;
+    };
     swapETHForExactTokens: {
-        (params: {
-            amountOut: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }, _value: number | BigNumber): Promise<TransactionReceipt>;
-        call: (params: {
-            amountOut: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }, _value: number | BigNumber) => Promise<{
+        (params: ISwapETHForExactTokensParams, _value: number | BigNumber): Promise<TransactionReceipt>;
+        call: (params: ISwapETHForExactTokensParams, _value: number | BigNumber) => Promise<{
             path: string[];
             amounts: BigNumber[];
         }>;
     };
-    swapExactETHForTokens_send(params: {
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }, _value: number | BigNumber): Promise<TransactionReceipt>;
-    swapExactETHForTokens_call(params: {
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }, _value: number | BigNumber): Promise<{
-        path: string[];
-        amounts: BigNumber[];
-    }>;
     swapExactETHForTokens: {
-        (params: {
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }, _value: number | BigNumber): Promise<TransactionReceipt>;
-        call: (params: {
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }, _value: number | BigNumber) => Promise<{
+        (params: ISwapExactETHForTokensParams, _value: number | BigNumber): Promise<TransactionReceipt>;
+        call: (params: ISwapExactETHForTokensParams, _value: number | BigNumber) => Promise<{
             path: string[];
             amounts: BigNumber[];
         }>;
     };
-    swapExactETHForTokensSupportingFeeOnTransferTokens_send(params: {
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }, _value: number | BigNumber): Promise<TransactionReceipt>;
-    swapExactETHForTokensSupportingFeeOnTransferTokens_call(params: {
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }, _value: number | BigNumber): Promise<void>;
     swapExactETHForTokensSupportingFeeOnTransferTokens: {
-        (params: {
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }, _value: number | BigNumber): Promise<TransactionReceipt>;
-        call: (params: {
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }, _value: number | BigNumber) => Promise<void>;
+        (params: ISwapExactETHForTokensSupportingFeeOnTransferTokensParams, _value: number | BigNumber): Promise<TransactionReceipt>;
+        call: (params: ISwapExactETHForTokensSupportingFeeOnTransferTokensParams, _value: number | BigNumber) => Promise<void>;
     };
-    swapExactTokensForETH_send(params: {
-        amountIn: number | BigNumber;
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<TransactionReceipt>;
-    swapExactTokensForETH_call(params: {
-        amountIn: number | BigNumber;
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<{
-        path: string[];
-        amounts: BigNumber[];
-    }>;
     swapExactTokensForETH: {
-        (params: {
-            amountIn: number | BigNumber;
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            amountIn: number | BigNumber;
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }) => Promise<{
+        (params: ISwapExactTokensForETHParams): Promise<TransactionReceipt>;
+        call: (params: ISwapExactTokensForETHParams) => Promise<{
             path: string[];
             amounts: BigNumber[];
         }>;
     };
-    swapExactTokensForETHSupportingFeeOnTransferTokens_send(params: {
-        amountIn: number | BigNumber;
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<TransactionReceipt>;
-    swapExactTokensForETHSupportingFeeOnTransferTokens_call(params: {
-        amountIn: number | BigNumber;
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<void>;
     swapExactTokensForETHSupportingFeeOnTransferTokens: {
-        (params: {
-            amountIn: number | BigNumber;
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            amountIn: number | BigNumber;
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }) => Promise<void>;
+        (params: ISwapExactTokensForETHSupportingFeeOnTransferTokensParams): Promise<TransactionReceipt>;
+        call: (params: ISwapExactTokensForETHSupportingFeeOnTransferTokensParams) => Promise<void>;
     };
-    swapExactTokensForTokens_send(params: {
-        amountIn: number | BigNumber;
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        tokenIn: string;
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<TransactionReceipt>;
-    swapExactTokensForTokens_call(params: {
-        amountIn: number | BigNumber;
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        tokenIn: string;
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<{
-        path: string[];
-        amounts: BigNumber[];
-    }>;
     swapExactTokensForTokens: {
-        (params: {
-            amountIn: number | BigNumber;
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            tokenIn: string;
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            amountIn: number | BigNumber;
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            tokenIn: string;
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }) => Promise<{
+        (params: ISwapExactTokensForTokensParams): Promise<TransactionReceipt>;
+        call: (params: ISwapExactTokensForTokensParams) => Promise<{
             path: string[];
             amounts: BigNumber[];
         }>;
     };
-    swapExactTokensForTokensSupportingFeeOnTransferTokens_send(params: {
-        amountIn: number | BigNumber;
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        tokenIn: string;
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<TransactionReceipt>;
-    swapExactTokensForTokensSupportingFeeOnTransferTokens_call(params: {
-        amountIn: number | BigNumber;
-        amountOutMin: number | BigNumber;
-        pair: string[];
-        tokenIn: string;
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<void>;
     swapExactTokensForTokensSupportingFeeOnTransferTokens: {
-        (params: {
-            amountIn: number | BigNumber;
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            tokenIn: string;
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            amountIn: number | BigNumber;
-            amountOutMin: number | BigNumber;
-            pair: string[];
-            tokenIn: string;
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }) => Promise<void>;
+        (params: ISwapExactTokensForTokensSupportingFeeOnTransferTokensParams): Promise<TransactionReceipt>;
+        call: (params: ISwapExactTokensForTokensSupportingFeeOnTransferTokensParams) => Promise<void>;
     };
-    swapTokensForExactETH_send(params: {
-        amountOut: number | BigNumber;
-        amountInMax: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<TransactionReceipt>;
-    swapTokensForExactETH_call(params: {
-        amountOut: number | BigNumber;
-        amountInMax: number | BigNumber;
-        pair: string[];
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<{
-        path: string[];
-        amounts: BigNumber[];
-    }>;
     swapTokensForExactETH: {
-        (params: {
-            amountOut: number | BigNumber;
-            amountInMax: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            amountOut: number | BigNumber;
-            amountInMax: number | BigNumber;
-            pair: string[];
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }) => Promise<{
+        (params: ISwapTokensForExactETHParams): Promise<TransactionReceipt>;
+        call: (params: ISwapTokensForExactETHParams) => Promise<{
             path: string[];
             amounts: BigNumber[];
         }>;
     };
-    swapTokensForExactTokens_send(params: {
-        amountOut: number | BigNumber;
-        amountInMax: number | BigNumber;
-        pair: string[];
-        tokenOut: string;
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<TransactionReceipt>;
-    swapTokensForExactTokens_call(params: {
-        amountOut: number | BigNumber;
-        amountInMax: number | BigNumber;
-        pair: string[];
-        tokenOut: string;
-        to: string;
-        deadline: number | BigNumber;
-        data: string;
-    }): Promise<{
-        path: string[];
-        amounts: BigNumber[];
-    }>;
     swapTokensForExactTokens: {
-        (params: {
-            amountOut: number | BigNumber;
-            amountInMax: number | BigNumber;
-            pair: string[];
-            tokenOut: string;
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            amountOut: number | BigNumber;
-            amountInMax: number | BigNumber;
-            pair: string[];
-            tokenOut: string;
-            to: string;
-            deadline: number | BigNumber;
-            data: string;
-        }) => Promise<{
+        (params: ISwapTokensForExactTokensParams): Promise<TransactionReceipt>;
+        call: (params: ISwapTokensForExactTokensParams) => Promise<{
             path: string[];
             amounts: BigNumber[];
         }>;

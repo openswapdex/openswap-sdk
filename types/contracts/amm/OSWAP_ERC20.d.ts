@@ -1,4 +1,30 @@
-import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-contract";
+export interface IAllowanceParams {
+    param1: string;
+    param2: string;
+}
+export interface IApproveParams {
+    spender: string;
+    value: number | BigNumber;
+}
+export interface IPermitParams {
+    owner: string;
+    spender: string;
+    value: number | BigNumber;
+    deadline: number | BigNumber;
+    v: number | BigNumber;
+    r: string;
+    s: string;
+}
+export interface ITransferParams {
+    to: string;
+    value: number | BigNumber;
+}
+export interface ITransferFromParams {
+    from: string;
+    to: string;
+    value: number | BigNumber;
+}
 export declare class OSWAP_ERC20 extends Contract {
     constructor(wallet: IWallet, address?: string);
     deploy(): Promise<string>;
@@ -6,115 +32,54 @@ export declare class OSWAP_ERC20 extends Contract {
     decodeApprovalEvent(event: Event): OSWAP_ERC20.ApprovalEvent;
     parseTransferEvent(receipt: TransactionReceipt): OSWAP_ERC20.TransferEvent[];
     decodeTransferEvent(event: Event): OSWAP_ERC20.TransferEvent;
-    EIP712_TYPEHASH(): Promise<string>;
-    NAME_HASH(): Promise<string>;
-    PERMIT_TYPEHASH(): Promise<string>;
-    VERSION_HASH(): Promise<string>;
-    allowance(params: {
-        param1: string;
-        param2: string;
-    }): Promise<BigNumber>;
-    approve_send(params: {
-        spender: string;
-        value: number | BigNumber;
-    }): Promise<TransactionReceipt>;
-    approve_call(params: {
-        spender: string;
-        value: number | BigNumber;
-    }): Promise<boolean>;
+    EIP712_TYPEHASH: {
+        (): Promise<string>;
+    };
+    NAME_HASH: {
+        (): Promise<string>;
+    };
+    PERMIT_TYPEHASH: {
+        (): Promise<string>;
+    };
+    VERSION_HASH: {
+        (): Promise<string>;
+    };
+    allowance: {
+        (params: IAllowanceParams): Promise<BigNumber>;
+    };
     approve: {
-        (params: {
-            spender: string;
-            value: number | BigNumber;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            spender: string;
-            value: number | BigNumber;
-        }) => Promise<boolean>;
+        (params: IApproveParams): Promise<TransactionReceipt>;
+        call: (params: IApproveParams) => Promise<boolean>;
     };
-    balanceOf(param1: string): Promise<BigNumber>;
-    decimals(): Promise<BigNumber>;
-    name(): Promise<string>;
-    nonces(param1: string): Promise<BigNumber>;
-    permit_send(params: {
-        owner: string;
-        spender: string;
-        value: number | BigNumber;
-        deadline: number | BigNumber;
-        v: number | BigNumber;
-        r: string;
-        s: string;
-    }): Promise<TransactionReceipt>;
-    permit_call(params: {
-        owner: string;
-        spender: string;
-        value: number | BigNumber;
-        deadline: number | BigNumber;
-        v: number | BigNumber;
-        r: string;
-        s: string;
-    }): Promise<void>;
+    balanceOf: {
+        (param1: string): Promise<BigNumber>;
+    };
+    decimals: {
+        (): Promise<BigNumber>;
+    };
+    name: {
+        (): Promise<string>;
+    };
+    nonces: {
+        (param1: string): Promise<BigNumber>;
+    };
     permit: {
-        (params: {
-            owner: string;
-            spender: string;
-            value: number | BigNumber;
-            deadline: number | BigNumber;
-            v: number | BigNumber;
-            r: string;
-            s: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            owner: string;
-            spender: string;
-            value: number | BigNumber;
-            deadline: number | BigNumber;
-            v: number | BigNumber;
-            r: string;
-            s: string;
-        }) => Promise<void>;
+        (params: IPermitParams): Promise<TransactionReceipt>;
+        call: (params: IPermitParams) => Promise<void>;
     };
-    symbol(): Promise<string>;
-    totalSupply(): Promise<BigNumber>;
-    transfer_send(params: {
-        to: string;
-        value: number | BigNumber;
-    }): Promise<TransactionReceipt>;
-    transfer_call(params: {
-        to: string;
-        value: number | BigNumber;
-    }): Promise<boolean>;
+    symbol: {
+        (): Promise<string>;
+    };
+    totalSupply: {
+        (): Promise<BigNumber>;
+    };
     transfer: {
-        (params: {
-            to: string;
-            value: number | BigNumber;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            to: string;
-            value: number | BigNumber;
-        }) => Promise<boolean>;
+        (params: ITransferParams): Promise<TransactionReceipt>;
+        call: (params: ITransferParams) => Promise<boolean>;
     };
-    transferFrom_send(params: {
-        from: string;
-        to: string;
-        value: number | BigNumber;
-    }): Promise<TransactionReceipt>;
-    transferFrom_call(params: {
-        from: string;
-        to: string;
-        value: number | BigNumber;
-    }): Promise<boolean>;
     transferFrom: {
-        (params: {
-            from: string;
-            to: string;
-            value: number | BigNumber;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            from: string;
-            to: string;
-            value: number | BigNumber;
-        }) => Promise<boolean>;
+        (params: ITransferFromParams): Promise<TransactionReceipt>;
+        call: (params: ITransferFromParams) => Promise<boolean>;
     };
     private assign;
 }

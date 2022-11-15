@@ -1,49 +1,39 @@
-import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-contract";
+export interface ISetCustomParamParams {
+    paramName: string;
+    paramValue: string;
+}
+export interface ISetMultiCustomParamParams {
+    paramName: string[];
+    paramValue: string[];
+}
 export declare class OSWAP_ConfigStore extends Contract {
     constructor(wallet: IWallet, address?: string);
     deploy(governance: string): Promise<string>;
     parseParamSetEvent(receipt: TransactionReceipt): OSWAP_ConfigStore.ParamSetEvent[];
     decodeParamSetEvent(event: Event): OSWAP_ConfigStore.ParamSetEvent;
-    customParam(param1: string): Promise<string>;
-    customParamNames(param1: number | BigNumber): Promise<string>;
-    customParamNamesIdx(param1: string): Promise<BigNumber>;
-    customParamNamesLength(): Promise<BigNumber>;
-    governance(): Promise<string>;
-    setCustomParam_send(params: {
-        paramName: string;
-        paramValue: string;
-    }): Promise<TransactionReceipt>;
-    setCustomParam_call(params: {
-        paramName: string;
-        paramValue: string;
-    }): Promise<void>;
-    setCustomParam: {
-        (params: {
-            paramName: string;
-            paramValue: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            paramName: string;
-            paramValue: string;
-        }) => Promise<void>;
+    customParam: {
+        (param1: string): Promise<string>;
     };
-    setMultiCustomParam_send(params: {
-        paramName: string[];
-        paramValue: string[];
-    }): Promise<TransactionReceipt>;
-    setMultiCustomParam_call(params: {
-        paramName: string[];
-        paramValue: string[];
-    }): Promise<void>;
+    customParamNames: {
+        (param1: number | BigNumber): Promise<string>;
+    };
+    customParamNamesIdx: {
+        (param1: string): Promise<BigNumber>;
+    };
+    customParamNamesLength: {
+        (): Promise<BigNumber>;
+    };
+    governance: {
+        (): Promise<string>;
+    };
+    setCustomParam: {
+        (params: ISetCustomParamParams): Promise<TransactionReceipt>;
+        call: (params: ISetCustomParamParams) => Promise<void>;
+    };
     setMultiCustomParam: {
-        (params: {
-            paramName: string[];
-            paramValue: string[];
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            paramName: string[];
-            paramValue: string[];
-        }) => Promise<void>;
+        (params: ISetMultiCustomParamParams): Promise<TransactionReceipt>;
+        call: (params: ISetMultiCustomParamParams) => Promise<void>;
     };
     private assign;
 }

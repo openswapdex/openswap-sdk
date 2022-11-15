@@ -1,14 +1,65 @@
-import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-contract";
+export interface IDeployParams {
+    governance: string;
+    pairCreator: string;
+    tradeFee: number | BigNumber;
+    protocolFee: number | BigNumber;
+    feePerDelegator: number | BigNumber;
+    protocolFeeTo: string;
+}
+export interface IAddOldOracleToNewPairParams {
+    tokenA: string;
+    tokenB: string;
+    oracle: string;
+}
+export interface ICheckAndGetOracleParams {
+    tokenA: string;
+    tokenB: string;
+}
+export interface ICheckAndGetOracleSwapParamsParams {
+    tokenA: string;
+    tokenB: string;
+}
+export interface ICreatePairParams {
+    tokenA: string;
+    tokenB: string;
+}
+export interface IGetPairParams {
+    param1: string;
+    param2: string;
+}
+export interface IOraclesParams {
+    param1: string;
+    param2: string;
+}
+export interface ISetLiveForPairParams {
+    pair: string;
+    live: boolean;
+}
+export interface ISetMinLotSizeParams {
+    token: string;
+    minLotSize: number | BigNumber;
+}
+export interface ISetOracleParams {
+    tokenA: string;
+    tokenB: string;
+    oracle: string;
+}
+export interface ISetOracleLiquidityProviderParams {
+    oracleRouter: string;
+    oracleLiquidityProvider: string;
+}
+export interface ISetSecurityScoreOracleParams {
+    securityScoreOracle: string;
+    minOracleScore: number | BigNumber;
+}
+export interface ISetWhiteListParams {
+    who: string;
+    allow: boolean;
+}
 export declare class OSWAP_OracleFactory extends Contract {
     constructor(wallet: IWallet, address?: string);
-    deploy(params: {
-        governance: string;
-        pairCreator: string;
-        tradeFee: number | BigNumber;
-        protocolFee: number | BigNumber;
-        feePerDelegator: number | BigNumber;
-        protocolFeeTo: string;
-    }): Promise<string>;
+    deploy(params: IDeployParams): Promise<string>;
     parseOracleAddedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OracleAddedEvent[];
     decodeOracleAddedEvent(event: Event): OSWAP_OracleFactory.OracleAddedEvent;
     parseOracleScoresEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.OracleScoresEvent[];
@@ -31,250 +82,152 @@ export declare class OSWAP_OracleFactory extends Contract {
     decodeShutdownedEvent(event: Event): OSWAP_OracleFactory.ShutdownedEvent;
     parseWhitelistedEvent(receipt: TransactionReceipt): OSWAP_OracleFactory.WhitelistedEvent[];
     decodeWhitelistedEvent(event: Event): OSWAP_OracleFactory.WhitelistedEvent;
-    addOldOracleToNewPair_send(params: {
-        tokenA: string;
-        tokenB: string;
-        oracle: string;
-    }): Promise<TransactionReceipt>;
-    addOldOracleToNewPair_call(params: {
-        tokenA: string;
-        tokenB: string;
-        oracle: string;
-    }): Promise<void>;
     addOldOracleToNewPair: {
-        (params: {
-            tokenA: string;
-            tokenB: string;
-            oracle: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            tokenA: string;
-            tokenB: string;
-            oracle: string;
-        }) => Promise<void>;
+        (params: IAddOldOracleToNewPairParams): Promise<TransactionReceipt>;
+        call: (params: IAddOldOracleToNewPairParams) => Promise<void>;
     };
-    allPairs(param1: number | BigNumber): Promise<string>;
-    allPairsLength(): Promise<BigNumber>;
-    allWhiteListed(): Promise<{
-        list: string[];
-        allowed: boolean[];
-    }>;
-    checkAndGetOracle(params: {
-        tokenA: string;
-        tokenB: string;
-    }): Promise<string>;
-    checkAndGetOracleSwapParams(params: {
-        tokenA: string;
-        tokenB: string;
-    }): Promise<{
-        oracle_: string;
-        tradeFee_: BigNumber;
-        protocolFee_: BigNumber;
-    }>;
-    createPair_send(params: {
-        tokenA: string;
-        tokenB: string;
-    }): Promise<TransactionReceipt>;
-    createPair_call(params: {
-        tokenA: string;
-        tokenB: string;
-    }): Promise<string>;
+    allPairs: {
+        (param1: number | BigNumber): Promise<string>;
+    };
+    allPairsLength: {
+        (): Promise<BigNumber>;
+    };
+    allWhiteListed: {
+        (): Promise<{
+            list: string[];
+            allowed: boolean[];
+        }>;
+    };
+    checkAndGetOracle: {
+        (params: ICheckAndGetOracleParams): Promise<string>;
+    };
+    checkAndGetOracleSwapParams: {
+        (params: ICheckAndGetOracleSwapParamsParams): Promise<{
+            oracle_: string;
+            tradeFee_: BigNumber;
+            protocolFee_: BigNumber;
+        }>;
+    };
     createPair: {
-        (params: {
-            tokenA: string;
-            tokenB: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            tokenA: string;
-            tokenB: string;
-        }) => Promise<string>;
+        (params: ICreatePairParams): Promise<TransactionReceipt>;
+        call: (params: ICreatePairParams) => Promise<string>;
     };
-    feePerDelegator(): Promise<BigNumber>;
-    getPair(params: {
-        param1: string;
-        param2: string;
-    }): Promise<string>;
-    governance(): Promise<string>;
-    isLive(): Promise<boolean>;
-    isOracle(param1: string): Promise<boolean>;
-    isWhitelisted(param1: string): Promise<boolean>;
-    minLotSize(param1: string): Promise<BigNumber>;
-    minOracleScore(): Promise<BigNumber>;
-    oracleLiquidityProvider(): Promise<string>;
-    oracleScores(param1: string): Promise<BigNumber>;
-    oracles(params: {
-        param1: string;
-        param2: string;
-    }): Promise<string>;
-    owner(): Promise<string>;
-    pairCreator(): Promise<string>;
-    protocolFee(): Promise<BigNumber>;
-    protocolFeeTo(): Promise<string>;
-    renounceOwnership_send(): Promise<TransactionReceipt>;
-    renounceOwnership_call(): Promise<void>;
+    feePerDelegator: {
+        (): Promise<BigNumber>;
+    };
+    getPair: {
+        (params: IGetPairParams): Promise<string>;
+    };
+    governance: {
+        (): Promise<string>;
+    };
+    isLive: {
+        (): Promise<boolean>;
+    };
+    isOracle: {
+        (param1: string): Promise<boolean>;
+    };
+    isWhitelisted: {
+        (param1: string): Promise<boolean>;
+    };
+    minLotSize: {
+        (param1: string): Promise<BigNumber>;
+    };
+    minOracleScore: {
+        (): Promise<BigNumber>;
+    };
+    oracleLiquidityProvider: {
+        (): Promise<string>;
+    };
+    oracleScores: {
+        (param1: string): Promise<BigNumber>;
+    };
+    oracles: {
+        (params: IOraclesParams): Promise<string>;
+    };
+    owner: {
+        (): Promise<string>;
+    };
+    pairCreator: {
+        (): Promise<string>;
+    };
+    protocolFee: {
+        (): Promise<BigNumber>;
+    };
+    protocolFeeTo: {
+        (): Promise<string>;
+    };
     renounceOwnership: {
         (): Promise<TransactionReceipt>;
         call: () => Promise<void>;
     };
-    securityScoreOracle(): Promise<string>;
-    setFeePerDelegator_send(feePerDelegator: number | BigNumber): Promise<TransactionReceipt>;
-    setFeePerDelegator_call(feePerDelegator: number | BigNumber): Promise<void>;
+    securityScoreOracle: {
+        (): Promise<string>;
+    };
     setFeePerDelegator: {
         (feePerDelegator: number | BigNumber): Promise<TransactionReceipt>;
         call: (feePerDelegator: number | BigNumber) => Promise<void>;
     };
-    setLive_send(isLive: boolean): Promise<TransactionReceipt>;
-    setLive_call(isLive: boolean): Promise<void>;
     setLive: {
         (isLive: boolean): Promise<TransactionReceipt>;
         call: (isLive: boolean) => Promise<void>;
     };
-    setLiveForPair_send(params: {
-        pair: string;
-        live: boolean;
-    }): Promise<TransactionReceipt>;
-    setLiveForPair_call(params: {
-        pair: string;
-        live: boolean;
-    }): Promise<void>;
     setLiveForPair: {
-        (params: {
-            pair: string;
-            live: boolean;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            pair: string;
-            live: boolean;
-        }) => Promise<void>;
+        (params: ISetLiveForPairParams): Promise<TransactionReceipt>;
+        call: (params: ISetLiveForPairParams) => Promise<void>;
     };
-    setMinLotSize_send(params: {
-        token: string;
-        minLotSize: number | BigNumber;
-    }): Promise<TransactionReceipt>;
-    setMinLotSize_call(params: {
-        token: string;
-        minLotSize: number | BigNumber;
-    }): Promise<void>;
     setMinLotSize: {
-        (params: {
-            token: string;
-            minLotSize: number | BigNumber;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            token: string;
-            minLotSize: number | BigNumber;
-        }) => Promise<void>;
+        (params: ISetMinLotSizeParams): Promise<TransactionReceipt>;
+        call: (params: ISetMinLotSizeParams) => Promise<void>;
     };
-    setOracle_send(params: {
-        tokenA: string;
-        tokenB: string;
-        oracle: string;
-    }): Promise<TransactionReceipt>;
-    setOracle_call(params: {
-        tokenA: string;
-        tokenB: string;
-        oracle: string;
-    }): Promise<void>;
     setOracle: {
-        (params: {
-            tokenA: string;
-            tokenB: string;
-            oracle: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            tokenA: string;
-            tokenB: string;
-            oracle: string;
-        }) => Promise<void>;
+        (params: ISetOracleParams): Promise<TransactionReceipt>;
+        call: (params: ISetOracleParams) => Promise<void>;
     };
-    setOracleLiquidityProvider_send(params: {
-        oracleRouter: string;
-        oracleLiquidityProvider: string;
-    }): Promise<TransactionReceipt>;
-    setOracleLiquidityProvider_call(params: {
-        oracleRouter: string;
-        oracleLiquidityProvider: string;
-    }): Promise<void>;
     setOracleLiquidityProvider: {
-        (params: {
-            oracleRouter: string;
-            oracleLiquidityProvider: string;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            oracleRouter: string;
-            oracleLiquidityProvider: string;
-        }) => Promise<void>;
+        (params: ISetOracleLiquidityProviderParams): Promise<TransactionReceipt>;
+        call: (params: ISetOracleLiquidityProviderParams) => Promise<void>;
     };
-    setProtocolFee_send(protocolFee: number | BigNumber): Promise<TransactionReceipt>;
-    setProtocolFee_call(protocolFee: number | BigNumber): Promise<void>;
     setProtocolFee: {
         (protocolFee: number | BigNumber): Promise<TransactionReceipt>;
         call: (protocolFee: number | BigNumber) => Promise<void>;
     };
-    setProtocolFeeTo_send(protocolFeeTo: string): Promise<TransactionReceipt>;
-    setProtocolFeeTo_call(protocolFeeTo: string): Promise<void>;
     setProtocolFeeTo: {
         (protocolFeeTo: string): Promise<TransactionReceipt>;
         call: (protocolFeeTo: string) => Promise<void>;
     };
-    setSecurityScoreOracle_send(params: {
-        securityScoreOracle: string;
-        minOracleScore: number | BigNumber;
-    }): Promise<TransactionReceipt>;
-    setSecurityScoreOracle_call(params: {
-        securityScoreOracle: string;
-        minOracleScore: number | BigNumber;
-    }): Promise<void>;
     setSecurityScoreOracle: {
-        (params: {
-            securityScoreOracle: string;
-            minOracleScore: number | BigNumber;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            securityScoreOracle: string;
-            minOracleScore: number | BigNumber;
-        }) => Promise<void>;
+        (params: ISetSecurityScoreOracleParams): Promise<TransactionReceipt>;
+        call: (params: ISetSecurityScoreOracleParams) => Promise<void>;
     };
-    setTradeFee_send(tradeFee: number | BigNumber): Promise<TransactionReceipt>;
-    setTradeFee_call(tradeFee: number | BigNumber): Promise<void>;
     setTradeFee: {
         (tradeFee: number | BigNumber): Promise<TransactionReceipt>;
         call: (tradeFee: number | BigNumber) => Promise<void>;
     };
-    setWhiteList_send(params: {
-        who: string;
-        allow: boolean;
-    }): Promise<TransactionReceipt>;
-    setWhiteList_call(params: {
-        who: string;
-        allow: boolean;
-    }): Promise<void>;
     setWhiteList: {
-        (params: {
-            who: string;
-            allow: boolean;
-        }): Promise<TransactionReceipt>;
-        call: (params: {
-            who: string;
-            allow: boolean;
-        }) => Promise<void>;
+        (params: ISetWhiteListParams): Promise<TransactionReceipt>;
+        call: (params: ISetWhiteListParams) => Promise<void>;
     };
-    tradeFee(): Promise<BigNumber>;
-    transferOwnership_send(newOwner: string): Promise<TransactionReceipt>;
-    transferOwnership_call(newOwner: string): Promise<void>;
+    tradeFee: {
+        (): Promise<BigNumber>;
+    };
     transferOwnership: {
         (newOwner: string): Promise<TransactionReceipt>;
         call: (newOwner: string) => Promise<void>;
     };
-    updateOracleScore_send(oracle: string): Promise<TransactionReceipt>;
-    updateOracleScore_call(oracle: string): Promise<void>;
     updateOracleScore: {
         (oracle: string): Promise<TransactionReceipt>;
         call: (oracle: string) => Promise<void>;
     };
-    whitelisted(param1: number | BigNumber): Promise<string>;
-    whitelistedInv(param1: string): Promise<BigNumber>;
-    whitelistedLength(): Promise<BigNumber>;
+    whitelisted: {
+        (param1: number | BigNumber): Promise<string>;
+    };
+    whitelistedInv: {
+        (param1: string): Promise<BigNumber>;
+    };
+    whitelistedLength: {
+        (): Promise<BigNumber>;
+    };
     private assign;
 }
 export declare module OSWAP_OracleFactory {

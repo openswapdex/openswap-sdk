@@ -1,17 +1,20 @@
-import { IWallet, Contract, TransactionReceipt } from "@ijstech/eth-wallet";
+import { IWallet, Contract, TransactionReceipt } from "@ijstech/eth-contract";
+export interface IDeployParams {
+    governance: string;
+    admin: string;
+}
 export declare class OAXDEX_VotingExecutor extends Contract {
     constructor(wallet: IWallet, address?: string);
-    deploy(params: {
-        governance: string;
-        admin: string;
-    }): Promise<string>;
-    admin(): Promise<string>;
-    execute_send(params: string[]): Promise<TransactionReceipt>;
-    execute_call(params: string[]): Promise<void>;
+    deploy(params: IDeployParams): Promise<string>;
+    admin: {
+        (): Promise<string>;
+    };
     execute: {
         (params: string[]): Promise<TransactionReceipt>;
         call: (params: string[]) => Promise<void>;
     };
-    governance(): Promise<string>;
+    governance: {
+        (): Promise<string>;
+    };
     private assign;
 }

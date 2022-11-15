@@ -1,4 +1,4 @@
-import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import {IWallet, Contract, Transaction, TransactionReceipt, BigNumber, Event, IBatchRequestObj} from "@ijstech/eth-contract";
 import Bin from "./OSWAP_CertiKSecurityOracle.json";
 
 export class OSWAP_CertiKSecurityOracle extends Contract{
@@ -9,14 +9,22 @@ export class OSWAP_CertiKSecurityOracle extends Contract{
     deploy(oracleAddress:string): Promise<string>{
         return this.__deploy([oracleAddress]);
     }
-    async getSecurityScore(oracle:string): Promise<BigNumber>{
-        let result = await this.call('getSecurityScore',[oracle]);
-        return new BigNumber(result);
+    getSecurityScore: {
+        (oracle:string): Promise<BigNumber>;
     }
-    async oracleAddress(): Promise<string>{
-        let result = await this.call('oracleAddress');
-        return result;
+    oracleAddress: {
+        (): Promise<string>;
     }
     private assign(){
+        let getSecurityScore_call = async (oracle:string): Promise<BigNumber> => {
+            let result = await this.call('getSecurityScore',[oracle]);
+            return new BigNumber(result);
+        }
+        this.getSecurityScore = getSecurityScore_call
+        let oracleAddress_call = async (): Promise<string> => {
+            let result = await this.call('oracleAddress');
+            return result;
+        }
+        this.oracleAddress = oracleAddress_call
     }
 }

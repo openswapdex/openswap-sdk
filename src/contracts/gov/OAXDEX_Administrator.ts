@@ -1,6 +1,18 @@
-import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import {IWallet, Contract, Transaction, TransactionReceipt, BigNumber, Event, IBatchRequestObj} from "@ijstech/eth-contract";
 import Bin from "./OAXDEX_Administrator.json";
 
+export interface IExecutePairRestartParams {factory:string;pair:string}
+export interface IExecutePairShutdownParams {factory:string;pair:string}
+export interface IFactoryRestartParams {factory:string;YorN:boolean}
+export interface IFactoryRestartVoteParams {param1:string;param2:string}
+export interface IFactoryShutdownParams {factory:string;YorN:boolean}
+export interface IFactoryShutdownVoteParams {param1:string;param2:string}
+export interface IPairRestartParams {pair:string;YorN:boolean}
+export interface IPairRestartVoteParams {param1:string;param2:string}
+export interface IPairShutdownParams {pair:string;YorN:boolean}
+export interface IPairShutdownVoteParams {param1:string;param2:string}
+export interface IVetoVotingParams {votingContract:string;YorN:boolean}
+export interface IVetoVotingVoteParams {param1:string;param2:string}
 export class OAXDEX_Administrator extends Contract{
     constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
@@ -99,236 +111,334 @@ export class OAXDEX_Administrator extends Contract{
             _event: event
         };
     }
-    async addAdmin_send(admin:string): Promise<TransactionReceipt>{
-        let result = await this.send('addAdmin',[admin]);
-        return result;
-    }
-    async addAdmin_call(admin:string): Promise<void>{
-        let result = await this.call('addAdmin',[admin]);
-        return;
-    }
     addAdmin: {
         (admin:string): Promise<TransactionReceipt>;
         call: (admin:string) => Promise<void>;
     }
-    async admins(param1:number|BigNumber): Promise<string>{
-        let result = await this.call('admins',[Utils.toString(param1)]);
-        return result;
+    admins: {
+        (param1:number|BigNumber): Promise<string>;
     }
-    async adminsIdx(param1:string): Promise<BigNumber>{
-        let result = await this.call('adminsIdx',[param1]);
-        return new BigNumber(result);
+    adminsIdx: {
+        (param1:string): Promise<BigNumber>;
     }
-    async allAdmins(): Promise<string[]>{
-        let result = await this.call('allAdmins');
-        return result;
-    }
-    async executeFactoryRestart_send(factory:string): Promise<TransactionReceipt>{
-        let result = await this.send('executeFactoryRestart',[factory]);
-        return result;
-    }
-    async executeFactoryRestart_call(factory:string): Promise<void>{
-        let result = await this.call('executeFactoryRestart',[factory]);
-        return;
+    allAdmins: {
+        (): Promise<string[]>;
     }
     executeFactoryRestart: {
         (factory:string): Promise<TransactionReceipt>;
         call: (factory:string) => Promise<void>;
     }
-    async executeFactoryShutdown_send(factory:string): Promise<TransactionReceipt>{
-        let result = await this.send('executeFactoryShutdown',[factory]);
-        return result;
-    }
-    async executeFactoryShutdown_call(factory:string): Promise<void>{
-        let result = await this.call('executeFactoryShutdown',[factory]);
-        return;
-    }
     executeFactoryShutdown: {
         (factory:string): Promise<TransactionReceipt>;
         call: (factory:string) => Promise<void>;
     }
-    async executePairRestart_send(params:{factory:string,pair:string}): Promise<TransactionReceipt>{
-        let result = await this.send('executePairRestart',[params.factory,params.pair]);
-        return result;
-    }
-    async executePairRestart_call(params:{factory:string,pair:string}): Promise<void>{
-        let result = await this.call('executePairRestart',[params.factory,params.pair]);
-        return;
-    }
     executePairRestart: {
-        (params:{factory:string,pair:string}): Promise<TransactionReceipt>;
-        call: (params:{factory:string,pair:string}) => Promise<void>;
-    }
-    async executePairShutdown_send(params:{factory:string,pair:string}): Promise<TransactionReceipt>{
-        let result = await this.send('executePairShutdown',[params.factory,params.pair]);
-        return result;
-    }
-    async executePairShutdown_call(params:{factory:string,pair:string}): Promise<void>{
-        let result = await this.call('executePairShutdown',[params.factory,params.pair]);
-        return;
+        (params: IExecutePairRestartParams): Promise<TransactionReceipt>;
+        call: (params: IExecutePairRestartParams) => Promise<void>;
     }
     executePairShutdown: {
-        (params:{factory:string,pair:string}): Promise<TransactionReceipt>;
-        call: (params:{factory:string,pair:string}) => Promise<void>;
-    }
-    async executeVetoVoting_send(votingContract:string): Promise<TransactionReceipt>{
-        let result = await this.send('executeVetoVoting',[votingContract]);
-        return result;
-    }
-    async executeVetoVoting_call(votingContract:string): Promise<void>{
-        let result = await this.call('executeVetoVoting',[votingContract]);
-        return;
+        (params: IExecutePairShutdownParams): Promise<TransactionReceipt>;
+        call: (params: IExecutePairShutdownParams) => Promise<void>;
     }
     executeVetoVoting: {
         (votingContract:string): Promise<TransactionReceipt>;
         call: (votingContract:string) => Promise<void>;
     }
-    async factoryRestart_send(params:{factory:string,YorN:boolean}): Promise<TransactionReceipt>{
-        let result = await this.send('factoryRestart',[params.factory,params.YorN]);
-        return result;
-    }
-    async factoryRestart_call(params:{factory:string,YorN:boolean}): Promise<void>{
-        let result = await this.call('factoryRestart',[params.factory,params.YorN]);
-        return;
-    }
     factoryRestart: {
-        (params:{factory:string,YorN:boolean}): Promise<TransactionReceipt>;
-        call: (params:{factory:string,YorN:boolean}) => Promise<void>;
+        (params: IFactoryRestartParams): Promise<TransactionReceipt>;
+        call: (params: IFactoryRestartParams) => Promise<void>;
     }
-    async factoryRestartVote(params:{param1:string,param2:string}): Promise<boolean>{
-        let result = await this.call('factoryRestartVote',[params.param1,params.param2]);
-        return result;
-    }
-    async factoryShutdown_send(params:{factory:string,YorN:boolean}): Promise<TransactionReceipt>{
-        let result = await this.send('factoryShutdown',[params.factory,params.YorN]);
-        return result;
-    }
-    async factoryShutdown_call(params:{factory:string,YorN:boolean}): Promise<void>{
-        let result = await this.call('factoryShutdown',[params.factory,params.YorN]);
-        return;
+    factoryRestartVote: {
+        (params: IFactoryRestartVoteParams): Promise<boolean>;
     }
     factoryShutdown: {
-        (params:{factory:string,YorN:boolean}): Promise<TransactionReceipt>;
-        call: (params:{factory:string,YorN:boolean}) => Promise<void>;
+        (params: IFactoryShutdownParams): Promise<TransactionReceipt>;
+        call: (params: IFactoryShutdownParams) => Promise<void>;
     }
-    async factoryShutdownVote(params:{param1:string,param2:string}): Promise<boolean>{
-        let result = await this.call('factoryShutdownVote',[params.param1,params.param2]);
-        return result;
+    factoryShutdownVote: {
+        (params: IFactoryShutdownVoteParams): Promise<boolean>;
     }
-    async getFactoryRestartVote(factory:string): Promise<boolean[]>{
-        let result = await this.call('getFactoryRestartVote',[factory]);
-        return result;
+    getFactoryRestartVote: {
+        (factory:string): Promise<boolean[]>;
     }
-    async getFactoryShutdownVote(factory:string): Promise<boolean[]>{
-        let result = await this.call('getFactoryShutdownVote',[factory]);
-        return result;
+    getFactoryShutdownVote: {
+        (factory:string): Promise<boolean[]>;
     }
-    async getPairRestartVote(pair:string): Promise<boolean[]>{
-        let result = await this.call('getPairRestartVote',[pair]);
-        return result;
+    getPairRestartVote: {
+        (pair:string): Promise<boolean[]>;
     }
-    async getPairShutdownVote(pair:string): Promise<boolean[]>{
-        let result = await this.call('getPairShutdownVote',[pair]);
-        return result;
+    getPairShutdownVote: {
+        (pair:string): Promise<boolean[]>;
     }
-    async getVetoVotingVote(votingContract:string): Promise<boolean[]>{
-        let result = await this.call('getVetoVotingVote',[votingContract]);
-        return result;
+    getVetoVotingVote: {
+        (votingContract:string): Promise<boolean[]>;
     }
-    async governance(): Promise<string>{
-        let result = await this.call('governance');
-        return result;
+    governance: {
+        (): Promise<string>;
     }
-    async maxAdmin(): Promise<BigNumber>{
-        let result = await this.call('maxAdmin');
-        return new BigNumber(result);
-    }
-    async pairRestart_send(params:{pair:string,YorN:boolean}): Promise<TransactionReceipt>{
-        let result = await this.send('pairRestart',[params.pair,params.YorN]);
-        return result;
-    }
-    async pairRestart_call(params:{pair:string,YorN:boolean}): Promise<void>{
-        let result = await this.call('pairRestart',[params.pair,params.YorN]);
-        return;
+    maxAdmin: {
+        (): Promise<BigNumber>;
     }
     pairRestart: {
-        (params:{pair:string,YorN:boolean}): Promise<TransactionReceipt>;
-        call: (params:{pair:string,YorN:boolean}) => Promise<void>;
+        (params: IPairRestartParams): Promise<TransactionReceipt>;
+        call: (params: IPairRestartParams) => Promise<void>;
     }
-    async pairRestartVote(params:{param1:string,param2:string}): Promise<boolean>{
-        let result = await this.call('pairRestartVote',[params.param1,params.param2]);
-        return result;
-    }
-    async pairShutdown_send(params:{pair:string,YorN:boolean}): Promise<TransactionReceipt>{
-        let result = await this.send('pairShutdown',[params.pair,params.YorN]);
-        return result;
-    }
-    async pairShutdown_call(params:{pair:string,YorN:boolean}): Promise<void>{
-        let result = await this.call('pairShutdown',[params.pair,params.YorN]);
-        return;
+    pairRestartVote: {
+        (params: IPairRestartVoteParams): Promise<boolean>;
     }
     pairShutdown: {
-        (params:{pair:string,YorN:boolean}): Promise<TransactionReceipt>;
-        call: (params:{pair:string,YorN:boolean}) => Promise<void>;
+        (params: IPairShutdownParams): Promise<TransactionReceipt>;
+        call: (params: IPairShutdownParams) => Promise<void>;
     }
-    async pairShutdownVote(params:{param1:string,param2:string}): Promise<boolean>{
-        let result = await this.call('pairShutdownVote',[params.param1,params.param2]);
-        return result;
-    }
-    async removeAdmin_send(admin:string): Promise<TransactionReceipt>{
-        let result = await this.send('removeAdmin',[admin]);
-        return result;
-    }
-    async removeAdmin_call(admin:string): Promise<void>{
-        let result = await this.call('removeAdmin',[admin]);
-        return;
+    pairShutdownVote: {
+        (params: IPairShutdownVoteParams): Promise<boolean>;
     }
     removeAdmin: {
         (admin:string): Promise<TransactionReceipt>;
         call: (admin:string) => Promise<void>;
     }
-    async setMaxAdmin_send(maxAdmin:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.send('setMaxAdmin',[Utils.toString(maxAdmin)]);
-        return result;
-    }
-    async setMaxAdmin_call(maxAdmin:number|BigNumber): Promise<void>{
-        let result = await this.call('setMaxAdmin',[Utils.toString(maxAdmin)]);
-        return;
-    }
     setMaxAdmin: {
         (maxAdmin:number|BigNumber): Promise<TransactionReceipt>;
         call: (maxAdmin:number|BigNumber) => Promise<void>;
     }
-    async vetoVoting_send(params:{votingContract:string,YorN:boolean}): Promise<TransactionReceipt>{
-        let result = await this.send('vetoVoting',[params.votingContract,params.YorN]);
-        return result;
-    }
-    async vetoVoting_call(params:{votingContract:string,YorN:boolean}): Promise<void>{
-        let result = await this.call('vetoVoting',[params.votingContract,params.YorN]);
-        return;
-    }
     vetoVoting: {
-        (params:{votingContract:string,YorN:boolean}): Promise<TransactionReceipt>;
-        call: (params:{votingContract:string,YorN:boolean}) => Promise<void>;
+        (params: IVetoVotingParams): Promise<TransactionReceipt>;
+        call: (params: IVetoVotingParams) => Promise<void>;
     }
-    async vetoVotingVote(params:{param1:string,param2:string}): Promise<boolean>{
-        let result = await this.call('vetoVotingVote',[params.param1,params.param2]);
-        return result;
+    vetoVotingVote: {
+        (params: IVetoVotingVoteParams): Promise<boolean>;
     }
     private assign(){
-        this.addAdmin = Object.assign(this.addAdmin_send, {call:this.addAdmin_call});
-        this.executeFactoryRestart = Object.assign(this.executeFactoryRestart_send, {call:this.executeFactoryRestart_call});
-        this.executeFactoryShutdown = Object.assign(this.executeFactoryShutdown_send, {call:this.executeFactoryShutdown_call});
-        this.executePairRestart = Object.assign(this.executePairRestart_send, {call:this.executePairRestart_call});
-        this.executePairShutdown = Object.assign(this.executePairShutdown_send, {call:this.executePairShutdown_call});
-        this.executeVetoVoting = Object.assign(this.executeVetoVoting_send, {call:this.executeVetoVoting_call});
-        this.factoryRestart = Object.assign(this.factoryRestart_send, {call:this.factoryRestart_call});
-        this.factoryShutdown = Object.assign(this.factoryShutdown_send, {call:this.factoryShutdown_call});
-        this.pairRestart = Object.assign(this.pairRestart_send, {call:this.pairRestart_call});
-        this.pairShutdown = Object.assign(this.pairShutdown_send, {call:this.pairShutdown_call});
-        this.removeAdmin = Object.assign(this.removeAdmin_send, {call:this.removeAdmin_call});
-        this.setMaxAdmin = Object.assign(this.setMaxAdmin_send, {call:this.setMaxAdmin_call});
-        this.vetoVoting = Object.assign(this.vetoVoting_send, {call:this.vetoVoting_call});
+        let admins_call = async (param1:number|BigNumber): Promise<string> => {
+            let result = await this.call('admins',[this.wallet.utils.toString(param1)]);
+            return result;
+        }
+        this.admins = admins_call
+        let adminsIdx_call = async (param1:string): Promise<BigNumber> => {
+            let result = await this.call('adminsIdx',[param1]);
+            return new BigNumber(result);
+        }
+        this.adminsIdx = adminsIdx_call
+        let allAdmins_call = async (): Promise<string[]> => {
+            let result = await this.call('allAdmins');
+            return result;
+        }
+        this.allAdmins = allAdmins_call
+        let factoryRestartVoteParams = (params: IFactoryRestartVoteParams) => [params.param1,params.param2];
+        let factoryRestartVote_call = async (params: IFactoryRestartVoteParams): Promise<boolean> => {
+            let result = await this.call('factoryRestartVote',factoryRestartVoteParams(params));
+            return result;
+        }
+        this.factoryRestartVote = factoryRestartVote_call
+        let factoryShutdownVoteParams = (params: IFactoryShutdownVoteParams) => [params.param1,params.param2];
+        let factoryShutdownVote_call = async (params: IFactoryShutdownVoteParams): Promise<boolean> => {
+            let result = await this.call('factoryShutdownVote',factoryShutdownVoteParams(params));
+            return result;
+        }
+        this.factoryShutdownVote = factoryShutdownVote_call
+        let getFactoryRestartVote_call = async (factory:string): Promise<boolean[]> => {
+            let result = await this.call('getFactoryRestartVote',[factory]);
+            return result;
+        }
+        this.getFactoryRestartVote = getFactoryRestartVote_call
+        let getFactoryShutdownVote_call = async (factory:string): Promise<boolean[]> => {
+            let result = await this.call('getFactoryShutdownVote',[factory]);
+            return result;
+        }
+        this.getFactoryShutdownVote = getFactoryShutdownVote_call
+        let getPairRestartVote_call = async (pair:string): Promise<boolean[]> => {
+            let result = await this.call('getPairRestartVote',[pair]);
+            return result;
+        }
+        this.getPairRestartVote = getPairRestartVote_call
+        let getPairShutdownVote_call = async (pair:string): Promise<boolean[]> => {
+            let result = await this.call('getPairShutdownVote',[pair]);
+            return result;
+        }
+        this.getPairShutdownVote = getPairShutdownVote_call
+        let getVetoVotingVote_call = async (votingContract:string): Promise<boolean[]> => {
+            let result = await this.call('getVetoVotingVote',[votingContract]);
+            return result;
+        }
+        this.getVetoVotingVote = getVetoVotingVote_call
+        let governance_call = async (): Promise<string> => {
+            let result = await this.call('governance');
+            return result;
+        }
+        this.governance = governance_call
+        let maxAdmin_call = async (): Promise<BigNumber> => {
+            let result = await this.call('maxAdmin');
+            return new BigNumber(result);
+        }
+        this.maxAdmin = maxAdmin_call
+        let pairRestartVoteParams = (params: IPairRestartVoteParams) => [params.param1,params.param2];
+        let pairRestartVote_call = async (params: IPairRestartVoteParams): Promise<boolean> => {
+            let result = await this.call('pairRestartVote',pairRestartVoteParams(params));
+            return result;
+        }
+        this.pairRestartVote = pairRestartVote_call
+        let pairShutdownVoteParams = (params: IPairShutdownVoteParams) => [params.param1,params.param2];
+        let pairShutdownVote_call = async (params: IPairShutdownVoteParams): Promise<boolean> => {
+            let result = await this.call('pairShutdownVote',pairShutdownVoteParams(params));
+            return result;
+        }
+        this.pairShutdownVote = pairShutdownVote_call
+        let vetoVotingVoteParams = (params: IVetoVotingVoteParams) => [params.param1,params.param2];
+        let vetoVotingVote_call = async (params: IVetoVotingVoteParams): Promise<boolean> => {
+            let result = await this.call('vetoVotingVote',vetoVotingVoteParams(params));
+            return result;
+        }
+        this.vetoVotingVote = vetoVotingVote_call
+        let addAdmin_send = async (admin:string): Promise<TransactionReceipt> => {
+            let result = await this.send('addAdmin',[admin]);
+            return result;
+        }
+        let addAdmin_call = async (admin:string): Promise<void> => {
+            let result = await this.call('addAdmin',[admin]);
+            return;
+        }
+        this.addAdmin = Object.assign(addAdmin_send, {
+            call:addAdmin_call
+        });
+        let executeFactoryRestart_send = async (factory:string): Promise<TransactionReceipt> => {
+            let result = await this.send('executeFactoryRestart',[factory]);
+            return result;
+        }
+        let executeFactoryRestart_call = async (factory:string): Promise<void> => {
+            let result = await this.call('executeFactoryRestart',[factory]);
+            return;
+        }
+        this.executeFactoryRestart = Object.assign(executeFactoryRestart_send, {
+            call:executeFactoryRestart_call
+        });
+        let executeFactoryShutdown_send = async (factory:string): Promise<TransactionReceipt> => {
+            let result = await this.send('executeFactoryShutdown',[factory]);
+            return result;
+        }
+        let executeFactoryShutdown_call = async (factory:string): Promise<void> => {
+            let result = await this.call('executeFactoryShutdown',[factory]);
+            return;
+        }
+        this.executeFactoryShutdown = Object.assign(executeFactoryShutdown_send, {
+            call:executeFactoryShutdown_call
+        });
+        let executePairRestartParams = (params: IExecutePairRestartParams) => [params.factory,params.pair];
+        let executePairRestart_send = async (params: IExecutePairRestartParams): Promise<TransactionReceipt> => {
+            let result = await this.send('executePairRestart',executePairRestartParams(params));
+            return result;
+        }
+        let executePairRestart_call = async (params: IExecutePairRestartParams): Promise<void> => {
+            let result = await this.call('executePairRestart',executePairRestartParams(params));
+            return;
+        }
+        this.executePairRestart = Object.assign(executePairRestart_send, {
+            call:executePairRestart_call
+        });
+        let executePairShutdownParams = (params: IExecutePairShutdownParams) => [params.factory,params.pair];
+        let executePairShutdown_send = async (params: IExecutePairShutdownParams): Promise<TransactionReceipt> => {
+            let result = await this.send('executePairShutdown',executePairShutdownParams(params));
+            return result;
+        }
+        let executePairShutdown_call = async (params: IExecutePairShutdownParams): Promise<void> => {
+            let result = await this.call('executePairShutdown',executePairShutdownParams(params));
+            return;
+        }
+        this.executePairShutdown = Object.assign(executePairShutdown_send, {
+            call:executePairShutdown_call
+        });
+        let executeVetoVoting_send = async (votingContract:string): Promise<TransactionReceipt> => {
+            let result = await this.send('executeVetoVoting',[votingContract]);
+            return result;
+        }
+        let executeVetoVoting_call = async (votingContract:string): Promise<void> => {
+            let result = await this.call('executeVetoVoting',[votingContract]);
+            return;
+        }
+        this.executeVetoVoting = Object.assign(executeVetoVoting_send, {
+            call:executeVetoVoting_call
+        });
+        let factoryRestartParams = (params: IFactoryRestartParams) => [params.factory,params.YorN];
+        let factoryRestart_send = async (params: IFactoryRestartParams): Promise<TransactionReceipt> => {
+            let result = await this.send('factoryRestart',factoryRestartParams(params));
+            return result;
+        }
+        let factoryRestart_call = async (params: IFactoryRestartParams): Promise<void> => {
+            let result = await this.call('factoryRestart',factoryRestartParams(params));
+            return;
+        }
+        this.factoryRestart = Object.assign(factoryRestart_send, {
+            call:factoryRestart_call
+        });
+        let factoryShutdownParams = (params: IFactoryShutdownParams) => [params.factory,params.YorN];
+        let factoryShutdown_send = async (params: IFactoryShutdownParams): Promise<TransactionReceipt> => {
+            let result = await this.send('factoryShutdown',factoryShutdownParams(params));
+            return result;
+        }
+        let factoryShutdown_call = async (params: IFactoryShutdownParams): Promise<void> => {
+            let result = await this.call('factoryShutdown',factoryShutdownParams(params));
+            return;
+        }
+        this.factoryShutdown = Object.assign(factoryShutdown_send, {
+            call:factoryShutdown_call
+        });
+        let pairRestartParams = (params: IPairRestartParams) => [params.pair,params.YorN];
+        let pairRestart_send = async (params: IPairRestartParams): Promise<TransactionReceipt> => {
+            let result = await this.send('pairRestart',pairRestartParams(params));
+            return result;
+        }
+        let pairRestart_call = async (params: IPairRestartParams): Promise<void> => {
+            let result = await this.call('pairRestart',pairRestartParams(params));
+            return;
+        }
+        this.pairRestart = Object.assign(pairRestart_send, {
+            call:pairRestart_call
+        });
+        let pairShutdownParams = (params: IPairShutdownParams) => [params.pair,params.YorN];
+        let pairShutdown_send = async (params: IPairShutdownParams): Promise<TransactionReceipt> => {
+            let result = await this.send('pairShutdown',pairShutdownParams(params));
+            return result;
+        }
+        let pairShutdown_call = async (params: IPairShutdownParams): Promise<void> => {
+            let result = await this.call('pairShutdown',pairShutdownParams(params));
+            return;
+        }
+        this.pairShutdown = Object.assign(pairShutdown_send, {
+            call:pairShutdown_call
+        });
+        let removeAdmin_send = async (admin:string): Promise<TransactionReceipt> => {
+            let result = await this.send('removeAdmin',[admin]);
+            return result;
+        }
+        let removeAdmin_call = async (admin:string): Promise<void> => {
+            let result = await this.call('removeAdmin',[admin]);
+            return;
+        }
+        this.removeAdmin = Object.assign(removeAdmin_send, {
+            call:removeAdmin_call
+        });
+        let setMaxAdmin_send = async (maxAdmin:number|BigNumber): Promise<TransactionReceipt> => {
+            let result = await this.send('setMaxAdmin',[this.wallet.utils.toString(maxAdmin)]);
+            return result;
+        }
+        let setMaxAdmin_call = async (maxAdmin:number|BigNumber): Promise<void> => {
+            let result = await this.call('setMaxAdmin',[this.wallet.utils.toString(maxAdmin)]);
+            return;
+        }
+        this.setMaxAdmin = Object.assign(setMaxAdmin_send, {
+            call:setMaxAdmin_call
+        });
+        let vetoVotingParams = (params: IVetoVotingParams) => [params.votingContract,params.YorN];
+        let vetoVoting_send = async (params: IVetoVotingParams): Promise<TransactionReceipt> => {
+            let result = await this.send('vetoVoting',vetoVotingParams(params));
+            return result;
+        }
+        let vetoVoting_call = async (params: IVetoVotingParams): Promise<void> => {
+            let result = await this.call('vetoVoting',vetoVotingParams(params));
+            return;
+        }
+        this.vetoVoting = Object.assign(vetoVoting_send, {
+            call:vetoVoting_call
+        });
     }
 }
 export module OAXDEX_Administrator{
