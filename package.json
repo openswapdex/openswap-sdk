@@ -1,11 +1,11 @@
 {
   "name": "@openswap/sdk",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "",
   "typings": "types/index.d.ts",
   "main": "lib",
   "scripts": {
-    "build": "npm run build:contracts && npm run updateHash && npm run build:contracts",
+    "build": "npm run build:contracts && npm run updateHash && npm run build:contracts && npm run build:lib",
     "updateHash": "ts-node tools/updateHash.ts",
     "build:contracts": "sol2ts solidity.config.json",
     "build:test": "sol2ts solidity-test.config.json",
@@ -20,17 +20,17 @@
   "license": "ISC",
   "devDependencies": {
     "@ijstech/eth-contract": "0.1.4",
-    "@ijstech/eth-wallet": "0.1.23",
+    "@ijstech/eth-wallet": "0.1.24",
     "@openzeppelin/contracts": "4.8.0",
     "@types/chai": "4.3.0",
     "@types/mocha": "9.0.0",
     "@types/node": "14.17",
-    "chai": "4.3.4",
-    "chai-bignumber": "3.0.0",
+    "chai": "4.3.7",
+    "chai-bignumber": "3.1.0",
     "esbuild": "0.13.13",
     "ganache": "7.5.0",
-    "mocha": "10.0.0",
-    "ts-node": "10.9.1",
+    "mocha": "10.1.0",
+    "ts-node": "10.9.",
     "typescript": "4.2.4"
   }
 }
