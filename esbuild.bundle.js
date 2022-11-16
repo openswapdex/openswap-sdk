@@ -1,4 +1,4 @@
-const dependencies = require('./package.json').devDependencies || {};
+const dependencies = require('./package.json').dependencies || {};
 const packageName = require('./package.json').name;
 
 const Fs = require('fs');
