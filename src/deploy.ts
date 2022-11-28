@@ -25,7 +25,7 @@ import {
     OSWAP_VotingExecutor4,
     OSWAP_ConfigStore,
     OSWAP_RestrictedPairOracle
-} from './contracts';
+} from './contracts/index';
 import {OpenSwap} from './OpenSwap';
 export interface ICoreContractsDeploymentResult {
     administrator?: string;

@@ -1,15 +1,16 @@
 {
   "name": "@openswap/sdk",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "",
   "typings": "types/index.d.ts",
   "main": "lib",
   "scripts": {
-    "build": "npm run build:contracts && npm run updateHash && npm run build:contracts && npm run build:lib",
+    "build": "rm -rf lib && rm -rf dist && rm -rf types && npm run build:contracts && npm run updateHash && npm run build:contracts && npm run build:lib && npm run build:dist",
     "updateHash": "ts-node tools/updateHash.ts",
-    "build:contracts": "sol2ts solidity.config.json",
+    "build:contracts": "rm -rf src/contracts && sol2ts solidity.config.json",
     "build:test": "sol2ts solidity-test.config.json",
-    "build:lib": "tsc && node esbuild.bundle",
+    "build:dist": "npx @ijstech/compiler",
+    "build:lib": "tsc",
     "test": "mocha --exit --require ts-node/register --timeout 100000 test/*.test.ts",
     "test:hybridRouter": "mocha --ui tdd --exit --require ts-node/register --timeout 100000 test/hybridRouter.test.ts",
     "build:plugin": "compile 0.6.11 node_modules/@openswap/openswap-core/contracts plugin/contracts",
@@ -18,19 +19,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@ijstech/eth-contract": "0.1.4"
+  },
   "devDependencies": {
-    "@ijstech/eth-contract": "0.1.4",
-    "@ijstech/eth-wallet": "0.1.24",
-    "@openzeppelin/contracts": "4.8.0",
-    "@types/chai": "4.3.0",
-    "@types/mocha": "9.0.0",
-    "@types/node": "14.17",
-    "chai": "4.3.7",
-    "chai-bignumber": "3.1.0",
-    "esbuild": "0.13.13",
-    "ganache": "7.5.0",
-    "mocha": "10.1.0",
-    "ts-node": "10.9.",
-    "typescript": "4.2.4"
+      "@ijstech/cli": "^0.1.23",
+      "@ijstech/compiler": "^0.1.15",
+      "@ijstech/eth-wallet": "0.1.26",
+      "@openzeppelin/contracts": "4.8.0",
+      "@scom/contract-deployer": "^0.1.6",
+      "@types/mocha": "9.1.1",
+      "@types/node": "18.8.4",
+      "ganache": "7.5.0",
+      "mocha": "10.0.0",
+      "ts-node": "10.9.1",
+      "typescript": "4.8.4"
   }
 }
