@@ -34,6 +34,10 @@ interface IOSWAP_PairV4 {
     function getReserves() external view returns (uint112, uint112, uint32);
     function swap(uint256 amount0Out, uint256 amount1Out, address to) external;
 }
+interface IOSWAP_PairV5 is IOSWAP_PairV1 {
+    function getAmountOut(address tokenIn, uint256 amountIn) external view returns (uint256 amountOut);
+    function getAmountIn(address tokenOut, uint256 amountOut) external view returns (uint256 amountIn);
+}
 
 contract OSWAP_HybridRouter2 is IOSWAP_HybridRouter2 {
     using SafeMath for uint;
@@ -102,7 +106,7 @@ contract OSWAP_HybridRouter2 is IOSWAP_HybridRouter2 {
             (uint amount0Out, uint amount1Out) = direction ? (uint(0), amountOut) : (amountOut, uint(0));
             address to = i < path.length - 2 ? pair[i + 1] : _to;
             uint256 typeCode = protocolTypeCode(pair[i]);
-            if (typeCode == 1) {
+            if (typeCode == 1 || typeCode == 5) {
                 IOSWAP_PairV1(pair[i]).swap(
                     amount0Out, amount1Out, to, new bytes(0)
                 );
@@ -246,24 +250,28 @@ contract OSWAP_HybridRouter2 is IOSWAP_HybridRouter2 {
 
             uint256 typeCode = protocolTypeCode(pair[i]);
             address to = i < path.length - 2 ? pair[i + 1] : _to;
-            if (typeCode == 1 || typeCode == 4) {
+            if (typeCode == 1 || typeCode == 4 || typeCode == 5) {
                 { // scope to avoid stack too deep errors
-                IOSWAP_PairV1 _pair = IOSWAP_PairV1(pair[i]);
+                IOSWAP_PairV5 _pair = IOSWAP_PairV5(pair[i]);
                 (uint reserve0, uint reserve1,) = _pair.getReserves();
-                (uint reserveInput, uint reserveOutput) = direction ? (reserve0, reserve1) : (reserve1, reserve0);
-                amountInput = amountInput.sub(reserveInput);
-                (uint256 fee,uint256 feeBase) = IOSWAP_HybridRouterRegistry(registry).getFee(address(_pair));
-                amountOutput = getAmountOut(amountInput, reserveInput, reserveOutput, fee, feeBase);
+                (reserve0, reserve1) = direction ? (reserve0, reserve1) : (reserve1, reserve0);
+                amountInput = amountInput.sub(reserve0);
+                if (typeCode == 5) {
+                    amountOutput = _pair.getAmountOut(path[i], amountInput);
+                } else {
+                    (uint256 fee,uint256 feeBase) = IOSWAP_HybridRouterRegistry(registry).getFee(address(_pair));
+                    amountOutput = getAmountOut(amountInput, reserve0, reserve1, fee, feeBase);
+                }
                 }
                 (uint amount0Out, uint amount1Out) = direction ? (uint(0), amountOutput) : (amountOutput, uint(0));
-                
+
                 if (typeCode == 4) {
                     IOSWAP_PairV4(pair[i]).swap(amount0Out, amount1Out, to);
                 }
-                else {
+                else /* if (typeCode == 1 || typeCode == 5)*/ {
                     IOSWAP_PairV1(pair[i]).swap(amount0Out, amount1Out, to, new bytes(0));
                 }
-            }           
+            }
             else {
                 bytes memory next;
                 (offset, next) = cut(data, offset);
@@ -362,7 +370,7 @@ contract OSWAP_HybridRouter2 is IOSWAP_HybridRouter2 {
     }
     function protocolTypeCode(address pair) internal view returns (uint256 typeCode) {
         typeCode =  IOSWAP_HybridRouterRegistry(registry).getTypeCode(pair);
-        require(typeCode > 0 && typeCode < 5, 'PAIR_NOT_REGCONIZED');
+        require(typeCode > 0 && typeCode < 6, 'PAIR_NOT_REGCONIZED');
     }
     // fetches and sorts the reserves for a pair
     function getReserves(address pair, address tokenA, address tokenB) internal view returns (uint reserveA, uint reserveB) {
@@ -437,8 +445,10 @@ contract OSWAP_HybridRouter2 is IOSWAP_HybridRouter2 {
                 (offset, next) = cut(data, offset);
                 if (typeCode == 2) {
                     amounts[i + 1] = IOSWAP_PairV2(pair[i]).getAmountOut(path[i], amounts[i], next);
-                } else /*if (typeCode == 3)*/ {
+                } else if (typeCode == 3) {
                     amounts[i + 1] = IOSWAP_PairV3(pair[i]).getAmountOut(path[i], amounts[i], msg.sender, next);
+                } else /*if (typeCode == 5)*/ {
+                    amounts[i + 1] = IOSWAP_PairV5(pair[i]).getAmountOut(path[i], amounts[i]);
                 }
                 dataChunks[i] = next;
             }
@@ -467,6 +477,8 @@ contract OSWAP_HybridRouter2 is IOSWAP_HybridRouter2 {
                     amounts[i - 1] = IOSWAP_PairV2(pair[i - 1]).getAmountIn(path[i], amounts[i], next);
                 } else if (typeCode == 3) {
                     amounts[i - 1] = IOSWAP_PairV3(pair[i - 1]).getAmountIn(path[i], amounts[i], msg.sender, next);
+                } else /*if (typeCode == 5)*/ {
+                    amounts[i - 1] = IOSWAP_PairV5(pair[i - 1]).getAmountIn(path[i], amounts[i]);
                 }
                 dataChunks[i - 1] = next;
             }
