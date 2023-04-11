@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import Web3 from 'web3';
+import {soliditySha3} from 'web3-utils';
 
 const sourceDir = "contracts/";
 async function updateHash(){
@@ -11,7 +11,7 @@ async function updateHash(){
         try {
             hex[i] = (await import(path.join(__dirname, "../src/contracts/", SOURCE[i] + ".json.ts"))).default;
             hex[i] = "0x" + hex[i].bytecode;
-            hex[i] = Web3.utils.soliditySha3(hex[i]);
+            hex[i] = soliditySha3(hex[i]);
             hex[i] = hex[i].replace("0x", "");
             console.log(SOURCE[i], hex[i]);
         } catch(e) {

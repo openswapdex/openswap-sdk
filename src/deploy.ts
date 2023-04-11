@@ -25,7 +25,7 @@ import {
     OSWAP_VotingExecutor4,
     OSWAP_ConfigStore,
     OSWAP_RestrictedPairOracle
-} from './contracts';
+} from './contracts/index';
 import {OpenSwap} from './OpenSwap';
 export interface ICoreContractsDeploymentResult {
     administrator?: string;
@@ -493,7 +493,7 @@ export function deploy(wallet: Wallet, options?: IDeployOptions): Promise<IDeplo
                 result.votingExecutor3,
                 result.votingExecutor4,
                 result.hybridRouterRegistry
-            ].filter(Boolean));
+            ].filter(e=>!!e));
             console.dir(result)
             resolve(result)
         }
