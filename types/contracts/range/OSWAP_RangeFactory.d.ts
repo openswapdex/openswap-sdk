@@ -1,4 +1,4 @@
-import { IWallet, Contract, TransactionReceipt, BigNumber, Event } from "@ijstech/eth-contract";
+import { IWallet, Contract as _Contract, TransactionReceipt, BigNumber, Event, TransactionOptions } from "@ijstech/eth-contract";
 export interface IDeployParams {
     governance: string;
     oracleFactory: string;
@@ -24,9 +24,10 @@ export interface ISetLiveForPairParams {
     pair: string;
     live: boolean;
 }
-export declare class OSWAP_RangeFactory extends Contract {
+export declare class OSWAP_RangeFactory extends _Contract {
+    static _abi: any;
     constructor(wallet: IWallet, address?: string);
-    deploy(params: IDeployParams): Promise<string>;
+    deploy(params: IDeployParams, options?: TransactionOptions): Promise<string>;
     parseOwnershipTransferredEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.OwnershipTransferredEvent[];
     decodeOwnershipTransferredEvent(event: Event): OSWAP_RangeFactory.OwnershipTransferredEvent;
     parsePairCreatedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.PairCreatedEvent[];
@@ -44,98 +45,98 @@ export declare class OSWAP_RangeFactory extends Contract {
     parseShutdownedEvent(receipt: TransactionReceipt): OSWAP_RangeFactory.ShutdownedEvent[];
     decodeShutdownedEvent(event: Event): OSWAP_RangeFactory.ShutdownedEvent;
     allPairs: {
-        (param1: number | BigNumber): Promise<string>;
+        (param1: number | BigNumber, options?: TransactionOptions): Promise<string>;
     };
     allPairsLength: {
-        (): Promise<BigNumber>;
+        (options?: TransactionOptions): Promise<BigNumber>;
     };
     checkAndGetSwapParams: {
-        (): Promise<BigNumber>;
+        (options?: TransactionOptions): Promise<BigNumber>;
     };
     createPair: {
-        (params: ICreatePairParams): Promise<TransactionReceipt>;
-        call: (params: ICreatePairParams) => Promise<string>;
+        (params: ICreatePairParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ICreatePairParams, options?: TransactionOptions) => Promise<string>;
     };
     getAllLiquidityProviderShare: {
-        (): Promise<{
-            _stakeAmount: BigNumber[];
-            _liquidityProviderShare: BigNumber[];
+        (options?: TransactionOptions): Promise<{
+            stakeAmount: BigNumber[];
+            liquidityProviderShare: BigNumber[];
         }>;
     };
     getCreateAddresses: {
-        (): Promise<{
-            _governance: string;
-            _rangeLiquidityProvider: string;
-            _oracleFactory: string;
+        (options?: TransactionOptions): Promise<{
+            governance: string;
+            rangeLiquidityProvider: string;
+            oracleFactory: string;
         }>;
     };
     getLiquidityProviderShare: {
-        (stake: number | BigNumber): Promise<BigNumber>;
+        (stake: number | BigNumber, options?: TransactionOptions): Promise<BigNumber>;
     };
     getPair: {
-        (params: IGetPairParams): Promise<string>;
+        (params: IGetPairParams, options?: TransactionOptions): Promise<string>;
     };
     governance: {
-        (): Promise<string>;
+        (options?: TransactionOptions): Promise<string>;
     };
     isLive: {
-        (): Promise<boolean>;
+        (options?: TransactionOptions): Promise<boolean>;
     };
     liquidityProviderShare: {
-        (param1: number | BigNumber): Promise<BigNumber>;
+        (param1: number | BigNumber, options?: TransactionOptions): Promise<BigNumber>;
     };
     oracleFactory: {
-        (): Promise<string>;
+        (options?: TransactionOptions): Promise<string>;
     };
     owner: {
-        (): Promise<string>;
+        (options?: TransactionOptions): Promise<string>;
     };
     pairCreator: {
-        (): Promise<string>;
+        (options?: TransactionOptions): Promise<string>;
     };
     protocolFeeTo: {
-        (): Promise<string>;
+        (options?: TransactionOptions): Promise<string>;
     };
     rangeLiquidityProvider: {
-        (): Promise<string>;
+        (options?: TransactionOptions): Promise<string>;
     };
     renounceOwnership: {
-        (): Promise<TransactionReceipt>;
-        call: () => Promise<void>;
+        (options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (options?: TransactionOptions) => Promise<void>;
     };
     setLiquidityProviderShare: {
-        (params: ISetLiquidityProviderShareParams): Promise<TransactionReceipt>;
-        call: (params: ISetLiquidityProviderShareParams) => Promise<void>;
+        (params: ISetLiquidityProviderShareParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ISetLiquidityProviderShareParams, options?: TransactionOptions) => Promise<void>;
     };
     setLive: {
-        (isLive: boolean): Promise<TransactionReceipt>;
-        call: (isLive: boolean) => Promise<void>;
+        (isLive: boolean, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (isLive: boolean, options?: TransactionOptions) => Promise<void>;
     };
     setLiveForPair: {
-        (params: ISetLiveForPairParams): Promise<TransactionReceipt>;
-        call: (params: ISetLiveForPairParams) => Promise<void>;
+        (params: ISetLiveForPairParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ISetLiveForPairParams, options?: TransactionOptions) => Promise<void>;
     };
     setProtocolFeeTo: {
-        (protocolFeeTo: string): Promise<TransactionReceipt>;
-        call: (protocolFeeTo: string) => Promise<void>;
+        (protocolFeeTo: string, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (protocolFeeTo: string, options?: TransactionOptions) => Promise<void>;
     };
     setRangeLiquidityProvider: {
-        (rangeLiquidityProvider: string): Promise<TransactionReceipt>;
-        call: (rangeLiquidityProvider: string) => Promise<void>;
+        (rangeLiquidityProvider: string, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (rangeLiquidityProvider: string, options?: TransactionOptions) => Promise<void>;
     };
     setTradeFee: {
-        (tradeFee: number | BigNumber): Promise<TransactionReceipt>;
-        call: (tradeFee: number | BigNumber) => Promise<void>;
+        (tradeFee: number | BigNumber, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (tradeFee: number | BigNumber, options?: TransactionOptions) => Promise<void>;
     };
     stakeAmount: {
-        (param1: number | BigNumber): Promise<BigNumber>;
+        (param1: number | BigNumber, options?: TransactionOptions): Promise<BigNumber>;
     };
     tradeFee: {
-        (): Promise<BigNumber>;
+        (options?: TransactionOptions): Promise<BigNumber>;
     };
     transferOwnership: {
-        (newOwner: string): Promise<TransactionReceipt>;
-        call: (newOwner: string) => Promise<void>;
+        (newOwner: string, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (newOwner: string, options?: TransactionOptions) => Promise<void>;
     };
     private assign;
 }

@@ -1,16 +1,17 @@
-import { IWallet, Contract, TransactionReceipt } from "@ijstech/eth-contract";
-export declare class OSWAP_PausablePair extends Contract {
+import { IWallet, Contract as _Contract, TransactionReceipt, TransactionOptions } from "@ijstech/eth-contract";
+export declare class OSWAP_PausablePair extends _Contract {
+    static _abi: any;
     constructor(wallet: IWallet, address?: string);
-    deploy(): Promise<string>;
+    deploy(options?: TransactionOptions): Promise<string>;
     factory: {
-        (): Promise<string>;
+        (options?: TransactionOptions): Promise<string>;
     };
     isLive: {
-        (): Promise<boolean>;
+        (options?: TransactionOptions): Promise<boolean>;
     };
     setLive: {
-        (isLive: boolean): Promise<TransactionReceipt>;
-        call: (isLive: boolean) => Promise<void>;
+        (isLive: boolean, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (isLive: boolean, options?: TransactionOptions) => Promise<void>;
     };
     private assign;
 }

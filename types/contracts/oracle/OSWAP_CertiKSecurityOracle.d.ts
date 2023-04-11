@@ -1,12 +1,13 @@
-import { IWallet, Contract, BigNumber } from "@ijstech/eth-contract";
-export declare class OSWAP_CertiKSecurityOracle extends Contract {
+import { IWallet, Contract as _Contract, BigNumber, TransactionOptions } from "@ijstech/eth-contract";
+export declare class OSWAP_CertiKSecurityOracle extends _Contract {
+    static _abi: any;
     constructor(wallet: IWallet, address?: string);
-    deploy(oracleAddress: string): Promise<string>;
+    deploy(oracleAddress: string, options?: TransactionOptions): Promise<string>;
     getSecurityScore: {
-        (oracle: string): Promise<BigNumber>;
+        (oracle: string, options?: TransactionOptions): Promise<BigNumber>;
     };
     oracleAddress: {
-        (): Promise<string>;
+        (options?: TransactionOptions): Promise<string>;
     };
     private assign;
 }
