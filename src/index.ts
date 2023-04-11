@@ -1,4 +1,4 @@
-export * as Contracts from './contracts';
+export * as Contracts from './contracts/index';
 export {
     deploy, 
     deployCoreContracts, 
@@ -8,6 +8,7 @@ export {
     deployHybridRouter, 
     initHybridRouterRegistry,
     deployRestrictedPairOracle,
+    IDeployOptions,
     IDeploymentResult, 
     IDeploymentContracts, 
     toDeploymentContracts
