@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity =0.6.11;
 
-import '@openswap/openswap-core/contracts/oracle/interfaces/IOSWAP_OracleScoreOracleAdaptor.sol';
+import '@openswap/contracts/oracle/interfaces/IOSWAP_OracleScoreOracleAdaptor.sol';
 
 contract MockSecurityOracle is IOSWAP_OracleScoreOracleAdaptor {
     address public override oracleAddress;

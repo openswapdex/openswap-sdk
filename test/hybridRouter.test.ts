@@ -1,15 +1,14 @@
 import 'mocha';
+import assert from 'assert';
 import { Utils, Wallet, Erc20, BigNumber } from "@ijstech/eth-wallet";
-import { Contracts, deploy, initHybridRouterRegistry, IDeploymentResult } from '../src';
-import * as Ganache from "ganache";
-import * as assert from 'assert';
-import { expect } from 'chai';
-import { TestERC20, EvilAmmPair, EvilAmmFactory } from '../test/src/contracts';
+import { Contracts, deploy, initHybridRouterRegistry, IDeploymentResult, toDeploymentContracts, IDeploymentContracts } from '../src';
+import { TestERC20, EvilAmmPair, EvilAmmFactory } from './src/contracts';
+import {print, assertEqual, getProvider} from './helper';
+import {stakeToVote, newVote, voteToPass}  from './oswapHelper';
 
 describe('##Contracts', function () {
   this.timeout(40000);
-  let provider = Ganache.provider()
-  let wallet = new Wallet(provider);
+    let wallet = new Wallet(getProvider());
   let accounts: string[];
   let deployer: string;
   let deployedContracts: IDeploymentResult;
@@ -17,6 +16,8 @@ describe('##Contracts', function () {
   let oswap: Contracts.ERC20;
   let CakeOswapPair: string;
   let hybridRouterRegistry: Contracts.OSWAP_HybridRouterRegistry;
+  let deployment: IDeploymentContracts;
+
   const maxAmount = new BigNumber(2).pow(256).minus(1);
 
   const addLiquidity = async (routerAddress: string, tokenAAddress: string, tokenBAddress: string, amountADesired: string, amountBDesired: string, toAddress: string) => {
@@ -25,7 +26,8 @@ describe('##Contracts', function () {
       const slippageTolerance = 0.5;
       const amountAMin = new BigNumber(amountADesired).times(1 - slippageTolerance / 100).toFixed();
       const amountBMin = new BigNumber(amountBDesired).times(1 - slippageTolerance / 100).toFixed();
-      const deadline = Math.floor(Date.now() / 1000 + 30 * 60);
+      let now = await wallet.getBlockTimestamp();
+      const deadline = now + 30 * 60;
       let router = new Contracts.OSWAP_Router(wallet, routerAddress);
       if (!tokenAAddress || !tokenBAddress) {
         let erc20Token, amountTokenDesired, amountETHDesired, amountTokenMin, amountETHMin;
@@ -69,35 +71,6 @@ describe('##Contracts', function () {
       console.log('err', err)
     }
     return receipt;
-  }
-  const newVote = async (executorAddress: string, type: string, quorum: BigNumber, params: string[]) => {
-    const registry = new Contracts.OAXDEX_VotingRegistry(wallet, deployedContracts.votingRegistry);
-    let now = (await wallet.getBlockTimestamp('latest'));
-    let threshold = Utils.toDecimals("0.5");
-    let voteEndTime = now + 30;
-    let exeDelay = 3;
-    const governance = new Contracts.OAXDEX_Governance(wallet, deployedContracts.governance);
-
-    let receipt = await registry.newVote({
-      executor: executorAddress,
-      name: Utils.stringToBytes32(type) as string,
-      options: [Utils.stringToBytes32('Y') as string, Utils.stringToBytes32('N') as string],
-      quorum: quorum.dp(0),
-      threshold: threshold.dp(0),
-      voteEndTime: new BigNumber(voteEndTime),
-      executeDelay: new BigNumber(exeDelay),
-      executeParam: [Utils.stringToBytes32(type) as string].concat(params)
-    })
-
-    console.log('params', [Utils.stringToBytes32(type) as string].concat(params))
-    let event = governance.parseNewVoteEvent(receipt)[0]
-    let voteAddr = event.vote;
-    console.log("voting address " + voteAddr);
-
-    const votingContract = new Contracts.OAXDEX_VotingContract(wallet, voteAddr);
-    await votingContract.vote(0);
-    await wallet.setBlockTime(voteEndTime + exeDelay + 1);
-    return votingContract;
   }
   before(async function () {
     accounts = await wallet.accounts;
@@ -154,6 +127,7 @@ describe('##Contracts', function () {
       }
     });
     deployedContracts = result;
+    deployment = toDeploymentContracts(wallet, result);
 
     let hybridRouterRegistryConfig = {
       defaultProtocols: [
@@ -277,7 +251,8 @@ describe('##Contracts', function () {
   it('Swap with hybrid router', async function () {
     wallet.defaultAccount = deployer;
     let hybridRouter = new Contracts.OSWAP_HybridRouter2(wallet, deployedContracts.hybridRouter);
-    const deadline = Math.floor(Date.now() / 1000 + 30 * 60);
+    let now = await wallet.getBlockTimestamp();
+    const deadline = now + 30 * 60;
     let params = {
       amountIn: Utils.toDecimals(1).dp(0),
       amountOutMin: Utils.toDecimals(0).dp(0),
@@ -302,15 +277,8 @@ describe('##Contracts', function () {
     let evilAmmFactory = new EvilAmmFactory(wallet);
     let evilAmmFactoryAddress = await evilAmmFactory.deploy();
 
-    const governance = new Contracts.OAXDEX_Governance(wallet, deployedContracts.governance);
-    let votingConfig = (await governance.votingConfigs(Utils.stringToBytes32("vote") as string));
-    let amount = BigNumber.max(votingConfig.minOaxTokenToCreateVote, votingConfig.minQuorum);
-    await oswap.approve({spender:governance.address, amount:amount});
-    await governance.stake(amount);
-    let wait = (await governance.minStakePeriod()).toNumber() + 1;
-    let now = (await wallet.getBlockTimestamp('latest'));
-    await wallet.setBlockTime(now + wait);
-    await governance.unlockStake();
+    await stakeToVote(accounts[0], accounts[0], wallet, deployment);
+
     let params = [
       Utils.stringToBytes32('Evil') as string,
       Utils.addressToBytes32Right(evilAmmFactoryAddress, true),
@@ -318,8 +286,7 @@ describe('##Contracts', function () {
       Utils.numberToBytes32(1000000, true),
       Utils.numberToBytes32(1, true)
     ];
-    let voting = await newVote(deployedContracts.hybridRouterRegistry, "registerProtocol", votingConfig.minQuorum, params);
-    await voting.execute();
+    let voting = await voteToPass(deployer, wallet, deployment, deployment.hybridRouterRegistry, "registerProtocol", params);
 
     let evilRouter = new Contracts.OSWAP_Router(wallet);
     let evilRouterAddress = await evilRouter.deploy({
@@ -381,7 +348,8 @@ describe('##Contracts', function () {
       tokenIn: deployedContracts.oswap,
       data: '0x'
     })
-    const deadline = Math.floor(Date.now() / 1000 + 30 * 60);
+    let now = await wallet.getBlockTimestamp();
+    const deadline = now + 30 * 60;
     let swapParams = {
       amountIn: Utils.toDecimals(1).dp(0),
       amountOutMin: amountsOut[amountsOut.length - 1],

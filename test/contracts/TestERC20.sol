@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity =0.6.11;
 
-import '@openswap/openswap-core/contracts/interfaces/IERC20.sol';
-import '@openswap/openswap-core/contracts/libraries/SafeMath.sol';
+import '@openswap/contracts/interfaces/IERC20.sol';
+import '@openswap/contracts/libraries/SafeMath.sol';
 
 contract TestERC20 is IERC20 {
     using SafeMath for uint256;

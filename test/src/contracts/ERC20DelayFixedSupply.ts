@@ -1,13 +1,21 @@
-import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import {IWallet, Contract as _Contract, Transaction, TransactionReceipt, BigNumber, Event, IBatchRequestObj, TransactionOptions} from "@ijstech/eth-contract";
 import Bin from "./ERC20DelayFixedSupply.json";
-
-export class ERC20DelayFixedSupply extends Contract{
+export interface IDeployParams {minter:string;name:string;symbol:string}
+export interface IAllowanceParams {owner:string;spender:string}
+export interface IApproveParams {spender:string;amount:number|BigNumber}
+export interface IDecreaseAllowanceParams {spender:string;subtractedValue:number|BigNumber}
+export interface IIncreaseAllowanceParams {spender:string;addedValue:number|BigNumber}
+export interface IMintParams {to:string;amount:number|BigNumber}
+export interface ITransferParams {to:string;amount:number|BigNumber}
+export interface ITransferFromParams {from:string;to:string;amount:number|BigNumber}
+export class ERC20DelayFixedSupply extends _Contract{
+    static _abi: any = Bin.abi;
     constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
         this.assign()
     }
-    deploy(params:{minter:string,name:string,symbol:string}): Promise<string>{
-        return this.__deploy([params.minter,params.name,params.symbol]);
+    deploy(params: IDeployParams, options?: TransactionOptions): Promise<string>{
+        return this.__deploy([params.minter,params.name,params.symbol], options);
     }
     parseApprovalEvent(receipt: TransactionReceipt): ERC20DelayFixedSupply.ApprovalEvent[]{
         return this.parseEvents(receipt, "Approval").map(e=>this.decodeApprovalEvent(e));
@@ -33,117 +41,168 @@ export class ERC20DelayFixedSupply extends Contract{
             _event: event
         };
     }
-    async allowance(params:{owner:string,spender:string}): Promise<BigNumber>{
-        let result = await this.call('allowance',[params.owner,params.spender]);
-        return new BigNumber(result);
-    }
-    async approve_send(params:{spender:string,amount:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('approve',[params.spender,Utils.toString(params.amount)]);
-        return result;
-    }
-    async approve_call(params:{spender:string,amount:number|BigNumber}): Promise<boolean>{
-        let result = await this.call('approve',[params.spender,Utils.toString(params.amount)]);
-        return result;
+    allowance: {
+        (params: IAllowanceParams, options?: TransactionOptions): Promise<BigNumber>;
     }
     approve: {
-        (params:{spender:string,amount:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{spender:string,amount:number|BigNumber}) => Promise<boolean>;
+        (params: IApproveParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: IApproveParams, options?: TransactionOptions) => Promise<boolean>;
     }
-    async balanceOf(account:string): Promise<BigNumber>{
-        let result = await this.call('balanceOf',[account]);
-        return new BigNumber(result);
+    balanceOf: {
+        (account:string, options?: TransactionOptions): Promise<BigNumber>;
     }
-    async decimals(): Promise<BigNumber>{
-        let result = await this.call('decimals');
-        return new BigNumber(result);
-    }
-    async decreaseAllowance_send(params:{spender:string,subtractedValue:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('decreaseAllowance',[params.spender,Utils.toString(params.subtractedValue)]);
-        return result;
-    }
-    async decreaseAllowance_call(params:{spender:string,subtractedValue:number|BigNumber}): Promise<boolean>{
-        let result = await this.call('decreaseAllowance',[params.spender,Utils.toString(params.subtractedValue)]);
-        return result;
+    decimals: {
+        (options?: TransactionOptions): Promise<BigNumber>;
     }
     decreaseAllowance: {
-        (params:{spender:string,subtractedValue:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{spender:string,subtractedValue:number|BigNumber}) => Promise<boolean>;
-    }
-    async increaseAllowance_send(params:{spender:string,addedValue:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('increaseAllowance',[params.spender,Utils.toString(params.addedValue)]);
-        return result;
-    }
-    async increaseAllowance_call(params:{spender:string,addedValue:number|BigNumber}): Promise<boolean>{
-        let result = await this.call('increaseAllowance',[params.spender,Utils.toString(params.addedValue)]);
-        return result;
+        (params: IDecreaseAllowanceParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: IDecreaseAllowanceParams, options?: TransactionOptions) => Promise<boolean>;
     }
     increaseAllowance: {
-        (params:{spender:string,addedValue:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{spender:string,addedValue:number|BigNumber}) => Promise<boolean>;
-    }
-    async mint_send(params:{to:string,amount:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('mint',[params.to,Utils.toString(params.amount)]);
-        return result;
-    }
-    async mint_call(params:{to:string,amount:number|BigNumber}): Promise<void>{
-        let result = await this.call('mint',[params.to,Utils.toString(params.amount)]);
-        return;
+        (params: IIncreaseAllowanceParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: IIncreaseAllowanceParams, options?: TransactionOptions) => Promise<boolean>;
     }
     mint: {
-        (params:{to:string,amount:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{to:string,amount:number|BigNumber}) => Promise<void>;
+        (params: IMintParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: IMintParams, options?: TransactionOptions) => Promise<void>;
     }
-    async minted(): Promise<boolean>{
-        let result = await this.call('minted');
-        return result;
+    minted: {
+        (options?: TransactionOptions): Promise<boolean>;
     }
-    async minter(): Promise<string>{
-        let result = await this.call('minter');
-        return result;
+    minter: {
+        (options?: TransactionOptions): Promise<string>;
     }
-    async name(): Promise<string>{
-        let result = await this.call('name');
-        return result;
+    name: {
+        (options?: TransactionOptions): Promise<string>;
     }
-    async symbol(): Promise<string>{
-        let result = await this.call('symbol');
-        return result;
+    symbol: {
+        (options?: TransactionOptions): Promise<string>;
     }
-    async totalSupply(): Promise<BigNumber>{
-        let result = await this.call('totalSupply');
-        return new BigNumber(result);
-    }
-    async transfer_send(params:{recipient:string,amount:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('transfer',[params.recipient,Utils.toString(params.amount)]);
-        return result;
-    }
-    async transfer_call(params:{recipient:string,amount:number|BigNumber}): Promise<boolean>{
-        let result = await this.call('transfer',[params.recipient,Utils.toString(params.amount)]);
-        return result;
+    totalSupply: {
+        (options?: TransactionOptions): Promise<BigNumber>;
     }
     transfer: {
-        (params:{recipient:string,amount:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{recipient:string,amount:number|BigNumber}) => Promise<boolean>;
-    }
-    async transferFrom_send(params:{sender:string,recipient:string,amount:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('transferFrom',[params.sender,params.recipient,Utils.toString(params.amount)]);
-        return result;
-    }
-    async transferFrom_call(params:{sender:string,recipient:string,amount:number|BigNumber}): Promise<boolean>{
-        let result = await this.call('transferFrom',[params.sender,params.recipient,Utils.toString(params.amount)]);
-        return result;
+        (params: ITransferParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ITransferParams, options?: TransactionOptions) => Promise<boolean>;
     }
     transferFrom: {
-        (params:{sender:string,recipient:string,amount:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{sender:string,recipient:string,amount:number|BigNumber}) => Promise<boolean>;
+        (params: ITransferFromParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ITransferFromParams, options?: TransactionOptions) => Promise<boolean>;
     }
     private assign(){
-        this.approve = Object.assign(this.approve_send, {call:this.approve_call});
-        this.decreaseAllowance = Object.assign(this.decreaseAllowance_send, {call:this.decreaseAllowance_call});
-        this.increaseAllowance = Object.assign(this.increaseAllowance_send, {call:this.increaseAllowance_call});
-        this.mint = Object.assign(this.mint_send, {call:this.mint_call});
-        this.transfer = Object.assign(this.transfer_send, {call:this.transfer_call});
-        this.transferFrom = Object.assign(this.transferFrom_send, {call:this.transferFrom_call});
+        let allowanceParams = (params: IAllowanceParams) => [params.owner,params.spender];
+        let allowance_call = async (params: IAllowanceParams, options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('allowance',allowanceParams(params),options);
+            return new BigNumber(result);
+        }
+        this.allowance = allowance_call
+        let balanceOf_call = async (account:string, options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('balanceOf',[account],options);
+            return new BigNumber(result);
+        }
+        this.balanceOf = balanceOf_call
+        let decimals_call = async (options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('decimals',[],options);
+            return new BigNumber(result);
+        }
+        this.decimals = decimals_call
+        let minted_call = async (options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('minted',[],options);
+            return result;
+        }
+        this.minted = minted_call
+        let minter_call = async (options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('minter',[],options);
+            return result;
+        }
+        this.minter = minter_call
+        let name_call = async (options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('name',[],options);
+            return result;
+        }
+        this.name = name_call
+        let symbol_call = async (options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('symbol',[],options);
+            return result;
+        }
+        this.symbol = symbol_call
+        let totalSupply_call = async (options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('totalSupply',[],options);
+            return new BigNumber(result);
+        }
+        this.totalSupply = totalSupply_call
+        let approveParams = (params: IApproveParams) => [params.spender,this.wallet.utils.toString(params.amount)];
+        let approve_send = async (params: IApproveParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('approve',approveParams(params),options);
+            return result;
+        }
+        let approve_call = async (params: IApproveParams, options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('approve',approveParams(params),options);
+            return result;
+        }
+        this.approve = Object.assign(approve_send, {
+            call:approve_call
+        });
+        let decreaseAllowanceParams = (params: IDecreaseAllowanceParams) => [params.spender,this.wallet.utils.toString(params.subtractedValue)];
+        let decreaseAllowance_send = async (params: IDecreaseAllowanceParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('decreaseAllowance',decreaseAllowanceParams(params),options);
+            return result;
+        }
+        let decreaseAllowance_call = async (params: IDecreaseAllowanceParams, options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('decreaseAllowance',decreaseAllowanceParams(params),options);
+            return result;
+        }
+        this.decreaseAllowance = Object.assign(decreaseAllowance_send, {
+            call:decreaseAllowance_call
+        });
+        let increaseAllowanceParams = (params: IIncreaseAllowanceParams) => [params.spender,this.wallet.utils.toString(params.addedValue)];
+        let increaseAllowance_send = async (params: IIncreaseAllowanceParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('increaseAllowance',increaseAllowanceParams(params),options);
+            return result;
+        }
+        let increaseAllowance_call = async (params: IIncreaseAllowanceParams, options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('increaseAllowance',increaseAllowanceParams(params),options);
+            return result;
+        }
+        this.increaseAllowance = Object.assign(increaseAllowance_send, {
+            call:increaseAllowance_call
+        });
+        let mintParams = (params: IMintParams) => [params.to,this.wallet.utils.toString(params.amount)];
+        let mint_send = async (params: IMintParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('mint',mintParams(params),options);
+            return result;
+        }
+        let mint_call = async (params: IMintParams, options?: TransactionOptions): Promise<void> => {
+            let result = await this.call('mint',mintParams(params),options);
+            return;
+        }
+        this.mint = Object.assign(mint_send, {
+            call:mint_call
+        });
+        let transferParams = (params: ITransferParams) => [params.to,this.wallet.utils.toString(params.amount)];
+        let transfer_send = async (params: ITransferParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('transfer',transferParams(params),options);
+            return result;
+        }
+        let transfer_call = async (params: ITransferParams, options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('transfer',transferParams(params),options);
+            return result;
+        }
+        this.transfer = Object.assign(transfer_send, {
+            call:transfer_call
+        });
+        let transferFromParams = (params: ITransferFromParams) => [params.from,params.to,this.wallet.utils.toString(params.amount)];
+        let transferFrom_send = async (params: ITransferFromParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('transferFrom',transferFromParams(params),options);
+            return result;
+        }
+        let transferFrom_call = async (params: ITransferFromParams, options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('transferFrom',transferFromParams(params),options);
+            return result;
+        }
+        this.transferFrom = Object.assign(transferFrom_send, {
+            call:transferFrom_call
+        });
     }
 }
 export module ERC20DelayFixedSupply{

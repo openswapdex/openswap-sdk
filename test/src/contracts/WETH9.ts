@@ -1,13 +1,17 @@
-import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import {IWallet, Contract as _Contract, Transaction, TransactionReceipt, BigNumber, Event, IBatchRequestObj, TransactionOptions} from "@ijstech/eth-contract";
 import Bin from "./WETH9.json";
-
-export class WETH9 extends Contract{
+export interface IAllowanceParams {param1:string;param2:string}
+export interface IApproveParams {guy:string;wad:number|BigNumber}
+export interface ITransferParams {dst:string;wad:number|BigNumber}
+export interface ITransferFromParams {src:string;dst:string;wad:number|BigNumber}
+export class WETH9 extends _Contract{
+    static _abi: any = Bin.abi;
     constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
         this.assign()
     }
-    deploy(): Promise<string>{
-        return this.__deploy();
+    deploy(options?: TransactionOptions): Promise<string>{
+        return this.__deploy([], options);
     }
     parseApprovalEvent(receipt: TransactionReceipt): WETH9.ApprovalEvent[]{
         return this.parseEvents(receipt, "Approval").map(e=>this.decodeApprovalEvent(e));
@@ -55,96 +59,134 @@ export class WETH9 extends Contract{
             _event: event
         };
     }
-    async allowance(params:{param1:string,param2:string}): Promise<BigNumber>{
-        let result = await this.call('allowance',[params.param1,params.param2]);
-        return new BigNumber(result);
-    }
-    async approve_send(params:{guy:string,wad:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('approve',[params.guy,Utils.toString(params.wad)]);
-        return result;
-    }
-    async approve_call(params:{guy:string,wad:number|BigNumber}): Promise<boolean>{
-        let result = await this.call('approve',[params.guy,Utils.toString(params.wad)]);
-        return result;
+    allowance: {
+        (params: IAllowanceParams, options?: TransactionOptions): Promise<BigNumber>;
     }
     approve: {
-        (params:{guy:string,wad:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{guy:string,wad:number|BigNumber}) => Promise<boolean>;
+        (params: IApproveParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: IApproveParams, options?: TransactionOptions) => Promise<boolean>;
     }
-    async balanceOf(param1:string): Promise<BigNumber>{
-        let result = await this.call('balanceOf',[param1]);
-        return new BigNumber(result);
+    balanceOf: {
+        (param1:string, options?: TransactionOptions): Promise<BigNumber>;
     }
-    async decimals(): Promise<BigNumber>{
-        let result = await this.call('decimals');
-        return new BigNumber(result);
-    }
-    async deposit_send(_value:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.send('deposit', [], {value:_value});
-        return result;
-    }
-    async deposit_call(_value:number|BigNumber): Promise<void>{
-        let result = await this.call('deposit', [], {value:_value});
-        return;
+    decimals: {
+        (options?: TransactionOptions): Promise<BigNumber>;
     }
     deposit: {
-        (_value:number|BigNumber): Promise<TransactionReceipt>;
-        call: (_value:number|BigNumber) => Promise<void>;
+        (options?: number|BigNumber|TransactionOptions): Promise<TransactionReceipt>;
+        call: (options?: number|BigNumber|TransactionOptions) => Promise<void>;
     }
-    async name(): Promise<string>{
-        let result = await this.call('name');
-        return result;
+    name: {
+        (options?: TransactionOptions): Promise<string>;
     }
-    async symbol(): Promise<string>{
-        let result = await this.call('symbol');
-        return result;
+    symbol: {
+        (options?: TransactionOptions): Promise<string>;
     }
-    async totalSupply(): Promise<BigNumber>{
-        let result = await this.call('totalSupply');
-        return new BigNumber(result);
-    }
-    async transfer_send(params:{dst:string,wad:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('transfer',[params.dst,Utils.toString(params.wad)]);
-        return result;
-    }
-    async transfer_call(params:{dst:string,wad:number|BigNumber}): Promise<boolean>{
-        let result = await this.call('transfer',[params.dst,Utils.toString(params.wad)]);
-        return result;
+    totalSupply: {
+        (options?: TransactionOptions): Promise<BigNumber>;
     }
     transfer: {
-        (params:{dst:string,wad:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{dst:string,wad:number|BigNumber}) => Promise<boolean>;
-    }
-    async transferFrom_send(params:{src:string,dst:string,wad:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('transferFrom',[params.src,params.dst,Utils.toString(params.wad)]);
-        return result;
-    }
-    async transferFrom_call(params:{src:string,dst:string,wad:number|BigNumber}): Promise<boolean>{
-        let result = await this.call('transferFrom',[params.src,params.dst,Utils.toString(params.wad)]);
-        return result;
+        (params: ITransferParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ITransferParams, options?: TransactionOptions) => Promise<boolean>;
     }
     transferFrom: {
-        (params:{src:string,dst:string,wad:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{src:string,dst:string,wad:number|BigNumber}) => Promise<boolean>;
-    }
-    async withdraw_send(wad:number|BigNumber): Promise<TransactionReceipt>{
-        let result = await this.send('withdraw',[Utils.toString(wad)]);
-        return result;
-    }
-    async withdraw_call(wad:number|BigNumber): Promise<void>{
-        let result = await this.call('withdraw',[Utils.toString(wad)]);
-        return;
+        (params: ITransferFromParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ITransferFromParams, options?: TransactionOptions) => Promise<boolean>;
     }
     withdraw: {
-        (wad:number|BigNumber): Promise<TransactionReceipt>;
-        call: (wad:number|BigNumber) => Promise<void>;
+        (wad:number|BigNumber, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (wad:number|BigNumber, options?: TransactionOptions) => Promise<void>;
     }
     private assign(){
-        this.approve = Object.assign(this.approve_send, {call:this.approve_call});
-        this.deposit = Object.assign(this.deposit_send, {call:this.deposit_call});
-        this.transfer = Object.assign(this.transfer_send, {call:this.transfer_call});
-        this.transferFrom = Object.assign(this.transferFrom_send, {call:this.transferFrom_call});
-        this.withdraw = Object.assign(this.withdraw_send, {call:this.withdraw_call});
+        let allowanceParams = (params: IAllowanceParams) => [params.param1,params.param2];
+        let allowance_call = async (params: IAllowanceParams, options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('allowance',allowanceParams(params),options);
+            return new BigNumber(result);
+        }
+        this.allowance = allowance_call
+        let balanceOf_call = async (param1:string, options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('balanceOf',[param1],options);
+            return new BigNumber(result);
+        }
+        this.balanceOf = balanceOf_call
+        let decimals_call = async (options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('decimals',[],options);
+            return new BigNumber(result);
+        }
+        this.decimals = decimals_call
+        let name_call = async (options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('name',[],options);
+            return result;
+        }
+        this.name = name_call
+        let symbol_call = async (options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('symbol',[],options);
+            return result;
+        }
+        this.symbol = symbol_call
+        let totalSupply_call = async (options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('totalSupply',[],options);
+            return new BigNumber(result);
+        }
+        this.totalSupply = totalSupply_call
+        let approveParams = (params: IApproveParams) => [params.guy,this.wallet.utils.toString(params.wad)];
+        let approve_send = async (params: IApproveParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('approve',approveParams(params),options);
+            return result;
+        }
+        let approve_call = async (params: IApproveParams, options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('approve',approveParams(params),options);
+            return result;
+        }
+        this.approve = Object.assign(approve_send, {
+            call:approve_call
+        });
+        let deposit_send = async (options?: number|BigNumber|TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('deposit',[],options);
+            return result;
+        }
+        let deposit_call = async (options?: number|BigNumber|TransactionOptions): Promise<void> => {
+            let result = await this.call('deposit',[],options);
+            return;
+        }
+        this.deposit = Object.assign(deposit_send, {
+            call:deposit_call
+        });
+        let transferParams = (params: ITransferParams) => [params.dst,this.wallet.utils.toString(params.wad)];
+        let transfer_send = async (params: ITransferParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('transfer',transferParams(params),options);
+            return result;
+        }
+        let transfer_call = async (params: ITransferParams, options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('transfer',transferParams(params),options);
+            return result;
+        }
+        this.transfer = Object.assign(transfer_send, {
+            call:transfer_call
+        });
+        let transferFromParams = (params: ITransferFromParams) => [params.src,params.dst,this.wallet.utils.toString(params.wad)];
+        let transferFrom_send = async (params: ITransferFromParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('transferFrom',transferFromParams(params),options);
+            return result;
+        }
+        let transferFrom_call = async (params: ITransferFromParams, options?: TransactionOptions): Promise<boolean> => {
+            let result = await this.call('transferFrom',transferFromParams(params),options);
+            return result;
+        }
+        this.transferFrom = Object.assign(transferFrom_send, {
+            call:transferFrom_call
+        });
+        let withdraw_send = async (wad:number|BigNumber, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('withdraw',[this.wallet.utils.toString(wad)],options);
+            return result;
+        }
+        let withdraw_call = async (wad:number|BigNumber, options?: TransactionOptions): Promise<void> => {
+            let result = await this.call('withdraw',[this.wallet.utils.toString(wad)],options);
+            return;
+        }
+        this.withdraw = Object.assign(withdraw_send, {
+            call:withdraw_call
+        });
     }
 }
 export module WETH9{

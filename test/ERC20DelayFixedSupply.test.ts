@@ -49,7 +49,7 @@ describe('OpenSwap', async () => {
     });
     it('can transfer', async () => {
         _wallet.defaultAccount = accounts[2];
-        await token.transfer({recipient:accounts[3], amount:Utils.toDecimals(300)});
+        await token.transfer({to:accounts[3], amount:Utils.toDecimals(300)});
         let balance = await token.balanceOf(accounts[2]);
         expect(balance).to.be.a.bignumber.that.equals(Utils.toDecimals(700));
         balance = await token.balanceOf(accounts[3]);
@@ -60,7 +60,7 @@ describe('OpenSwap', async () => {
         await token.approve({spender:accounts[4], amount:Utils.toDecimals(200)});
 
         _wallet.defaultAccount = accounts[4];
-        await token.transferFrom({sender:accounts[3], recipient:accounts[5], amount:Utils.toDecimals(100)});
+        await token.transferFrom({from:accounts[3], to:accounts[5], amount:Utils.toDecimals(100)});
         let balance = await token.balanceOf(accounts[3]);
         expect(balance).to.be.a.bignumber.that.equals(Utils.toDecimals(200));
         balance = await token.balanceOf(accounts[4]);

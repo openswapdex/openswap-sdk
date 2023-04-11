@@ -1,13 +1,15 @@
-import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import {IWallet, Contract as _Contract, Transaction, TransactionReceipt, BigNumber, Event, IBatchRequestObj, TransactionOptions} from "@ijstech/eth-contract";
 import Bin from "./MockAmmPair.json";
-
-export class MockAmmPair extends Contract{
+export interface IDeployParams {token0:string;token1:string}
+export interface ISetReservesParams {reserve0:number|BigNumber;reserve1:number|BigNumber}
+export class MockAmmPair extends _Contract{
+    static _abi: any = Bin.abi;
     constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
         this.assign()
     }
-    deploy(params:{token0:string,token1:string}): Promise<string>{
-        return this.__deploy([params.token0,params.token1]);
+    deploy(params: IDeployParams, options?: TransactionOptions): Promise<string>{
+        return this.__deploy([params.token0,params.token1], options);
     }
     parseSyncEvent(receipt: TransactionReceipt): MockAmmPair.SyncEvent[]{
         return this.parseEvents(receipt, "Sync").map(e=>this.decodeSyncEvent(e));
@@ -20,48 +22,75 @@ export class MockAmmPair extends Contract{
             _event: event
         };
     }
-    async __blockTimestampLast(): Promise<BigNumber>{
-        let result = await this.call('__blockTimestampLast');
-        return new BigNumber(result);
+    __blockTimestampLast: {
+        (options?: TransactionOptions): Promise<BigNumber>;
     }
-    async __reserve0(): Promise<BigNumber>{
-        let result = await this.call('__reserve0');
-        return new BigNumber(result);
+    __reserve0: {
+        (options?: TransactionOptions): Promise<BigNumber>;
     }
-    async __reserve1(): Promise<BigNumber>{
-        let result = await this.call('__reserve1');
-        return new BigNumber(result);
+    __reserve1: {
+        (options?: TransactionOptions): Promise<BigNumber>;
     }
-    async getReserves(): Promise<{reserve0:BigNumber,reserve1:BigNumber,blockTimestampLast:BigNumber}>{
-        let result = await this.call('getReserves');
-        return {
-            reserve0: new BigNumber(result.reserve0),
-            reserve1: new BigNumber(result.reserve1),
-            blockTimestampLast: new BigNumber(result.blockTimestampLast)
-        };
-    }
-    async setReserves_send(params:{reserve0:number|BigNumber,reserve1:number|BigNumber}): Promise<TransactionReceipt>{
-        let result = await this.send('setReserves',[Utils.toString(params.reserve0),Utils.toString(params.reserve1)]);
-        return result;
-    }
-    async setReserves_call(params:{reserve0:number|BigNumber,reserve1:number|BigNumber}): Promise<void>{
-        let result = await this.call('setReserves',[Utils.toString(params.reserve0),Utils.toString(params.reserve1)]);
-        return;
+    getReserves: {
+        (options?: TransactionOptions): Promise<{reserve0:BigNumber,reserve1:BigNumber,blockTimestampLast:BigNumber}>;
     }
     setReserves: {
-        (params:{reserve0:number|BigNumber,reserve1:number|BigNumber}): Promise<TransactionReceipt>;
-        call: (params:{reserve0:number|BigNumber,reserve1:number|BigNumber}) => Promise<void>;
+        (params: ISetReservesParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ISetReservesParams, options?: TransactionOptions) => Promise<void>;
     }
-    async token0(): Promise<string>{
-        let result = await this.call('token0');
-        return result;
+    token0: {
+        (options?: TransactionOptions): Promise<string>;
     }
-    async token1(): Promise<string>{
-        let result = await this.call('token1');
-        return result;
+    token1: {
+        (options?: TransactionOptions): Promise<string>;
     }
     private assign(){
-        this.setReserves = Object.assign(this.setReserves_send, {call:this.setReserves_call});
+        let __blockTimestampLast_call = async (options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('__blockTimestampLast',[],options);
+            return new BigNumber(result);
+        }
+        this.__blockTimestampLast = __blockTimestampLast_call
+        let __reserve0_call = async (options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('__reserve0',[],options);
+            return new BigNumber(result);
+        }
+        this.__reserve0 = __reserve0_call
+        let __reserve1_call = async (options?: TransactionOptions): Promise<BigNumber> => {
+            let result = await this.call('__reserve1',[],options);
+            return new BigNumber(result);
+        }
+        this.__reserve1 = __reserve1_call
+        let getReserves_call = async (options?: TransactionOptions): Promise<{reserve0:BigNumber,reserve1:BigNumber,blockTimestampLast:BigNumber}> => {
+            let result = await this.call('getReserves',[],options);
+            return {
+                reserve0: new BigNumber(result.reserve0),
+                reserve1: new BigNumber(result.reserve1),
+                blockTimestampLast: new BigNumber(result.blockTimestampLast)
+            };
+        }
+        this.getReserves = getReserves_call
+        let token0_call = async (options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('token0',[],options);
+            return result;
+        }
+        this.token0 = token0_call
+        let token1_call = async (options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('token1',[],options);
+            return result;
+        }
+        this.token1 = token1_call
+        let setReservesParams = (params: ISetReservesParams) => [this.wallet.utils.toString(params.reserve0),this.wallet.utils.toString(params.reserve1)];
+        let setReserves_send = async (params: ISetReservesParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('setReserves',setReservesParams(params),options);
+            return result;
+        }
+        let setReserves_call = async (params: ISetReservesParams, options?: TransactionOptions): Promise<void> => {
+            let result = await this.call('setReserves',setReservesParams(params),options);
+            return;
+        }
+        this.setReserves = Object.assign(setReserves_send, {
+            call:setReserves_call
+        });
     }
 }
 export module MockAmmPair{

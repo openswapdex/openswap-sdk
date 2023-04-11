@@ -1,15 +1,10 @@
 import 'mocha';
 import {Utils, Wallet, BigNumber} from "@ijstech/eth-wallet";
-const Ganache = require("ganache");
-const {expect, use} = require("chai");
 
-import {OpenSwap as OpenSwapContract} from '../src/contracts';
 import {OpenSwap} from '../src';
+import { assertEqual, getProvider } from './helper';
 
-use(require('chai-bignumber')(BigNumber));
-
-let _provider = Ganache.provider();
-let _wallet = new Wallet(_provider);
+let _wallet = new Wallet(getProvider());
 
 let accounts: string[];
 let oswap: OpenSwap;
@@ -26,28 +21,28 @@ describe('OpenSwap', async () => {
     });
    
     it('init', async () => {
-        expect(await oswap.cap).to.be.a.bignumber.that.equals(new BigNumber(CAP));
-        expect(await oswap.totalSupply).to.be.a.bignumber.that.equals(new BigNumber(CAP/2));
-        expect(await oswap.balanceOf(accounts[2])).to.be.a.bignumber.that.equals(new BigNumber(CAP/2));
+        assertEqual(await oswap.cap, new BigNumber(CAP));
+        assertEqual(await oswap.totalSupply, new BigNumber(CAP/2));
+        assertEqual(await oswap.balanceOf(accounts[2]), new BigNumber(CAP/2));
     });
     it('transfer', async () => {
         _wallet.defaultAccount = accounts[2];
         let event = await oswap.transfer({address: accounts[3], amount: TRANSFER});
-        expect(event).to.deep.include({from:accounts[2], to:accounts[3], value:new BigNumber(TRANSFER)});
-        expect(await oswap.balanceOf(accounts[2])).to.be.a.bignumber.that.equals(new BigNumber(CAP/2-TRANSFER));
-        expect(await oswap.balanceOf(accounts[3])).to.be.a.bignumber.that.equals(new BigNumber(TRANSFER));
+        assertEqual(event, {from:accounts[2], to:accounts[3], value:new BigNumber(TRANSFER)}, true);
+        assertEqual(await oswap.balanceOf(accounts[2]), new BigNumber(CAP/2-TRANSFER));
+        assertEqual(await oswap.balanceOf(accounts[3]), new BigNumber(TRANSFER));
     });
     it('transfer from', async () => {
         _wallet.defaultAccount = accounts[2];
         let event1 = await oswap.approve({spender: accounts[3], amount: TRANSFER});
-        expect(event1).to.deep.include({owner:accounts[2], spender:accounts[3], value:new BigNumber(TRANSFER)});
+        assertEqual(event1, {owner:accounts[2], spender:accounts[3], value:new BigNumber(TRANSFER)}, true);
 
         _wallet.defaultAccount = accounts[3];
         let event2 = await oswap.transferFrom({sender: accounts[2], recipient: accounts[4], amount: TRANSFER/2});
-        expect(event2.transfer).to.deep.include({from:accounts[2], to:accounts[4], value:new BigNumber(TRANSFER/2)});
-        expect(event2.approval).to.deep.include({owner:accounts[2], spender:accounts[3], value:new BigNumber(TRANSFER/2)});
-        expect(await oswap.balanceOf(accounts[2])).to.be.a.bignumber.that.equals(new BigNumber(CAP/2-TRANSFER*1.5));
-        expect(await oswap.balanceOf(accounts[3])).to.be.a.bignumber.that.equals(new BigNumber(TRANSFER));
-        expect(await oswap.balanceOf(accounts[4])).to.be.a.bignumber.that.equals(new BigNumber(TRANSFER/2));
+        assertEqual(event2.transfer, {from:accounts[2], to:accounts[4], value:new BigNumber(TRANSFER/2)}, true);
+        assertEqual(event2.approval, {owner:accounts[2], spender:accounts[3], value:new BigNumber(TRANSFER/2)}, true);
+        assertEqual(await oswap.balanceOf(accounts[2]), new BigNumber(CAP/2-TRANSFER*1.5));
+        assertEqual(await oswap.balanceOf(accounts[3]), new BigNumber(TRANSFER));
+        assertEqual(await oswap.balanceOf(accounts[4]), new BigNumber(TRANSFER/2));
     });
 });

@@ -1,94 +1,38 @@
 import 'mocha';
-import BigNumber from 'bignumber.js';
-import { padLeft, padRight, numberToBytes32, addressToBytes32, stringToBytes32, addressToBytes32Right, print } from "./helper";
-import Web3 from "web3";
-const { expect } = require('chai');
-import * as Ganache from "ganache";
-
+import assert from 'assert';
 import { Contract } from "@ijstech/eth-contract";
-
-import { OAXDEX_VotingContract, OSWAP_OraclePair } from '../src/contracts';
+import {Utils, Wallet, BigNumber} from "@ijstech/eth-wallet";
+import { Contracts, deploy, toDeploymentContracts, IDeploymentContracts} from '../src';
 import { TestERC20, MockOracleAdaptor, WETH9, MockAmmFactory, MockAmmPair } from './src/contracts';
-
-import {deploy, toDeploymentContracts, IDeploymentContracts} from '../src/deploy';
-
-import {Utils, Wallet} from "@ijstech/eth-wallet";
+import {print, assertEqual, getProvider} from './helper';
+import {stakeToVote, newVote, voteToPass}  from './oswapHelper';
 
 let deployment: IDeploymentContracts;
 let weth: WETH9;
 
 const ERC20 = TestERC20;
 
-let accounts;
+let accounts: string[];
 
 let now;
-let web3:Web3;
-let _provider = Ganache.provider();
-let _wallet = new Wallet(_provider);
+let _wallet = new Wallet(getProvider());
 
 
-function toWei(value: string, decimals: number =18) {
-    return new BigNumber(value).shiftedBy(decimals);
-}
-async function stakeToVote() {
-    const govToken = deployment.openSwap;
-    const governance = deployment.governance;
-
-    await govToken.mint({address:accounts[0], amount: 100000000});
-    await govToken.approve({spender:governance.address, amount:100000000});
-    await governance.stake(Utils.toDecimals(100000000));
-
-    now = (await web3.eth.getBlock('latest')).timestamp;
-    now += 2;
-    await _wallet.setBlockTime(now);
-
-    await governance.unlockStake();
-}
-async function newVote(executor, type, quorum, param) {
-    now = (await web3.eth.getBlock('latest')).timestamp;
-    let threshold = "50";
-    let voteEndTime = now + 30;
-    let exeDelay = 3;
-
-    let receipt = await deployment.registry.newVote({
-        executor: executor.address,
-        name: stringToBytes32(type, true), 
-        options: [stringToBytes32('Y', true), stringToBytes32('N', true)],
-        quorum: new BigNumber(quorum).shiftedBy(18),
-        threshold: new BigNumber(threshold).shiftedBy(18 - 2),
-        voteEndTime: voteEndTime,
-        executeDelay: exeDelay,
-        executeParam: [stringToBytes32(type, true)].concat(param)
-    }); 
-    let event = await deployment.governance.parseNewVoteEvent(receipt)[0];
-    let voteAddr = event.vote;
-    console.log("voting address " + voteAddr);
-
-    let voting = new OAXDEX_VotingContract(_wallet, voteAddr);
-    receipt = await voting.vote(0);
-
-    await _wallet.setBlockTime(voteEndTime + exeDelay + 1);
-
-    return voting;
-}
 async function addExecutor(newExecutor:Contract) {
-    let voting = await newVote(deployment.executor, "setVotingExecutor", "10000000", [addressToBytes32Right(newExecutor.address, true), numberToBytes32(1, true)]);
-    let receipt = await voting.execute();
+    let voting = await voteToPass(_wallet.defaultAccount, _wallet, deployment, deployment.executor, "setVotingExecutor", [Utils.addressToBytes32Right(newExecutor.address, true), Utils.numberToBytes32(1, true)]);
 }
 async function createPair(accounts, tokenA, tokenB, priceA, priceB) {
-    const factory = deployment.oracleFactory;
-    
-    now = (await web3.eth.getBlock('latest')).timestamp;
+    now = (await _wallet.getBlock('latest')).timestamp;
 
     let tokens = [];
     let prices = [];
     if (tokenA.address != weth.address) {
         tokens.push(tokenA.address);
-        prices.push(toWei((priceA).toString()));
+        prices.push(Utils.toDecimals((priceA).toString()));
     }
     if (tokenB.address != weth.address) {
         tokens.push(tokenB.address);
-        prices.push(toWei((priceB).toString()));
+        prices.push(Utils.toDecimals((priceB).toString()));
     }
     const oracle = new MockOracleAdaptor(_wallet);
     await oracle.deploy({weth:weth.address, decimals:18, tokens:tokens, prices:prices});
@@ -106,15 +50,14 @@ async function createPair(accounts, tokenA, tokenB, priceA, priceB) {
         direction = false;
     }
 
-    let voting = await newVote(deployment.executor2, "setOracle", "10000000", [addressToBytes32Right(token0, true), addressToBytes32Right(token1, true), addressToBytes32Right(oracle.address, true)]);
-    await voting.execute();
+    let voting = await voteToPass(_wallet.defaultAccount, _wallet, deployment, deployment.executor2, "setOracle", [Utils.addressToBytes32Right(token0, true), Utils.addressToBytes32Right(token1, true), Utils.addressToBytes32Right(oracle.address, true)]);
     console.log("executed");
 
-    let receipt = await factory.createPair({tokenA:token0, tokenB:token1});
-    let event = factory.parsePairCreatedEvent(receipt)[0];
+    let receipt = await deployment.oracleFactory.createPair({tokenA:token0, tokenB:token1});
+    let event = deployment.oracleFactory.parsePairCreatedEvent(receipt)[0];
     
     console.log("pair address " + event.pair);
-    let pair = new OSWAP_OraclePair(_wallet, event.pair);
+    let pair = new Contracts.OSWAP_OraclePair(_wallet, event.pair);
 
     return [pair, direction];
 }
@@ -131,7 +74,7 @@ async function addLiquidityETH(from, tokenA, toAddTokenA, staked, orderIndex, am
     const govToken = deployment.openSwap;
 
     staked = staked;
-    amountIn = toWei(amountIn);
+    amountIn = Utils.toDecimals(amountIn);
 
     _wallet.defaultAccount = accounts[0];
     // await govToken.transfer({recipient:from, amount:staked});
@@ -152,12 +95,11 @@ async function addLiquidityETH(from, tokenA, toAddTokenA, staked, orderIndex, am
 describe('OSWAP_OraclePair 1', function () {
     let _tokenCounter = 0;
     let _token: TestERC20;
-    let _pair: OSWAP_OraclePair;
+    let _pair: Contracts.OSWAP_OraclePair;
     let _direction: boolean;
     let _expire: number;
 
-    before(async function() {
-        web3 = new Web3(_provider/*new Web3.providers.HttpProvider()*/);
+    before('deploy', async function() {
         accounts = await _wallet.accounts;
         console.log(accounts);
 
@@ -166,12 +108,6 @@ describe('OSWAP_OraclePair 1', function () {
         weth = new WETH9(_wallet);
         let wethAddr = await weth.deploy();
         let result = await deploy(_wallet, {
-            govTokenOptions:{
-                initSupply: 2000000,
-                initSupplyTo: accounts[0],
-                minter: accounts[0],
-                totalSupply: 1000000000
-            },
             tokens: {
                 weth: wethAddr
             }
@@ -179,12 +115,10 @@ describe('OSWAP_OraclePair 1', function () {
 
         deployment = toDeploymentContracts(_wallet, result);
 
-        await stakeToVote();
-        await addExecutor(deployment.executor1);
-        await addExecutor(deployment.executor2);
+        await stakeToVote(accounts[0], accounts[0], _wallet, deployment);
     });
     beforeEach(async function() {
-        now = (await web3.eth.getBlock('latest')).timestamp;
+        now = (await _wallet.getBlock('latest')).timestamp;
         console.log("now " + now);
     });
 
@@ -196,15 +130,15 @@ describe('OSWAP_OraclePair 1', function () {
         it('should able to add liquidity - token', async function () {
             let staked = "100";
             let amountIn = "10000";
-            now = (await web3.eth.getBlock('latest')).timestamp;
+            now = (await _wallet.getBlock('latest')).timestamp;
             _expire = now + 60;
             let deadline = now + 36000;
 
             let receipt = await addLiquidityETH(accounts[2], _token, true, staked, 0, amountIn, _expire, true, deadline);
         });
         async function swapExactETHForTokens() {
-            let amountIn = toWei("1");
-            let amountOutMin = toWei("300");
+            let amountIn = Utils.toDecimals("1");
+            let amountOutMin = Utils.toDecimals("300");
             let path = [weth.address, _token.address];
             let to = accounts[3];
             let deadline = now + 60;
@@ -226,15 +160,15 @@ describe('OSWAP_OraclePair 1', function () {
         it('should able to add liquidity - ETH', async function () {
             let staked = "100";
             let amountIn = "50";
-            now = (await web3.eth.getBlock('latest')).timestamp;
+            now = (await _wallet.getBlock('latest')).timestamp;
             _expire = now + 60;
             let deadline = now + 36000;
 
             let receipt = await addLiquidityETH(accounts[4], _token, false, staked, 0, amountIn, _expire, true, deadline);
         });
         it ('should able to swap token to ETH', async function () {
-            let amountIn = toWei("500");
-            let amountOutMin = toWei("1");
+            let amountIn = Utils.toDecimals("500");
+            let amountOutMin = Utils.toDecimals("1");
             let path = [_token.address, weth.address];
             let to = accounts[3];
             let deadline = now + 60;

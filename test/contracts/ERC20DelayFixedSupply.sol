@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
-pragma solidity 0.6.11;
+pragma solidity 0.8.19;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract ERC20DelayFixedSupply is ERC20 {
     address public immutable minter;
     bool public minted;
-    constructor(address _minter, string memory name, string memory symbol) ERC20(name, symbol) public {
+    constructor(address _minter, string memory name, string memory symbol) ERC20(name, symbol) {
         minter = _minter;
     }
     function mint(address to, uint256 amount) external {

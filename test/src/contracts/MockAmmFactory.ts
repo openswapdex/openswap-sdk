@@ -1,13 +1,16 @@
-import {IWallet, Contract, Transaction, TransactionReceipt, Utils, BigNumber, Event} from "@ijstech/eth-wallet";
+import {IWallet, Contract as _Contract, Transaction, TransactionReceipt, BigNumber, Event, IBatchRequestObj, TransactionOptions} from "@ijstech/eth-contract";
 import Bin from "./MockAmmFactory.json";
-
-export class MockAmmFactory extends Contract{
+export interface ICreatePairParams {tokenA:string;tokenB:string}
+export interface IGetPairParams {param1:string;param2:string}
+export interface ISetPairParams {token0:string;token1:string;pair:string}
+export class MockAmmFactory extends _Contract{
+    static _abi: any = Bin.abi;
     constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);
         this.assign()
     }
-    deploy(): Promise<string>{
-        return this.__deploy();
+    deploy(options?: TransactionOptions): Promise<string>{
+        return this.__deploy([], options);
     }
     parsePairCreatedEvent(receipt: TransactionReceipt): MockAmmFactory.PairCreatedEvent[]{
         return this.parseEvents(receipt, "PairCreated").map(e=>this.decodePairCreatedEvent(e));
@@ -22,37 +25,48 @@ export class MockAmmFactory extends Contract{
             _event: event
         };
     }
-    async createPair_send(params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>{
-        let result = await this.send('createPair',[params.tokenA,params.tokenB]);
-        return result;
-    }
-    async createPair_call(params:{tokenA:string,tokenB:string}): Promise<string>{
-        let result = await this.call('createPair',[params.tokenA,params.tokenB]);
-        return result;
-    }
     createPair: {
-        (params:{tokenA:string,tokenB:string}): Promise<TransactionReceipt>;
-        call: (params:{tokenA:string,tokenB:string}) => Promise<string>;
+        (params: ICreatePairParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ICreatePairParams, options?: TransactionOptions) => Promise<string>;
     }
-    async getPair(params:{param1:string,param2:string}): Promise<string>{
-        let result = await this.call('getPair',[params.param1,params.param2]);
-        return result;
-    }
-    async setPair_send(params:{token0:string,token1:string,pair:string}): Promise<TransactionReceipt>{
-        let result = await this.send('setPair',[params.token0,params.token1,params.pair]);
-        return result;
-    }
-    async setPair_call(params:{token0:string,token1:string,pair:string}): Promise<void>{
-        let result = await this.call('setPair',[params.token0,params.token1,params.pair]);
-        return;
+    getPair: {
+        (params: IGetPairParams, options?: TransactionOptions): Promise<string>;
     }
     setPair: {
-        (params:{token0:string,token1:string,pair:string}): Promise<TransactionReceipt>;
-        call: (params:{token0:string,token1:string,pair:string}) => Promise<void>;
+        (params: ISetPairParams, options?: TransactionOptions): Promise<TransactionReceipt>;
+        call: (params: ISetPairParams, options?: TransactionOptions) => Promise<void>;
     }
     private assign(){
-        this.createPair = Object.assign(this.createPair_send, {call:this.createPair_call});
-        this.setPair = Object.assign(this.setPair_send, {call:this.setPair_call});
+        let getPairParams = (params: IGetPairParams) => [params.param1,params.param2];
+        let getPair_call = async (params: IGetPairParams, options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('getPair',getPairParams(params),options);
+            return result;
+        }
+        this.getPair = getPair_call
+        let createPairParams = (params: ICreatePairParams) => [params.tokenA,params.tokenB];
+        let createPair_send = async (params: ICreatePairParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('createPair',createPairParams(params),options);
+            return result;
+        }
+        let createPair_call = async (params: ICreatePairParams, options?: TransactionOptions): Promise<string> => {
+            let result = await this.call('createPair',createPairParams(params),options);
+            return result;
+        }
+        this.createPair = Object.assign(createPair_send, {
+            call:createPair_call
+        });
+        let setPairParams = (params: ISetPairParams) => [params.token0,params.token1,params.pair];
+        let setPair_send = async (params: ISetPairParams, options?: TransactionOptions): Promise<TransactionReceipt> => {
+            let result = await this.send('setPair',setPairParams(params),options);
+            return result;
+        }
+        let setPair_call = async (params: ISetPairParams, options?: TransactionOptions): Promise<void> => {
+            let result = await this.call('setPair',setPairParams(params),options);
+            return;
+        }
+        this.setPair = Object.assign(setPair_send, {
+            call:setPair_call
+        });
     }
 }
 export module MockAmmFactory{
