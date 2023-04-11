@@ -1,8 +1,8 @@
 import {IWallet, Contract as _Contract, Transaction, TransactionReceipt, BigNumber, Event, IBatchRequestObj, TransactionOptions} from "@ijstech/eth-contract";
 import Bin from "./StablePair.json";
 export interface IDeployParams {token0:string;token1:string;owner:string;fee:number|BigNumber}
-export interface IGetAmountInParams {param1:string;amountOut:number|BigNumber}
-export interface IGetAmountOutParams {param1:string;amountIn:number|BigNumber}
+export interface IGetAmountInParams {amountOut:number|BigNumber;param2:string}
+export interface IGetAmountOutParams {amountIn:number|BigNumber;param2:string}
 export interface ISwapParams {amount0Out:number|BigNumber;amount1Out:number|BigNumber;to:string;param4:string}
 export class StablePair extends _Contract{
     static _abi: any = Bin.abi;
@@ -78,13 +78,13 @@ export class StablePair extends _Contract{
             return new BigNumber(result);
         }
         this.fee = fee_call
-        let getAmountInParams = (params: IGetAmountInParams) => [params.param1,this.wallet.utils.toString(params.amountOut)];
+        let getAmountInParams = (params: IGetAmountInParams) => [this.wallet.utils.toString(params.amountOut),params.param2];
         let getAmountIn_call = async (params: IGetAmountInParams, options?: TransactionOptions): Promise<BigNumber> => {
             let result = await this.call('getAmountIn',getAmountInParams(params),options);
             return new BigNumber(result);
         }
         this.getAmountIn = getAmountIn_call
-        let getAmountOutParams = (params: IGetAmountOutParams) => [params.param1,this.wallet.utils.toString(params.amountIn)];
+        let getAmountOutParams = (params: IGetAmountOutParams) => [this.wallet.utils.toString(params.amountIn),params.param2];
         let getAmountOut_call = async (params: IGetAmountOutParams, options?: TransactionOptions): Promise<BigNumber> => {
             let result = await this.call('getAmountOut',getAmountOutParams(params),options);
             return new BigNumber(result);

@@ -9,8 +9,8 @@ interface IOSWAP_PairV1 {
     function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes calldata data) external;
 }
 interface IOSWAP_PairV5 is IOSWAP_PairV1 {
-    function getAmountOut(address tokenIn, uint256 amountIn) external view returns (uint256 amountOut);
-    function getAmountIn(address tokenOut, uint256 amountOut) external view returns (uint256 amountIn);
+    function getAmountOut(uint256 amountIn, address tokenIn) external view returns (uint256 amountOut);
+    function getAmountIn(uint256 amountOut, address tokenOut) external view returns (uint256 amountIn);
 }
 
 contract StableFactory {
@@ -78,10 +78,10 @@ contract StablePair {
     function _getAmountOut(uint256 amountIn) internal view returns (uint256 amountOut) {
         return amountIn.mul(fee).div(FEE_BASE);
     }
-    function getAmountOut(address /*tokenIn*/, uint256 amountIn) external view returns (uint256 amountOut) {
+    function getAmountOut(uint256 amountIn, address /*tokenIn*/) external view returns (uint256 amountOut) {
         return _getAmountOut(amountIn);
     }
-    function getAmountIn(address /*tokenOut*/, uint256 amountOut) external view returns (uint256 amountIn) {
+    function getAmountIn(uint256 amountOut, address /*tokenOut*/) external view returns (uint256 amountIn) {
         return amountOut.mul(FEE_BASE).div(fee).add(1);
     }
     function _safeTransfer(address token, address to, uint value) private {
@@ -104,7 +104,7 @@ contract StablePair {
         _update(balance0, balance1, reserve0, reserve1);
         emit Swap(msg.sender, amount0In, amount1In, amount0Out, amount1Out, to);
     }
-    function _update(uint balance0, uint balance1, uint112 _reserve0, uint112 _reserve1) private {
+    function _update(uint balance0, uint balance1, uint112 /*_reserve0*/, uint112 /*_reserve1*/) private {
         require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'OVERFLOW');
         reserve0 = uint112(balance0);
         reserve1 = uint112(balance1);

@@ -17,15 +17,6 @@ let accounts: string[];
 
 let wallet = new Wallet(getProvider());
 
-
-// async function addExecutor(newExecutor:Contract) {
-//     let voting = await voteToPass(wallet.defaultAccount, wallet, deployment, deployment.executor, "setVotingExecutor", [Utils.addressToBytes32Right(newExecutor.address, true), Utils.numberToBytes32(1, true)]);
-// }
-
-const oswapDeployOptions = {
-    hybridRouter: {
-    }
-};
 describe('Stable', function () {
     let weth: WETH9;
     let usdt: Erc20;
@@ -82,7 +73,7 @@ describe('Stable', function () {
         pair = new StablePair(wallet, await factory.allPairs(0));
     });
     it('registerPair', async function() {
-        await voteToPass(admin, wallet, oswap, oswap.hybridRouterRegistry, "registerProtocol", [Utils.stringToBytes32("Thena") as string, Utils.addressToBytes32Right(factory.address, true), Utils.numberToBytes32(fee, true),  Utils.numberToBytes32(100000, true), Utils.numberToBytes32(5, true)]);
+        await voteToPass(admin, wallet, oswap, oswap.hybridRouterRegistry, "registerProtocol", [Utils.stringToBytes32("Stable") as string, Utils.addressToBytes32Right(factory.address, true), Utils.numberToBytes32(fee, true),  Utils.numberToBytes32(100000, true), Utils.numberToBytes32(5, true)]);
         wallet.defaultAccount = nobody;
         await oswap.hybridRouterRegistry.registerPairByIndex({factory:factory.address, index:0});
     });
