@@ -3,7 +3,6 @@
 "optimizerRuns": 999999,
 "sourceDir": "test/contracts",
 "outputDir": "test/src/contracts",
-"outputObjects": "bytecode",
 "libMap": {"@openswap":"../../","@openzeppelin":"../../node_modules/@openzeppelin"},
 "overrides": [{
     "sources":["ERC20DelayFixedSupply.sol"],
