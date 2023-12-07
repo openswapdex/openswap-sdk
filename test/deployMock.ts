@@ -1,16 +1,18 @@
 
 import {Utils, Wallet} from "@ijstech/eth-wallet";
-import { MockOracleAdaptor, MockAmmFactory, MockAmmPair } from './src/contracts';
-import Web3 from 'web3';
+import { MockOracleAdaptor, MockAmmFactory, MockAmmPair, WETH9 } from './src/contracts';
+import HttpProvider from "web3-providers-http";
 import * as Config from '../data/config';
 
 async function main() {
     let rpcUrl = Config.rpcUrl;
-    let provider = new Web3.providers.HttpProvider(rpcUrl);
+    let provider = new HttpProvider(rpcUrl);
     let _wallet = new Wallet(provider, {
         address: Config.deployer.address,
         privateKey: Config.deployer.privateKey
     });
+
+    // console.log(await new WETH9(_wallet).deploy());
 
     let price = 1/400;
     const oracle = new MockOracleAdaptor(_wallet);

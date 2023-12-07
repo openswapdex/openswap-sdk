@@ -213,6 +213,11 @@ export function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult)
 
 export async function deployCoreContracts(wallet: Wallet, options: IDeployOptions): Promise<ICoreContractsDeploymentResult>{
     let result: ICoreContractsDeploymentResult = {};
+    //weth            
+    if (!options.tokens.weth) {
+        throw new Error("WETH not defined; please define/deploy one.");
+    }
+    result.weth = options.tokens.weth;   
     //oswap
     if (!options.tokens.oswap){
         let oswap = new OpenSwap(wallet);
@@ -226,10 +231,7 @@ export async function deployCoreContracts(wallet: Wallet, options: IDeployOption
     }
     else {
         result.votingToken = options.tokens.votingToken;
-    }      
-    //weth            
-    if (options.tokens.weth)
-        result.weth = options.tokens.weth;           
+    }              
     //governance
     let governance = new OAXDEX_Governance(wallet);
     result.governance = await governance.deploy({
@@ -246,7 +248,7 @@ export async function deployCoreContracts(wallet: Wallet, options: IDeployOption
     
     //administrator
     let administrator = new OAXDEX_Administrator(wallet);
-    result.administrator = await administrator.deploy(governance.address);
+    result.administrator = await administrator.deploy(result.governance);
     await governance.initAdmin(result.administrator);
     //VotingRegistry	
     let votingRegistry = new OAXDEX_VotingRegistry(wallet);

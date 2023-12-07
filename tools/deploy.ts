@@ -100,7 +100,6 @@ async function deployAll() {
         hybridRouter: {
         }
     });
-
     let hybridRouterRegistryConfig = Config.deploymentConfig.hybridRouterRegistry;
     let hybridRouterOptions = {
         registryAddress: result.hybridRouterRegistry,
@@ -120,11 +119,13 @@ async function deployAll() {
     }
     for (let protocol of hybridRouterRegistryConfig.customProtocols){
         let {factory, name, fee, feeBase, typeCode} = protocol;
-        hybridRouterOptions.factory.push(factory);
-        hybridRouterOptions.name.push(name);
-        hybridRouterOptions.fee.push(fee);
-        hybridRouterOptions.feeBase.push(feeBase);
-        hybridRouterOptions.typeCode.push(typeCode);
+        if (name) {
+            hybridRouterOptions.factory.push(factory);
+            hybridRouterOptions.name.push(name);
+            hybridRouterOptions.fee.push(fee);
+            hybridRouterOptions.feeBase.push(feeBase);
+            hybridRouterOptions.typeCode.push(typeCode);
+        }
     }
     await initHybridRouterRegistry(wallet, hybridRouterOptions);
 }
