@@ -4,7 +4,7 @@ import {Wallet, Erc20, BigNumber, Utils, TransactionReceipt} from "@ijstech/eth-
 
 
 const TIME_FOR_VOTING = 3;
-export async function stakeToVote(deployer:string, staker:string, wallet: Wallet, oswap: OSWAP.IDeploymentContracts){
+export async function stakeToVote(deployer:string, staker:string, wallet: Wallet, oswap: OSWAP.IDeploymentContracts, toWait?:boolean){
     let votingConfig = (await oswap.governance.votingConfigs(Utils.stringToBytes32("vote") as string));
     let amount = Utils.fromDecimals(BigNumber.max(votingConfig.minOaxTokenToCreateVote, votingConfig.minQuorum));
     wallet.defaultAccount = deployer;
@@ -13,7 +13,12 @@ export async function stakeToVote(deployer:string, staker:string, wallet: Wallet
     await oswap.openSwap.approve({spender:oswap.governance.address, amount:amount});
     await oswap.governance.stake(Utils.toDecimals(amount));
     let wait = (await oswap.governance.minStakePeriod()).toNumber() + 1/*networks[mainChainName].blockTime*/;
-    await wallet.setBlockTime(wait);
+    if (toWait){
+        console.log(`sleep for ${wait}s`);
+        await Utils.sleep(wait*1000);
+    } else {
+        await wallet.setBlockTime(wait);
+    }
     await oswap.governance.unlockStake();    
 }
 export async function newVote(wallet: Wallet, oswap: OSWAP.IDeploymentContracts, executor:Contract, type:string, param:string[]):Promise<OSWAP.Contracts.OAXDEX_VotingContract> {
@@ -42,7 +47,7 @@ console.log('executor',executor.address)
 
     return voting;
 }
-export async function voteToPass(voter: string, wallet: Wallet, oswap: OSWAP.IDeploymentContracts, executor:Contract, type:string, param:string[]):Promise<TransactionReceipt> {
+export async function voteToPass(voter: string, wallet: Wallet, oswap: OSWAP.IDeploymentContracts, executor:Contract, type:string, param:string[], toWait?:boolean):Promise<TransactionReceipt> {
 console.log('executor 1',executor.address)
     wallet.defaultAccount = voter;
     let voting = await newVote(wallet, oswap, executor, type, param);
@@ -51,8 +56,13 @@ console.log('executor 1',executor.address)
     let now = <number>(await wallet.web3.eth.getBlock('latest')).timestamp;
     let end = (await voting.voteEndTime()).plus(await voting.executeDelay()).toNumber() + 1/*networks[chain].blockTime*/;
     if (end>now) {
-        await wallet.setBlockTime((end-now)*1000);
-        await wallet.send(wallet.defaultAccount, 0); // mine one block
+        if (toWait) {
+            console.log(`sleep for ${end-now}s`);
+            await Utils.sleep((end-now)*1000);
+        } else {
+            await wallet.setBlockTime((end-now)*1000);
+            await wallet.send(wallet.defaultAccount, 0); // mine one block
+        }
     }
     return await voting.execute();
 }

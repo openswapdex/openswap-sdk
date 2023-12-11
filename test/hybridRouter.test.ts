@@ -8,7 +8,7 @@ import {stakeToVote, newVote, voteToPass}  from './oswapHelper';
 
 describe('##Contracts', function () {
   this.timeout(40000);
-    let wallet = new Wallet(getProvider());
+  let wallet = new Wallet(getProvider());
   let accounts: string[];
   let deployer: string;
   let deployedContracts: IDeploymentResult;

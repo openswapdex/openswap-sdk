@@ -28,11 +28,11 @@ async function createPair(accounts, tokenA, tokenB, priceA, priceB) {
     let prices = [];
     if (tokenA.address != weth.address) {
         tokens.push(tokenA.address);
-        prices.push(Utils.toDecimals((priceA).toString()));
+        prices.push(Utils.toDecimals(priceA.toFixed()));
     }
     if (tokenB.address != weth.address) {
         tokens.push(tokenB.address);
-        prices.push(Utils.toDecimals((priceB).toString()));
+        prices.push(Utils.toDecimals(priceB.toFixed()));
     }
     const oracle = new MockOracleAdaptor(_wallet);
     await oracle.deploy({weth:weth.address, decimals:18, tokens:tokens, prices:prices});
