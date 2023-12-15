@@ -1,7 +1,9 @@
+
 <!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <script src="libs/@ijstech/components/index.js"></script>
 </head>
 <html>
@@ -10,8 +12,7 @@
   <script>
     async function init() {
       application.LibHost = "";
-      let config = await application.getContent('scconfig.json');
-      let module = await application.newModule("@scom/dapp", JSON.parse(config));
+      let module = await application.init('scconfig.json');
       document.body.append(module);
     };
     init();
