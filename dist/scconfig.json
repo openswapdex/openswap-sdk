@@ -1,0 +1,9 @@
+{
+    "name": "@openswap/sdk",
+    "type": "widget",
+    "version": "0.1.11",
+    "dependencies": [
+        "@ijstech/eth-contract",
+        "@ijstech/eth-wallet"
+    ]
+}
