@@ -19,8 +19,12 @@ import {
     OSWAP_RangeLiquidityProvider,
     OSWAP_RangeFactory,
     OSWAP_VotingExecutor3,
-    OSWAP_RestrictedPairCreator,
+    OSWAP_RestrictedPairCreator1,
+    OSWAP_RestrictedPairCreator3,
+    OSWAP_RestrictedPairCreator4,
     OSWAP_RestrictedLiquidityProvider1,
+    OSWAP_RestrictedLiquidityProvider3,
+    OSWAP_RestrictedLiquidityProvider4,
     OSWAP_RestrictedFactory,
     OSWAP_VotingExecutor4,
     OSWAP_ConfigStore,
@@ -55,7 +59,9 @@ export interface IRangeContractsDeploymentResult {
 }
 export interface IRestrictedContractsDeploymentResult {
     restrictedFactory?: string;    
-    restrictedLiquidityProvider?: string;
+    restrictedLiquidityProvider1?: string;
+    restrictedLiquidityProvider3?: string;
+    restrictedLiquidityProvider4?: string;
     restrictedPairCreator?: string;
     configStore?: string;
     votingExecutor4?: string;
@@ -146,6 +152,7 @@ export interface IRestrictedFactoryOptions{
     tradeFee?: number|BigNumber;
     protocolFee?: number|BigNumber;
     protocolFeeTo?: string;
+    type?: number; // list, signature, merkle tree
 }
 export interface IHybridRouterOptions{
     registryAddress?: string;
@@ -176,9 +183,7 @@ export interface IDeploymentContracts {
     governance: OAXDEX_Governance;
     administrator: OAXDEX_Administrator;
     registry: OAXDEX_VotingRegistry;
-    pairCreator: OSWAP_PairCreator;
     factory: OSWAP_Factory;
-    oraclePairCreator: OSWAP_OraclePairCreator;
     router: OSWAP_Router;
     oracleFactory: OSWAP_OracleFactory;
     oracleRouter: OSWAP_OracleRouter;
@@ -188,17 +193,25 @@ export interface IDeploymentContracts {
     executor: OAXDEX_VotingExecutor;
     executor1: OSWAP_VotingExecutor1;
     executor2: OSWAP_VotingExecutor2;
+    rangeFactory?: OSWAP_RangeFactory;
+    rangeLiquidityProvider?: OSWAP_RangeLiquidityProvider;
+    executor3?: OSWAP_VotingExecutor3;
+    configStore?: OSWAP_ConfigStore;
+    restrictedFactory?: OSWAP_RestrictedFactory;
+    restrictedLiquidityProvider1?: OSWAP_RestrictedLiquidityProvider1;
+    restrictedLiquidityProvider3?: OSWAP_RestrictedLiquidityProvider3;
+    restrictedLiquidityProvider4?: OSWAP_RestrictedLiquidityProvider4;
+    executor4?: OSWAP_VotingExecutor4;
+    
 }
 
 export function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult): IDeploymentContracts{
-    return {
+    let deployment: IDeploymentContracts = {
         openSwap: new OpenSwap(wallet, result.oswap),
         governance: new OAXDEX_Governance(wallet, result.governance),
         administrator: new OAXDEX_Administrator(wallet, result.administrator),
         registry: new OAXDEX_VotingRegistry(wallet, result.votingRegistry),
-        pairCreator:new  OSWAP_PairCreator(wallet, result.pairCreator),
         factory: new OSWAP_Factory(wallet, result.factory),
-        oraclePairCreator: new OSWAP_OraclePairCreator(wallet, result.oraclePairCreator),
         router: new OSWAP_Router(wallet, result.router),
         oracleFactory: new OSWAP_OracleFactory(wallet, result.oracleFactory),
         oracleRouter: new OSWAP_OracleRouter(wallet, result.oracleRouter),
@@ -208,7 +221,26 @@ export function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult)
         executor: new OAXDEX_VotingExecutor(wallet, result.votingExecutor),
         executor1: new OSWAP_VotingExecutor1(wallet, result.votingExecutor1),
         executor2: new OSWAP_VotingExecutor2(wallet, result.votingExecutor2)
+    };
+
+    if (result.rangeFactory) {
+        deployment.rangeFactory = new OSWAP_RangeFactory(wallet, result.rangeFactory);
+        deployment.rangeLiquidityProvider = new OSWAP_RangeLiquidityProvider(wallet, result.rangeLiquidityProvider);
+        deployment.executor3 = new OSWAP_VotingExecutor3(wallet, result.votingExecutor3)
     }
+    if (result.restrictedFactory) {
+        deployment.configStore = new OSWAP_ConfigStore(wallet, result.configStore);
+        deployment.restrictedFactory = new OSWAP_RestrictedFactory(wallet, result.restrictedFactory);
+        if (result.restrictedLiquidityProvider1) {
+            deployment.restrictedLiquidityProvider1 = new OSWAP_RestrictedLiquidityProvider1(wallet, result.restrictedLiquidityProvider1);
+        } else if (result.restrictedLiquidityProvider3) {
+            deployment.restrictedLiquidityProvider3 = new OSWAP_RestrictedLiquidityProvider3(wallet, result.restrictedLiquidityProvider3);
+        } else if (result.restrictedLiquidityProvider4) {
+            deployment.restrictedLiquidityProvider4 = new OSWAP_RestrictedLiquidityProvider4(wallet, result.restrictedLiquidityProvider4);
+        }
+        deployment.executor4 = new OSWAP_VotingExecutor4(wallet, result.votingExecutor4)
+    }
+    return deployment;
 }
 
 export async function deployCoreContracts(wallet: Wallet, options: IDeployOptions): Promise<ICoreContractsDeploymentResult>{
@@ -364,8 +396,12 @@ export async function deployRestrictedContracts(wallet: Wallet, options: IRestri
         options.configStore = result.configStore;
     }
     //RestrictedPairCreator
-    let restrictedPairCreator = new OSWAP_RestrictedPairCreator(wallet);
-    result.restrictedPairCreator = await restrictedPairCreator.deploy();           
+    let restrictedPairCreator = 
+        options.type == 1 ? new OSWAP_RestrictedPairCreator1(wallet) :
+        options.type == 3 ? new OSWAP_RestrictedPairCreator3(wallet) :
+        options.type == 4 ? new OSWAP_RestrictedPairCreator4(wallet) : null;
+    if (!restrictedPairCreator) throw new Error("invalid restricted type");
+    result.restrictedPairCreator = await restrictedPairCreator.deploy();
     //RestrictedFactory
     let restrictedFactory = new OSWAP_RestrictedFactory(wallet);
     result.restrictedFactory = await restrictedFactory.deploy({
@@ -378,12 +414,15 @@ export async function deployRestrictedContracts(wallet: Wallet, options: IRestri
         protocolFeeTo: options.protocolFeeTo || Utils.nullAddress
     });
     //RestrictedLiquidityProvider
-    let restrictedLiquidityProvider = new OSWAP_RestrictedLiquidityProvider1(wallet);
-    result.restrictedLiquidityProvider = await restrictedLiquidityProvider.deploy({
+    let restrictedLiquidityProvider = 
+        options.type == 1 ? new OSWAP_RestrictedLiquidityProvider1(wallet) :
+        options.type == 3 ? new OSWAP_RestrictedLiquidityProvider3(wallet) :
+        options.type == 4 ? new OSWAP_RestrictedLiquidityProvider4(wallet) : null;
+    result["restrictedLiquidityProvider"+options.type] = await restrictedLiquidityProvider.deploy({
         WETH: weth,
         factory: result.restrictedFactory
     });            
-    await restrictedFactory.init(result.restrictedLiquidityProvider);      
+    await restrictedFactory.init(restrictedLiquidityProvider.address);
     //VotingExecutor4
     let votingExecutor4 = new OSWAP_VotingExecutor4(wallet);
     result.votingExecutor4 = await votingExecutor4.deploy({

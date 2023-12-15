@@ -46,11 +46,18 @@ async function deployPeggedQueue() {
     console.log('result', result);
 }
 
+export async function deployAllToLocalTestnet(wallet:Wallet, weth:string) {
+    deploymentConfig.tokens.weth = weth;
+    return await _deployAll(wallet);
+} 
 async function deployAll() {
     let wallet = new Wallet(rpcUrl, {
         address: deployerAddress, 
         privateKey
-    })   
+    });
+    await _deployAll(wallet);
+}
+async function _deployAll(wallet:Wallet) {
     let accounts = await wallet.accounts;
     wallet.defaultAccount = accounts[0];
     let result = await deploy(wallet, {
@@ -93,6 +100,7 @@ async function deployAll() {
             tradeFee: 100
         },
         restricted: {
+            type: 4,
             protocolFee: 10000,
             protocolFeeTo,
             tradeFee: 100
@@ -100,7 +108,7 @@ async function deployAll() {
         hybridRouter: {
         }
     });
-    let hybridRouterRegistryConfig = Config.deploymentConfig.hybridRouterRegistry;
+    let hybridRouterRegistryConfig = deploymentConfig.hybridRouterRegistry;
     let hybridRouterOptions = {
         registryAddress: result.hybridRouterRegistry,
         name: [],
@@ -128,6 +136,8 @@ async function deployAll() {
         }
     }
     await initHybridRouterRegistry(wallet, hybridRouterOptions);
+
+    return result;
 }
 
 async function setupHybridRouter(){
@@ -138,11 +148,11 @@ async function setupHybridRouter(){
     let accounts = await wallet.accounts;
     wallet.defaultAccount = accounts[0];
 
-    let hybridRouterRegistryConfig = Config.deploymentConfig.hybridRouterRegistry;
+    let hybridRouterRegistryConfig = deploymentConfig.hybridRouterRegistry;
     let hybridRouterOptions = {
         registryAddress: hybridRouterRegistryConfig.address,
-        governance: Config.deploymentConfig.governance,
-        weth: Config.deploymentConfig.tokens.weth,
+        governance: deploymentConfig.governance,
+        weth: deploymentConfig.tokens.weth,
         name: [],
         factory: [],
         fee: [],
@@ -171,7 +181,7 @@ async function setupHybridRouter(){
     console.log('result', result);
 }
 
-deployAll();
+// deployAll();
 // deployOracle();
 // deployPeggedQueue();
 // setupHybridRouter();

@@ -1,5 +1,5 @@
 import { Wallet, BigNumber } from "@ijstech/eth-wallet";
-import { OSWAP_Factory, OSWAP_PairCreator, OSWAP_Router, OSWAP_VotingExecutor1, OAXDEX_Governance, OAXDEX_VotingExecutor, OAXDEX_Administrator, OAXDEX_VotingRegistry, OSWAP_OraclePairCreator, OSWAP_VotingExecutor2, OSWAP_OracleFactory, OSWAP_OracleLiquidityProvider, OSWAP_OracleRouter, OSWAP_HybridRouterRegistry, OSWAP_HybridRouter2 } from './contracts/index';
+import { OSWAP_Factory, OSWAP_Router, OSWAP_VotingExecutor1, OAXDEX_Governance, OAXDEX_VotingExecutor, OAXDEX_Administrator, OAXDEX_VotingRegistry, OSWAP_VotingExecutor2, OSWAP_OracleFactory, OSWAP_OracleLiquidityProvider, OSWAP_OracleRouter, OSWAP_HybridRouterRegistry, OSWAP_HybridRouter2, OSWAP_RangeLiquidityProvider, OSWAP_RangeFactory, OSWAP_VotingExecutor3, OSWAP_RestrictedLiquidityProvider1, OSWAP_RestrictedLiquidityProvider3, OSWAP_RestrictedLiquidityProvider4, OSWAP_RestrictedFactory, OSWAP_VotingExecutor4, OSWAP_ConfigStore } from './contracts/index';
 import { OpenSwap } from './OpenSwap';
 export interface ICoreContractsDeploymentResult {
     administrator?: string;
@@ -29,7 +29,9 @@ export interface IRangeContractsDeploymentResult {
 }
 export interface IRestrictedContractsDeploymentResult {
     restrictedFactory?: string;
-    restrictedLiquidityProvider?: string;
+    restrictedLiquidityProvider1?: string;
+    restrictedLiquidityProvider3?: string;
+    restrictedLiquidityProvider4?: string;
     restrictedPairCreator?: string;
     configStore?: string;
     votingExecutor4?: string;
@@ -101,6 +103,7 @@ export interface IRestrictedFactoryOptions {
     tradeFee?: number | BigNumber;
     protocolFee?: number | BigNumber;
     protocolFeeTo?: string;
+    type?: number;
 }
 export interface IHybridRouterOptions {
     registryAddress?: string;
@@ -131,9 +134,7 @@ export interface IDeploymentContracts {
     governance: OAXDEX_Governance;
     administrator: OAXDEX_Administrator;
     registry: OAXDEX_VotingRegistry;
-    pairCreator: OSWAP_PairCreator;
     factory: OSWAP_Factory;
-    oraclePairCreator: OSWAP_OraclePairCreator;
     router: OSWAP_Router;
     oracleFactory: OSWAP_OracleFactory;
     oracleRouter: OSWAP_OracleRouter;
@@ -143,6 +144,15 @@ export interface IDeploymentContracts {
     executor: OAXDEX_VotingExecutor;
     executor1: OSWAP_VotingExecutor1;
     executor2: OSWAP_VotingExecutor2;
+    rangeFactory?: OSWAP_RangeFactory;
+    rangeLiquidityProvider?: OSWAP_RangeLiquidityProvider;
+    executor3?: OSWAP_VotingExecutor3;
+    configStore?: OSWAP_ConfigStore;
+    restrictedFactory?: OSWAP_RestrictedFactory;
+    restrictedLiquidityProvider1?: OSWAP_RestrictedLiquidityProvider1;
+    restrictedLiquidityProvider3?: OSWAP_RestrictedLiquidityProvider3;
+    restrictedLiquidityProvider4?: OSWAP_RestrictedLiquidityProvider4;
+    executor4?: OSWAP_VotingExecutor4;
 }
 export declare function toDeploymentContracts(wallet: Wallet, result: IDeploymentResult): IDeploymentContracts;
 export declare function deployCoreContracts(wallet: Wallet, options: IDeployOptions): Promise<ICoreContractsDeploymentResult>;
