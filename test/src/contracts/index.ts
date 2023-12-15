@@ -1,4 +1,5 @@
 export { CallFormContract } from './CallFormContract';
+export { ERC20WithFee } from './ERC20WithFee';
 export { EvilAmmFactory } from './EvilAmmFactory';
 export { EvilAmmPair } from './EvilAmmPair';
 export { MockAmmFactory } from './MockAmmFactory';
