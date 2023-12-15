@@ -1,6 +1,6 @@
 import {IWallet, Contract as _Contract, Transaction, TransactionReceipt, BigNumber, Event, IBatchRequestObj, TransactionOptions} from "@ijstech/eth-contract";
-import Bin from "./OSWAP_RestrictedPairCreator.json";
-export class OSWAP_RestrictedPairCreator extends _Contract{
+import Bin from "./OSWAP_RestrictedPairCreator1.json";
+export class OSWAP_RestrictedPairCreator1 extends _Contract{
     static _abi: any = Bin.abi;
     constructor(wallet: IWallet, address?: string){
         super(wallet, address, Bin.abi, Bin.bytecode);

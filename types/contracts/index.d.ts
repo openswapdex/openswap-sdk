@@ -39,5 +39,7 @@ export { OSWAP_OracleRouter } from './router/OSWAP_OracleRouter';
 export { OSWAP_RestrictedPair1 } from './restricted/OSWAP_RestrictedPair1';
 export { OSWAP_RestrictedPair3 } from './restricted/OSWAP_RestrictedPair3';
 export { OSWAP_RestrictedPair4 } from './restricted/OSWAP_RestrictedPair4';
-export { OSWAP_RestrictedPairCreator } from './restricted/OSWAP_RestrictedPairCreator';
+export { OSWAP_RestrictedPairCreator1 } from './restricted/OSWAP_RestrictedPairCreator1';
+export { OSWAP_RestrictedPairCreator3 } from './restricted/OSWAP_RestrictedPairCreator3';
+export { OSWAP_RestrictedPairCreator4 } from './restricted/OSWAP_RestrictedPairCreator4';
 export { OSWAP_HybridRouter2 } from './router/OSWAP_HybridRouter2';

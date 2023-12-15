@@ -1,5 +1,5 @@
 import { IWallet, Contract as _Contract, TransactionReceipt, TransactionOptions } from "@ijstech/eth-contract";
-export declare class OSWAP_RestrictedPairCreator extends _Contract {
+export declare class OSWAP_RestrictedPairCreator4 extends _Contract {
     static _abi: any;
     constructor(wallet: IWallet, address?: string);
     deploy(options?: TransactionOptions): Promise<string>;
