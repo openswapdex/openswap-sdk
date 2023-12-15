@@ -3,7 +3,7 @@ import { Contract } from "@ijstech/eth-contract";
 import {Wallet, Erc20, BigNumber, Utils, TransactionReceipt} from "@ijstech/eth-wallet";
 
 
-const TIME_FOR_VOTING = 3;
+const TIME_FOR_VOTING = 10;
 export async function stakeToVote(deployer:string, staker:string, wallet: Wallet, oswap: OSWAP.IDeploymentContracts, toWait?:boolean){
     let votingConfig = (await oswap.governance.votingConfigs(Utils.stringToBytes32("vote") as string));
     let amount = Utils.fromDecimals(BigNumber.max(votingConfig.minOaxTokenToCreateVote, votingConfig.minQuorum));
@@ -48,13 +48,12 @@ console.log('executor',executor.address)
     return voting;
 }
 export async function voteToPass(voter: string, wallet: Wallet, oswap: OSWAP.IDeploymentContracts, executor:Contract, type:string, param:string[], toWait?:boolean):Promise<TransactionReceipt> {
-console.log('executor 1',executor.address)
     wallet.defaultAccount = voter;
     let voting = await newVote(wallet, oswap, executor, type, param);
     await voting.vote(0);
 
     let now = <number>(await wallet.web3.eth.getBlock('latest')).timestamp;
-    let end = (await voting.voteEndTime()).plus(await voting.executeDelay()).toNumber() + 1/*networks[chain].blockTime*/;
+    let end = (await voting.voteEndTime()).plus(await voting.executeDelay()).toNumber() + 3/*networks[chain].blockTime*/;
     if (end>now) {
         if (toWait) {
             console.log(`sleep for ${end-now}s`);
