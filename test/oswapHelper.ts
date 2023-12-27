@@ -12,7 +12,7 @@ export async function stakeToVote(deployer:string, staker:string, wallet: Wallet
     wallet.defaultAccount = staker;
     await oswap.openSwap.approve({spender:oswap.governance.address, amount:amount});
     await oswap.governance.stake(Utils.toDecimals(amount));
-    let wait = (await oswap.governance.minStakePeriod()).toNumber() + 1/*networks[mainChainName].blockTime*/;
+    let wait = (await oswap.governance.minStakePeriod()).toNumber() + TIME_FOR_VOTING/*networks[mainChainName].blockTime*/;
     if (toWait){
         console.log(`sleep for ${wait}s`);
         await Utils.sleep(wait*1000);
@@ -53,7 +53,7 @@ export async function voteToPass(voter: string, wallet: Wallet, oswap: OSWAP.IDe
     await voting.vote(0);
 
     let now = <number>(await wallet.web3.eth.getBlock('latest')).timestamp;
-    let end = (await voting.voteEndTime()).plus(await voting.executeDelay()).toNumber() + 3/*networks[chain].blockTime*/;
+    let end = (await voting.voteEndTime()).plus(await voting.executeDelay()).toNumber() + TIME_FOR_VOTING/*networks[chain].blockTime*/;
     if (end>now) {
         if (toWait) {
             console.log(`sleep for ${end-now}s`);

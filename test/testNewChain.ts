@@ -19,9 +19,9 @@ let Accounts = [
 
 
 let LOCAL_TESTNET = true;
-let Token:any = {};//"usd":"", "gold":""};
+let Token:any = {};//{"usd":"", "gold":""};
 let Address;// = JSON.parse(fs.readFileSync("", "utf8"));
-let wallet = new Wallet(getProvider());//""), Accounts);
+let wallet = new Wallet(getProvider());//(""), Accounts);
 
 let deployment:IDeploymentContracts;
 
@@ -543,13 +543,11 @@ console.log(usd.address, gold.address);
     console.log(!!event17b);
     let event17c = pair4.parseApprovedTraderEvent(receipt17);
     console.log(!!event17c[0]);
-    console.log(!!event17c[1]);
     let receipt17b = await addLiquidityRestricted1(accounts[0], accounts[1], allocations, usd, gold, false,  new BigNumber(1000), new BigNumber((1/2000).toString()), new BigNumber(1000));
     let event17ba = pair4.parseAddLiquidityEvent(receipt17)[0];
     console.log(!!event17ba);
     let event17bb = pair4.parseApprovedTraderEvent(receipt17b);
     console.log(!!event17bb[0]);
-    console.log(!!event17bb[1]);
     }
 
     if (deployment.restrictedLiquidityProvider4) { // type 4
@@ -593,6 +591,6 @@ main();
 //     // let voting = await voteToPass(accounts[0], wallet, deployment, deployment.executor, "setVotingExecutor", [Utils.addressToBytes32Right(deployment.executor4.address, true), Utils.numberToBytes32(1, true)], true);
 //     // let voting = await voteToPass(accounts[0], wallet, deployment, deployment.executor3, "registerProtocol", [Utils.stringToBytes32("Restricted") as string, Utils.addressToBytes32Right(deployment.restrictedFactory.address, true), Utils.numberToBytes32(999000, true), Utils.numberToBytes32(1000000, true), Utils.numberToBytes32(3, true)], true);
 //     // console.log(voting)
-//     // console.log(await (new Contracts.OAXDEX_VotingContract(wallet, "0xFAAd92ed5897c08C0Fe6Fd102A2345b956E102c4")).execute());
+//     // console.log(await (new Contracts.OAXDEX_VotingContract(wallet, "")).execute());
 // }
 // fix();
