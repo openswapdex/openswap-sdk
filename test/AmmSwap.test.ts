@@ -3,7 +3,7 @@ import assert from 'assert';
 import { Contract } from "@ijstech/eth-contract";
 import {Utils, Wallet, BigNumber} from "@ijstech/eth-wallet";
 import { Contracts, deploy, toDeploymentContracts, IDeploymentContracts} from '../src';
-import { TestERC20, MockOracleAdaptor, WETH9, MockAmmFactory, MockAmmPair } from './src/contracts';
+import { TestERC20, WETH9, MockAmmFactory, MockAmmPair } from './src/contracts';
 import {print, assertEqual, getProvider} from './helper';
 import {stakeToVote, newVote, voteToPass}  from './oswapHelper';
 
@@ -70,10 +70,10 @@ async function addLiquidityETH(from, tokenA, amountIn, ethIn, deadline){
     _wallet.defaultAccount = accounts[0];
 }
 
-describe('OSWAP_OraclePair 1', function () {
+describe('OSWAP_Pair 1', function () {
     let _tokenCounter = 0;
     let _token: TestERC20;
-    let _pair: Contracts.OSWAP_OraclePair;
+    let _pair: Contracts.OSWAP_Pair;
     let _direction: boolean;
     let _expire: number;
 
@@ -149,6 +149,42 @@ describe('OSWAP_OraclePair 1', function () {
                 to: to, 
                 deadline: deadline
             });
+        });
+        it ('should able to get price', async function () {
+            let reserves = await deployment.router.getReserves({tokenA: _token.address, tokenB:weth.address});
+            console.log(Utils.fromDecimals(reserves.reserveA).toFixed(), Utils.fromDecimals(reserves.reserveB).toFixed());
+            console.log('price', reserves.reserveA.div(reserves.reserveB).toFixed())
+        });
+        let balance2;
+        it ('should able to transfer LP', async function () {
+            _wallet.defaultAccount = accounts[2];
+            let balance = await _pair.balanceOf(accounts[2]);
+            console.log(balance.toFixed());
+            await _pair.transfer({to: accounts[6], value:balance});
+            balance2 = await _pair.balanceOf(accounts[6]);
+            console.log(balance2.toFixed());
+        });
+        it ('should able to withdraw', async function () {
+            _wallet.defaultAccount = accounts[6];
+
+            await _pair.approve({spender: deployment.router.address, value: balance2});
+
+            console.log('lp', Utils.fromDecimals(await (_pair.balanceOf(accounts[6]))).toFixed());
+            console.log('token', Utils.fromDecimals(await (_token.balanceOf(accounts[6]))).toFixed());
+            console.log('eth', (await (_wallet.balance)).toFixed());
+
+            let deadline = Math.floor(Date.now()/1000) + 1000;
+            let receipt = await deployment.router.removeLiquidityETH({
+                token: _token.address, 
+                liquidity: balance2,
+                to: accounts[6],
+                amountTokenMin: 0,
+                amountETHMin: 0,
+                deadline: deadline
+            });
+            console.log('lp', Utils.fromDecimals(await (_pair.balanceOf(accounts[6]))).toFixed());
+            console.log('token', Utils.fromDecimals(await (_token.balanceOf(accounts[6]))).toFixed());
+            console.log('eth', (await (_wallet.balance)).toFixed());
         });
     });
 });
